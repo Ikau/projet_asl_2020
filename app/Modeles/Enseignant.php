@@ -32,10 +32,11 @@ class Enseignant extends AbstractEnseignant
      * @var array[string]string
      */
     protected $attributes = [
-        'nom'                => Constantes::STRING_VIDE,
-        'prenom'             => Constantes::STRING_VIDE,
-        'email'              => Constantes::STRING_VIDE,
-        'responsable_option' => Constantes::STRING_VIDE,
+        'nom'                     => Constantes::STRING_VIDE,
+        'prenom'                  => Constantes::STRING_VIDE,
+        'email'                   => Constantes::STRING_VIDE,
+        'responsable_option'      => Constantes::OPTION['vide'],
+        'responsable_departement' => Constantes::DEPARTEMENT['vide']
     ];
 
     /**
