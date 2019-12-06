@@ -31,6 +31,12 @@ class Constantes
         'monsieur' => 'monsieur'
     ];
 
+    const DEPARTEMENT = [
+        'vide' => '',
+        'MRI'  => 'MRI',
+        'STI'  => 'STI'
+    ];
+
     /**
      * @var array[string]string Diplome prepare par l'etudiant
      */
@@ -63,7 +69,7 @@ class Constantes
      */
     const NATIONALITE = [
         'vide'      => '',
-        'francaise' => 'francaise'
+        'francaise' => 'française'
     ];
 
     /**
