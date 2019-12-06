@@ -9,6 +9,13 @@ use App\Utils\Constantes;
 
 class FicheEntreprise extends AbstractFiche
 {
+    /*
+     * Nom des colonnes des clefs etrangeres 
+     */
+    const COL_CONTACT_INSA_ID = 'contact_insa_id';
+    const COL_SYNTHESE_ID     = 'synthese_id';
+    const COL_STAGE_ID        = 'stage_id';
+    
     /**
      * @var string Nom de la table associee au modele 'FicheEntreprise'.
      */
@@ -25,12 +32,46 @@ class FicheEntreprise extends AbstractFiche
      * @var array[string]mixed
      */
     protected $attributes = [
-        'signature'            => FALSE,
+        // Attributs propres au modeles
+        'signature'           => FALSE,
         'date_limite'         => Constantes::DATE_VIDE,
         'fonction_signataire' => Constantes::STRING_VIDE,
         'date'                => Constantes::DATE_VIDE,
         'appreciation'        => Constantes::STRING_VIDE,
         'note_entreprise'     => Constantes::FLOAT_VIDE,
-        'note_tuteur'         => Constantes::FLOAT_VIDE
+        'note_tuteur'         => Constantes::FLOAT_VIDE,
+
+        // Clefs etrangeres
+        FicheEntreprise::COL_CONTACT_INSA_ID => Constantes::ID_VIDE,
+        FicheEntreprise::COL_STAGE_ID        => Constantes::ID_VIDE,
+        FicheEntreprise::COL_SYNTHESE_ID     => Constantes::ID_VIDE,
     ];
+
+
+    /**
+     * Renvoie le contact INSA qui s'occupe des fiches entreprises.
+     * @var App\Modeles\Contact
+     */
+    public function contact_insa()
+    {
+        return $this->belongsTo('App\Modeles\Contact', FicheEntreprise::COL_CONTACT_INSA_ID);
+    }
+
+    /**
+     * Renvoie la fiche synthese liee a cette fiche entreprise
+     * @var App\Modeles\FicheSynthese
+     */
+    public function synthese()
+    {
+        return $this->belongsTo('App\Modeles\FicheSynthese', FicheEntreprise::COL_SYNTHESE_ID);
+    }
+
+    /**
+     * Renvoie le stage associe a cette fiche entreprise
+     * @var App\Modeles\Stage
+     */
+    public function stage()
+    {
+        return $this->belongsTo('App\Modeles\Stage', FicheEntreprise::COL_STAGE_ID);
+    }
 }

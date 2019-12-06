@@ -39,4 +39,33 @@ class Contact extends Model
         'telephone' => Constantes::STRING_VIDE,
         'adresse'   => Constantes::STRING_VIDE        
     ];
+
+    /**
+     * Renvoie la liste des stages ou le contact est maitre de stage
+     * @var array[App\Modeles\Stage]
+     */
+    public function stages_mds()
+    {
+        return $this->hasMany('App\Modeles\Stage', Stage::COL_MDS_ID);
+    }
+
+    /**
+     * Renvoie la liste des soutenances ou le contact est maitre de stage
+     * @var array[App\Modeles\Soutenance]
+     */
+    public function soutenances_mds()
+    {
+        return $this->hasMany('App\Modeles\Soutenance', Soutenance::COL_CONTACT_ENTREPRISE_ID);
+    }
+
+    /**
+     * Renvoie la liste des soutenances ou le contact est la scolarite INSA
+     * @var array[App\Modeles\FicheEntreprise]
+     */
+    public function fiches_entreprise()
+    {
+        return $this->hasMany('App\Modeles\FicheEntreprise', FicheEntreprise::COL_CONTACT_INSA_ID);
+    }
+
+    
 }

@@ -15,6 +15,7 @@ class Constantes
     /*
      * Valeurs par defaut lorsque vide
      */
+    const ID_VIDE     = -1;
     const FLOAT_VIDE  = 0.0;
     const INT_VIDE    = 0;
     const STRING_VIDE = '';

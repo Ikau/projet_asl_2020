@@ -39,4 +39,13 @@ class Entreprise extends Model
         'region'   => Constantes::STRING_VIDE,
         'pays'     => Constantes::STRING_VIDE,
     ];
+
+    /**
+     * Renvoie la liste des stages associes a l'entreprise
+     * @var array[App\Modeles\Stage]
+     */
+    public function stages()
+    {
+        return $this->hasMany('App\Modeles\Stage', Stage::COL_ENTREPRISE_ID);
+    }
 }

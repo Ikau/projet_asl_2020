@@ -46,4 +46,23 @@ class Etudiant extends Model
         'annee'       => Constantes::INT_VIDE,
         'mobilite'    => FALSE
     ];
+
+
+    /**
+     * Renvoie la soutenance que l'etudiant doit passer
+     * @var App\Modeles\Soutenance
+     */
+    public function soutenances()
+    {
+        return $this->hasMany('App\Modeles\Soutenance', Soutenance::COL_ETUDIANT_ID);
+    }
+
+    /**
+     * Renvoie la liste des stages de l'etudiants
+     * @var App\Modeles\Stage
+     */
+    public function stages()
+    {
+        return $this->hasMany('App\Modeles\Stage', Stage::COL_ETUDIANT_ID);
+    }
 }
