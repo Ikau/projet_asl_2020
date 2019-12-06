@@ -16,9 +16,14 @@ class FicheRapport extends AbstractFiche
     const COL_SYNTHESE_ID = 'synthese_id';
 
     /**
+     * @var string Nom de la table associe au modele 'FicheRapport'
+     */
+    const NOM_TABLE = 'fiches_rapport';
+
+    /**
      * @var string Nom de la table associee au modele 'FicheRapport'.
      */
-    protected $table = 'fiches_rapport';
+    protected $table = FicheRapport::NOM_TABLE;
 
     /**
      * @var array[string] Liste des attributs a assigner manuellement.

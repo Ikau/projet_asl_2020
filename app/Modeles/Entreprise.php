@@ -10,6 +10,11 @@ use App\Utils\Constantes;
 class Entreprise extends AbstractEntreprise
 {
     /**
+     * @var string Nom de la table associe au modele 'Entreprise'
+     */
+    const NOM_TABLE = 'entreprises';
+
+    /**
      * Indique a Laravel de ne pas creer ni de gerer les tables 'created_at' et 'updated_at'.
      * 
      * @var bool Gestion des timestamps.
@@ -19,7 +24,7 @@ class Entreprise extends AbstractEntreprise
     /**
      * @var string Nom de la table associee au modele 'Entreprise'.
      */
-    protected $table = 'entreprises';
+    protected $table = Entreprise::NOM_TABLE;
 
     /**
      * @var array[string] Liste des attributs a assigner manuellement.

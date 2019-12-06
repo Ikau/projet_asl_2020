@@ -18,6 +18,11 @@ class Soutenance extends AbstractSoutenance
     const COL_CONTACT_ENTREPRISE_ID = 'contact_entreprise_id';
 
     /**
+     * @var string Nom de la table associe au modele 'Soutenance'
+     */
+    const NOM_TABLE = 'soutenances';
+
+    /**
      * Indique a Laravel de ne pas creer ni de gerer les tables 'created_at' et 'updated_at'.
      * 
      * @var bool Gestion des timestamps.
@@ -27,7 +32,7 @@ class Soutenance extends AbstractSoutenance
     /**
      * @var string Nom de la table associee au modele 'Soutenance'.
      */
-    protected $table = 'soutenances';
+    protected $table = Soutenance::NOM_TABLE;
 
     /**
      * @var array[string] Liste des attributs a assigner manuellement.

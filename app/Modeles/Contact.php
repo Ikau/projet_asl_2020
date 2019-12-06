@@ -10,6 +10,11 @@ use App\Utils\Constantes;
 class Contact extends AbstractContact
 {
     /**
+     * @var string Nom de la table associe au modele 'Contact'
+     */
+    const NOM_TABLE = 'contacts';
+
+    /**
      * Indique a Laravel de ne pas creer ni de gerer les tables 'created_at' et 'updated_at'
      * 
      * @var bool Gestion des timestamps
@@ -19,7 +24,7 @@ class Contact extends AbstractContact
     /**
      * @var string Nom de la table associee au modele 'Contact'
      */
-    protected $table = 'contacts';
+    protected $table = Contact::NOM_TABLE;
 
     /**
      * @var array[string] Liste des attributs a assigner manuellement

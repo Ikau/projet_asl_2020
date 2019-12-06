@@ -17,9 +17,14 @@ class FicheSoutenance extends AbstractFiche
     const COL_SYNTHESE_ID   = 'synthese_id';
 
     /**
+     * @var string Nom de la table associe au modele 'FicheSoutenance'
+     */
+    const NOM_TABLE = 'fiches_soutenance';
+
+    /**
      * @var string Nom de la table associee au model 'FicheSoutenance'
      */
-    protected $table = "fiches_soutenance";
+    protected $table = FicheSoutenance::NOM_TABLE;
 
     /**
      * @var array[string] Liste des attributs a assigner manuellement

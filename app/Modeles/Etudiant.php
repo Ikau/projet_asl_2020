@@ -10,6 +10,11 @@ use App\Utils\Constantes;
 class Etudiant extends AbstractEtudiant
 {
     /**
+     * @var string Nom de la table associe au modele 'Etudiant'
+     */
+    const NOM_TABLE = 'etudiants';
+
+    /**
      * Indique a Laravel de ne pas creer ni de gerer les tables 'created_at' et 'updated_at'
      * 
      * @var bool Gestion des timestamps
@@ -19,7 +24,7 @@ class Etudiant extends AbstractEtudiant
     /**
      * @var string Nom de la table associee au modele 'Etudiant'
      */
-    protected $table = 'etudiants';
+    protected $table = Etudiant::NOM_TABLE;
 
     /**
      * #WIP

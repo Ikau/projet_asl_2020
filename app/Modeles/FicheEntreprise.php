@@ -15,11 +15,16 @@ class FicheEntreprise extends AbstractFiche
     const COL_CONTACT_INSA_ID = 'contact_insa_id';
     const COL_SYNTHESE_ID     = 'synthese_id';
     const COL_STAGE_ID        = 'stage_id';
+
+    /**
+     * @var string Nom de la table associe au modele 'FicheEntreprise'
+     */
+    const NOM_TABLE = 'fiches_entreprise';
     
     /**
      * @var string Nom de la table associee au modele 'FicheEntreprise'.
      */
-    protected $table = 'fiches_entreprise';
+    protected $table = FicheEntreprise::NOM_TABLE;
 
     /**
      * @var array[string] Liste des attributs a assigner manuellement.

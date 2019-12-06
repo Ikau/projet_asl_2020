@@ -10,6 +10,11 @@ use App\Utils\Constantes;
 class Enseignant extends AbstractEnseignant
 {
     /**
+     * @var string Nom de la table associe au modele 'Enseignant'
+     */
+    const NOM_TABLE = 'enseignants';
+
+    /**
      * Indique a Laravel de ne pas creer ni de gerer les tables 'created_at' et 'updated_at'
      * 
      * @var bool Gestion des timestamps
@@ -19,7 +24,7 @@ class Enseignant extends AbstractEnseignant
     /**
      * @var string Nom de la table associee au modele 'Enseignant'
      */
-    protected $table = 'enseignants';
+    protected $table = Enseignant::NOM_TABLE;
 
     /**
      * @var array[string] Liste des attributs a assigner manuellement

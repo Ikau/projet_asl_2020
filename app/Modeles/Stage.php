@@ -19,6 +19,11 @@ class Stage extends AbstractStage
     const COL_SOUTENANCE_ID = 'soutenance_id';
 
     /**
+     * @var string Nom de la table associe au modele 'Stage'
+     */
+    const NOM_TABLE = 'stages';
+
+    /**
      * Indique a Laravel de ne pas creer ni de gerer les tables 'created_at' et 'updated_at'.
      * 
      * @var bool Gestion des timestamps
@@ -28,7 +33,7 @@ class Stage extends AbstractStage
     /**
      * @var string Nom de la table associee au model 'Stage'.
      */
-    protected $table = 'stages';
+    protected $table = Stage::NOM_TABLE;
 
     /**
      * @var array[string] Liste des attributs a assigner manuellement.

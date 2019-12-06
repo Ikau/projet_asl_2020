@@ -16,9 +16,14 @@ class FicheSynthese extends AbstractFiche
     const COL_STAGE_ID = 'stage_id';
 
     /**
+     * @var string Nom de la table associe au modele 'FicheSynthese'
+     */
+    const NOM_TABLE = 'fiches_synthese';
+
+    /**
      * @var string Nom de la table associee au modele 'FicheSynthese'.
      */
-    protected $table = 'fiches_synthese';
+    protected $table = FicheSynthese::NOM_TABLE;
 
     /**
      * @var array[string] Liste des attributs a assigner manuellement.
