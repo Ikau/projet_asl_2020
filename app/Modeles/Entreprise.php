@@ -4,9 +4,10 @@ namespace App\Modeles;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Abstracts\AbstractEntreprise;
 use App\Utils\Constantes;
 
-class Entreprise extends Model
+class Entreprise extends AbstractEntreprise
 {
     /**
      * Indique a Laravel de ne pas creer ni de gerer les tables 'created_at' et 'updated_at'.

@@ -4,9 +4,10 @@ namespace App\Modeles;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Abstracts\AbstractStage;
 use App\Utils\Constantes;
 
-class Stage extends Model
+class Stage extends AbstractStage
 {
     /*
      * Nom des colonnes des clefs etrangeres de Stage 
@@ -58,24 +59,6 @@ class Stage extends Model
     ];
 
     /**
-     * Renvoie l'etudiant associe au stage
-     * @var App\Modeles\Etudiant
-     */
-    public function etudiant()
-    {
-        return $this->belongsTo('App\Modeles\Etudiant', Stage::COL_ETUDIANT_ID);
-    }
-    
-    /**
-     * Renvoie l'enseignant referent associe au stage. 
-     * @var App\Modeles\Enseignant
-     */
-    public function referent()
-    {
-        return $this->belongsTo('App\Modeles\Enseignant', Stage::COL_REFERENT_ID);
-    }
-
-    /**
      * Renvoie l'entreprise associee au stage
      * @var App\Modeles\Entreprise
      */
@@ -85,21 +68,12 @@ class Stage extends Model
     }
 
     /**
-     * Renvoie le contact ayant le role de maitre de stage
-     * @var App\Modeles\Contact
+     * Renvoie l'etudiant associe au stage
+     * @var App\Modeles\Etudiant
      */
-    public function maitre_de_stage()
+    public function etudiant()
     {
-        return $this->belongsTo('App\Modeles\Contact', Stage::COL_MDS_ID);
-    }
-
-    /**
-     * Renvoie la soutenance associee au stage
-     * @var App\Modeles\Soutenance
-     */
-    public function soutenance()
-    {
-        return $this->belongsTo('App\Modeles\Soutenance', Stage::COL_SOUTENANCE_ID);
+        return $this->belongsTo('App\Modeles\Etudiant', Stage::COL_ETUDIANT_ID);
     }
 
     /**
@@ -112,21 +86,21 @@ class Stage extends Model
     }
 
     /**
-     * Renvoie la fiche soutenance du stage
-     * @var App\Modeles\FicheSoutenance
-     */
-    public function fiche_soutenance()
-    {
-        return $this->hasOne('App\Modeles\FicheSoutenance', FicheSoutenance::COL_STAGE_ID);
-    }
-
-    /**
      * Renvoie la fiche rapport du stage
      * @var App\Modeles\FicheRapport
      */
     public function fiche_rapport()
     {
         return $this->hasOne('App\Modeles\FicheRapport', FicheRapport::COL_STAGE_ID);
+    }
+    
+    /**
+     * Renvoie la fiche soutenance du stage
+     * @var App\Modeles\FicheSoutenance
+     */
+    public function fiche_soutenance()
+    {
+        return $this->hasOne('App\Modeles\FicheSoutenance', FicheSoutenance::COL_STAGE_ID);
     }
 
     /**
@@ -137,6 +111,31 @@ class Stage extends Model
     {
         return $this->hasOne('App\Modeles\FicheSynthese', FicheSynthese::COL_STAGE_ID);
     }
+    
+    /**
+     * Renvoie le contact ayant le role de maitre de stage
+     * @var App\Modeles\Contact
+     */
+    public function maitre_de_stage()
+    {
+        return $this->belongsTo('App\Modeles\Contact', Stage::COL_MDS_ID);
+    }
 
+    /**
+     * Renvoie l'enseignant referent associe au stage. 
+     * @var App\Modeles\Enseignant
+     */
+    public function referent()
+    {
+        return $this->belongsTo('App\Modeles\Enseignant', Stage::COL_REFERENT_ID);
+    }
 
+    /**
+     * Renvoie la soutenance associee au stage
+     * @var App\Modeles\Soutenance
+     */
+    public function soutenance()
+    {
+        return $this->belongsTo('App\Modeles\Soutenance', Stage::COL_SOUTENANCE_ID);
+    }
 }

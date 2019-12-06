@@ -4,9 +4,10 @@ namespace App\Modeles;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Abstracts\AbstractSoutenance;
 use App\Utils\Constantes;
 
-class Soutenance extends Model
+class Soutenance extends AbstractSoutenance
 {
     /*
      * Nom des colonnes des clefs etrangeres 
@@ -60,30 +61,12 @@ class Soutenance extends Model
     ];
 
     /**
-     * Renvoie l'enseignant referent du jury.
-     * @var App\Modeles\Enseignant
-     */
-    public function referent()
-    {
-        return $this->belongsTo('App\Modeles\Enseignant', Soutenance::COL_REFERENT_ID);
-    }
-
-    /**
      * Renvoie l'enseignant candide du jury.
      * @var App\Modeles\Enseignant
      */
     public function candide()
     {
         return $this->belongsTo('App\Modeles\Enseignant', Soutenance::COL_CANDIDE_ID);
-    }
-
-    /**
-     * Renvoie l'etudiant qui passe la soutenance.
-     * @var App\Modeles\Etudiant
-     */
-    public function etudiant()
-    {
-        return $this->belongsTo('App\Modeles\Etudiant', Soutenance::COL_ETUDIANT_ID);
     }
 
     /**
@@ -96,12 +79,30 @@ class Soutenance extends Model
     }
 
     /**
+     * Renvoie l'etudiant qui passe la soutenance.
+     * @var App\Modeles\Etudiant
+     */
+    public function etudiant()
+    {
+        return $this->belongsTo('App\Modeles\Etudiant', Soutenance::COL_ETUDIANT_ID);
+    }
+
+    /**
      * Renvoie la fiche d'evaluation liee a cette soutenance
      * @var App\Modeles\FicheSoutenance
      */
     public function fiche()
     {
         return $this->hasOne('App\Modeles\FicheSoutenance', FicheSoutenance::COL_SOUTENANCE_ID);
+    }
+
+    /**
+     * Renvoie l'enseignant referent du jury.
+     * @var App\Modeles\Enseignant
+     */
+    public function referent()
+    {
+        return $this->belongsTo('App\Modeles\Enseignant', Soutenance::COL_REFERENT_ID);
     }
 
     /**

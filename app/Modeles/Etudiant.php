@@ -4,9 +4,10 @@ namespace App\Modeles;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Abstracts\AbstractEtudiant;
 use App\Utils\Constantes;
 
-class Etudiant extends Model
+class Etudiant extends AbstractEtudiant
 {
     /**
      * Indique a Laravel de ne pas creer ni de gerer les tables 'created_at' et 'updated_at'

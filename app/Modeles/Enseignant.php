@@ -4,9 +4,10 @@ namespace App\Modeles;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Abstacts\AbstractEnseignant;
 use App\Utils\Constantes;
 
-class Enseignant extends Model
+class Enseignant extends AbstractEnseignant
 {
     /**
      * Indique a Laravel de ne pas creer ni de gerer les tables 'created_at' et 'updated_at'
@@ -37,14 +38,13 @@ class Enseignant extends Model
         'responsable_option' => Constantes::STRING_VIDE,
     ];
 
-
     /**
-     * Renvoie la liste des stages dont l'enseignant est referent.
-     * @var array[App\Modeles\Stage]
+     * Renvoie la liste des soutenances dont l'enseignant est candide.
+     * @var array[App\Modeles\Soutenance]
      */
-    public function stages()
+    public function soutenances_candide()
     {
-        return $this->hasMany('App\Modeles\Stage', Stage::COL_REFERENT_ID);
+        return $this->hasMany('App\Modeles\Soutenance', Soutenance::COL_CANDIDE_ID);
     }
 
     /**
@@ -57,11 +57,11 @@ class Enseignant extends Model
     }
 
     /**
-     * Renvoie la liste des soutenances dont l'enseignant est candide.
-     * @var array[App\Modeles\Soutenance]
+     * Renvoie la liste des stages dont l'enseignant est referent.
+     * @var array[App\Modeles\Stage]
      */
-    public function soutenances_candide()
+    public function stages()
     {
-        return $this->hasMany('App\Modeles\Soutenance', Soutenance::COL_CANDIDE_ID);
+        return $this->hasMany('App\Modeles\Stage', Stage::COL_REFERENT_ID);
     }
 }

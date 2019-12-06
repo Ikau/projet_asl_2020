@@ -4,9 +4,10 @@ namespace App\Modeles;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Abstracts\AbstractContact;
 use App\Utils\Constantes;
 
-class Contact extends Model
+class Contact extends AbstractContact
 {
     /**
      * Indique a Laravel de ne pas creer ni de gerer les tables 'created_at' et 'updated_at'
@@ -41,12 +42,12 @@ class Contact extends Model
     ];
 
     /**
-     * Renvoie la liste des stages ou le contact est maitre de stage
-     * @var array[App\Modeles\Stage]
+     * Renvoie la liste des soutenances ou le contact est la scolarite INSA
+     * @var array[App\Modeles\FicheEntreprise]
      */
-    public function stages_mds()
+    public function fiches_entreprise()
     {
-        return $this->hasMany('App\Modeles\Stage', Stage::COL_MDS_ID);
+        return $this->hasMany('App\Modeles\FicheEntreprise', FicheEntreprise::COL_CONTACT_INSA_ID);
     }
 
     /**
@@ -59,13 +60,12 @@ class Contact extends Model
     }
 
     /**
-     * Renvoie la liste des soutenances ou le contact est la scolarite INSA
-     * @var array[App\Modeles\FicheEntreprise]
+     * Renvoie la liste des stages ou le contact est maitre de stage
+     * @var array[App\Modeles\Stage]
      */
-    public function fiches_entreprise()
+    public function stages_mds()
     {
-        return $this->hasMany('App\Modeles\FicheEntreprise', FicheEntreprise::COL_CONTACT_INSA_ID);
+        return $this->hasMany('App\Modeles\Stage', Stage::COL_MDS_ID);
     }
-
     
 }
