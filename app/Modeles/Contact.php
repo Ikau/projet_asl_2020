@@ -29,7 +29,7 @@ class Contact extends AbstractContact
     /**
      * @var array[string] Liste des attributs a assigner manuellement
      */
-    protected $guarded = ['type'];
+    protected $guarded = ['id'];
 
     /**
      * Valeurs par defaut des colonnes du modele 'Contact'

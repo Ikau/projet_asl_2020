@@ -20,7 +20,7 @@ class CreerTableContacts extends Migration
             $table->string('nom');
             $table->string('prenom');
             $table->string('civilite');
-            $table->string('type');
+            $table->smallInteger('type');
             $table->string('mail');
             $table->string('telephone');
             $table->text('adresse');
