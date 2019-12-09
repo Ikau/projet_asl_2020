@@ -26,9 +26,9 @@ class Constantes
      * @var array[string]string Indique la civilite du contact
      */
     const CIVILITE = [
-        'vide'     => '',
-        'madame'   => 'madame',
-        'monsieur' => 'monsieur'
+        'vide'     => 0,
+        'madame'   => 1,
+        'monsieur' => 2
     ];
 
     const DEPARTEMENT = [
@@ -92,9 +92,9 @@ class Constantes
      * @var array[string]string Indique le type de contact
      */
     const TYPE_CONTACT = [
-        'vide'                => '',
-        'administration_insa' => 'administration_insa',
-        'entreprise'          => 'entreprise',
-        'maitre_de_stage'     => 'maitre_de_stage'
+        'vide'                => 0,
+        'administration_insa' => 1,
+        'entreprise'          => 2,
+        'maitre_de_stage'     => 3
     ];
 }
