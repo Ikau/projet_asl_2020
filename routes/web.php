@@ -16,3 +16,5 @@ Route::get('/', function () {
 });
 
 Route::get('/test', 'TestController@test');
+
+Route::resource('/tests/contacts', 'CRUD\ContactController');
