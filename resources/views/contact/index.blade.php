@@ -35,6 +35,20 @@
             <td>{{ $c->mail }}</td>
             <td>{{ $c->telephone }}</td>
             <td>{{ $c->adresse }}</td>
+            <td>
+                <form method="POST" action="{{ route('contacts.edit', [$c->id]) }}">
+                    @csrf
+                    @method('GET')
+                    <button type="submit">Modifier</button>
+                </form>
+            </td>
+            <td>
+                <form method="POST" action="{{ route('contacts.destroy', [$c->id]) }}">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit">Supprimer</button>
+                </form>
+            </td>
         </tr>
         @endforeach
 
