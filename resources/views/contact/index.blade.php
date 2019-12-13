@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('title', 'Contact - Index')
+@section('title', $titre)
 
 @section('sidebar')
 @endsection
 
 @section('content')
 <div>
-    Nombre d'entrees dans la base : {{ $nombre }}
+    Nombre d'entrees dans la base : {{ $contacts->count() }}
 </div>
 
 <div>
@@ -36,7 +36,14 @@
             <td>{{ $c->telephone }}</td>
             <td>{{ $c->adresse }}</td>
             <td>
-                <form method="POST" action="{{ route('contacts.edit', [$c->id]) }}">
+                <form method="GET" action="{{ route('contacts.show', [$c->id]) }}">
+                    @csrf
+                    @method('GET')
+                    <button type="submit">Profil</button>
+                </form>
+            </td>
+            <td>
+                <form method="GET" action="{{ route('contacts.edit', [$c->id]) }}">
                     @csrf
                     @method('GET')
                     <button type="submit">Modifier</button>

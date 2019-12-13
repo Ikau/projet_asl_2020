@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Contact - Create')
+@section('title', $titre)
 
 @section('sidebar')
 @endsection

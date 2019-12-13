@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Contact - Show')
+@section('title', $titre)
 
 @section('sidebar')
 @endsection
@@ -10,5 +10,11 @@
     Information sur un contact
 </div>
 
-
+@foreach($contact->toArray() as $key => $value)
+<div>
+    {{ $key }} : {{ $value }}
+</div>
+@endforeach
+<div>
+</div>
 @endsection
