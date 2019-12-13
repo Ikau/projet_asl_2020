@@ -27,8 +27,11 @@ class Constantes
      */
     const CIVILITE = [
         'vide'     => 0,
-        'madame'   => 1,
-        'monsieur' => 2
+        'Madame'   => 1,
+        'Monsieur' => 2,
+
+        'min' => 0,
+        'max' => 2
     ];
 
     const DEPARTEMENT = [
@@ -95,6 +98,9 @@ class Constantes
         'vide'                => 0,
         'administration_insa' => 1,
         'entreprise'          => 2,
-        'maitre_de_stage'     => 3
+        'maitre_de_stage'     => 3,
+
+        'min' => 0,
+        'max' => 3
     ];
 }
