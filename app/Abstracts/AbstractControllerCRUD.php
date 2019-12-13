@@ -57,10 +57,34 @@ abstract class AbstractControllerCRUD extends Controller
     abstract public function update(Request $request, $id);
 
     /**
-     * Supprime l'entree $d de la table du modele.
+     * Supprime l'entree $id de la table du modele.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     abstract public function destroy($id);
+
+    /**
+     * Normalise les inputs utilisateur qui sont null
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    abstract protected function normaliseInputsOptionnels(Request $request);
+
+    /**
+     * Fonction qui doit faire la logique de validation des inputs d'une requete entrante.
+     * 
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    abstract protected function validerForm(Request $request);
+
+    /**
+     * Fonction qui doit faire la logique de validation de l'id
+     * 
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    abstract protected function validerContact($id);
 }
