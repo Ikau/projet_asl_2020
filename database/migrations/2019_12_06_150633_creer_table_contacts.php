@@ -19,8 +19,8 @@ class CreerTableContacts extends Migration
             $table->bigIncrements('id');
             $table->string('nom');
             $table->string('prenom');
-            $table->string('civilite');
-            $table->string('type');
+            $table->smallInteger('civilite');
+            $table->smallInteger('type');
             $table->string('mail');
             $table->string('telephone');
             $table->text('adresse');

@@ -16,3 +16,11 @@ Route::get('/', function () {
 });
 
 Route::get('/test', 'TestController@test');
+
+Route::resource('/tests/contacts', 'CRUD\ContactController');
+
+/* 
+ * Route de test... 
+ * C'est sale mais je n'ai rien trouve de plus simple ni elegant
+ */
+Route::post('contacts/tests', 'CRUD\ContactController@tests')->name('contacts.tests');
