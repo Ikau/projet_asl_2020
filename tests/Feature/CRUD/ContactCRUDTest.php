@@ -28,6 +28,11 @@ class ContactControllerTest extends TestCase
         'adresse'
     ];
 
+    /* ====================================================================
+     *                           TESTS AUXILIAIRES
+     * ====================================================================
+     */
+
     /**
      * Test de la fonction 'normaliseInputsOptionnels'
      * 
@@ -191,6 +196,12 @@ class ContactControllerTest extends TestCase
             'Id null'             => ['null', 404],
         ];
     }
+
+
+    /* ====================================================================
+     *                           TESTS RESOURCES
+     * ====================================================================
+     */
 
     /**
      * Test de la requete GET d'index
