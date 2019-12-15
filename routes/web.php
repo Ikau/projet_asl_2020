@@ -25,6 +25,6 @@ Route::resource('/tests/enseignants', 'CRUD\EnseignantController');
  * Route de test... 
  * C'est sale mais je n'ai rien trouve de plus simple ni elegant
  */
-Route::get('/test', 'TestController@test');
+Route::get('/tests', 'TestsController@tests');
 Route::post('contacts/tests', 'CRUD\ContactController@tests')->name('contacts.tests');
 Route::post('enseignants/tests', 'CRUD\EnseignantController@tests')->name('enseignants.tests');
