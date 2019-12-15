@@ -41,7 +41,7 @@ class Contact extends AbstractContact
         'prenom'    => Constantes::STRING_VIDE,
         'civilite'  => Constantes::CIVILITE['vide'],
         'type'      => Constantes::TYPE_CONTACT['vide'],
-        'mail'      => Constantes::STRING_VIDE,
+        'email'      => Constantes::STRING_VIDE,
         'telephone' => Constantes::STRING_VIDE,
         'adresse'   => Constantes::STRING_VIDE        
     ];
@@ -65,7 +65,7 @@ class Contact extends AbstractContact
         if($this->prenom    === null) { $this->prenom    = Constantes::STRING_VIDE;}
         if($this->civilite  === null) { $this->civilite  = Constantes::CIVILITE['vide'];}
         if($this->type      === null) { $this->type      = Constantes::TYPE_CONTACT['vide'];}
-        if($this->mail      === null) { $this->mail      = Constantes::STRING_VIDE;}
+        if($this->email      === null) { $this->email      = Constantes::STRING_VIDE;}
         if($this->telephone === null) { $this->telephone = Constantes::STRING_VIDE;}
         if($this->adresse   === null) { $this->adresse   = Constantes::STRING_VIDE ;}
     }

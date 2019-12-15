@@ -61,9 +61,9 @@
     @enderror
     <br/>
 
-    <label for="mail">Mail</label>
-    <input id="mail" name="mail" type="text" value="{{ $contact->mail ?? old('mail') }}" >
-    @error('mail')
+    <label for="email">Mail</label>
+    <input id="email" name="email" type="text" value="{{ $contact->email ?? old('email') }}" >
+    @error('email')
     <div class="alert alert-danger">{{ $message }}</div>
     @enderror
     <br/>

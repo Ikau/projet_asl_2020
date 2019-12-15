@@ -23,7 +23,7 @@ class ContactControllerTest extends TestCase
         'prenom',
         'civilite',
         'type',
-        'mail',
+        'email',
         'telephone',
         'adresse'
     ];
@@ -111,8 +111,8 @@ class ContactControllerTest extends TestCase
 
         $mailNull             = $arrayValide;
         $mailInvalide         = $arrayValide;
-        $mailNull['mail']     = null;
-        $mailInvalide['mail'] = Constantes::STRING_VIDE;
+        $mailNull['email']     = null;
+        $mailInvalide['email'] = Constantes::STRING_VIDE;
 
         $telephoneNull                = $arrayValide;
         $telephoneNull['telephone']   = null;
@@ -127,7 +127,7 @@ class ContactControllerTest extends TestCase
             'Nom null'       => [route('contacts.tests'), TRUE, 'nom', $nomNull],
             'Prenom null'    => [route('contacts.tests'), TRUE, 'prenom', $prenomNull],
             'Type null'      => [route('contacts.tests'), TRUE, 'type', $typeNull],
-            'Mail null'      => [route('contacts.tests'), TRUE, 'mail', $mailNull],
+            'Mail null'      => [route('contacts.tests'), TRUE, 'email', $mailNull],
             'Civilite null'  => ['/', FALSE, null, $civiliteNull],
             'Telephone null' => ['/', FALSE, null, $telephoneNull],
             'Adresse null'   => ['/', FALSE, null, $adresseNull],
@@ -136,7 +136,7 @@ class ContactControllerTest extends TestCase
             'Prenom invalide'        => [route('contacts.tests'), TRUE, 'prenom',  $prenomInvalide],
             'Type invalide sup'      => [route('contacts.tests'), TRUE, 'type',  $typeInvalideSup],
             'Type invalide inf'      => [route('contacts.tests'), TRUE, 'type', $typeInvalideInf],
-            'Mail invalide'          => [route('contacts.tests'), TRUE, 'mail',  $mailInvalide],
+            'Mail invalide'          => [route('contacts.tests'), TRUE, 'email',  $mailInvalide],
             'Civilite invalide sup'  => [route('contacts.tests'), TRUE, 'civilite', $civiliteInvalideSup],
             'Civilite invalide inf'  => [route('contacts.tests'), TRUE, 'civilite', $civiliteInvalideInf]
         ];
@@ -315,7 +315,7 @@ class ContactControllerTest extends TestCase
             'Prenom valide'    => ['prenom', 'nouveau'],
             'Civilite valide'  => ['civilite', Constantes::CIVILITE['vide']],
             'Type valide'      => ['type', Constantes::TYPE_CONTACT['vide']],
-            'Mail valide'      => ['mail', 'nouveau@example.com'],
+            'Mail valide'      => ['email', 'nouveau@example.com'],
             'Telephone valide' => ['telephone', 'nouveau'],
             'Adresse valide'   => ['adresse', 'nouveau'],
 

@@ -13,7 +13,7 @@ $factory->define(\App\Modeles\Contact::class, function (Faker $faker)
         'prenom' => $faker->lastName,
         'civilite' => $faker->randomElement(Constantes::CIVILITE),
         'type' => $faker->randomElement(Constantes::TYPE_CONTACT),
-        'mail' => $faker->unique()->safeEmail,
+        'email' => $faker->unique()->safeEmail,
         'telephone' => $faker->phoneNumber,
         'adresse' => $faker->address
     ];

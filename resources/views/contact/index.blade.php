@@ -21,7 +21,7 @@
             <th>prenom</th>
             <th>civilite</th>
             <th>type</th>
-            <th>mail</th>
+            <th>email</th>
             <th>telephone</th>
             <th>adresse</th>
         </tr>
@@ -32,7 +32,7 @@
             <td>{{ $c->prenom }}</td>
             <td>{{ $c->civilite }}</td>
             <td>{{ $c->type }}</td>
-            <td>{{ $c->mail }}</td>
+            <td>{{ $c->email }}</td>
             <td>{{ $c->telephone }}</td>
             <td>{{ $c->adresse }}</td>
             <td>

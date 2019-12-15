@@ -24,7 +24,7 @@ class ContactTest extends TestCase
         $this->assertEquals(Constantes::STRING_VIDE, $contact->prenom);
         $this->assertEquals(Constantes::CIVILITE['vide'], $contact->civilite);
         $this->assertEquals(Constantes::TYPE_CONTACT['vide'], $contact->type);
-        $this->assertEquals(Constantes::STRING_VIDE, $contact->mail);
+        $this->assertEquals(Constantes::STRING_VIDE, $contact->email);
         $this->assertEquals(Constantes::STRING_VIDE, $contact->telephone);
         $this->assertEquals(Constantes::STRING_VIDE, $contact->adresse);
     }
