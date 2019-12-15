@@ -19,6 +19,7 @@ Route::get('/', function () {
  * Route resources CRUD pour les modeles 
  */
 Route::resource('/tests/contacts', 'CRUD\ContactController');
+Route::resource('/tests/enseignants', 'CRUD\EnseignantController');
 
 /* 
  * Route de test... 
@@ -26,3 +27,4 @@ Route::resource('/tests/contacts', 'CRUD\ContactController');
  */
 Route::get('/test', 'TestController@test');
 Route::post('contacts/tests', 'CRUD\ContactController@tests')->name('contacts.tests');
+Route::post('enseignants/tests', 'CRUD\EnseignantController@tests')->name('enseignants.tests');
