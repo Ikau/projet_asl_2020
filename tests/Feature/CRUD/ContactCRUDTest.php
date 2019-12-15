@@ -143,11 +143,11 @@ class ContactControllerTest extends TestCase
     }
 
     /**
-     * Test de la methode 'validerContact'
+     * Test de la methode 'validerModele'
      * 
-     * @dataProvider validerContactProvider
+     * @dataProvider validerModeleProvider
      */
-    public function testValiderContact($idCas, $statutAttendu)
+    public function testValiderModele($idCas, $statutAttendu)
     {
         $id;
         switch($idCas)
@@ -175,12 +175,12 @@ class ContactControllerTest extends TestCase
         }
 
         $response = $this->post(route('contacts.tests'), [
-            'test' => 'validerContact',
+            'test' => 'validerModele',
             'id'   => $id,
         ])->assertStatus($statutAttendu);
     }
 
-    public function validerContactProvider()
+    public function validerModeleProvider()
     {
         //[string $casId, int $statutAttendu]
         return [
@@ -245,7 +245,7 @@ class ContactControllerTest extends TestCase
 
     /**
      * 
-     * @depends testValiderContact
+     * @depends testValiderModele
      * @return void
      */
     public function testShow($idCas)
@@ -265,7 +265,7 @@ class ContactControllerTest extends TestCase
     /**
      * 
      * @depends testValiderForm
-     * @depends testValiderContact
+     * @depends testValiderModele
      * @return void
      */
     public function testEdit()
@@ -284,7 +284,7 @@ class ContactControllerTest extends TestCase
 
     /**
      * @depends testValiderForm
-     * @depends testValiderContact
+     * @depends testValiderModele
      * @dataProvider updateProvider
      * @return void
      */
@@ -326,7 +326,7 @@ class ContactControllerTest extends TestCase
     }
 
     /**
-     * @depends testValiderContact
+     * @depends testValiderModele
      * @return void
      */
     public function testDestroy()

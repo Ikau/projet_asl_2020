@@ -55,7 +55,7 @@ class ContactController extends AbstractControllerCRUD
 
     public function show($id) 
     {
-        $contact = $this->validerContact($id);
+        $contact = $this->validerModele($id);
         if(null === $contact) abort('404');
 
         return view('contact.show', [
@@ -81,7 +81,7 @@ class ContactController extends AbstractControllerCRUD
     public function update(Request $request, $id) 
     {
         $this->validerForm($request);
-        $contact = $this->validerContact($id);
+        $contact = $this->validerModele($id);
         if(null === $contact) abort ('404');
 
         $contact->update($request->all());
@@ -92,7 +92,7 @@ class ContactController extends AbstractControllerCRUD
 
     public function destroy($id) 
     {
-        $contact = $this->validerContact($id);
+        $contact = $this->validerModele($id);
         if(null === $contact) abort('404');
 
         $contact->delete();
@@ -118,8 +118,8 @@ class ContactController extends AbstractControllerCRUD
                 $this->validerForm($request);
             return redirect('/');
 
-            case 'validerContact':
-                $contact = $this->validerContact($request->id);
+            case 'validerModele':
+                $contact = $this->validerModele($request->id);
                 if( is_null($contact) ) abort('404');
             return redirect('/');
 
@@ -177,7 +177,7 @@ class ContactController extends AbstractControllerCRUD
     /**
      * Fonction qui valide la validite de l'id donnee et renvoie un contact le cas echeant
      */
-    protected function validerContact($id)
+    protected function validerModele($id)
     {
         if(null === $id
         || ! is_numeric($id))

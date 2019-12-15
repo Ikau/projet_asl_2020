@@ -86,5 +86,5 @@ abstract class AbstractControllerCRUD extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    abstract protected function validerContact($id);
+    abstract protected function validerModele($id);
 }
