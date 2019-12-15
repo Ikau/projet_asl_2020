@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title', $titre)
+@section('titre', $titre)
 
 @section('sidebar')
 @endsection
 
-@section('content')
+@section('contenu')
 <div>
     Information sur un contact
 </div>

@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title', $titre)
+@section('titre', $titre)
 
 @section('sidebar')
 @endsection
 
-@section('content')
+@section('contenu')
 <div>
     @if ( ! isset($contact))
     Formulaire de creation d'un contact

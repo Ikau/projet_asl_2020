@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>@yield('title')</title>
+        <title>@yield('titre')</title>
         <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/style.css') }}"/>
     </head>
     <body>
@@ -9,7 +9,7 @@
         @show
 
         <div class="container">
-            @yield('content')
+            @yield('contenu')
         </div>
     </body>
 </html>
