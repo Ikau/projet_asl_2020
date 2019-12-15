@@ -99,10 +99,6 @@ class ContactController extends AbstractControllerCRUD
         return redirect()->route('contacts.index');
     }
 
-    /**
-     * Callback pour tous les tests necessaires du controller
-     * Ce n'est pas elegant mais je n'ai pas trouve de meilleurs facons
-     */
     public function tests(Request $request)
     {
         switch($request->test)
