@@ -15,12 +15,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/test', 'TestController@test');
-
+/*
+ * Route resources CRUD pour les modeles 
+ */
 Route::resource('/tests/contacts', 'CRUD\ContactController');
 
 /* 
  * Route de test... 
  * C'est sale mais je n'ai rien trouve de plus simple ni elegant
  */
+Route::get('/test', 'TestController@test');
 Route::post('contacts/tests', 'CRUD\ContactController@tests')->name('contacts.tests');
