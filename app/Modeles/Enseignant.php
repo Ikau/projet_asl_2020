@@ -29,7 +29,7 @@ class Enseignant extends AbstractEnseignant
     /**
      * @var array[string] Liste des attributs a assigner manuellement
      */
-    protected $guarded = ['responsable_option'];
+    protected $guarded = ['id'];
 
     /**
      * Valeurs par defaut des colonnes du modele 'Enseignant'
