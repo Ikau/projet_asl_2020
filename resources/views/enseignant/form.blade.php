@@ -17,7 +17,7 @@
     <a href="{{ route('enseignants.index') }}">Retour</a>
 </div>
 <div>
-    (*) : Champs obligatoire 
+    (*) : Champs obligatoires
 </div>
 
 @if ( ! isset($enseignant) )
