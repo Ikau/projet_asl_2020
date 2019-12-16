@@ -16,6 +16,9 @@
 <div>
     <a href="{{ route('contacts.index') }}">Retour</a>
 </div>
+<div>
+    (*) : Champs obligatoire 
+</div>
 
 @if ( ! isset($contact) )
 <form method="POST" action="{{ route('contacts.store') }}">
@@ -25,16 +28,34 @@
 @endif
     @csrf
 
-    <label for="nom">Nom</label>
+    <label for="nom">Nom (*)</label>
     <input id="nom" name="nom" type="text" value="{{ $contact->nom ?? old('nom') }}">
     @error('nom')
     <div class="alert alert-danger">{{ $message }}</div>
     @enderror
     <br/>
 
-    <label for="prenom">Prenom</label>
+    <label for="prenom">Prenom (*)</label>
     <input id="prenom" name="prenom" type="text" value="{{ $contact->prenom ?? old('prenom') }}" >
     @error('prenom')
+    <div class="alert alert-danger">{{ $message }}</div>
+    @enderror
+    <br/>
+
+    <label for="type">Type (*)</label>
+    <select name="type" id="type" value="{{ $contact->type ?? old('type') }}" >
+        @foreach($type as $key => $value)
+        <option value="{{ $value }}">{{ $key }}</option>
+        @endforeach
+    </select>
+    @error('type')
+    <div class="alert alert-danger">{{ $message }}</div>
+    @enderror
+    <br/>
+
+    <label for="email">Mail (*)</label>
+    <input id="email" name="email" type="text" value="{{ $contact->email ?? old('email') }}" >
+    @error('email')
     <div class="alert alert-danger">{{ $message }}</div>
     @enderror
     <br/>
@@ -46,24 +67,6 @@
         @endforeach
     </select>
     @error('civilite')
-    <div class="alert alert-danger">{{ $message }}</div>
-    @enderror
-    <br/>
-
-    <label for="type">Type</label>
-    <select name="type" id="type" value="{{ $contact->type ?? old('type') }}" >
-        @foreach($type as $key => $value)
-        <option value="{{ $value }}">{{ $key }}</option>
-        @endforeach
-    </select>
-    @error('type')
-    <div class="alert alert-danger">{{ $message }}</div>
-    @enderror
-    <br/>
-
-    <label for="email">Mail</label>
-    <input id="email" name="email" type="text" value="{{ $contact->email ?? old('email') }}" >
-    @error('email')
     <div class="alert alert-danger">{{ $message }}</div>
     @enderror
     <br/>
