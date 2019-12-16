@@ -104,7 +104,9 @@ class EnseignantController extends AbstractControllerCRUD
 
     public function destroy($id)
     {
-        //
+        $enseignant = $this->validerModele($id);
+        if(null === $enseignant) abort('404');
+        $enseignant->delete();
     }
 
     public function tests(Request $request)

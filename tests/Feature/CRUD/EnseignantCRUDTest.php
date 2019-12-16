@@ -235,7 +235,7 @@ class EnseignantControllerTest extends TestCase
 
     /**
      * @depends testValiderModele
-     * @dataProvider showEditProvider
+     * @dataProvider showEditDestroyProvider
      */
     public function testShow(string $idCas, bool $succes)
     {
@@ -271,7 +271,7 @@ class EnseignantControllerTest extends TestCase
     /**
      * @depends testValiderForm
      * @depends testValiderModele
-     * @dataProvider showEditProvider
+     * @dataProvider showEditDestroyProvider
      */
     public function testEdit(string $idCas, bool $succes)
     {
@@ -307,15 +307,6 @@ class EnseignantControllerTest extends TestCase
         {
             $response->assertStatus(404);
         }
-    }
-
-    public function showEditProvider()
-    {
-        return [
-            'Id valide'    => ['id_valide', TRUE],
-            'Id numerique' => ['id_numerique', TRUE],
-            'Id invalide'  => ['id_invalide', FALSE]
-        ];
     }
 
     /**
@@ -355,9 +346,47 @@ class EnseignantControllerTest extends TestCase
 
     /**
      * @depends testValiderModele
+     * @dataProvider showEditDestroyProvider
      */
-    public function testDestroy()
+    public function testDestroy(string $idCas, bool $succes)
     {
-        $this->assertTrue(TRUE);
+        $enseignant = factory(Enseignant::class)->create();
+        $id;
+        switch($idCas)
+        {
+            case 'id_valide':
+                $id = $enseignant->id;
+            break;
+
+            case 'id_numerique':
+                $id = "$enseignant->id";
+            break;
+
+            case 'id_invalide':
+                $id = -1;
+            break;
+        }
+        $response = $this->from(route('enseignants.index'))
+        ->delete(route('enseignants.destroy', $id));
+
+        if($succes) // L'enseignant est supprime
+        {
+            $response->assertOk();
+            $this->assertNull(Enseignant::find($id));
+        }
+        else // L'enseignent existe toujours
+        {
+            $response->assertStatus(404);
+            $this->assertNotNull(Enseignant::find($enseignant->id));
+        }
+    }
+
+    public function showEditDestroyProvider()
+    {
+        return [
+            'Id valide'    => ['id_valide', TRUE],
+            'Id numerique' => ['id_numerique', TRUE],
+            'Id invalide'  => ['id_invalide', FALSE]
+        ];
     }
 }
