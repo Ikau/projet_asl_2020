@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\CRUD;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Validation\Rule;
 
 use App\Abstracts\AbstractControllerCRUD;
 use App\Modeles\Enseignant;
@@ -19,6 +20,12 @@ class EnseignantController extends AbstractControllerCRUD
     const TITRE_CREATE = 'Creer un enseignant';
     const TITRE_SHOW   = 'Details du enseignant';
     const TITRE_EDIT   = 'Editer un enseignant';
+
+
+    /* ====================================================================
+     *                             RESOURCES
+     * ====================================================================
+     */
 
     public function index()
     {
@@ -41,7 +48,7 @@ class EnseignantController extends AbstractControllerCRUD
 
     public function store(Request $request)
     {
-        //
+        $this->validerForm($request);
     }
 
     public function show($id)
@@ -66,15 +73,46 @@ class EnseignantController extends AbstractControllerCRUD
 
     public function tests(Request $request)
     {
-        return;
+        switch($request->test)
+        {
+            case 'normaliseInputsOptionnels':
+                $this->normaliseInputsOptionnels($request);
+                if(null === $request->stages) abort('404');
+                if(null === $request->soutenances_referent) abort('404');
+                if(null === $request->soutenances_candide ) abort('404');
+            return redirect('/');
+
+            case 'validerForm':
+                $this->validerForm($request);
+            return redirect('/');
+
+            default:
+                abort('404');
+            break;
+        }
     }
+
+    /* ====================================================================
+     *                             AUXILIAIRES
+     * ====================================================================
+     */
 
     /**
      * Fonction qui remplace les valeurs optionnels null par des valeurs par defaut
      */
     protected function normaliseInputsOptionnels(Request $request)
     {
-        return;
+        if(null === $request->stages
+        || ! $request->stages instanceof Collection)
+            $request->stages = new Collection();
+
+        if(null === $request->soutenances_referent
+        || ! $request->soutenances_referent instanceof Collection)
+            $request->soutenances_referent = new Collection();
+
+        if(null === $request->soutenances_candide
+        || ! $request->soutenances_candide instanceof Collection)
+            $request->soutenances_candide = new Collection();
     }
 
     /**
@@ -82,7 +120,27 @@ class EnseignantController extends AbstractControllerCRUD
      */
     protected function validerForm(Request $request)
     {
-        return;
+        $validation = $request->validate([
+            'nom'    => ['required', 'string'],
+            'prenom' => ['required', 'string'],
+            'email'  => ['required', 'email'],
+            'responsable_option' => [
+                'required', 
+                'integer',
+                Rule::in(array_merge(
+                    Constantes::OPTION['vide'],
+                    Constantes::OPTION['MRI'],
+                    Constantes::OPTION['STI'],
+                ))
+            ],
+            'responsable_departement' => [
+                'required', 
+                'integer',
+                Rule::in(Constantes::DEPARTEMENT),
+            ], 
+        ]);
+        
+        $this->normaliseInputsOptionnels($request);
     }
 
     /**
