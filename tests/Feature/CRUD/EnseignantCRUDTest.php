@@ -138,9 +138,50 @@ class EnseignantControllerTest extends TestCase
         ];
     }
 
-    public function testValiderModele()
+    /**
+     * @dataProvider validerModeleProvider
+     */
+    public function testValiderModele(string $casId, int $statutAttendu)
     {
-        $this->assertTrue(TRUE);
+        $id;
+        switch($casId)
+        {
+            case 'id_valide':
+                $enseignant = factory(Enseignant::class)->create();
+                $id         = $enseignant->id;
+            break;
+
+            case 'id_numerique':
+                $enseignant = factory(Enseignant::class)->create();
+                $id         = "$enseignant->id";
+            break;
+
+            case 'id_invalide':
+                $id = -1;
+            break;
+
+            case 'id_null':
+                $id = null;
+            break;
+        }
+
+        $response = $this->from(route('enseignants.tests'))
+        ->post(route('enseignants.tests',[
+            'id'   => $id,
+            'test' => 'validerModele',
+        ]))
+        ->assertStatus($statutAttendu);
+    }
+
+    public function validerModeleProvider()
+    {
+
+        return [
+            'Id valide'    => ['id_valide', 302],
+            'Id numerique' => ['id_numerique', 302],
+            'Id invalide'  => ['id_invalide', 404],
+            'Id null'      => ['id_null', 404],
+        ];
     }
 
     /* ====================================================================

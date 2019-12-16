@@ -92,6 +92,11 @@ class EnseignantController extends AbstractControllerCRUD
                 $this->validerForm($request);
             return redirect('/');
 
+            case 'validerModele':
+                $enseignant = $this->validerModele($request->id);
+                if(null === $enseignant) abort('404');
+            return redirect('/');
+
             default:
                 abort('404');
             break;
@@ -154,7 +159,13 @@ class EnseignantController extends AbstractControllerCRUD
      */
     protected function validerModele($id)
     {
-        return;
+        if(null === $id
+        || ! is_numeric($id))
+        {
+            return null;
+        }
+
+        return Enseignant::find($id);
     }
 
 }
