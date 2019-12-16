@@ -9,6 +9,12 @@ use App\Utils\Constantes;
 
 class Etudiant extends AbstractEtudiant
 {
+    /*
+     * Nom des colonnes des clefs etrangeres
+     */
+    const COL_DEPARTEMENT_ID = 'departement_id';
+    const COL_OPTION_ID      = 'option_id';
+
     /**
      * @var string Nom de la table associe au modele 'Etudiant'
      */
@@ -30,7 +36,7 @@ class Etudiant extends AbstractEtudiant
      * #WIP
      * @var array[string] Liste des attributs a assigner manuellement
      */
-    protected $guarded = ['matricule', 'inscription', 'mobilite'];
+    protected $guarded = ['id'];
 
     /**
      * Valeurs par defaut des colonnes du modele 'Etudiant'
@@ -46,13 +52,29 @@ class Etudiant extends AbstractEtudiant
         'inscription' => Constantes::DATE_VIDE,
         'nationalite' => Constantes::NATIONALITE['vide'],
         'formation'   => Constantes::FORMATION['vide'],
-        'option'      => Constantes::OPTION['vide'],
         'master'      => Constantes::MASTER['vide'],
         'diplome'     => Constantes::DIPLOME['vide'],
         'annee'       => Constantes::INT_VIDE,
         'mobilite'    => FALSE
     ];
 
+    /**
+     * Renvoie le departement auquel appartient l'etudiant
+     * @var App\Modeles\Departement
+     */
+    public function departement()
+    {
+        return $this->belongsTo('App\Modeles\Departement', Etudiant::COL_DEPARTEMENT_ID);
+    }
+
+    /**
+     * Renvoie l'option auquel appartient l'etudiant
+     * @var App\Modeles\Option
+     */
+    public function option()
+    {
+        return $this->belongsTo('App\Modeles\Option', Etudiant::COL_OPTION_ID);
+    }
 
     /**
      * Renvoie la soutenance que l'etudiant doit passer

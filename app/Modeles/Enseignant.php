@@ -9,6 +9,12 @@ use App\Utils\Constantes;
 
 class Enseignant extends AbstractEnseignant
 {
+    /*
+     * Nom des colonnes des clefs etrangeres
+     */
+    const COL_RESPONSABLE_DEPARTEMENT_ID = 'departement_id';
+    const COL_RESPONSABLE_OPTION_ID      = 'option_id';
+
     /**
      * @var string Nom de la table associe au modele 'Enseignant'
      */
@@ -31,9 +37,11 @@ class Enseignant extends AbstractEnseignant
      */
     protected $guarded = [
         'id', 
-        'stages', 
+        'responsable_departement',
+        'responsable_option',
         'soutenances_referent',
-        'soutenances_candide'
+        'soutenances_candide',
+        'stages'
     ];
 
     /**
@@ -45,9 +53,25 @@ class Enseignant extends AbstractEnseignant
         'nom'                     => Constantes::STRING_VIDE,
         'prenom'                  => Constantes::STRING_VIDE,
         'email'                   => Constantes::STRING_VIDE,
-        'responsable_option'      => Constantes::OPTION['vide'],
-        'responsable_departement' => Constantes::DEPARTEMENT['vide']
     ];
+
+    /**
+     * Renvoie l'option dont l'enseignant est responsable
+     * @var array[App\Modeles\Option]
+     */
+    public function responsable_option()
+    {
+        return $this->belongsTo('App\Modeles\Option', Enseignant::COL_RESPONSABLE_OPTION_ID);
+    }
+
+    /**
+     * Renvoie le departement dont l'enseignant est responsable
+     * @var array[App\Modeles\Departement]
+     */
+    public function responsable_repartement()
+    {
+        return $this->belongsTo('App\Modeles\Departement', Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID);
+    }
 
     /**
      * Renvoie la liste des soutenances dont l'enseignant est candide.
