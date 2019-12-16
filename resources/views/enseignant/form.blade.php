@@ -7,10 +7,10 @@
 
 @section('contenu')
 <div>
-    @if ( ! isset($enseignant) )
-    Formulaire de creation d'un enseignant
-    @else
+    @if ( isset($enseignant) )
     Formulaire d'édition d'un enseignant
+    @else
+    Formulaire de creation d'un enseignant
     @endif
 </div>
 <div>
@@ -20,11 +20,11 @@
     (*) : Champs obligatoires
 </div>
 
-@if ( ! isset($enseignant) )
-<form method="POST" action="{{ route('enseignants.store') }}">
-@else
+@if ( isset($enseignant) )
 <form method="POST" action="{{ route('enseignants.update', [$id ?? -1]) }}">
 @method('PATCH')
+@else
+<form method="POST" action="{{ route('enseignants.store') }}">
 @endif
     @csrf
 
@@ -75,10 +75,10 @@
     @enderror
     <br/>
 
-    @if ( ! isset($enseignant))
-    <button type="submit"> Créer le enseignant</button>
-    @else
+    @if ( isset($enseignant))
     <button type="submit"> Modifier le enseignant</button>
+    @else
+    <button type="submit"> Créer le enseignant</button>
     @endif
 </form>
 

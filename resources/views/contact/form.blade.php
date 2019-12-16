@@ -7,10 +7,10 @@
 
 @section('contenu')
 <div>
-    @if ( ! isset($contact))
-    Formulaire de creation d'un contact
-    @else
+    @if ( isset($contact))
     Formulaire d'édition d'un contact
+    @else
+    Formulaire de creation d'un contact
     @endif
 </div>
 <div>
@@ -20,11 +20,11 @@
     (*) : Champs obligatoires
 </div>
 
-@if ( ! isset($contact) )
-<form method="POST" action="{{ route('contacts.store') }}">
-@else
+@if ( isset($contact) )
 <form method="POST" action="{{ route('contacts.update', [$id ?? -1]) }}">
 @method('PATCH')
+@else
+<form method="POST" action="{{ route('contacts.store') }}">
 @endif
     @csrf
 
@@ -85,10 +85,10 @@
     @enderror
     <br/>
 
-    @if ( ! isset($contact))
-    <button type="submit"> Créer le contact</button>
-    @else
+    @if ( isset($contact))
     <button type="submit"> Modifier le contact</button>
+    @else
+    <button type="submit"> Créer le contact</button>
     @endif
 </form>
 
