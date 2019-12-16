@@ -64,7 +64,10 @@ class EnseignantControllerTest extends TestCase
 
     public function testCreate()
     {
-        $this->assertTrue(TRUE);
+        $response = $this->get(route('enseignants.create'))
+        ->assertOK()
+        ->assertViewIs('enseignant.form')
+        ->assertSee(EnseignantController::TITRE_CREATE);
     }
     
     /**

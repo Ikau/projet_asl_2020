@@ -25,14 +25,18 @@ class EnseignantController extends AbstractControllerCRUD
         $enseignants = Enseignant::all();
 
         return view('enseignant.index', [
-            'titre'      => EnseignantController::TITRE_INDEX,
+            'titre'       => EnseignantController::TITRE_INDEX,
             'enseignants' => $enseignants,
         ]);
     }
 
     public function create()
     {
-        //
+        return view('enseignant.form', [
+            'titre'        => EnseignantController::TITRE_CREATE,
+            'options'      => Constantes::OPTION,
+            'departements' => Constantes::DEPARTEMENT,
+        ]);
     }
 
     public function store(Request $request)
