@@ -151,16 +151,16 @@ class ContactController extends AbstractControllerCRUD
             'prenom'    => ['required', 'string'],
             'type'      => ['required',
                 'numeric', 
-                'min:' . Constantes::TYPE_CONTACT['min'], 
-                'max:' . Constantes::TYPE_CONTACT['max']
+                'min:' . Constantes::MIN['type_contact'], 
+                'max:' . Constantes::MAX['type_contact']
             ],
             'email'      => ['required', 'email'],
 
             'civilite'  => [
                 'nullable',
                 'numeric',
-                'min:' . Constantes::CIVILITE['min'],
-                'max:' . Constantes::CIVILITE['max']
+                'min:' . Constantes::MIN['civilite'],
+                'max:' . Constantes::MAX['civilite']
             ],
             'telephone' => ['nullable', 'string'],
             'adresse'   => ['nullable', 'string'],

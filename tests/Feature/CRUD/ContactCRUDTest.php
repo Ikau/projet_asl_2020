@@ -104,15 +104,15 @@ class ContactControllerTest extends TestCase
         $civiliteInvalideSup             = $arrayValide;
         $civiliteInvalideInf             = $arrayValide;
         $civiliteNull['civilite']        = null;
-        $civiliteInvalideSup['civilite'] = Constantes::CIVILITE['max'] + 1;
-        $civiliteInvalideInf['civilite'] = Constantes::CIVILITE['min'] - 1;
+        $civiliteInvalideInf['civilite'] = Constantes::MIN['civilite'] - 1;
+        $civiliteInvalideSup['civilite'] = Constantes::MAX['civilite'] + 1;
 
-        $typeNull                  = $arrayValide;
-        $typeInvalideSup           = $arrayValide;
-        $typeInvalideInf           = $arrayValide;
-        $typeNull['type']          = null;
-        $typeInvalideSup['type'] = Constantes::TYPE_CONTACT['max'] + 1;
-        $typeInvalideInf['type'] = Constantes::TYPE_CONTACT['min'] - 1;
+        $typeNull                = $arrayValide;
+        $typeInvalideSup         = $arrayValide;
+        $typeInvalideInf         = $arrayValide;
+        $typeNull['type']        = null;
+        $typeInvalideInf['type'] = Constantes::MIN['type_contact'] - 1;
+        $typeInvalideSup['type'] = Constantes::MAX['type_contact'] + 1;
 
         $mailNull             = $arrayValide;
         $mailInvalide         = $arrayValide;

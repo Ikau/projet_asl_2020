@@ -23,15 +23,28 @@ class Constantes
     const HEURE_VIDE  = '00:00:00';
 
     /**
+     * @var array[string]int Contient les index minimaux des constantes
+     */
+    const MIN = [
+        'civilite'     => 0,
+        'type_contact' => 0,
+    ];
+
+    /**
+     * @var array[string]int Contient les index minimaux des constantes
+     */
+    const MAX = [
+        'civilite'     => 2,
+        'type_contact' => 3,
+    ];
+
+    /**
      * @var array[string]string Indique la civilite du contact
      */
     const CIVILITE = [
         'vide'     => 0,
         'Madame'   => 1,
         'Monsieur' => 2,
-
-        'min' => 0,
-        'max' => 2
     ];
 
     const DEPARTEMENT = [
@@ -79,16 +92,18 @@ class Constantes
      * @var array[string]string Option suivie par l'etudiant
      */
     const OPTION = [
-        'vide' => '',
+        'vide' => [
+            'aucun' => -1,
+        ],
         'MRI'  => [
-            'opt1' => 'opt1',
-            'opt2' => 'opt2'
+            'opt1' => 100,
+            'opt2' => 101,
         ],
         'STI'  => [
-            '2SU' => '2SU',
-            '4AS' => '4AS',
-            'ASL' => 'ASL'
-        ]
+            '2SU' => 200,
+            '4AS' => 201,
+            'ASL' => 202
+        ],
     ];
 
     /**
@@ -99,8 +114,5 @@ class Constantes
         'administration_insa' => 1,
         'entreprise'          => 2,
         'maitre_de_stage'     => 3,
-
-        'min' => 0,
-        'max' => 3
     ];
 }
