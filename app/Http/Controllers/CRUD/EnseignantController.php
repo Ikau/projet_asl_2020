@@ -49,6 +49,12 @@ class EnseignantController extends AbstractControllerCRUD
     public function store(Request $request)
     {
         $this->validerForm($request);
+
+        $enseignant = new Enseignant();
+        $enseignant->fill($request->all());
+        $enseignant->save();
+
+        return redirect()->route('enseignants.index');
     }
 
     public function show($id)

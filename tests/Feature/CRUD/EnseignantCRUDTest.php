@@ -24,10 +24,7 @@ class EnseignantControllerTest extends TestCase
         'prenom',
         'email',
         'responsable_option',
-        'responsable_departement',
-        'soutenances_candide',
-        'soutenances_referent',
-        'stages'
+        'responsable_departement'
     ];
 
     /* ====================================================================
@@ -172,7 +169,27 @@ class EnseignantControllerTest extends TestCase
      */
     public function testStore()
     {
-        $this->assertTrue(TRUE);
+        $enseignant = factory(Enseignant::class)->make();
+
+        $response = $this->from(route('enseignants.create'))
+        ->post(route('enseignants.store'), $enseignant->toArray())
+        ->assertRedirect(route('enseignants.index'));
+
+        // Arguments pour la clause 'where'
+        $arrayWhere = [];
+        foreach($this->attributs as $attribut)
+        {
+            $arrayWhere[] = [$attribut, '=', $enseignant[$attribut]];
+        }
+        
+        // Recuperation de l'enseignant
+        $enseignantTest = Enseignant::where($arrayWhere)->first();
+        $this->assertNotNull($enseignantTest);
+
+        foreach($this->attributs as $attribut)
+        {
+            $this->assertEquals($enseignant[$attribut], $enseignantTest[$attribut]);
+        }
     }
 
     /**
