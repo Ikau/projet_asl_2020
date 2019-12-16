@@ -32,7 +32,6 @@ $factory->define(\App\Modeles\Enseignant::class, function (Faker $faker)
             Constantes::OPTION['MRI'],
             Constantes::OPTION['STI'],
         )),
-        'responsable_departement' => $faker->randomElement(Constantes::DEPARTEMENT),
-        'stages'                  => new Collection(),
+        'responsable_departement' => $faker->randomElement(Constantes::DEPARTEMENT)
     ];
 });
