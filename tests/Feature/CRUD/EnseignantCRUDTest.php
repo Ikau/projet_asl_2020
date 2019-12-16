@@ -235,10 +235,46 @@ class EnseignantControllerTest extends TestCase
 
     /**
      * @depends testValiderModele
+     * @dataProvider showProvider
      */
-    public function testShow()
+    public function testShow(string $idCas, bool $succes)
     {
-        $this->assertTrue(TRUE);
+        $id;
+        switch($idCas)
+        {
+            case 'id_valide':
+                $id = factory(Enseignant::class)->create()->id;
+            break;
+
+            case 'id_numerique':
+                $enseignant = factory(Enseignant::class)->create();
+                $id = "$enseignant->id";
+            break;
+
+            case 'id_invalide':
+                $id = -1;
+            break;
+        }
+        $response = $this->get(route('enseignants.show', $id));
+        if($succes)
+        {
+            $response->assertOk()
+            ->assertViewIs('enseignant.show')
+            ->assertSee(EnseignantController::TITRE_SHOW);
+        }
+        else
+        {
+            $response->assertStatus(404);
+        }
+    }
+
+    public function showProvider()
+    {
+        return [
+            'Id valide'    => ['id_valide', TRUE],
+            'Id numerique' => ['id_numerique', TRUE],
+            'Id invalide'  => ['id_invalide', FALSE]
+        ];
     }
 
     /**

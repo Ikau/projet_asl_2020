@@ -59,7 +59,16 @@ class EnseignantController extends AbstractControllerCRUD
 
     public function show($id)
     {
-        //
+        $enseignant = $this->validerModele($id);
+        if(null === $enseignant)
+        {
+            abort('404');
+        }
+
+        return view('enseignant.show', [
+            'titre'      => EnseignantController::TITRE_SHOW,
+            'enseignant' => $enseignant
+        ]);
     }
 
     public function edit($id)
