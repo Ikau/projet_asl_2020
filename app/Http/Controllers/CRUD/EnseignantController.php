@@ -11,92 +11,79 @@ use App\Utils\Constantes;
 
 class EnseignantController extends AbstractControllerCRUD
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Valeur attendue du tag <title> pour les pages
      */
+    const TITRE_INDEX  = 'Gestion des enseignants';
+    const TITRE_CREATE = 'Creer un enseignant';
+    const TITRE_SHOW   = 'Details du enseignant';
+    const TITRE_EDIT   = 'Editer un enseignant';
+
+    public function index()
+    {
+        $enseignants = Enseignant::all();
+
+        return view('enseignant.index', [
+            'titre'      => EnseignantController::TITRE_INDEX,
+            'enseignants' => $enseignants,
+        ]);
+    }
+
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //
     }
 
+    public function tests(Request $request)
+    {
+        return;
+    }
+
+    /**
+     * Fonction qui remplace les valeurs optionnels null par des valeurs par defaut
+     */
     protected function normaliseInputsOptionnels(Request $request)
     {
         return;
     }
 
+    /**
+     * Fonction qui se charge de valider tous les inputs issus d'un POST, PATCH, PUT
+     */
     protected function validerForm(Request $request)
     {
         return;
     }
 
+    /**
+     * Fonction qui valide la validite de l'id donnee et renvoie un enseignant le cas echeant
+     */
     protected function validerModele($id)
     {
         return;
