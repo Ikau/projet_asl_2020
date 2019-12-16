@@ -73,7 +73,18 @@ class EnseignantController extends AbstractControllerCRUD
 
     public function edit($id)
     {
-        //
+        $enseignant = $this->validerModele($id);
+        if(null === $enseignant)
+        {
+            abort('404');
+        }
+
+        return view('enseignant.form', [
+            'titre'        => EnseignantController::TITRE_EDIT,
+            'enseignant'   => $enseignant,
+            'options'      => Constantes::OPTION,
+            'departements' => Constantes::DEPARTEMENT
+        ]);
     }
 
     public function update(Request $request, $id)

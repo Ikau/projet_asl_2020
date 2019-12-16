@@ -235,7 +235,7 @@ class EnseignantControllerTest extends TestCase
 
     /**
      * @depends testValiderModele
-     * @dataProvider showProvider
+     * @dataProvider showEditProvider
      */
     public function testShow(string $idCas, bool $succes)
     {
@@ -268,22 +268,54 @@ class EnseignantControllerTest extends TestCase
         }
     }
 
-    public function showProvider()
+    /**
+     * @depends testValiderForm
+     * @depends testValiderModele
+     * @dataProvider showEditProvider
+     */
+    public function testEdit(string $idCas, bool $succes)
+    {
+        $enseignant = factory(Enseignant::class)->create();
+        $id;
+        switch($idCas)
+        {
+            case 'id_valide':
+                $id = $enseignant->id;
+            break;
+
+            case 'id_numerique':
+                $id = "$enseignant->id";
+            break;
+
+            case 'id_invalide':
+                $id = -1;
+            break;
+        }
+        $response = $this->get(route('enseignants.edit', $id));
+        if($succes)
+        {
+            $response->assertOk()
+            ->assertViewIs('enseignant.form')
+            ->assertSee(EnseignantController::TITRE_EDIT);
+
+            foreach($this->attributs as $attribut)
+            {
+                $response->assertSee($enseignant[$attribut]);
+            }
+        }
+        else
+        {
+            $response->assertStatus(404);
+        }
+    }
+
+    public function showEditProvider()
     {
         return [
             'Id valide'    => ['id_valide', TRUE],
             'Id numerique' => ['id_numerique', TRUE],
             'Id invalide'  => ['id_invalide', FALSE]
         ];
-    }
-
-    /**
-     * @depends testValiderForm
-     * @depends testValiderModele
-     */
-    public function testEdit()
-    {
-        $this->assertTrue(TRUE);
     }
 
     /**
