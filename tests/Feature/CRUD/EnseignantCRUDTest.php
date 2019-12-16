@@ -321,10 +321,36 @@ class EnseignantControllerTest extends TestCase
     /**
      * @depends testValiderForm
      * @depends testValiderModele
+     * @dataProvider updateProvider
      */
-    public function testUpdate()
+    public function testUpdate($clefModifiee, $nouvelleValeur)
     {
-        $this->assertTrue(TRUE);
+        $enseignantSource = factory(Enseignant::class)->create();
+        $enseignantSource[$clefModifiee] = $nouvelleValeur;
+        
+        // Mise a jour et redirection OK
+        $response = $this->from(route('enseignants.edit', $enseignantSource->id))
+        ->patch(route('enseignants.update', $enseignantSource->id), $enseignantSource->toArray())
+        ->assertRedirect(route('enseignants.index'));
+
+        // Verification de la MAJ
+        $enseignantMaj = Enseignant::find($enseignantSource->id);
+        $this->assertEquals($enseignantSource->id, $enseignantMaj->id);
+        foreach($this->attributs as $attribut)
+        {
+            $this->assertEquals($enseignantSource[$attribut], $enseignantMaj[$attribut]);
+        }
+    }
+
+    public function updateProvider()
+    {
+        return [
+            'Nom valide'         => ['nom', 'nouveau'],
+            'Prenom valide'      => ['prenom', 'nouveau'],
+            'Mail valide'        => ['email', 'nouveau@example.com'],
+            'Option valide'      => ['responsable_option', Constantes::OPTION['vide']['aucun']],
+            'Departement valide' => ['responsable_departement', Constantes::DEPARTEMENT['vide']],
+        ];
     }
 
     /**

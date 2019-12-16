@@ -89,7 +89,17 @@ class EnseignantController extends AbstractControllerCRUD
 
     public function update(Request $request, $id)
     {
-        //
+        $this->validerForm($request);
+        $enseignant = $this->validerModele($id);
+        if(null === $enseignant)
+        {
+            abort('404');
+        }
+
+        $enseignant->update($request->all());
+        $enseignant->save();
+
+        return redirect()->route('enseignants.index');
     }
 
     public function destroy($id)
