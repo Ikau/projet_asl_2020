@@ -31,8 +31,8 @@ class CreerTableEtudiants extends Migration
             $table->unsignedSmallInteger('annee');
             $table->boolean('mobilite');
 
-            $table->unsignedBigInteger('departement');
-            $table->unsignedBigInteger('option');
+            $table->unsignedBigInteger(Etudiant::COL_DEPARTEMENT_ID);
+            $table->unsignedBigInteger(Etudiant::COL_OPTION_ID);
 
             $table->foreign(Etudiant::COL_DEPARTEMENT_ID)->references('id')->on(Departement::NOM_TABLE);
             $table->foreign(Etudiant::COL_OPTION_ID)->references('id')->on(Option::NOM_TABLE);

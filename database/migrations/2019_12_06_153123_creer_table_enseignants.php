@@ -24,8 +24,8 @@ class CreerTableEnseignants extends Migration
             $table->string('prenom');
             $table->string('email');
 
-            $table->unsignedBigInteger('responsable_option');
-            $table->unsignedBigInteger('responsable_departement');
+            $table->unsignedBigInteger(Enseignant::COL_RESPONSABLE_OPTION_ID);
+            $table->unsignedBigInteger(Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID);
 
             $table->foreign(Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID)->references('id')->on(Departement::NOM_TABLE);
             $table->foreign(Enseignant::COL_RESPONSABLE_OPTION_ID)->references('id')->on(Option::NOM_TABLE);
