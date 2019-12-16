@@ -65,6 +65,16 @@ abstract class AbstractControllerCRUD extends Controller
     abstract public function destroy($id);
 
     /**
+     * Callback pour tous les tests (notammant PHPUnit) necessaire du controller
+     * 
+     * Ce n'est pas elegant mais je n'ai pas trouve de meilleures facons
+     *
+     * @param  mixed $request
+     * @return void
+     */
+    abstract public function tests(Request $request);
+
+    /**
      * Normalise les inputs utilisateur qui sont null
      *
      * @param  \Illuminate\Http\Request $request
@@ -86,5 +96,5 @@ abstract class AbstractControllerCRUD extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    abstract protected function validerContact($id);
+    abstract protected function validerModele($id);
 }

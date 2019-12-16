@@ -55,7 +55,7 @@ class ContactController extends AbstractControllerCRUD
 
     public function show($id) 
     {
-        $contact = $this->validerContact($id);
+        $contact = $this->validerModele($id);
         if(null === $contact) abort('404');
 
         return view('contact.show', [
@@ -81,7 +81,7 @@ class ContactController extends AbstractControllerCRUD
     public function update(Request $request, $id) 
     {
         $this->validerForm($request);
-        $contact = $this->validerContact($id);
+        $contact = $this->validerModele($id);
         if(null === $contact) abort ('404');
 
         $contact->update($request->all());
@@ -92,17 +92,13 @@ class ContactController extends AbstractControllerCRUD
 
     public function destroy($id) 
     {
-        $contact = $this->validerContact($id);
+        $contact = $this->validerModele($id);
         if(null === $contact) abort('404');
 
         $contact->delete();
         return redirect()->route('contacts.index');
     }
 
-    /**
-     * Callback pour tous les tests necessaires du controller
-     * Ce n'est pas elegant mais je n'ai pas trouve de meilleurs facons
-     */
     public function tests(Request $request)
     {
         switch($request->test)
@@ -118,8 +114,8 @@ class ContactController extends AbstractControllerCRUD
                 $this->validerForm($request);
             return redirect('/');
 
-            case 'validerContact':
-                $contact = $this->validerContact($request->id);
+            case 'validerModele':
+                $contact = $this->validerModele($request->id);
                 if( is_null($contact) ) abort('404');
             return redirect('/');
 
@@ -154,17 +150,17 @@ class ContactController extends AbstractControllerCRUD
             'nom'       => ['required', 'string'],
             'prenom'    => ['required', 'string'],
             'type'      => ['required',
-                'numeric', 
-                'min:' . Constantes::TYPE_CONTACT['min'], 
-                'max:' . Constantes::TYPE_CONTACT['max']
+                'integer', 
+                'min:' . Constantes::MIN['type_contact'], 
+                'max:' . Constantes::MAX['type_contact']
             ],
-            'mail'      => ['required', 'email'],
+            'email'      => ['required', 'email'],
 
             'civilite'  => [
                 'nullable',
-                'numeric',
-                'min:' . Constantes::CIVILITE['min'],
-                'max:' . Constantes::CIVILITE['max']
+                'integer',
+                'min:' . Constantes::MIN['civilite'],
+                'max:' . Constantes::MAX['civilite']
             ],
             'telephone' => ['nullable', 'string'],
             'adresse'   => ['nullable', 'string'],
@@ -177,7 +173,7 @@ class ContactController extends AbstractControllerCRUD
     /**
      * Fonction qui valide la validite de l'id donnee et renvoie un contact le cas echeant
      */
-    protected function validerContact($id)
+    protected function validerModele($id)
     {
         if(null === $id
         || ! is_numeric($id))

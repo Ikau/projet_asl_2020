@@ -54,7 +54,7 @@ class Soutenance extends AbstractSoutenance
         'date'                  => Constantes::DATE_VIDE,
         'departement_ou_option' => Constantes::STRING_VIDE,
         'nom_entreprise'        => Constantes::STRING_VIDE,
-        'annee_etudiant'        => Constante::INT_VIDE,
+        'annee_etudiant'        => Constantes::INT_VIDE,
         'campus'                => Constantes::STRING_VIDE,
         'confidentielle'        => FALSE,
 

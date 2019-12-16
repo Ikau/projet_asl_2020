@@ -1,40 +1,61 @@
 @extends('layouts.app')
 
-@section('title', $titre)
+@section('titre', $titre)
 
 @section('sidebar')
 @endsection
 
-@section('content')
+@section('contenu')
 <div>
-    @if ( ! isset($contact))
-    Formulaire de creation d'un contact
-    @else
+    @if ( isset($contact))
     Formulaire d'édition d'un contact
+    @else
+    Formulaire de creation d'un contact
     @endif
 </div>
 <div>
     <a href="{{ route('contacts.index') }}">Retour</a>
 </div>
+<div>
+    (*) : Champs obligatoires
+</div>
 
-@if ( ! isset($contact) )
-<form method="POST" action="{{ route('contacts.store') }}">
-@else
+@if ( isset($contact) )
 <form method="POST" action="{{ route('contacts.update', [$id ?? -1]) }}">
 @method('PATCH')
+@else
+<form method="POST" action="{{ route('contacts.store') }}">
 @endif
     @csrf
 
-    <label for="nom">Nom</label>
+    <label for="nom">Nom (*)</label>
     <input id="nom" name="nom" type="text" value="{{ $contact->nom ?? old('nom') }}">
     @error('nom')
     <div class="alert alert-danger">{{ $message }}</div>
     @enderror
     <br/>
 
-    <label for="prenom">Prenom</label>
+    <label for="prenom">Prenom (*)</label>
     <input id="prenom" name="prenom" type="text" value="{{ $contact->prenom ?? old('prenom') }}" >
     @error('prenom')
+    <div class="alert alert-danger">{{ $message }}</div>
+    @enderror
+    <br/>
+
+    <label for="type">Type (*)</label>
+    <select name="type" id="type" value="{{ $contact->type ?? old('type') }}" >
+        @foreach($type as $key => $value)
+        <option value="{{ $value }}">{{ $key }}</option>
+        @endforeach
+    </select>
+    @error('type')
+    <div class="alert alert-danger">{{ $message }}</div>
+    @enderror
+    <br/>
+
+    <label for="email">Mail (*)</label>
+    <input id="email" name="email" type="text" value="{{ $contact->email ?? old('email') }}" >
+    @error('email')
     <div class="alert alert-danger">{{ $message }}</div>
     @enderror
     <br/>
@@ -46,24 +67,6 @@
         @endforeach
     </select>
     @error('civilite')
-    <div class="alert alert-danger">{{ $message }}</div>
-    @enderror
-    <br/>
-
-    <label for="type">Type</label>
-    <select name="type" id="type" value="{{ $contact->type ?? old('type') }}" >
-        @foreach($type as $key => $value)
-        <option value="{{ $value }}">{{ $key }}</option>
-        @endforeach
-    </select>
-    @error('type')
-    <div class="alert alert-danger">{{ $message }}</div>
-    @enderror
-    <br/>
-
-    <label for="mail">Mail</label>
-    <input id="mail" name="mail" type="text" value="{{ $contact->mail ?? old('mail') }}" >
-    @error('mail')
     <div class="alert alert-danger">{{ $message }}</div>
     @enderror
     <br/>
@@ -82,10 +85,10 @@
     @enderror
     <br/>
 
-    @if ( ! isset($contact))
-    <button type="submit"> Créer le contact</button>
-    @else
+    @if ( isset($contact))
     <button type="submit"> Modifier le contact</button>
+    @else
+    <button type="submit"> Créer le contact</button>
     @endif
 </form>
 

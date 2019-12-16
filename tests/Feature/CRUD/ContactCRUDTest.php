@@ -23,10 +23,15 @@ class ContactControllerTest extends TestCase
         'prenom',
         'civilite',
         'type',
-        'mail',
+        'email',
         'telephone',
         'adresse'
     ];
+
+    /* ====================================================================
+     *                           TESTS AUXILIAIRES
+     * ====================================================================
+     */
 
     /**
      * Test de la fonction 'normaliseInputsOptionnels'
@@ -99,20 +104,20 @@ class ContactControllerTest extends TestCase
         $civiliteInvalideSup             = $arrayValide;
         $civiliteInvalideInf             = $arrayValide;
         $civiliteNull['civilite']        = null;
-        $civiliteInvalideSup['civilite'] = Constantes::CIVILITE['max'] + 1;
-        $civiliteInvalideInf['civilite'] = Constantes::CIVILITE['min'] - 1;
+        $civiliteInvalideInf['civilite'] = Constantes::MIN['civilite'] - 1;
+        $civiliteInvalideSup['civilite'] = Constantes::MAX['civilite'] + 1;
 
-        $typeNull                  = $arrayValide;
-        $typeInvalideSup           = $arrayValide;
-        $typeInvalideInf           = $arrayValide;
-        $typeNull['type']          = null;
-        $typeInvalideSup['type'] = Constantes::TYPE_CONTACT['max'] + 1;
-        $typeInvalideInf['type'] = Constantes::TYPE_CONTACT['min'] - 1;
+        $typeNull                = $arrayValide;
+        $typeInvalideSup         = $arrayValide;
+        $typeInvalideInf         = $arrayValide;
+        $typeNull['type']        = null;
+        $typeInvalideInf['type'] = Constantes::MIN['type_contact'] - 1;
+        $typeInvalideSup['type'] = Constantes::MAX['type_contact'] + 1;
 
         $mailNull             = $arrayValide;
         $mailInvalide         = $arrayValide;
-        $mailNull['mail']     = null;
-        $mailInvalide['mail'] = Constantes::STRING_VIDE;
+        $mailNull['email']     = null;
+        $mailInvalide['email'] = Constantes::STRING_VIDE;
 
         $telephoneNull                = $arrayValide;
         $telephoneNull['telephone']   = null;
@@ -127,7 +132,7 @@ class ContactControllerTest extends TestCase
             'Nom null'       => [route('contacts.tests'), TRUE, 'nom', $nomNull],
             'Prenom null'    => [route('contacts.tests'), TRUE, 'prenom', $prenomNull],
             'Type null'      => [route('contacts.tests'), TRUE, 'type', $typeNull],
-            'Mail null'      => [route('contacts.tests'), TRUE, 'mail', $mailNull],
+            'Mail null'      => [route('contacts.tests'), TRUE, 'email', $mailNull],
             'Civilite null'  => ['/', FALSE, null, $civiliteNull],
             'Telephone null' => ['/', FALSE, null, $telephoneNull],
             'Adresse null'   => ['/', FALSE, null, $adresseNull],
@@ -136,18 +141,18 @@ class ContactControllerTest extends TestCase
             'Prenom invalide'        => [route('contacts.tests'), TRUE, 'prenom',  $prenomInvalide],
             'Type invalide sup'      => [route('contacts.tests'), TRUE, 'type',  $typeInvalideSup],
             'Type invalide inf'      => [route('contacts.tests'), TRUE, 'type', $typeInvalideInf],
-            'Mail invalide'          => [route('contacts.tests'), TRUE, 'mail',  $mailInvalide],
+            'Mail invalide'          => [route('contacts.tests'), TRUE, 'email',  $mailInvalide],
             'Civilite invalide sup'  => [route('contacts.tests'), TRUE, 'civilite', $civiliteInvalideSup],
             'Civilite invalide inf'  => [route('contacts.tests'), TRUE, 'civilite', $civiliteInvalideInf]
         ];
     }
 
     /**
-     * Test de la methode 'validerContact'
+     * Test de la methode 'validerModele'
      * 
-     * @dataProvider validerContactProvider
+     * @dataProvider validerModeleProvider
      */
-    public function testValiderContact($idCas, $statutAttendu)
+    public function testValiderModele($idCas, $statutAttendu)
     {
         $id;
         switch($idCas)
@@ -175,12 +180,12 @@ class ContactControllerTest extends TestCase
         }
 
         $response = $this->post(route('contacts.tests'), [
-            'test' => 'validerContact',
+            'test' => 'validerModele',
             'id'   => $id,
         ])->assertStatus($statutAttendu);
     }
 
-    public function validerContactProvider()
+    public function validerModeleProvider()
     {
         //[string $casId, int $statutAttendu]
         return [
@@ -191,6 +196,12 @@ class ContactControllerTest extends TestCase
             'Id null'             => ['null', 404],
         ];
     }
+
+
+    /* ====================================================================
+     *                           TESTS RESOURCES
+     * ====================================================================
+     */
 
     /**
      * Test de la requete GET d'index
@@ -245,7 +256,7 @@ class ContactControllerTest extends TestCase
 
     /**
      * 
-     * @depends testValiderContact
+     * @depends testValiderModele
      * @return void
      */
     public function testShow($idCas)
@@ -265,7 +276,7 @@ class ContactControllerTest extends TestCase
     /**
      * 
      * @depends testValiderForm
-     * @depends testValiderContact
+     * @depends testValiderModele
      * @return void
      */
     public function testEdit()
@@ -284,7 +295,7 @@ class ContactControllerTest extends TestCase
 
     /**
      * @depends testValiderForm
-     * @depends testValiderContact
+     * @depends testValiderModele
      * @dataProvider updateProvider
      * @return void
      */
@@ -295,8 +306,8 @@ class ContactControllerTest extends TestCase
         
         // Mise a jour et redirection OK
         $response = $this->from(route('contacts.edit', $contactSource->id))
-        ->patch(route('contacts.update', $contactSource->id), [$clefModifiee => $nouvelleValeur])
-        ->assertRedirect(route('contacts.edit', $contactSource->id));
+        ->patch(route('contacts.update', $contactSource->id), $contactSource->toArray())
+        ->assertRedirect(route('contacts.index'));
 
         // Verification de la MAJ
         $contactMaj = Contact::find($contactSource->id);
@@ -315,7 +326,7 @@ class ContactControllerTest extends TestCase
             'Prenom valide'    => ['prenom', 'nouveau'],
             'Civilite valide'  => ['civilite', Constantes::CIVILITE['vide']],
             'Type valide'      => ['type', Constantes::TYPE_CONTACT['vide']],
-            'Mail valide'      => ['mail', 'nouveau@example.com'],
+            'Mail valide'      => ['email', 'nouveau@example.com'],
             'Telephone valide' => ['telephone', 'nouveau'],
             'Adresse valide'   => ['adresse', 'nouveau'],
 
@@ -326,7 +337,7 @@ class ContactControllerTest extends TestCase
     }
 
     /**
-     * @depends testValiderContact
+     * @depends testValiderModele
      * @return void
      */
     public function testDestroy()

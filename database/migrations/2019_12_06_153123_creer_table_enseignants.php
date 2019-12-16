@@ -20,8 +20,8 @@ class CreerTableEnseignants extends Migration
             $table->string('nom');
             $table->string('prenom');
             $table->string('email');
-            $table->string('responsable_option');
-            $table->string('responsable_departement');
+            $table->unsignedSmallInteger('responsable_option');
+            $table->unsignedSmallInteger('responsable_departement');
         });
     }
 
