@@ -5,6 +5,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 use App\Modeles\Enseignant;
+use App\Modeles\Departement;
+use App\Modeles\Option;
+
 
 class CreerTableEnseignants extends Migration
 {
@@ -20,8 +23,12 @@ class CreerTableEnseignants extends Migration
             $table->string('nom');
             $table->string('prenom');
             $table->string('email');
-            $table->unsignedSmallInteger('responsable_option');
-            $table->unsignedSmallInteger('responsable_departement');
+
+            $table->unsignedBigInteger('responsable_option');
+            $table->unsignedBigInteger('responsable_departement');
+
+            $table->foreign(Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID)->references('id')->on(Departement::NOM_TABLE);
+            $table->foreign(Enseignant::COL_RESPONSABLE_OPTION_ID)->references('id')->on(Option::NOM_TABLE);
         });
     }
 
