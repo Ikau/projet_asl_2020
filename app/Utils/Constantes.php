@@ -27,6 +27,8 @@ class Constantes
      */
     const MIN = [
         'civilite'     => 0,
+        'departement'  => 0,
+        'diplome'      => 0,
         'type_contact' => 0,
     ];
 
@@ -35,6 +37,8 @@ class Constantes
      */
     const MAX = [
         'civilite'     => 2,
+        'departement'  => 2,
+        'diplome'      => 2,
         'type_contact' => 3,
     ];
 
@@ -48,18 +52,18 @@ class Constantes
     ];
 
     const DEPARTEMENT = [
-        'vide' => '',
-        'MRI'  => 'MRI',
-        'STI'  => 'STI'
+        'vide' => 0,
+        'MRI'  => 1,
+        'STI'  => 2,
     ];
 
     /**
      * @var array[string]string Diplome prepare par l'etudiant
      */
     const DIPLOME = [
-        'vide' => '',
-        'STI'  => 'STI',
-        'MRI'  => 'MRI'
+        'vide' => 0,
+        'STI'  => 1,
+        'MRI'  => 2
     ];
 
     /**
@@ -93,7 +97,7 @@ class Constantes
      */
     const OPTION = [
         'vide' => [
-            'aucun' => -1,
+            'aucun' => 0,
         ],
         'MRI'  => [
             'opt1' => 100,
