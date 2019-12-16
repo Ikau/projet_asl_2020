@@ -27,8 +27,12 @@ $factory->define(\App\Modeles\Enseignant::class, function (Faker $faker)
         'nom'                     => $faker->firstname,
         'prenom'                  => $faker->lastName,
         'email'                   => $faker->unique()->safeEmail,
-        'responsable_option'      => new Collection(),
-        'responsable_departement' => new Collection(),
+        'responsable_option'      => $faker->randomElement(array_merge(
+            Constantes::OPTION['vide'],
+            Constantes::OPTION['MRI'],
+            Constantes::OPTION['STI'],
+        )),
+        'responsable_departement' => $faker->randomElement(Constantes::DEPARTEMENT),
         'stages'                  => new Collection(),
     ];
 });
