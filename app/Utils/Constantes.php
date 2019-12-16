@@ -100,8 +100,11 @@ class Constantes
             'aucun' => 0,
         ],
         'MRI'  => [
-            'opt1' => 100,
-            'opt2' => 101,
+            'RAI'  => 100,
+            'RE'   => 101,
+            'RSI'  => 102,
+            'SFEN' => 103,
+            'STLR' => 104,
         ],
         'STI'  => [
             '2SU' => 200,
