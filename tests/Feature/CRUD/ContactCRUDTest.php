@@ -306,8 +306,8 @@ class ContactControllerTest extends TestCase
         
         // Mise a jour et redirection OK
         $response = $this->from(route('contacts.edit', $contactSource->id))
-        ->patch(route('contacts.update', $contactSource->id), [$clefModifiee => $nouvelleValeur])
-        ->assertRedirect(route('contacts.edit', $contactSource->id));
+        ->patch(route('contacts.update', $contactSource->id), $contactSource->toArray())
+        ->assertRedirect(route('contacts.index'));
 
         // Verification de la MAJ
         $contactMaj = Contact::find($contactSource->id);
