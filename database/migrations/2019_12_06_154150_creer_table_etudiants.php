@@ -19,17 +19,19 @@ class CreerTableEtudiants extends Migration
     {
         Schema::create(Etudiant::NOM_TABLE, function(Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nom');
-            $table->string('prenom');
-            $table->string('email');
-            $table->string('civilite');
-            $table->date('inscription');
-            $table->string('nationalite');
-            $table->string('formation');
-            $table->string('master');
-            $table->string('diplome');
-            $table->unsignedSmallInteger('annee');
-            $table->boolean('mobilite');
+
+            //$table->string(Etudiant::COL_MATRICULE);
+            $table->string(Etudiant::COL_NOM);
+            $table->string(Etudiant::COL_PRENOM);
+            $table->string(Etudiant::COL_EMAIL);
+            //$table->string(Etudiant::COL_CIVILITE);
+            //$table->date(Etudiant::COL_INSCRIPTION);
+            //$table->string(Etudiant::COL_NATIONALITE);
+            //$table->string(Etudiant::COL_FORMATION);
+            //$table->string(Etudiant::COL_MASTER);
+            //$table->string(Etudiant::COL_DIPLOME);
+            $table->unsignedSmallInteger(Etudiant::COL_ANNEE);
+            $table->boolean(Etudiant::COL_MOBILITE);
 
             $table->unsignedBigInteger(Etudiant::COL_DEPARTEMENT_ID);
             $table->unsignedBigInteger(Etudiant::COL_OPTION_ID);

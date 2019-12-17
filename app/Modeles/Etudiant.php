@@ -10,6 +10,22 @@ use App\Utils\Constantes;
 class Etudiant extends AbstractEtudiant
 {
     /*
+     * Nom des colonnes dans la base de donnees
+     */
+    //const COL_MATRICULE = 'matricule';
+    const COL_NOM       = 'nom';
+    const COL_PRENOM    = 'prenom';
+    const COL_EMAIL     = 'email';
+    //const COL_CIVILITE  = 'civilite';
+    //const COL_INSCRIPTION = 'inscription';
+    //const COL_NATIONALITE = 'nationalite';
+    //const COL_FORMATION   = 'formation';
+    //const COL_MASTER = 'master';
+    //const COL_DIPLOME  = 'diplome';
+    const COL_ANNEE    = 'annee';
+    const COL_MOBILITE = 'mobilite';
+
+    /*
      * Nom des colonnes des clefs etrangeres
      */
     const COL_DEPARTEMENT_ID = 'departement_id';
@@ -44,18 +60,21 @@ class Etudiant extends AbstractEtudiant
      * @var array[string]mixed
      */
     protected $attributes = [
-        'matricule'   => Constantes::STRING_VIDE, 
-        'nom'         => Constantes::STRING_VIDE,
-        'prenom'      => Constantes::STRING_VIDE,
-        'email'       => Constantes::STRING_VIDE,
-        'civilite'    => Constantes::CIVILITE['vide'],
-        'inscription' => Constantes::DATE_VIDE,
-        'nationalite' => Constantes::NATIONALITE['vide'],
-        'formation'   => Constantes::FORMATION['vide'],
-        'master'      => Constantes::MASTER['vide'],
-        'diplome'     => Constantes::DIPLOME['vide'],
-        'annee'       => Constantes::INT_VIDE,
-        'mobilite'    => FALSE
+        //Etudiant::COL_MATRICULE     => Constantes::STRING_VIDE, 
+        Etudiant::COL_NOM           => Constantes::STRING_VIDE,
+        Etudiant::COL_PRENOM        => Constantes::STRING_VIDE,
+        Etudiant::COL_EMAIL         => Constantes::STRING_VIDE,
+        //Etudiant::COL_CIVILITE      => Constantes::CIVILITE['vide'],
+        //Etudiant::COL_INSCRIPTION   => Constantes::DATE_VIDE,
+        //Etudiant::COL_NATIONALITE   => Constantes::NATIONALITE['vide'],
+        //Etudiant::COL_FORMATION     => Constantes::FORMATION['vide'],
+        //Etudiant::COL_MASTER        => Constantes::MASTER['vide'],
+        //Etudiant::COL_DIPLOME       => Constantes::DIPLOME['vide'],
+        Etudiant::COL_ANNEE         => Constantes::INT_VIDE,
+        Etudiant::COL_MOBILITE      => FALSE,
+        
+        Etudiant::COL_DEPARTEMENT_ID => Constantes::ID_VIDE,
+        Etudiant::COL_OPTION_ID      => Constantes::ID_VIDE
     ];
 
     /**
