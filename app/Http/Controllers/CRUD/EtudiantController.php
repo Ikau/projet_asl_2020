@@ -58,6 +58,13 @@ class EtudiantController extends AbstractControllerCRUD
 
     public function store(Request $request)
     {
+        $this->validerForm($request);
+
+        $etudiant = new Etudiant();
+        $etudiant->fill($request->all());
+        $etudiant->save();
+
+        return redirect()->route('etudiants.index');
     }
 
     public function show($id)

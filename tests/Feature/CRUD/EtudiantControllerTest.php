@@ -168,15 +168,36 @@ class EtudiantControllerTest extends TestCase
      */
     public function testStore()
     {
-        /*
-        $etudiant = factory(Etudiant::class)->make();
+        $etudiantSource = factory(Etudiant::class)->make();
 
-        $response = $this->followingRedirect()
+        // Verification redirection
+        $response = $this->followingRedirects()
         ->from(route('etudiants.create'))
-        ->post(route('etudiants.store'), $etudiant->toArray())
-        ->assertOk();
-        */
-        $this->assertTrue(TRUE);
+        ->post(route('etudiants.store'), $etudiantSource->toArray())
+        ->assertViewIs('etudiant.index');
+
+        // Clause where
+        $attributs  = Schema::getColumnListing(Etudiant::NOM_TABLE);
+
+        $arrayWhere = [];
+        foreach($attributs as $a)
+        {
+            if('id' !== $a)
+            {
+                $arrayWhere[] = [$a, '=', $etudiantSource[$a]];
+            }
+        }
+
+        // Verification sauvegarde
+        $etudiantTest = Etudiant::where($arrayWhere)->first();
+        $this->assertNotNull($etudiantTest);
+        foreach($attributs as $a)
+        {
+            if('id' !== $a)
+            {
+                $this->assertEquals($etudiantTest[$a], $etudiantSource[$a]);
+            }
+        }
     }
 
     /**
