@@ -17,6 +17,11 @@ class Option extends AbstractOption
      */
     const COL_DEPARTEMENT_ID = 'departement_id';
 
+    /*
+     * Nom des colonnes dans la base de donnees
+     */
+    const COL_INTITULE = 'intitule';
+
     /**
      * @var string Nom de la table associe au modele 'option'
      */
@@ -32,7 +37,7 @@ class Option extends AbstractOption
     /**
      * @var string Nom de la table associee au modele 'Option'
      */
-    protected $table = Departement::NOM_TABLE;
+    protected $table = Option::NOM_TABLE;
 
     /**
      * Valeurs par defaut des colonnes du modele 'Option'
@@ -40,7 +45,7 @@ class Option extends AbstractOption
      * @var array[string]mixed
      */
     protected $attributes = [
-        'intitule' => Constantes::STRING_VIDE
+        Option::COL_INTITULE => Constantes::STRING_VIDE
     ];
 
     /**
