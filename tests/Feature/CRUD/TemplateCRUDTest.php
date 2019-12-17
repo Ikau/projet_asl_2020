@@ -7,12 +7,12 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 /* Template a remplir
-use App\Modeles\Enseignant;
-use App\Http\Controllers\CRUD\EnseignantController;
+use App\Modeles\Template;
+use App\Http\Controllers\CRUD\TemplateController;
 use App\Utils\Constantes;
 */
 
-class TemplatetControllerTest extends TestCase
+class TemplateControllerTest extends TestCase
 {
     // Rollback les modifications de la BDD a la fin des tests
     use RefreshDatabase;
