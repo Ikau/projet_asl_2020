@@ -21,7 +21,7 @@
 </div>
 
 @if ( isset($enseignant) )
-<form method="POST" action="{{ route('enseignants.update', [$id ?? -1]) }}">
+<form method="POST" action="{{ route('enseignants.update', [$enseignant->id ?? -1]) }}">
 @method('PATCH')
 @else
 <form method="POST" action="{{ route('enseignants.store') }}">
