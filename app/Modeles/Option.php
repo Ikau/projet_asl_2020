@@ -11,6 +11,12 @@ use App\Modeles\Etudiant;
 
 class Option extends AbstractOption
 {
+
+    /*
+     * Nom des colonnes des clefs etrangeres
+     */
+    const COL_DEPARTEMENT_ID = 'departement_id';
+
     /**
      * @var string Nom de la table associe au modele 'option'
      */
@@ -36,6 +42,15 @@ class Option extends AbstractOption
     protected $attributes = [
         'intitule' => Constantes::STRING_VIDE
     ];
+
+    /**
+     * Renvoie le departement auquel est rattache l'option
+     * @var App\Modeles\Departement
+     */
+    public function departement()
+    {
+        return $this->belongsTo('App\Modeles\Departement', Option::COL_DEPARTEMENT_ID);
+    }
 
     /**
      * Renvoie les etudiants appartenant a l'option
