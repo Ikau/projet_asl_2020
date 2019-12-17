@@ -70,7 +70,7 @@ class Enseignant extends AbstractEnseignant
      * Renvoie le departement dont l'enseignant est responsable
      * @var array[App\Modeles\Departement]
      */
-    public function responsable_repartement()
+    public function responsable_departement()
     {
         return $this->belongsTo('App\Modeles\Departement', Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID);
     }
