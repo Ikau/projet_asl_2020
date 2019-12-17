@@ -8,6 +8,10 @@ use App\Http\Controllers\Controller;
 
 abstract class AbstractControllerCRUD extends Controller
 {
+    /* ====================================================================
+     *                             RESOURCES
+     * ====================================================================
+     */
 
     /**
      * Liste les donnees presentes dans la table du modele.
@@ -74,6 +78,12 @@ abstract class AbstractControllerCRUD extends Controller
      */
     abstract public function tests(Request $request);
 
+
+    /* ====================================================================
+     *                             AUXILIAIRES
+     * ====================================================================
+     */
+
     /**
      * Normalise les inputs utilisateur qui sont null
      *
@@ -97,4 +107,12 @@ abstract class AbstractControllerCRUD extends Controller
      * @return \Illuminate\Http\Response
      */
     abstract protected function validerModele($id);
+
+    
+    /**
+     * Renvoie l'output de la fonction Schema::getColumnListing(Modele::NOM_TABLE)
+     * 
+     * @return void
+     */
+    abstract protected function getAttributsModele();
 }
