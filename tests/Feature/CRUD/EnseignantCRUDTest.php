@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Collection;
 use Tests\TestCase;
 
 use App\Modeles\Enseignant;
+use App\Modeles\Departement;
+use App\Modeles\Option;
 use App\Http\Controllers\CRUD\EnseignantController;
 use App\Utils\Constantes;
 
@@ -197,10 +199,24 @@ class EnseignantControllerTest extends TestCase
 
     public function testCreate()
     {
+        // Affichage de la page
         $response = $this->get(route('enseignants.create'))
         ->assertOK()
         ->assertViewIs('enseignant.form')
         ->assertSee(EnseignantController::TITRE_CREATE);
+
+        // Verification des departements
+        foreach(Departement::all() as $departement)
+        {
+            $response->assertSee("<optgroup label=\"$departement->intitule\">")
+            ->assertSee("<option value=\"$departement->id\">$departement->intitule</option>");
+        }
+
+        // Verification des options
+        foreach(Option::all() as $option)
+        {
+            $response->assertSee("<option value=\"$option->id\">$option->intitule</option>");
+        }
     }
     
     /**

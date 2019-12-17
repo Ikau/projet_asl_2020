@@ -49,28 +49,30 @@
     @enderror
     <br/>
 
-    <label for="responsable_option">Responsable d'option ? (*)</label>
-    <select name="responsable_option" id="responsable_option" value="{{ $enseignant->responsable_option ?? old('responsable_option') }}" >
-        @foreach($options as $nomOption => $option)
-        <optgroup label="{{ $nomOption }}">
-            @foreach($option as $key => $value)
-            <option value="{{ $value }}">{{ $key }}</option>
+    <label for="option_id">Responsable d'option ? (*)</label>
+    <select name="option_id" id="option_id" value="{{ $enseignant->option_id ?? old('option_id') }}" >
+        @foreach($departements as $d)
+        <optgroup label="{{ $d->intitule }}">
+            @foreach($options as $o)
+                @if($d->id === $o->departement_id)
+                <option value="{{ $o->id }}">{{ $o->intitule }}</option>
+                @endif
             @endforeach
         </optgroup>
         @endforeach
     </select>
-    @error('responsable_option')
+    @error('option_id')
     <div class="alert alert-danger">{{ $message }}</div>
     @enderror
     <br/>
 
-    <label for="responsable_departement">Responsable de département ? (*)</label>
-    <select name="responsable_departement" id="responsable_departement" value="{{ $enseignant->responsable_departement ?? old('responsable_departement') }}" >
-        @foreach($departements as $key => $value)
-        <option value="{{ $value }}">{{ $key }}</option>
+    <label for="departement_id">Responsable de département ? (*)</label>
+    <select name="departement_id" id="departement_id" value="{{ $enseignant->departement_id ?? old('departement_id') }}" >
+        @foreach($departements as $d)
+        <option value="{{ $d->id }}">{{ $d->intitule }}</option>
         @endforeach
     </select>
-    @error('responsable_departement')
+    @error('departement_id')
     <div class="alert alert-danger">{{ $message }}</div>
     @enderror
     <br/>

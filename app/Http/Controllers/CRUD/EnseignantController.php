@@ -43,8 +43,8 @@ class EnseignantController extends AbstractControllerCRUD
     {
         return view('enseignant.form', [
             'titre'        => EnseignantController::TITRE_CREATE,
-            'options'      => Constantes::OPTION,
-            'departements' => Constantes::DEPARTEMENT,
+            'options'      => Option::all(),
+            'departements' => Departement::all(),
         ]);
     }
 
@@ -84,8 +84,8 @@ class EnseignantController extends AbstractControllerCRUD
         return view('enseignant.form', [
             'titre'        => EnseignantController::TITRE_EDIT,
             'enseignant'   => $enseignant,
-            'options'      => Constantes::OPTION,
-            'departements' => Constantes::DEPARTEMENT
+            'options'      => Option::all(),
+            'departements' => Departement::all()
         ]);
     }
 
