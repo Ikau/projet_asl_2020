@@ -16,6 +16,11 @@ class Departement extends AbstractDepartement
      */
     const NOM_TABLE = 'departements';
 
+    /*
+     * Nom des colonnes dans la base de donnees
+     */
+    const COL_INTITULE = 'intitule';
+
     /**
      * Indique a Laravel de ne pas creer ni de gerer les tables 'created_at' et 'updated_at'
      * 
@@ -34,7 +39,7 @@ class Departement extends AbstractDepartement
      * @var array[string]mixed
      */
     protected $attributes = [
-        'intitule' => Constantes::STRING_VIDE
+        Departement::COL_INTITULE => Constantes::STRING_VIDE
     ];
 
     /**
