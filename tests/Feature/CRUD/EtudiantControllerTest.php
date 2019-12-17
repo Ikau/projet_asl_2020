@@ -33,16 +33,15 @@ class EtudiantControllerTest extends TestCase
         $response = $this->followingRedirects()
         ->from(route('etudiants.tests'))
         ->post(route('etudiants.tests'), $etudiant->toArray())
-        ->assertOk();
+        ->assertOk(); // Si les inputs sont null, 404 est renvoye
     }
     
     public function normaliseOptionnelsProvider()
     {
-        // Il n'y a pas d'arguments optionnels pour l'instant
-
         //[string $clefModifiee, $nouvelleValeur]
         return [
-            'Etudiant valide' => ['aucune', 'aucune']
+            'Etudiant valide' => ['aucune', 'aucune'],
+            'Mobilite null'   => [Etudiant::COL_MOBILITE, null]
         ];
     }
 

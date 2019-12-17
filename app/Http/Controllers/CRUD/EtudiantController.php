@@ -99,7 +99,8 @@ class EtudiantController extends AbstractControllerCRUD
         {
             case 'normaliseInputsOptionnels':
                 $this->normaliseInputsOptionnels($request);
-                // Si des attributs sont optionnels, il faut check le resultat
+
+                if(null === $request[Etudiant::COL_MOBILITE]) abort('404');
             return redirect('/');
 
             case 'validerForm':
@@ -108,6 +109,7 @@ class EtudiantController extends AbstractControllerCRUD
 
             case 'validerModele':
                 $etudiant = $this->validerModele($request->id);
+                
                 if(null === $etudiant) abort('404');
             return redirect('/');
 
@@ -127,7 +129,10 @@ class EtudiantController extends AbstractControllerCRUD
      */
     protected function normaliseInputsOptionnels(Request $request)
     {
-        // Aucun input optionnel
+        if(null === $request[Etudiant::COL_MOBILITE])
+        {
+            $request[Etudiant::COL_MOBILITE] = FALSE;
+        }
     }
 
     /**
