@@ -11,7 +11,7 @@ use App\Modeles\Etudiant;
 use App\Http\Controllers\CRUD\EtudiantController;
 use App\Utils\Constantes;
 
-class TemplatetControllerTest extends TestCase
+class EtudiantControllerTest extends TestCase
 {
     // Rollback les modifications de la BDD a la fin des tests
     use RefreshDatabase;
@@ -58,7 +58,8 @@ class TemplatetControllerTest extends TestCase
 
     public function testCreate()
     {
-        $this->assertTrue(TRUE);
+        $response = $this->get(route('etudiants.create'));
+        //->assertSee(EtudiantController::TITRE_CREATE);
     }
     
     /**
