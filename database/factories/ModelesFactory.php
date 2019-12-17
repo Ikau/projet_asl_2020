@@ -6,9 +6,13 @@ use Faker\Generator as Faker;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
 
+use App\Modeles\Contact;
+use App\Modeles\Enseignant;
+use App\Modeles\Departement;
+use App\Modeles\Option;
 use App\Utils\Constantes;
 
-$factory->define(\App\Modeles\Contact::class, function (Faker $faker)
+$factory->define(Contact::class, function (Faker $faker)
 {
     return [
         'nom'       => $faker->firstName,
@@ -21,17 +25,16 @@ $factory->define(\App\Modeles\Contact::class, function (Faker $faker)
     ];
 });
 
-$factory->define(\App\Modeles\Enseignant::class, function (Faker $faker)
+$factory->define(Enseignant::class, function (Faker $faker)
 {
+    $idDepartements = DB::table(Departement::NOM_TABLE)->pluck('id');
+    $idOptions      = DB::table(Option::NOM_TABLE)->pluck('id');
+
     return [
-        'nom'                     => $faker->firstname,
-        'prenom'                  => $faker->lastName,
-        'email'                   => $faker->unique()->safeEmail,
-        'responsable_option'      => $faker->randomElement(array_merge(
-            Constantes::OPTION['vide'],
-            Constantes::OPTION['MRI'],
-            Constantes::OPTION['STI'],
-        )),
-        'responsable_departement' => $faker->randomElement(Constantes::DEPARTEMENT)
+        Enseignant::COL_NOM                        => $faker->firstname,
+        Enseignant::COL_PRENOM                     => $faker->lastName,
+        Enseignant::COL_EMAIL                      => $faker->unique()->safeEmail,
+        Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID => $faker->randomElement($idDepartements),
+        Enseignant::COL_RESPONSABLE_OPTION_ID      => $faker->randomElement($idOptions)
     ];
 });
