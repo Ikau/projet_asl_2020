@@ -21,22 +21,115 @@ class EtudiantControllerTest extends TestCase
      * ====================================================================
      */
 
-    public function testNormaliseOptionnels()
+    /**
+     * @dataProvider normaliseOptionnelsProvider
+     */
+    public function testNormaliseOptionnels(string $clefModifiee, $nouvelleValeur)
     {
-        $this->assertTrue(TRUE);
+        $etudiant                = factory(Etudiant::class)->make();
+        $etudiant['test']        = 'normaliseInputsOptionnels';
+        $etudiant[$clefModifiee] = $nouvelleValeur;
+
+        $response = $this->followingRedirects()
+        ->from(route('etudiants.tests'))
+        ->post(route('etudiants.tests'), $etudiant->toArray())
+        ->assertOk();
+    }
+    
+    public function normaliseOptionnelsProvider()
+    {
+        // Il n'y a pas d'arguments optionnels pour l'instant
+
+        //[string $clefModifiee, $nouvelleValeur]
+        return [
+            'Etudiant valide' => ['aucune', 'aucune']
+        ];
     }
 
     /**
      * @depends testNormaliseOptionnels
+     * @dataProvider validerFormProvider
      */
-    public function testValiderForm()
+    public function testValiderForm(bool $possedeErreur, string $clefModifiee, $nouvelleValeur)
     {
-        $this->assertTrue(TRUE);
+        $etudiant                = factory(Etudiant::class)->make();
+        $etudiant['test']        = 'validerForm';
+        $etudiant[$clefModifiee] = $nouvelleValeur;
+
+        $response = $this->from(route('etudiants.create'))
+        ->post(route('etudiants.tests'), $etudiant->toArray());
+
+        if($possedeErreur)
+        {
+            $response->assertSessionHasErrors($clefModifiee)
+            ->assertRedirect(route('etudiants.create'));
+        }
+        else 
+        {
+            $response->assertSessionDoesntHaveErrors();
+        }
+
     }
 
-    public function testValiderModele()
+    public function validerFormProvider()
     {
-        $this->assertTrue(TRUE);
+        //[bool $possedeErreur, string $clefModifiee, $nouvelleValeur]
+        return [
+            // Succes
+            'Etudiant valide' => [FALSE, 'aucune', 'aucune'],
+            
+            // Echecs
+            'Nom null'         => [TRUE, Etudiant::COL_NOM, null],
+            'Prenom null'      => [TRUE, Etudiant::COL_PRENOM, null],
+            'Email null'       => [TRUE, Etudiant::COL_EMAIL, null],
+            'Annee null'       => [TRUE, Etudiant::COL_ANNEE, null],
+            'Mobilite null'    => [TRUE, Etudiant::COL_MOBILITE, null],
+            'Departement null' => [TRUE, Etudiant::COL_DEPARTEMENT_ID, null],
+            'Option null'      => [TRUE, Etudiant::COL_OPTION_ID, null],
+
+            'Nom invalide'         => [TRUE, Etudiant::COL_NOM, 42],
+            'Prenom invalide'      => [TRUE, Etudiant::COL_PRENOM, 42],
+            'Email invalide'       => [TRUE, Etudiant::COL_EMAIL, 'invalide'],
+            'Annee invalide'       => [TRUE, Etudiant::COL_ANNEE, '-1'],
+            'Mobilite invalide'    => [TRUE, Etudiant::COL_MOBILITE, -1],
+            'Departement invalide' => [TRUE, Etudiant::COL_DEPARTEMENT_ID, -1],
+            'Option invalide'      => [TRUE, Etudiant::COL_OPTION_ID, -1],
+        ];
+    }
+
+    /**
+     * @dataProvider validerModeleProvider
+     */
+    public function testValiderModele(int $idCase, int $statutAttendu)
+    {
+        $etudiant = factory(Etudiant::class)->create();
+        $id;
+        switch($idCase)
+        {
+            case 0: $id = $etudiant->id; break;
+            case 1: $id = "$etudiant->id"; break;
+            case 2: $id = -1; break;
+            case 3: $id = null; break;
+        }
+
+        $response = $this->followingRedirects()
+        ->from(route('etudiants.tests'))
+        ->post(route('etudiants.tests'), [
+            'test' => 'validerModele',
+            'id'   => $id
+        ])
+        ->assertStatus($statutAttendu);
+    }
+
+    public function validerModeleProvider()
+    {
+        // [int $idCas, int $statutAttendu]
+        return [
+            'Id valide'    => [0, 200],
+            'Id numerique' => [1, 200],
+            'Id invalide'  => [2, 404],
+            'Id null'      => [3, 404],
+        ];
     }
 
     /* ====================================================================
@@ -75,6 +168,14 @@ class EtudiantControllerTest extends TestCase
      */
     public function testStore()
     {
+        /*
+        $etudiant = factory(Etudiant::class)->make();
+
+        $response = $this->followingRedirect()
+        ->from(route('etudiants.create'))
+        ->post(route('etudiants.store'), $etudiant->toArray())
+        ->assertOk();
+        */
         $this->assertTrue(TRUE);
     }
 

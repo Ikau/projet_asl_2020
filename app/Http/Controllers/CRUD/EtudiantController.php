@@ -81,12 +81,17 @@ class EtudiantController extends AbstractControllerCRUD
         switch($request->test)
         {
             case 'normaliseInputsOptionnels':
+                $this->normaliseInputsOptionnels($request);
+                // Si des attributs sont optionnels, il faut check le resultat
             return redirect('/');
 
             case 'validerForm':
+                $this->validerForm($request);
             return redirect('/');
 
             case 'validerModele':
+                $etudiant = $this->validerModele($request->id);
+                if(null === $etudiant) abort('404');
             return redirect('/');
 
             default:
@@ -105,6 +110,7 @@ class EtudiantController extends AbstractControllerCRUD
      */
     protected function normaliseInputsOptionnels(Request $request)
     {
+        // Aucun input optionnel
     }
 
     /**
@@ -112,6 +118,20 @@ class EtudiantController extends AbstractControllerCRUD
      */
     protected function validerForm(Request $request)
     {
+        $idsDepartement = Departement::all()->pluck('id');
+        $idsOption      = Option::all()->pluck('id');
+
+        $validation = $request->validate([
+            Etudiant::COL_NOM            => ['required', 'string'],
+            Etudiant::COL_PRENOM         => ['required', 'string'],
+            Etudiant::COL_EMAIL          => ['required', 'email'],
+            Etudiant::COL_ANNEE          => ['required', Rule::in([4, 5])],
+            Etudiant::COL_MOBILITE       => ['required', 'boolean'],
+            Etudiant::COL_DEPARTEMENT_ID => ['required', Rule::in($idsDepartement)],
+            Etudiant::COL_OPTION_ID      => ['required', Rule::in($idsOption)],
+        ]);
+
+        $this->normaliseInputsOptionnels($request);
     }
 
     /**
@@ -119,6 +139,13 @@ class EtudiantController extends AbstractControllerCRUD
      */
     protected function validerModele($id)
     {
+        if(null === $id
+        || ! is_numeric($id))
+        {
+            return null;
+        }
+
+        return Etudiant::find($id);
     }
 
     /**
