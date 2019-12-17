@@ -50,7 +50,7 @@ $factory->define(Etudiant::class, function (Faker $faker)
         Etudiant::COL_NOM            => $faker->lastName,
         Etudiant::COL_PRENOM         => $faker->firstName,
         Etudiant::COL_EMAIL          => $faker->unique()->safeEmail,
-        Etudiant::COL_ANNEE          => RandomElement([4,5]),
+        Etudiant::COL_ANNEE          => $faker->randomElement([4,5]),
         Etudiant::COL_MOBILITE       => $faker->boolean(50),
         Etudiant::COL_DEPARTEMENT_ID => $faker->randomElement($idsDepartement),
         Etudiant::COL_OPTION_ID      => $faker->randomElement($idsOption)
