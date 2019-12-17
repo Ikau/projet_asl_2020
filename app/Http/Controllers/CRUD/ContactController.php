@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\CRUD;
 
 use Illuminate\Http\Request; 
+use Illuminate\Validation\Rule;
 
 use App\Abstracts\AbstractControllerCRUD;
 use App\Modeles\Contact;
@@ -151,16 +152,14 @@ class ContactController extends AbstractControllerCRUD
             'prenom'    => ['required', 'string'],
             'type'      => ['required',
                 'integer', 
-                'min:' . Constantes::MIN['type_contact'], 
-                'max:' . Constantes::MAX['type_contact']
+                Rule::in(Constantes::TYPE_CONTACT)
             ],
             'email'      => ['required', 'email'],
 
             'civilite'  => [
                 'nullable',
                 'integer',
-                'min:' . Constantes::MIN['civilite'],
-                'max:' . Constantes::MAX['civilite']
+                Rule::in(Constantes::CIVILITE)
             ],
             'telephone' => ['nullable', 'string'],
             'adresse'   => ['nullable', 'string'],

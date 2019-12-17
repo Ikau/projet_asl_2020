@@ -86,64 +86,60 @@ class ContactControllerTest extends TestCase
     public function validerFormProvider()
     {
         $this->refreshApplication();
+
+        // Rappel : les affectations d'array sont par defaut des copies profondes
         $arrayValide         = factory(Contact::class)->make()->toArray();
         $arrayValide['test'] = 'validerForm';
 
-        /* Rappel : les affectations d'array sont par defaut des copies profondes */
-        $nomNull            = $arrayValide;
-        $nomInvalide        = $arrayValide;
-        $nomNull['nom']     = null;
-        $nomInvalide['nom'] = 42;
+        // Succes
+        $civiliteNull  = $arrayValide;
+        $telephoneNull = $arrayValide;
+        $adresseNull   = $arrayValide;
+        $civiliteNull['civilite']   = null;
+        $telephoneNull['telephone'] = null;
+        $adresseNull['adresse']     = null;
 
-        $prenomNull               = $arrayValide;
-        $prenomInvalide           = $arrayValide;
-        $prenomNull['prenom']     = null;
-        $prenomInvalide['prenom'] = 42;
+        // Echecs
+        $nomNull    = $arrayValide;
+        $prenomNull = $arrayValide;
+        $typeNull   = $arrayValide;
+        $mailNull   = $arrayValide;
+        $nomNull['nom']       = null;
+        $prenomNull['prenom'] = null;
+        $typeNull['type']     = null;
+        $mailNull['email']    = null;
 
-        $civiliteNull                    = $arrayValide;
-        $civiliteInvalideSup             = $arrayValide;
-        $civiliteInvalideInf             = $arrayValide;
-        $civiliteNull['civilite']        = null;
-        $civiliteInvalideInf['civilite'] = Constantes::MIN['civilite'] - 1;
-        $civiliteInvalideSup['civilite'] = Constantes::MAX['civilite'] + 1;
+        $nomInvalide      = $arrayValide;
+        $prenomInvalide   = $arrayValide;
+        $civiliteInvalide = $arrayValide;
+        $typeInvalide     = $arrayValide;
+        $mailInvalide     = $arrayValide;
+        $nomInvalide['nom']           = 42;
+        $prenomInvalide['prenom']     = 42;
+        $civiliteInvalide['civilite'] = -1;
+        $typeInvalide['type']         = -1;
+        $mailInvalide['email']        = Constantes::STRING_VIDE;
 
-        $typeNull                = $arrayValide;
-        $typeInvalideSup         = $arrayValide;
-        $typeInvalideInf         = $arrayValide;
-        $typeNull['type']        = null;
-        $typeInvalideInf['type'] = Constantes::MIN['type_contact'] - 1;
-        $typeInvalideSup['type'] = Constantes::MAX['type_contact'] + 1;
-
-        $mailNull             = $arrayValide;
-        $mailInvalide         = $arrayValide;
-        $mailNull['email']     = null;
-        $mailInvalide['email'] = Constantes::STRING_VIDE;
-
-        $telephoneNull                = $arrayValide;
-        $telephoneNull['telephone']   = null;
-
-        $adresseNull              = $arrayValide;
-        $adresseNull['adresse']   = null;
 
         //[$routeAttendue, $possedeErreur, $clefErreurAttendue, $donnee]
         return [
+            // Succes
             'Formulaire valide'  => ['/', FALSE, null, $arrayValide],
+            'Civilite null'      => ['/', FALSE, null, $civiliteNull],
+            'Telephone null'     => ['/', FALSE, null, $telephoneNull],
+            'Adresse null'       => ['/', FALSE, null, $adresseNull],
 
-            'Nom null'       => [route('contacts.tests'), TRUE, 'nom', $nomNull],
-            'Prenom null'    => [route('contacts.tests'), TRUE, 'prenom', $prenomNull],
-            'Type null'      => [route('contacts.tests'), TRUE, 'type', $typeNull],
-            'Mail null'      => [route('contacts.tests'), TRUE, 'email', $mailNull],
-            'Civilite null'  => ['/', FALSE, null, $civiliteNull],
-            'Telephone null' => ['/', FALSE, null, $telephoneNull],
-            'Adresse null'   => ['/', FALSE, null, $adresseNull],
+            // Echecs
+            'Nom null'    => [route('contacts.tests'), TRUE, 'nom', $nomNull],
+            'Prenom null' => [route('contacts.tests'), TRUE, 'prenom', $prenomNull],
+            'Type null'   => [route('contacts.tests'), TRUE, 'type', $typeNull],
+            'Mail null'   => [route('contacts.tests'), TRUE, 'email', $mailNull],
 
-            'Nom invalide'           => [route('contacts.tests'), TRUE, 'nom',  $nomInvalide],
-            'Prenom invalide'        => [route('contacts.tests'), TRUE, 'prenom',  $prenomInvalide],
-            'Type invalide sup'      => [route('contacts.tests'), TRUE, 'type',  $typeInvalideSup],
-            'Type invalide inf'      => [route('contacts.tests'), TRUE, 'type', $typeInvalideInf],
-            'Mail invalide'          => [route('contacts.tests'), TRUE, 'email',  $mailInvalide],
-            'Civilite invalide sup'  => [route('contacts.tests'), TRUE, 'civilite', $civiliteInvalideSup],
-            'Civilite invalide inf'  => [route('contacts.tests'), TRUE, 'civilite', $civiliteInvalideInf]
+            'Nom invalide'      => [route('contacts.tests'), TRUE, 'nom',  $nomInvalide],
+            'Prenom invalide'   => [route('contacts.tests'), TRUE, 'prenom',  $prenomInvalide],
+            'Type invalide'     => [route('contacts.tests'), TRUE, 'type',  $typeInvalide],
+            'Mail invalide'     => [route('contacts.tests'), TRUE, 'email',  $mailInvalide],
+            'Civilite invalide' => [route('contacts.tests'), TRUE, 'civilite', $civiliteInvalide]
         ];
     }
 

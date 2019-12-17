@@ -27,7 +27,6 @@ class Constantes
      */
     const MIN = [
         'civilite'     => 0,
-        'departement'  => 0,
         'diplome'      => 0,
         'type_contact' => 0,
     ];
@@ -37,7 +36,6 @@ class Constantes
      */
     const MAX = [
         'civilite'     => 2,
-        'departement'  => 2,
         'diplome'      => 2,
         'type_contact' => 3,
     ];
@@ -49,12 +47,6 @@ class Constantes
         'vide'     => 0,
         'Madame'   => 1,
         'Monsieur' => 2,
-    ];
-
-    const DEPARTEMENT = [
-        'vide' => 0,
-        'MRI'  => 1,
-        'STI'  => 2,
     ];
 
     /**
@@ -90,27 +82,6 @@ class Constantes
     const NATIONALITE = [
         'vide'      => '',
         'francaise' => 'française'
-    ];
-
-    /**
-     * @var array[string]string Option suivie par l'etudiant
-     */
-    const OPTION = [
-        'vide' => [
-            'aucun' => 0,
-        ],
-        'MRI'  => [
-            'RAI'  => 100,
-            'RE'   => 101,
-            'RSI'  => 102,
-            'SFEN' => 103,
-            'STLR' => 104,
-        ],
-        'STI'  => [
-            '2SU' => 200,
-            '4AS' => 201,
-            'ASL' => 202
-        ],
     ];
 
     /**
