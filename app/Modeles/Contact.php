@@ -54,22 +54,7 @@ class Contact extends AbstractContact
     {
         return $this->hasMany('App\Modeles\FicheEntreprise', FicheEntreprise::COL_CONTACT_INSA_ID);
     }
-
-    /**
-     * Remplace les valeurs 'null' par les valeurs par défaut le cas echeant.
-     * @return void
-     */
-    public function nullToDefault() : void
-    {
-        if($this->nom       === null) { $this->nom       = Constantes::STRING_VIDE;}
-        if($this->prenom    === null) { $this->prenom    = Constantes::STRING_VIDE;}
-        if($this->civilite  === null) { $this->civilite  = Constantes::CIVILITE['vide'];}
-        if($this->type      === null) { $this->type      = Constantes::TYPE_CONTACT['vide'];}
-        if($this->email      === null) { $this->email      = Constantes::STRING_VIDE;}
-        if($this->telephone === null) { $this->telephone = Constantes::STRING_VIDE;}
-        if($this->adresse   === null) { $this->adresse   = Constantes::STRING_VIDE ;}
-    }
-
+    
     /**
      * Renvoie la liste des soutenances ou le contact est maitre de stage
      * @var array[App\Modeles\Soutenance]
