@@ -9,6 +9,17 @@ use App\Utils\Constantes;
 
 class Contact extends AbstractContact
 {
+    /*
+     * Nom des colonnes dans la base de donnees
+     */
+    const COL_NOM       = 'nom';
+    const COL_PRENOM    = 'prenom';
+    const COL_CIVILITE  = 'civilite';
+    const COL_TYPE      = 'type';
+    const COL_EMAIL     = 'email';
+    const COL_TELEPHONE = 'telephone';
+    const COL_ADRESSE   = 'adresse';
+
     /**
      * @var string Nom de la table associe au modele 'Contact'
      */
@@ -29,7 +40,9 @@ class Contact extends AbstractContact
     /**
      * @var array[string] Liste des attributs a assigner manuellement
      */
-    protected $guarded = ['id'];
+    protected $guarded = [
+        'id'
+    ];
 
     /**
      * Valeurs par defaut des colonnes du modele 'Contact'
@@ -37,13 +50,13 @@ class Contact extends AbstractContact
      * @var array[string]mixed
      */
     protected $attributes = [
-        'nom'       => Constantes::STRING_VIDE,
-        'prenom'    => Constantes::STRING_VIDE,
-        'civilite'  => Constantes::CIVILITE['vide'],
-        'type'      => Constantes::TYPE_CONTACT['vide'],
-        'email'      => Constantes::STRING_VIDE,
-        'telephone' => Constantes::STRING_VIDE,
-        'adresse'   => Constantes::STRING_VIDE        
+        Contact::COL_NOM       => Constantes::STRING_VIDE,
+        Contact::COL_PRENOM    => Constantes::STRING_VIDE,
+        Contact::COL_CIVILITE  => Constantes::CIVILITE['vide'],
+        Contact::COL_TYPE      => Constantes::TYPE_CONTACT['vide'],
+        Contact::COL_EMAIL     => Constantes::STRING_VIDE,
+        Contact::COL_TELEPHONE => Constantes::STRING_VIDE,
+        Contact::COL_ADRESSE   => Constantes::STRING_VIDE        
     ];
 
     /**
@@ -54,7 +67,7 @@ class Contact extends AbstractContact
     {
         return $this->hasMany('App\Modeles\FicheEntreprise', FicheEntreprise::COL_CONTACT_INSA_ID);
     }
-    
+
     /**
      * Renvoie la liste des soutenances ou le contact est maitre de stage
      * @var array[App\Modeles\Soutenance]
