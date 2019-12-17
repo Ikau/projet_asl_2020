@@ -205,7 +205,21 @@ class EtudiantControllerTest extends TestCase
      */
     public function testShow()
     {
-        $this->assertTrue(TRUE);
+        $etudiant = factory(Etudiant::class)->create();
+
+        // Verification redirection
+        $response = $this->from(route('etudiants.tests'))
+        ->get(route('etudiants.show', $etudiant->id))
+        ->assertOk()
+        ->assertViewIs('etudiant.show')
+        ->assertSee(EtudiantController::TITRE_SHOW);
+
+        // Verification donnees
+        $attributs = Schema::getColumnListing(Etudiant::NOM_TABLE);
+        foreach($attributs as $a)
+        {
+            $response->assertSee($etudiant[$a]);
+        }
     }
 
     /**

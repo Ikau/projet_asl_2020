@@ -69,6 +69,16 @@ class EtudiantController extends AbstractControllerCRUD
 
     public function show($id)
     {
+        $etudiant = $this->validerModele($id);
+        if(null === $etudiant)
+        {
+            abort('404');
+        }
+        
+        return view('etudiant.show', [
+            'titre'    => EtudiantController::TITRE_SHOW,
+            'etudiant' => $etudiant
+        ]);
     }
 
     public function edit($id)
