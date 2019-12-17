@@ -50,9 +50,9 @@
     <br/>
 
     <label for="annee">Année suivie (*)</label>
-    <select name="annee" id="annee" value="{{ $etudiant->annee ?? old('annee') }}">
-        <option value="4">4e année</option>
-        <option value="5">5e année</option>
+    <select name="annee" id="annee">
+        <option value="4" {{ $etudiant->annee ?? old('annee') === '4' ? 'selected':'' }}>4e année</option>
+        <option value="5" {{ $etudiant->annee ?? old('annee') === '5' ? 'selected':'' }}>5e année</option>
     </select>
     @error('annee')
     <div class="alert alert-danger">{{ $message }}</div>
@@ -60,7 +60,7 @@
     <br/>
 
     <label for="mobilite">Mobilitée validée ? (*)</label>
-    <input id="mobilite" name="mobilite" type="checkbox" value="{{ $etudiant->mobilite ?? old('mobilite') }}">
+    <input id="mobilite" name="mobilite" type="checkbox" {{ $etudiant->mobilite ?? old('mobilite') === 'on' ? 'checked':'' }}>
     @error('mobilite')
     <div class="alert alert-danger">{{ $message }}</div>
     @enderror

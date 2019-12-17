@@ -41,7 +41,8 @@ class EtudiantControllerTest extends TestCase
         //[string $clefModifiee, $nouvelleValeur]
         return [
             'Etudiant valide' => ['aucune', 'aucune'],
-            'Mobilite null'   => [Etudiant::COL_MOBILITE, null]
+            'Mobilite null'   => [Etudiant::COL_MOBILITE, null],
+            'Mobilite on'     => [Etudiant::COL_MOBILITE, 'on']
         ];
     }
 
@@ -76,13 +77,13 @@ class EtudiantControllerTest extends TestCase
         return [
             // Succes
             'Etudiant valide' => [FALSE, 'aucune', 'aucune'],
+            'Mobilite null'   => [FALSE, Etudiant::COL_MOBILITE, null],
             
             // Echecs
             'Nom null'         => [TRUE, Etudiant::COL_NOM, null],
             'Prenom null'      => [TRUE, Etudiant::COL_PRENOM, null],
             'Email null'       => [TRUE, Etudiant::COL_EMAIL, null],
             'Annee null'       => [TRUE, Etudiant::COL_ANNEE, null],
-            'Mobilite null'    => [TRUE, Etudiant::COL_MOBILITE, null],
             'Departement null' => [TRUE, Etudiant::COL_DEPARTEMENT_ID, null],
             'Option null'      => [TRUE, Etudiant::COL_OPTION_ID, null],
 

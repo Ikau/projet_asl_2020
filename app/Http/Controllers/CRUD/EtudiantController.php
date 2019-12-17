@@ -100,7 +100,11 @@ class EtudiantController extends AbstractControllerCRUD
             case 'normaliseInputsOptionnels':
                 $this->normaliseInputsOptionnels($request);
 
-                if(null === $request[Etudiant::COL_MOBILITE]) abort('404');
+                if(null === $request[Etudiant::COL_MOBILITE]
+                || ! is_bool($request[Etudiant::COL_MOBILITE]))
+                {
+                    abort('404');
+                }
             return redirect('/');
 
             case 'validerForm':
@@ -109,7 +113,7 @@ class EtudiantController extends AbstractControllerCRUD
 
             case 'validerModele':
                 $etudiant = $this->validerModele($request->id);
-                
+
                 if(null === $etudiant) abort('404');
             return redirect('/');
 
@@ -133,6 +137,10 @@ class EtudiantController extends AbstractControllerCRUD
         {
             $request[Etudiant::COL_MOBILITE] = FALSE;
         }
+        else if('on' === $request[Etudiant::COL_MOBILITE])
+        {
+            $request[Etudiant::COL_MOBILITE] = TRUE;
+        }
     }
 
     /**
@@ -148,9 +156,11 @@ class EtudiantController extends AbstractControllerCRUD
             Etudiant::COL_PRENOM         => ['required', 'string'],
             Etudiant::COL_EMAIL          => ['required', 'email'],
             Etudiant::COL_ANNEE          => ['required', Rule::in([4, 5])],
-            Etudiant::COL_MOBILITE       => ['required', 'boolean'],
             Etudiant::COL_DEPARTEMENT_ID => ['required', Rule::in($idsDepartement)],
             Etudiant::COL_OPTION_ID      => ['required', Rule::in($idsOption)],
+            
+            // Ce n'est pas elegant mais je n'ai pas trouve mieux
+            Etudiant::COL_MOBILITE => ['nullable', Rule::in(['on', FALSE, TRUE, 0, 1])],
         ]);
 
         $this->normaliseInputsOptionnels($request);
