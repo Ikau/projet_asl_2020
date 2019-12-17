@@ -26,5 +26,10 @@ class EnseignantTest extends TestCase
         $this->assertEquals(Constantes::STRING_VIDE, $enseignant->nom);
         $this->assertEquals(Constantes::STRING_VIDE, $enseignant->prenom);
         $this->assertEquals(Constantes::STRING_VIDE, $enseignant->email);
+        $this->assertEquals(null, $enseignant->responsable_departement);
+        $this->assertEquals(null, $enseignant->responsable_option);
+        $this->assertEquals(new Collection, $enseignant->soutenances_candide);
+        $this->assertEquals(new Collection, $enseignant->soutenances_referent);
+        $this->assertEquals(new Collection, $enseignant->stages);
     }
 }
