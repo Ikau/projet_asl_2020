@@ -47,8 +47,9 @@ class EtudiantControllerTest extends TestCase
     public function testIndex()
     {
         $response = $this->get(route('etudiants.index'))
-        ->assertSee(EtudiantController::TITRE_INDEX)
-        ->assertOK();
+        ->assertOK()
+        ->assertViewIs('etudiant.index')
+        ->assertSee(EtudiantController::TITRE_INDEX);
 
         foreach(Schema::getColumnListing(Etudiant::NOM_TABLE) as $attribut)
         {
@@ -58,8 +59,15 @@ class EtudiantControllerTest extends TestCase
 
     public function testCreate()
     {
-        $response = $this->get(route('etudiants.create'));
-        //->assertSee(EtudiantController::TITRE_CREATE);
+        $response = $this->get(route('etudiants.create'))
+        ->assertOK()
+        ->assertViewIs('etudiant.form')
+        ->assertSee(EtudiantController::TITRE_CREATE);
+
+        foreach(Schema::getColumnListing(Etudiant::NOM_TABLE) as $attribut)
+        {
+            if($attribut !== 'id') $response->assertSee("name=\"$attribut\"");
+        }
     }
     
     /**

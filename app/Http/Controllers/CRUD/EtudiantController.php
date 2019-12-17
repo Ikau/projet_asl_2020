@@ -44,7 +44,16 @@ class EtudiantController extends AbstractControllerCRUD
 
     public function create()
     {
-        //$attributs = $this->getAttributsModele();
+        $attributs    = $this->getAttributsModele();
+        $options      = Option::all();
+        $departements = Departement::all();
+
+        return view('etudiant.form', [
+            'titre'        => EtudiantController::TITRE_CREATE,
+            'attributs'    => $attributs,
+            'options'      => $options,
+            'departements' => $departements
+        ]);
     }
 
     public function store(Request $request)
