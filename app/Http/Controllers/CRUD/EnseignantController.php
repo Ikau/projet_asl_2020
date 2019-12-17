@@ -8,6 +8,8 @@ use Illuminate\Validation\Rule;
 
 use App\Abstracts\AbstractControllerCRUD;
 use App\Modeles\Enseignant;
+use App\Modeles\Departement;
+use App\Modeles\Option;
 use App\Utils\Constantes;
 
 class EnseignantController extends AbstractControllerCRUD
@@ -41,8 +43,8 @@ class EnseignantController extends AbstractControllerCRUD
     {
         return view('enseignant.form', [
             'titre'        => EnseignantController::TITRE_CREATE,
-            'options'      => Constantes::OPTION,
-            'departements' => Constantes::DEPARTEMENT,
+            'options'      => Option::all(),
+            'departements' => Departement::all(),
         ]);
     }
 
@@ -82,8 +84,8 @@ class EnseignantController extends AbstractControllerCRUD
         return view('enseignant.form', [
             'titre'        => EnseignantController::TITRE_EDIT,
             'enseignant'   => $enseignant,
-            'options'      => Constantes::OPTION,
-            'departements' => Constantes::DEPARTEMENT
+            'options'      => Option::all(),
+            'departements' => Departement::all()
         ]);
     }
 
@@ -164,23 +166,19 @@ class EnseignantController extends AbstractControllerCRUD
     protected function validerForm(Request $request)
     {
         $validation = $request->validate([
-            'nom'    => ['required', 'string'],
-            'prenom' => ['required', 'string'],
-            'email'  => ['required', 'email'],
-            'responsable_option' => [
+            Enseignant::COL_NOM    => ['required', 'string'],
+            Enseignant::COL_PRENOM => ['required', 'string'],
+            Enseignant::COL_EMAIL  => ['required', 'email'],
+            Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID => [
                 'required', 
                 'integer',
-                Rule::in(array_merge(
-                    Constantes::OPTION['vide'],
-                    Constantes::OPTION['MRI'],
-                    Constantes::OPTION['STI'],
-                ))
+                Rule::in(Departement::all()->pluck('id'))
             ],
-            'responsable_departement' => [
-                'required', 
+            Enseignant::COL_RESPONSABLE_OPTION_ID => [
+                'required',
                 'integer',
-                Rule::in(Constantes::DEPARTEMENT),
-            ], 
+                Rule::in(Option::all()->pluck('id'))
+            ]
         ]);
         
         $this->normaliseInputsOptionnels($request);

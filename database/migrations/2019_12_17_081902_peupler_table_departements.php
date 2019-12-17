@@ -3,10 +3,11 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 use App\Modeles\Departement;
 
-class CreerTableDepartements extends Migration
+class PeuplerTableDepartements extends Migration
 {
     /**
      * Run the migrations.
@@ -15,11 +16,11 @@ class CreerTableDepartements extends Migration
      */
     public function up()
     {
-        Schema::create(Departement::NOM_TABLE, function(Blueprint $table) {
-            $table->bigIncrements('id');
-
-            $table->string('intitule');
-        });
+        DB::table(Departement::NOM_TABLE)->insert([
+            [Departement::COL_INTITULE => 'Aucun'],
+            [Departement::COL_INTITULE => 'MRI'],
+            [Departement::COL_INTITULE => 'STI']
+        ]);
     }
 
     /**
@@ -29,6 +30,7 @@ class CreerTableDepartements extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists(Departement::NOM_TABLE);
+        // Supression brutale
+        DB::table(Departement::NOM_TABLE)->truncate();
     }
 }

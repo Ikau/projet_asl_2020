@@ -4,9 +4,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-use App\Modeles\Option;
+use App\Modeles\Departement;
 
-class CreerTableOptions extends Migration
+class CreerTableDepartements extends Migration
 {
     /**
      * Run the migrations.
@@ -15,10 +15,10 @@ class CreerTableOptions extends Migration
      */
     public function up()
     {
-        Schema::create(Option::NOM_TABLE, function(Blueprint $table){
+        Schema::create(Departement::NOM_TABLE, function(Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->string('intitule');
+            $table->string(Departement::COL_INTITULE);
         });
     }
 
@@ -29,6 +29,6 @@ class CreerTableOptions extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists(Option::NOM_TABLE);
+        Schema::dropIfExists(Departement::NOM_TABLE);
     }
 }

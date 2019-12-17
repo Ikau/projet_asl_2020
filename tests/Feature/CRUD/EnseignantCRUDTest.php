@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Collection;
 use Tests\TestCase;
 
 use App\Modeles\Enseignant;
+use App\Modeles\Departement;
+use App\Modeles\Option;
 use App\Http\Controllers\CRUD\EnseignantController;
 use App\Utils\Constantes;
 
@@ -22,9 +24,7 @@ class EnseignantControllerTest extends TestCase
     private $attributs = [
         'nom',
         'prenom',
-        'email',
-        'responsable_option',
-        'responsable_departement'
+        'email'
     ];
 
     /* ====================================================================
@@ -96,11 +96,11 @@ class EnseignantControllerTest extends TestCase
         $optionNull      = $enseignantValide;
         $departementNull = $enseignantValide;
 
-        $nomNull['nom']                             = null;
-        $prenomNull['prenom']                       = null;
-        $emailNull['email']                         = null;
-        $optionNull['responsable_option']           = null;
-        $departementNull['responsable_departement'] = null;
+        $nomNull[Enseignant::COL_NOM]                                = null;
+        $prenomNull[Enseignant::COL_PRENOM]                          = null;
+        $emailNull[Enseignant::COL_EMAIL]                            = null;
+        $optionNull[Enseignant::COL_RESPONSABLE_OPTION_ID]           = null;
+        $departementNull[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID] = null;
 
         $nomInvalide         = $enseignantValide;
         $prenomInvalide      = $enseignantValide;
@@ -108,11 +108,11 @@ class EnseignantControllerTest extends TestCase
         $optionInvalide      = $enseignantValide;
         $departementInvalide = $enseignantValide;
 
-        $nomInvalide['nom']                             = 42;
-        $prenomInvalide['prenom']                       = 42;
-        $emailInvalide['email']                         = 'mauvaisEmail';
-        $optionInvalide['responsable_option']           = -1;
-        $departementInvalide['responsable_departement'] = -1;
+        $nomInvalide[Enseignant::COL_NOM]                                = 42;
+        $prenomInvalide[Enseignant::COL_PRENOM]                          = 42;
+        $emailInvalide[Enseignant::COL_EMAIL]                            = 'mauvaisEmail';
+        $optionInvalide[Enseignant::COL_RESPONSABLE_OPTION_ID]           = -1;
+        $departementInvalide[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID] = -1;
 
         // [array $donnee, string $routeAttendue]
         return [
@@ -199,10 +199,24 @@ class EnseignantControllerTest extends TestCase
 
     public function testCreate()
     {
+        // Affichage de la page
         $response = $this->get(route('enseignants.create'))
         ->assertOK()
         ->assertViewIs('enseignant.form')
         ->assertSee(EnseignantController::TITRE_CREATE);
+
+        // Verification des departements
+        foreach(Departement::all() as $departement)
+        {
+            $response->assertSee("<optgroup label=\"$departement->intitule\">")
+            ->assertSee("<option value=\"$departement->id\">$departement->intitule</option>");
+        }
+
+        // Verification des options
+        foreach(Option::all() as $option)
+        {
+            $response->assertSee("<option value=\"$option->id\">$option->intitule</option>");
+        }
     }
     
     /**
@@ -336,11 +350,11 @@ class EnseignantControllerTest extends TestCase
     public function updateProvider()
     {
         return [
-            'Nom valide'         => ['nom', 'nouveau'],
-            'Prenom valide'      => ['prenom', 'nouveau'],
-            'Mail valide'        => ['email', 'nouveau@example.com'],
-            'Option valide'      => ['responsable_option', Constantes::OPTION['vide']['aucun']],
-            'Departement valide' => ['responsable_departement', Constantes::DEPARTEMENT['vide']],
+            'Nom valide'         => [Enseignant::COL_NOM, 'nouveau'],
+            'Prenom valide'      => [Enseignant::COL_PRENOM, 'nouveau'],
+            'Mail valide'        => [Enseignant::COL_EMAIL, 'nouveau@example.com'],
+            'Option valide'      => [Enseignant::COL_RESPONSABLE_OPTION_ID, 1],
+            'Departement valide' => [Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, 1],
         ];
     }
 
