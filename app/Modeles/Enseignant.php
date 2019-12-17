@@ -10,6 +10,13 @@ use App\Utils\Constantes;
 class Enseignant extends AbstractEnseignant
 {
     /*
+     * Nom des colonnes dans la base de donnees
+     */
+    const COL_NOM    = 'nom';
+    const COL_PRENOM = 'prenom';
+    const COL_EMAIL  = 'email';
+
+    /*
      * Nom des colonnes des clefs etrangeres
      */
     const COL_RESPONSABLE_DEPARTEMENT_ID = 'departement_id';
@@ -37,11 +44,6 @@ class Enseignant extends AbstractEnseignant
      */
     protected $guarded = [
         'id', 
-        'responsable_departement',
-        'responsable_option',
-        'soutenances_referent',
-        'soutenances_candide',
-        'stages'
     ];
 
     /**
@@ -50,9 +52,9 @@ class Enseignant extends AbstractEnseignant
      * @var array[string]string
      */
     protected $attributes = [
-        'nom'                     => Constantes::STRING_VIDE,
-        'prenom'                  => Constantes::STRING_VIDE,
-        'email'                   => Constantes::STRING_VIDE,
+        Enseignant::COL_NOM    => Constantes::STRING_VIDE,
+        Enseignant::COL_PRENOM => Constantes::STRING_VIDE,
+        Enseignant::COL_EMAIL  => Constantes::STRING_VIDE,
     ];
 
     /**
