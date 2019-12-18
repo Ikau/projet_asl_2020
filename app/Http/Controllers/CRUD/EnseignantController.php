@@ -110,7 +110,11 @@ class EnseignantController extends AbstractControllerCRUD
     public function destroy($id)
     {
         $enseignant = $this->validerModele($id);
-        if(null === $enseignant) abort('404');
+        if(null === $enseignant) 
+        {
+            abort('404');
+        }
+
         $enseignant->delete();
 
         return redirect()->route('enseignants.index');
@@ -122,7 +126,7 @@ class EnseignantController extends AbstractControllerCRUD
         {
             case 'normaliseInputsOptionnels':
                 $this->normaliseInputsOptionnels($request);
-                if(null === $request->stages) abort('404');
+                if(null === $request->stages)               abort('404');
                 if(null === $request->soutenances_referent) abort('404');
                 if(null === $request->soutenances_candide ) abort('404');
             return redirect('/');
@@ -154,15 +158,21 @@ class EnseignantController extends AbstractControllerCRUD
     {
         if(null === $request->stages
         || ! $request->stages instanceof Collection)
+        {
             $request->stages = new Collection();
+        }
 
         if(null === $request->soutenances_referent
         || ! $request->soutenances_referent instanceof Collection)
+        {
             $request->soutenances_referent = new Collection();
+        }
 
         if(null === $request->soutenances_candide
         || ! $request->soutenances_candide instanceof Collection)
+        {
             $request->soutenances_candide = new Collection();
+        }
     }
 
     /**
@@ -203,6 +213,9 @@ class EnseignantController extends AbstractControllerCRUD
         return Enseignant::find($id);
     }
 
+    /**
+     * Renvoie tous les attributs du modele 'Enseignant'
+     */
     protected function getAttributsModele()
     {
         return Schema::getColumnListing(Enseignant::NOM_TABLE);
