@@ -28,18 +28,18 @@
 @endif
     @csrf
 
-    <label for="nom">Nom (*)</label>
-    <input id="nom" name="nom" type="text" value="{{ $contact->nom ?? old('nom') }}">
-    @error('nom')
-    <div class="alert alert-danger">{{ $message }}</div>
-    @enderror
+    @include('includes.form.input.text', [
+        'attribut' => 'nom',
+        'intitule' => 'Nom (*)',
+        'valeur'   => $contact->nom ?? old('nom')
+    ])
     <br/>
 
-    <label for="prenom">Prenom (*)</label>
-    <input id="prenom" name="prenom" type="text" value="{{ $contact->prenom ?? old('prenom') }}" >
-    @error('prenom')
-    <div class="alert alert-danger">{{ $message }}</div>
-    @enderror
+    @include('includes.form.input.text', [
+        'attribut' => 'prenom',
+        'intitule' => 'Prenom (*)',
+        'valeur'   => $contact->prenom ?? old('prenom')
+    ])
     <br/>
 
     <label for="type">Type (*)</label>
@@ -53,11 +53,12 @@
     @enderror
     <br/>
 
-    <label for="email">Mail (*)</label>
-    <input id="email" name="email" type="text" value="{{ $contact->email ?? old('email') }}" >
-    @error('email')
-    <div class="alert alert-danger">{{ $message }}</div>
-    @enderror
+
+    @include('includes.form.input.text', [
+        'attribut' => 'email',
+        'intitule' => 'Courriel (*)',
+        'valeur'   => $contact->email ?? old('email')
+    ])
     <br/>
 
     <label for="civilite">Civilite</label>
@@ -71,18 +72,18 @@
     @enderror
     <br/>
 
-    <label for="telephone">Telephone</label>
-    <input id="telephone" name="telephone" type="text" value="{{ $contact->telephone ?? old('telephone') }}" >
-    @error('telephone')
-    <div class="alert alert-danger">{{ $message }}</div>
-    @enderror
+    @include('includes.form.input.text', [
+        'attribut' => 'telephone',
+        'intitule' => 'Telephone',
+        'valeur'   => $contact->telephone ?? old('telephone')
+    ])
     <br/>
 
-    <label for="adresse">Adresse</label>
-    <input id="adresse" name="adresse" type="text" value="{{ $contact->adresse ?? old('adresse') }}" >
-    @error('adresse')
-    <div class="alert alert-danger">{{ $message }}</div>
-    @enderror
+    @include('includes.form.input.text', [
+        'attribut' => 'adresse',
+        'intitule' => 'Adresse',
+        'valeur'   => $contact->adresse ?? old('adresse')
+    ])
     <br/>
 
     @if ( isset($contact))

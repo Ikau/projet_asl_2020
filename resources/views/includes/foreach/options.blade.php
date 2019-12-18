@@ -1,7 +1,7 @@
 {{-- 
-    Liste les differentes options de l'INSA dans un tage <select>
+    Liste les differentes options de l'INSA dans un tag <select>
 
-    Variables recues de la vue appelante :
+    Variables a definir depuis la vue appelante :
         'departements' : collection de App\Modeles\Departement
         'options'      : collection de App\Modeles\Option
 --}}
