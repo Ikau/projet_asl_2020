@@ -169,7 +169,7 @@ class EtudiantControllerTest extends TestCase
 
         foreach($this->getAttributsModele() as $attribut)
         {
-            $response->assertSee("<td>$attribut</td>");
+            $response->assertSee("<th>$attribut</th>");
         }
     }
 

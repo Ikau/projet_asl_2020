@@ -17,7 +17,7 @@
     <table>
         <tr>
             @foreach($attributs as $attribut)
-            <td>{{ $attribut }}</td>
+            <th>{{ $attribut }}</th>
             @endforeach
         </tr>
         @foreach($etudiants as $etudiant)
