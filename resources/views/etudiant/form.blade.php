@@ -28,67 +28,56 @@
 @endif
     @csrf
 
-    <label for="nom">Nom (*)</label>
-    <input id="nom" name="nom" type="text" value="{{ $etudiant->nom ?? old('nom') }}">
-    @error('nom')
-    <div class="alert alert-danger">{{ $message }}</div>
-    @enderror
+    @include('includes.form.input.text', [
+        'attribut' => 'nom',
+        'intitule' => 'Nom (*)',
+        'valeur'   => $etudiant->nom ?? old('nom')
+    ])
     <br/>
 
-    <label for="prenom">Prenom (*)</label>
-    <input id="prenom" name="prenom" type="text" value="{{ $etudiant->prenom ?? old('prenom') }}" >
-    @error('prenom')
-    <div class="alert alert-danger">{{ $message }}</div>
-    @enderror
+    @include('includes.form.input.text', [
+        'attribut' => 'prenom',
+        'intitule' => 'Prenom (*)',
+        'valeur'   => $etudiant->prenom ?? old('prenom')
+    ])
     <br/>
 
-    <label for="email">Mail (*)</label>
-    <input id="email" name="email" type="text" value="{{ $etudiant->email ?? old('email') }}" >
-    @error('email')
-    <div class="alert alert-danger">{{ $message }}</div>
-    @enderror
+    @include('includes.form.input.text', [
+        'attribut' => 'email',
+        'intitule' => 'Courriel (*)',
+        'valeur'   => $etudiant->email ?? old('email')
+    ])
     <br/>
 
-    <label for="annee">Année suivie (*)</label>
-    <select name="annee" id="annee">
-        <option value="4" {{ $etudiant->annee ?? old('annee') === '4' ? 'selected':'' }}>4e année</option>
-        <option value="5" {{ $etudiant->annee ?? old('annee') === '5' ? 'selected':'' }}>5e année</option>
-    </select>
-    @error('annee')
-    <div class="alert alert-danger">{{ $message }}</div>
-    @enderror
+    @include('includes.form.input.select.annee', [
+        'attribut' => 'annee',
+        'intitule' => 'Année suivie (*)',
+        'valeur'   => $etudiant->annee ?? old('annee')
+    ])
     <br/>
 
-    <label for="mobilite">Mobilitée validée ? (*)</label>
-    <input id="mobilite" name="mobilite" type="checkbox" {{ $etudiant->mobilite ?? old('mobilite') === 'on' ? 'checked':'' }}>
-    @error('mobilite')
-    <div class="alert alert-danger">{{ $message }}</div>
-    @enderror
+    @include('includes.form.input.checkbox', [
+        'attribut' => 'mobilite',
+        'intitule' => 'Mobilitée validée ? (*)',
+        'valeur'   => $etudiant->mobilite ?? old('mobilite')
+    ])
     <br/>
 
-    <label for="option_id">Option (*)</label>
-    <select name="option_id" id="option_id" value="{{ $etudiant->option_id ?? old('option_id') }}" >
-        {{-- Liste les options de departement existants --}}
-        @include('includes.liste.options', [
-            'departements' => $departements,
-            'options'      => $options
-        ])
-    </select>
-    @error('option_id')
-    <div class="alert alert-danger">{{ $message }}</div>
-    @enderror
+    @include('includes.form.input.select.options', [
+        'attribut'     => 'option_id',
+        'intitule'     => 'Option (*)',
+        'valeur'       => $etudiant->option_id ?? old('option_id'),
+        'departements' => $departements,
+        'options'      => $options
+    ])
     <br/>
 
-    <label for="departement_id">Département (*)</label>
-    <select name="departement_id" id="departement_id" value="{{ $etudiant->departement_id ?? old('departement_id') }}" >
-        {{-- Liste les departements existants --}}
-        @include('includes.liste.departements', [
-            'departements' => $departements
-        ])
-    </select>
-    @error('departement_id')
-    <div class="alert alert-danger">{{ $message }}</div>
-    @enderror
+    @include('includes.form.input.select.departements', [
+        'attribut'     => 'departement_id',
+        'intitule'     => 'Département (*)',
+        'valeur'       => $etudiant->departement_id ?? old('departement_id'),
+        'departements' => $departements
+    ])
     <br/>
 
     @if ( isset($etudiant) )
