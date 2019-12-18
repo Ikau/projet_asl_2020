@@ -144,7 +144,7 @@ class EtudiantControllerTest extends TestCase
         ->assertViewIs('etudiant.index')
         ->assertSee(EtudiantController::TITRE_INDEX);
 
-        foreach(Schema::getColumnListing(Etudiant::NOM_TABLE) as $attribut)
+        foreach($this->getAttributsModele() as $attribut)
         {
             $response->assertSee("<td>$attribut</td>");
         }
@@ -157,7 +157,7 @@ class EtudiantControllerTest extends TestCase
         ->assertViewIs('etudiant.form')
         ->assertSee(EtudiantController::TITRE_CREATE);
 
-        foreach(Schema::getColumnListing(Etudiant::NOM_TABLE) as $attribut)
+        foreach($this->getAttributsModele() as $attribut)
         {
             if($attribut !== 'id') $response->assertSee("name=\"$attribut\"");
         }
@@ -177,7 +177,7 @@ class EtudiantControllerTest extends TestCase
         ->assertViewIs('etudiant.index');
 
         // Clause where
-        $attributs  = Schema::getColumnListing(Etudiant::NOM_TABLE);
+        $attributs = $this->getAttributsModele();
 
         $arrayWhere = [];
         foreach($attributs as $a)
@@ -202,21 +202,43 @@ class EtudiantControllerTest extends TestCase
 
     /**
      * @depends testValiderModele
+     * @dataProvider idProvider
      */
-    public function testShow()
+    public function testShow(bool $possedeErreur, string $idCase)
     {
         $etudiant = factory(Etudiant::class)->create();
+        $id;
+
+        switch($idCase)
+        {
+            case 'id_valide': 
+                $id = $etudiant->id; 
+            break;
+
+            case 'id_numerique': 
+                $id = "$etudiant->id"; 
+            break;
+
+            case 'id_invalide': 
+                $id = -1;
+            break;
+        }
 
         // Verification redirection
         $response = $this->from(route('etudiants.tests'))
-        ->get(route('etudiants.show', $etudiant->id))
-        ->assertOk()
+        ->get(route('etudiants.show', $id));
+
+        if($possedeErreur)
+        {
+            $response->assertStatus(404);
+            return;
+        }
+        $response->assertOk()
         ->assertViewIs('etudiant.show')
         ->assertSee(EtudiantController::TITRE_SHOW);
 
         // Verification donnees
-        $attributs = Schema::getColumnListing(Etudiant::NOM_TABLE);
-        foreach($attributs as $a)
+        foreach($this->getAttributsModele() as $a)
         {
             $response->assertSee($etudiant[$a]);
         }
@@ -228,7 +250,18 @@ class EtudiantControllerTest extends TestCase
      */
     public function testEdit()
     {
-        $this->assertTrue(TRUE);
+        $etudiant = factory(Etudiant::class)->create();
+
+        $response = $this->from(route('etudiants.tests'))
+        ->get(route('etudiants.edit', $etudiant->id))
+        ->assertOk()
+        ->assertViewIs('etudiant.form')
+        ->assertSee(EtudiantController::TITRE_EDIT);
+
+        foreach($this->getAttributsModele() as $a)
+        {
+            $response->assertSee($a);
+        }
     }
 
     /**
@@ -246,5 +279,26 @@ class EtudiantControllerTest extends TestCase
     public function testDestroy()
     {
         $this->assertTrue(TRUE);
+    }
+
+    public function idProvider()
+    {
+        //[bool $possedeErreur, string $idCase]
+        return [
+            // Succes
+            'Id valide'    => [FALSE, 'id_valide'],
+            'Id numerique' => [FALSE, 'id_numerique'],
+
+            // Echecs
+            'Id invalide'  => [TRUE, 'id_invalide']
+        ];
+    }
+
+    /**
+     * Fonction auxiliaire facilitant la recuperation des attributs du modele a tester
+     */
+    private function getAttributsModele()
+    {
+        return Schema::getColumnListing(Etudiant::NOM_TABLE);
     }
 }

@@ -83,6 +83,21 @@ class EtudiantController extends AbstractControllerCRUD
 
     public function edit($id)
     {
+        $etudiant = $this->validerModele($id);
+        if(null === $etudiant)
+        {
+            abort('404');
+        }
+
+        $departements = Departement::all();
+        $options      = Option::all();
+
+        return view('etudiant.form', [
+            'titre'        => EtudiantController::TITRE_EDIT,
+            'etudiant'     => $etudiant,
+            'departements' => $departements,
+            'options'      => $options
+        ]);
     }
 
     public function update(Request $request, $id)
