@@ -33,14 +33,13 @@ class EtudiantControllerTest extends TestCase
         $response = $this->followingRedirects()
         ->from(route('etudiants.tests'))
         ->post(route('etudiants.tests'), $etudiant->toArray())
-        ->assertOk(); // Si les inputs sont null, 404 est renvoye
+        ->assertOk(); // Si les inputs optionnels sont null, 404 est renvoye
     }
     
     public function normaliseOptionnelsProvider()
     {
         //[string $clefModifiee, $nouvelleValeur]
         return [
-            'Etudiant valide' => ['aucune', 'aucune'],
             'Mobilite null'   => [Etudiant::COL_MOBILITE, null],
             'Mobilite on'     => [Etudiant::COL_MOBILITE, 'on']
         ];
@@ -76,17 +75,27 @@ class EtudiantControllerTest extends TestCase
         //[bool $possedeErreur, string $clefModifiee, $nouvelleValeur]
         return [
             // Succes
-            'Etudiant valide' => [FALSE, 'aucune', 'aucune'],
-            'Mobilite null'   => [FALSE, Etudiant::COL_MOBILITE, null],
-            'Mobilite vide'   => [FALSE, Etudiant::COL_MOBILITE, ''],
+            'Nom valide'         => [FALSE, Etudiant::COL_NOM, 'nom'],
+            'Prenom valide'      => [FALSE, Etudiant::COL_PRENOM, 'prenom'],
+            'Email valide'       => [FALSE, Etudiant::COL_EMAIL, 'valide@email.com'],
+            'Annee valide'       => [FALSE, Etudiant::COL_ANNEE, 4],
+            'Departement valide' => [FALSE, Etudiant::COL_DEPARTEMENT_ID, 1],
+            'Option valide'      => [FALSE, Etudiant::COL_OPTION_ID, 1],
+
+            'Mobilite on'        => [FALSE, Etudiant::COL_MOBILITE, 'on'],
+            'Mobilite null'      => [FALSE, Etudiant::COL_MOBILITE, null],
+            'Mobilite vide'      => [FALSE, Etudiant::COL_MOBILITE, ''],
+            'Mobilite bool'      => [FALSE, Etudiant::COL_MOBILITE, FALSE],
+            'Mobilite 1'         => [FALSE, Etudiant::COL_MOBILITE, 1],
+            'Mobilite 0'         => [FALSE, Etudiant::COL_MOBILITE, 0],
             
             // Echecs
-            'Nom null'         => [TRUE, Etudiant::COL_NOM, null],
-            'Prenom null'      => [TRUE, Etudiant::COL_PRENOM, null],
-            'Email null'       => [TRUE, Etudiant::COL_EMAIL, null],
-            'Annee null'       => [TRUE, Etudiant::COL_ANNEE, null],
-            'Departement null' => [TRUE, Etudiant::COL_DEPARTEMENT_ID, null],
-            'Option null'      => [TRUE, Etudiant::COL_OPTION_ID, null],
+            'Nom null'             => [TRUE, Etudiant::COL_NOM, null],
+            'Prenom null'          => [TRUE, Etudiant::COL_PRENOM, null],
+            'Email null'           => [TRUE, Etudiant::COL_EMAIL, null],
+            'Annee null'           => [TRUE, Etudiant::COL_ANNEE, null],
+            'Departement null'     => [TRUE, Etudiant::COL_DEPARTEMENT_ID, null],
+            'Option null'          => [TRUE, Etudiant::COL_OPTION_ID, null],
 
             'Nom invalide'         => [TRUE, Etudiant::COL_NOM, 42],
             'Prenom invalide'      => [TRUE, Etudiant::COL_PRENOM, 42],
@@ -107,10 +116,21 @@ class EtudiantControllerTest extends TestCase
         $id;
         switch($idCase)
         {
-            case 0: $id = $etudiant->id; break;
-            case 1: $id = "$etudiant->id"; break;
-            case 2: $id = -1; break;
-            case 3: $id = null; break;
+            case 0: 
+                $id = $etudiant->id; 
+            break;
+
+            case 1: 
+                $id = "$etudiant->id"; 
+            break;
+
+            case 2: 
+                $id = -1; 
+            break;
+
+            case 3: 
+                $id = null; 
+            break;
         }
 
         $response = $this->followingRedirects()
@@ -160,27 +180,25 @@ class EtudiantControllerTest extends TestCase
 
         foreach($this->getAttributsModele() as $attribut)
         {
-            if($attribut !== 'id') $response->assertSee("name=\"$attribut\"");
+            if($attribut !== 'id') 
+            {
+                $response->assertSee("name=\"$attribut\"");
+            }
         }
     }
     
     /**
      * @depends testValiderForm
-     * @dataProvider storeProvider
      */
-    public function testStore(bool $boolAttendu, $valeurMobilite)
+    public function testStore()
     {
         $etudiantSource = factory(Etudiant::class)->make();
-        $etudiantSource->mobilite = $valeurMobilite;
 
         // Verification redirection
         $response = $this->followingRedirects()
         ->from(route('etudiants.create'))
         ->post(route('etudiants.store'), $etudiantSource->toArray())
         ->assertViewIs('etudiant.index');
-
-        // La requete est finie : on remet une valeur boolean
-        $etudiantSource->mobilite = $boolAttendu;
 
         // Clause where
         $attributs = $this->getAttributsModele();
@@ -204,20 +222,6 @@ class EtudiantControllerTest extends TestCase
                 $this->assertEquals($etudiantTest[$a], $etudiantSource[$a]);
             }
         }
-    }
-
-    public function storeProvider()
-    {
-        //[$valeurMobilite, bool $boolAttendu]
-        return [
-            // Succes
-            'Mobilite bool'   => [FALSE, FALSE],
-            'Mobilite 1'      => [TRUE, 1],
-            'Mobilite 0'      => [FALSE, 0],
-            'Mobilite on'     => [TRUE, 'on'],
-            'Mobilite vide'   => [FALSE, ''],
-            'Mobilite null'   => [FALSE, null]
-        ];
     }
 
     /**
@@ -265,7 +269,7 @@ class EtudiantControllerTest extends TestCase
      * @depends testValiderModele
      * @dataProvider updateProvider
      */
-    public function testUpdate(string $clefModifiee, $nouvelleValeur)
+    public function testUpdate(string $clefModifiee, $nouvelleValeur, $boolAttendu)
     {
         $etudiant                = factory(Etudiant::class)->create();
         $etudiant[$clefModifiee] = $nouvelleValeur;
@@ -274,11 +278,11 @@ class EtudiantControllerTest extends TestCase
         ->patch(route('etudiants.update', $etudiant->id), $etudiant->toArray())
         ->assertRedirect(route('etudiants.index'));
 
-        // Verification de la maj
-        if('mobilite' === $clefModifiee)
-        {
-            $etudiant[$clefModifiee] = FALSE;
-        }
+        // Redefinition du champ 'mobilite' par un boolean
+        if(null !== $boolAttendu)
+       {
+           $etudiant->mobilite = $boolAttendu;
+       } 
         
         $etudiantTest = Etudiant::find($etudiant->id);
         foreach($this->getAttributsModele() as $a)
@@ -289,18 +293,19 @@ class EtudiantControllerTest extends TestCase
 
     public function updateProvider()
     {
-        //[string $clefModifiee, $nouvelleValeur]
+        //[string $clefModifiee, $nouvelleValeur, bool $boolAttendu]
         return [
             // Sucess
-            'Nom valide'         => [Etudiant::COL_NOM, 'valide'],
-            'Prenom valide'      => [Etudiant::COL_PRENOM, 'valide'],
-            'Email valide'       => [Etudiant::COL_EMAIL, 'valide@example.com'],
-            'Annee valide'       => [Etudiant::COL_ANNEE, 4],
-            'Mobilite valide'    => [Etudiant::COL_NOM, 'on'],
-            'Mobilite null'      => [Etudiant::COL_MOBILITE, null],
-            'Mobilite vide'      => [Etudiant::COL_MOBILITE, ''],
-            'Departement valide' => [Etudiant::COL_DEPARTEMENT_ID, 1],
-            'Option valide'      => [Etudiant::COL_OPTION_ID, 1]
+            'Nom valide'         => [Etudiant::COL_NOM, 'valide', null],
+            'Prenom valide'      => [Etudiant::COL_PRENOM, 'valide', null],
+            'Email valide'       => [Etudiant::COL_EMAIL, 'valide@example.com', null],
+            'Annee valide'       => [Etudiant::COL_ANNEE, 4, null],
+            'Departement valide' => [Etudiant::COL_DEPARTEMENT_ID, 1, null],
+            'Option valide'      => [Etudiant::COL_OPTION_ID, 1, null],
+
+            'Mobilite on'        => [Etudiant::COL_MOBILITE, 'on', TRUE],
+            'Mobilite null'      => [Etudiant::COL_MOBILITE, null, FALSE],
+            'Mobilite vide'      => [Etudiant::COL_MOBILITE, '', FALSE],
         ];
     }
 
@@ -318,6 +323,12 @@ class EtudiantControllerTest extends TestCase
         $etudiantTest = Etudiant::find($etudiant->id);
         $this->assertNull($etudiantTest);
     }
+
+
+    /* ====================================================================
+     *                       FONCTIONS UTILITAIRES
+     * ====================================================================
+     */
 
     /**
      * Fonction auxiliaire facilitant la recuperation des attributs du modele a tester
