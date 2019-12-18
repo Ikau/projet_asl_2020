@@ -49,7 +49,7 @@
     @enderror
     <br/>
 
-    <label for="option_id">Responsable d'option ? (*)</label>
+    <label for="option_id">Responsable d'option ?</label>
     <select name="option_id" id="option_id" value="{{ $enseignant->option_id ?? old('option_id') }}" >
         {{-- Liste les options de departement existants --}}
         @include('includes.liste.options', [
@@ -62,7 +62,7 @@
     @enderror
     <br/>
 
-    <label for="departement_id">Responsable de département ? (*)</label>
+    <label for="departement_id">Responsable de département ?</label>
     <select name="departement_id" id="departement_id" value="{{ $enseignant->departement_id ?? old('departement_id') }}" >
         {{-- Liste les departements existants --}}
         @include('includes.liste.departements', [

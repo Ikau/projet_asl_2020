@@ -55,17 +55,19 @@ class EtudiantControllerTest extends TestCase
         $etudiant['test']        = 'validerForm';
         $etudiant[$clefModifiee] = $nouvelleValeur;
 
-        $response = $this->from(route('etudiants.create'))
+        $routeSource = route('etudiants.create');
+        $response    = $this->from($routeSource)
         ->post(route('etudiants.tests'), $etudiant->toArray());
 
         if($possedeErreur)
         {
             $response->assertSessionHasErrors($clefModifiee)
-            ->assertRedirect(route('etudiants.create'));
+            ->assertRedirect($routeSource);
         }
         else 
         {
-            $response->assertSessionDoesntHaveErrors();
+            $response->assertSessionDoesntHaveErrors()
+            ->assertRedirect('/');
         }
 
     }

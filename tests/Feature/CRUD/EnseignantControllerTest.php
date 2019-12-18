@@ -4,7 +4,7 @@ namespace Tests\Feature\CRUD;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
 
 use App\Modeles\Enseignant;
@@ -18,15 +18,6 @@ class EnseignantControllerTest extends TestCase
     // Rollback les modifications de la BDD a la fin des tests
     use RefreshDatabase;
 
-    /**
-     * Attributs sur lesquels effectuer les tests
-     */
-    private $attributs = [
-        'nom',
-        'prenom',
-        'email'
-    ];
-
     /* ====================================================================
      *                           TESTS AUXILIAIRES
      * ====================================================================
@@ -35,132 +26,112 @@ class EnseignantControllerTest extends TestCase
      /**
       * @dataProvider normaliseOptionnelsProvider
       */
-    public function testNormaliseOptionnels($clefModifiee)
+    public function testNormaliseOptionnels(string $clefModifiee, $nouvelleValeur)
     {
         $donnee                = factory(Enseignant::class)->make()->toArray();
         $donnee['test']        = 'normaliseInputsOptionnels';
-        $donnee[$clefModifiee] = null;
+        $donnee[$clefModifiee] = $nouvelleValeur;
 
         $response = $this->from(route('enseignants.tests'))
         ->post(route('enseignants.tests'), $donnee)
-        ->assertRedirect('/');
+        ->assertRedirect('/'); // 404 est renvoye si non numerique, 500 si affectation par defaut echoue
     }
 
     public function normaliseOptionnelsProvider()
     {
+        //[string $clefModifiee, $nouvelleValeur]
         return [
-          'Enseignant valide'         => ['aucune'] ,
-          'Soutenances candide null'  => ['soutenances_candide'],
-          'Soutenances referent null' => ['soutenances_referent'],
-          'Stages null'               => ['stages'],
+            // Success
+           'Resp departement null'     => [Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, null],
+           'Resp option null'          => [Enseignant::COL_RESPONSABLE_OPTION_ID, null],
+
+           'Resp departement numerique' => [Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, '1'],
+           'Resp option numerique'      => [Enseignant::COL_RESPONSABLE_OPTION_ID, '1'],
+
+           'Resp departement non numerique' => [Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, ''],
+           'Resp option non numerique'      => [Enseignant::COL_RESPONSABLE_OPTION_ID, ''],
+
+           'Resp departement invalide' => [Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, -1],
+           'Resp option invalide'      => [Enseignant::COL_RESPONSABLE_OPTION_ID, -1],
         ];
     }
 
     /**
      * @dataProvider validerFormProvider
      */
-    public function testValiderForm(array $donnee, string $routeAttendue)
+    public function testValiderForm(bool $possedeErreur, string $clefModifiee, $nouvelleValeur)
     {
-        $response = $this->from(route('enseignants.tests'))
-        ->post(route('enseignants.tests'), $donnee)
-        ->assertRedirect($routeAttendue);
+        $enseignant                = factory(Enseignant::class)->make();
+        $enseignant['test']        = 'validerForm';
+        $enseignant[$clefModifiee] = $nouvelleValeur;
+
+        $routeSource = route('enseignants.tests');
+        $response = $this->from($routeSource)
+        ->post(route('enseignants.tests'), $enseignant->toArray());
+
+        if($possedeErreur)
+        {
+            $response->assertSessionHasErrors($clefModifiee)
+            ->assertRedirect($routeSource);
+        }
+        else
+        {
+            $response->assertSessionDoesntHaveErrors()
+            ->assertRedirect('/');
+        }
 
     }
 
     public function validerFormProvider()
     {
-        // 'Fix' pour utiliser les factories dans les providers
-        $this->refreshApplication();
-
-        // Rappel : les affectations par array sont des copies profondes
-        $enseignantValide = factory(Enseignant::class)->make()->toArray();
-        $enseignantValide['test'] = 'validerForm';
-
-        // Success
-        $stagesNull           = $enseignantValide;
-        $stagesInvalides      = $enseignantValide;
-        $soutenancesNull      = $enseignantValide;
-        $soutenancesInvalides = $enseignantValide;
-
-        $stagesNull['stages']      = null;
-        $stagesInvalides['stages'] = 'non_collection';
-        $soutenancesNull['soutenances_referent']      = null;
-        $soutenancesNull['soutenances_candide']       = null;
-        $soutenancesInvalides['soutenances_referent'] = 'non_collection';
-        $soutenancesInvalides['soutenances_candide']  = 'non_collection';
-
-        // Echecs
-        $nomNull         = $enseignantValide;
-        $prenomNull      = $enseignantValide;
-        $emailNull       = $enseignantValide;
-        $optionNull      = $enseignantValide;
-        $departementNull = $enseignantValide;
-
-        $nomNull[Enseignant::COL_NOM]                                = null;
-        $prenomNull[Enseignant::COL_PRENOM]                          = null;
-        $emailNull[Enseignant::COL_EMAIL]                            = null;
-        $optionNull[Enseignant::COL_RESPONSABLE_OPTION_ID]           = null;
-        $departementNull[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID] = null;
-
-        $nomInvalide         = $enseignantValide;
-        $prenomInvalide      = $enseignantValide;
-        $emailInvalide       = $enseignantValide;
-        $optionInvalide      = $enseignantValide;
-        $departementInvalide = $enseignantValide;
-
-        $nomInvalide[Enseignant::COL_NOM]                                = 42;
-        $prenomInvalide[Enseignant::COL_PRENOM]                          = 42;
-        $emailInvalide[Enseignant::COL_EMAIL]                            = 'mauvaisEmail';
-        $optionInvalide[Enseignant::COL_RESPONSABLE_OPTION_ID]           = -1;
-        $departementInvalide[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID] = -1;
-
-        // [array $donnee, string $routeAttendue]
+        //[bool $possedeErreur, string $clefModifiee, $nouvelleValeur]
         return [
             // Succes
-            'Enseignant valide'     => [$enseignantValide, '/'],
-            'Stages null'           => [$stagesNull, '/'],
-            'Stages invalides'      => [$stagesInvalides, '/'],
-            'Soutenances null'      => [$soutenancesNull, '/'],
-            'Soutenances invalides' => [$soutenancesInvalides, '/'],
+            'Nom valide'         => [FALSE, Enseignant::COL_NOM, 'nom'],
+            'Prenom valide'      => [FALSE, Enseignant::COL_PRENOM, 'prenom'],
+            'Email valide'       => [FALSE, Enseignant::COL_EMAIL, 'valide@example.com'],
+            'Departement valide' => [FALSE, Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, 1],
+            'Option valide'      => [FALSE, Enseignant::COL_RESPONSABLE_OPTION_ID, 1],
+
+            'Departement non numerique' => [FALSE, Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, ''],
+            'Option non numerique'      => [FALSE, Enseignant::COL_RESPONSABLE_OPTION_ID, ''],
+
+            'Departement null' => [FALSE, Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, null],
+            'Option null'      => [FALSE, Enseignant::COL_RESPONSABLE_OPTION_ID, null],
 
             // Echecs
-            'Nom null'         => [$nomNull, route('enseignants.tests')],
-            'Prenom null'      => [$prenomNull, route('enseignants.tests')],
-            'Email null'       => [$emailNull, route('enseignants.tests')],
-            'Option null'      => [$optionNull, route('enseignants.tests')],
-            'Departement null' => [$departementNull, route('enseignants.tests')],
+            'Nom null'         => [TRUE, Enseignant::COL_NOM, null],
+            'Prenom null'      => [TRUE, Enseignant::COL_PRENOM, null],
+            'Email null'       => [TRUE, Enseignant::COL_EMAIL, null],
 
-            'Nom invalide'         => [$nomInvalide, route('enseignants.tests')],
-            'Prenom invalide'      => [$prenomInvalide, route('enseignants.tests')],
-            'Email invalide'       => [$emailInvalide, route('enseignants.tests')],
-            'Option invalide'      => [$optionInvalide, route('enseignants.tests')],
-            'Departement invalide' => [$departementInvalide, route('enseignants.tests')],
+            'Departement invalide' => [TRUE, Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, -1],
+            'Option invalide'      => [TRUE, Enseignant::COL_RESPONSABLE_OPTION_ID, -1],
+            'Email invalide'       => [TRUE, Enseignant::COL_EMAIL, 'invalideEmail'],
         ];
     }
 
     /**
      * @dataProvider validerModeleProvider
      */
-    public function testValiderModele(string $casId, int $statutAttendu)
+    public function testValiderModele(int $casId, int $statutAttendu)
     {
+        $enseignant = factory(Enseignant::class)->create();
         $id;
         switch($casId)
         {
-            case 'id_valide':
-                $enseignant = factory(Enseignant::class)->create();
-                $id         = $enseignant->id;
+            case 0:
+                $id = $enseignant->id;
             break;
 
-            case 'id_numerique':
-                $enseignant = factory(Enseignant::class)->create();
-                $id         = "$enseignant->id";
+            case 1:
+                $id = "$enseignant->id";
             break;
 
-            case 'id_invalide':
+            case 2:
                 $id = -1;
             break;
 
-            case 'id_null':
+            case 3:
                 $id = null;
             break;
         }
@@ -177,10 +148,10 @@ class EnseignantControllerTest extends TestCase
     {
 
         return [
-            'Id valide'    => ['id_valide', 302],
-            'Id numerique' => ['id_numerique', 302],
-            'Id invalide'  => ['id_invalide', 404],
-            'Id null'      => ['id_null', 404],
+            'Id valide'    => [0, 302],
+            'Id numerique' => [1, 302],
+            'Id invalide'  => [2, 404],
+            'Id null'      => [3, 404],
         ];
     }
 
@@ -195,6 +166,11 @@ class EnseignantControllerTest extends TestCase
         ->assertOk()
         ->assertViewIs('enseignant.index')
         ->assertSee(EnseignantController::TITRE_INDEX);
+
+        foreach($this->getAttributsModele() as $attribut)
+        {
+            $response->assertSee("<th>$attribut</th>");
+        }
     }
 
     public function testCreate()
@@ -204,6 +180,15 @@ class EnseignantControllerTest extends TestCase
         ->assertOK()
         ->assertViewIs('enseignant.form')
         ->assertSee(EnseignantController::TITRE_CREATE);
+
+        // Verification des inputs
+        foreach($this->getAttributsModele() as $attribut)
+        {
+            if('id' !== $attribut)
+            {
+                $response->assertSee("name=\"$attribut\"");
+            }
+        }
 
         // Verification des departements
         foreach(Departement::all() as $departement)
@@ -221,6 +206,7 @@ class EnseignantControllerTest extends TestCase
     
     /**
      * @depends testValiderForm
+     * @depends testNormaliseOptionnels
      */
     public function testStore()
     {
@@ -232,94 +218,61 @@ class EnseignantControllerTest extends TestCase
 
         // Arguments pour la clause 'where'
         $arrayWhere = [];
-        foreach($this->attributs as $attribut)
+        foreach($this->getAttributsModele() as $attribut)
         {
-            $arrayWhere[] = [$attribut, '=', $enseignant[$attribut]];
+            if('id' !== $attribut)
+            {
+                $arrayWhere[] = [$attribut, '=', $enseignant[$attribut]];
+            }
         }
         
         // Recuperation de l'enseignant
         $enseignantTest = Enseignant::where($arrayWhere)->first();
         $this->assertNotNull($enseignantTest);
 
-        foreach($this->attributs as $attribut)
+        foreach($this->getAttributsModele() as $attribut)
         {
-            $this->assertEquals($enseignant[$attribut], $enseignantTest[$attribut]);
+            if('id' !== $attribut)
+            {
+                $this->assertEquals($enseignant[$attribut], $enseignantTest[$attribut]);
+            }
         }
     }
 
     /**
      * @depends testValiderModele
-     * @dataProvider showEditDestroyProvider
      */
-    public function testShow(string $idCas, bool $succes)
+    public function testShow()
     {
-        $id;
-        switch($idCas)
-        {
-            case 'id_valide':
-                $id = factory(Enseignant::class)->create()->id;
-            break;
+        $enseignant = factory(Enseignant::class)->create();
 
-            case 'id_numerique':
-                $enseignant = factory(Enseignant::class)->create();
-                $id = "$enseignant->id";
-            break;
+        $response = $this->get(route('enseignants.show', $enseignant->id))
+        ->assertOk()
+        ->assertViewIs('enseignant.show')
+        ->assertSee(EnseignantController::TITRE_SHOW);
 
-            case 'id_invalide':
-                $id = -1;
-            break;
-        }
-        $response = $this->get(route('enseignants.show', $id));
-        if($succes)
+        foreach($this->getAttributsModele() as $a)
         {
-            $response->assertOk()
-            ->assertViewIs('enseignant.show')
-            ->assertSee(EnseignantController::TITRE_SHOW);
-        }
-        else
-        {
-            $response->assertStatus(404);
+            $response->assertSee($enseignant[$a]);
         }
     }
 
     /**
      * @depends testValiderForm
      * @depends testValiderModele
-     * @dataProvider showEditDestroyProvider
      */
-    public function testEdit(string $idCas, bool $succes)
+    public function testEdit()
     {
         $enseignant = factory(Enseignant::class)->create();
-        $id;
-        switch($idCas)
-        {
-            case 'id_valide':
-                $id = $enseignant->id;
-            break;
+        
+        $response = $this->get(route('enseignants.edit', $enseignant->id))
+        ->assertOk()
+        ->assertViewIs('enseignant.form')
+        ->assertSee(EnseignantController::TITRE_EDIT);
 
-            case 'id_numerique':
-                $id = "$enseignant->id";
-            break;
-
-            case 'id_invalide':
-                $id = -1;
-            break;
-        }
-        $response = $this->get(route('enseignants.edit', $id));
-        if($succes)
+        foreach($this->getAttributsModele() as $attribut)
         {
-            $response->assertOk()
-            ->assertViewIs('enseignant.form')
-            ->assertSee(EnseignantController::TITRE_EDIT);
-
-            foreach($this->attributs as $attribut)
-            {
-                $response->assertSee($enseignant[$attribut]);
-            }
-        }
-        else
-        {
-            $response->assertStatus(404);
+            $response->assertSee($enseignant[$attribut]);
         }
     }
 
@@ -328,9 +281,9 @@ class EnseignantControllerTest extends TestCase
      * @depends testValiderModele
      * @dataProvider updateProvider
      */
-    public function testUpdate($clefModifiee, $nouvelleValeur)
+    public function testUpdate(string $clefModifiee, $nouvelleValeur, $valeurDefaut)
     {
-        $enseignantSource = factory(Enseignant::class)->create();
+        $enseignantSource                = factory(Enseignant::class)->create();
         $enseignantSource[$clefModifiee] = $nouvelleValeur;
         
         // Mise a jour et redirection OK
@@ -338,69 +291,66 @@ class EnseignantControllerTest extends TestCase
         ->patch(route('enseignants.update', $enseignantSource->id), $enseignantSource->toArray())
         ->assertRedirect(route('enseignants.index'));
 
+        // Definition du defaut si necessaire
+        if('departement' === $valeurDefaut)
+        {
+            $idAucunDepartement = Departement::where(Departement::COL_INTITULE, 'Aucun')->first()->id;
+            $enseignantSource[$clefModifiee] = $idAucunDepartement;
+        }
+        else if('option' === $valeurDefaut)
+        {
+            $idAucuneOption = Option::where(Option::COL_INTITULE, 'Aucune')->first()->id;
+            $enseignantSource[$clefModifiee] = $idAucuneOption;
+        }
+
         // Verification de la MAJ
         $enseignantMaj = Enseignant::find($enseignantSource->id);
-        $this->assertEquals($enseignantSource->id, $enseignantMaj->id);
-        foreach($this->attributs as $attribut)
+        $this->assertNotNull($enseignantMaj);
+        foreach($this->getAttributsModele() as $a)
         {
-            $this->assertEquals($enseignantSource[$attribut], $enseignantMaj[$attribut]);
+            $this->assertEquals($enseignantSource[$a], $enseignantMaj[$a]);
         }
     }
 
     public function updateProvider()
     {
+        //[string $clefModifiee, $nouvelleValeur, $valeurDefaut]
         return [
-            'Nom valide'         => [Enseignant::COL_NOM, 'nouveau'],
-            'Prenom valide'      => [Enseignant::COL_PRENOM, 'nouveau'],
-            'Mail valide'        => [Enseignant::COL_EMAIL, 'nouveau@example.com'],
-            'Option valide'      => [Enseignant::COL_RESPONSABLE_OPTION_ID, 1],
-            'Departement valide' => [Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, 1],
+            'Nom valide'         => [Enseignant::COL_NOM, 'nouveau', null],
+            'Prenom valide'      => [Enseignant::COL_PRENOM, 'nouveau', null],
+            'Mail valide'        => [Enseignant::COL_EMAIL, 'nouveau@example.com', null],
+            'Departement valide' => [Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, 1, null],
+            'Option valide'      => [Enseignant::COL_RESPONSABLE_OPTION_ID, 1, null],
+
+            'Departement null' => [Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, null, 'departement'],
+            'Option null'      => [Enseignant::COL_RESPONSABLE_OPTION_ID, null, 'option'],
         ];
     }
 
     /**
      * @depends testValiderModele
-     * @dataProvider showEditDestroyProvider
      */
-    public function testDestroy(string $idCas, bool $succes)
+    public function testDestroy()
     {
         $enseignant = factory(Enseignant::class)->create();
-        $id;
-        switch($idCas)
-        {
-            case 'id_valide':
-                $id = $enseignant->id;
-            break;
-
-            case 'id_numerique':
-                $id = "$enseignant->id";
-            break;
-
-            case 'id_invalide':
-                $id = -1;
-            break;
-        }
+        
         $response = $this->from(route('enseignants.index'))
-        ->delete(route('enseignants.destroy', $id));
+        ->delete(route('enseignants.destroy', $enseignant->id))
+        ->assertRedirect(route('enseignants.index'));
 
-        if($succes) // L'enseignant est supprime
-        {
-            $response->assertOk();
-            $this->assertNull(Enseignant::find($id));
-        }
-        else // L'enseignent existe toujours
-        {
-            $response->assertStatus(404);
-            $this->assertNotNull(Enseignant::find($enseignant->id));
-        }
+        $this->assertNull(Enseignant::find($enseignant->id));
     }
 
-    public function showEditDestroyProvider()
+    /* ====================================================================
+     *                       FONCTIONS UTILITAIRES
+     * ====================================================================
+     */
+
+    /**
+     * Fonction auxiliaire facilitant la recuperation des attributs du modele a tester
+     */
+    private function getAttributsModele()
     {
-        return [
-            'Id valide'    => ['id_valide', TRUE],
-            'Id numerique' => ['id_numerique', TRUE],
-            'Id invalide'  => ['id_invalide', FALSE]
-        ];
+        return Schema::getColumnListing(Enseignant::NOM_TABLE);
     }
 }

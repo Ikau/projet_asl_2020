@@ -126,9 +126,11 @@ class EnseignantController extends AbstractControllerCRUD
         {
             case 'normaliseInputsOptionnels':
                 $this->normaliseInputsOptionnels($request);
-                if(null === $request->stages)               abort('404');
-                if(null === $request->soutenances_referent) abort('404');
-                if(null === $request->soutenances_candide ) abort('404');
+
+                // On verifie seulement que c'est numerique.
+                // Si l'affectation par defaut a echoue alors on a une reponse 500
+                if(! is_numeric($request[Enseignant::COL_RESPONSABLE_OPTION_ID]))       abort('404');
+                if(! is_numeric($request[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID]))  abort('404');
             return redirect('/');
 
             case 'validerForm':
@@ -156,22 +158,29 @@ class EnseignantController extends AbstractControllerCRUD
      */
     protected function normaliseInputsOptionnels(Request $request)
     {
-        if(null === $request->stages
-        || ! $request->stages instanceof Collection)
+
+        // Departement
+        $idsDepartement       = Departement::all()->pluck('id');
+        $idDepartementRequest = $request[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID];
+        if($request->missing(Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID)
+        || null === $idDepartementRequest
+        || ! is_numeric($idDepartementRequest)
+        || ! $idsDepartement->contains($idDepartementRequest))
         {
-            $request->stages = new Collection();
+            $idAucunDepartement = Departement::where(Departement::COL_INTITULE, 'Aucun')->first()->id;
+            $request[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID] = $idAucunDepartement;
         }
 
-        if(null === $request->soutenances_referent
-        || ! $request->soutenances_referent instanceof Collection)
+        // Option
+        $idsOption       = Option::all()->pluck('id');
+        $idOptionRequest = $request[Enseignant::COL_RESPONSABLE_OPTION_ID];
+        if($request->missing(Enseignant::COL_RESPONSABLE_OPTION_ID)
+        || null === $idOptionRequest
+        || ! is_numeric($idOptionRequest)
+        || ! $idsOption->contains($idOptionRequest))
         {
-            $request->soutenances_referent = new Collection();
-        }
-
-        if(null === $request->soutenances_candide
-        || ! $request->soutenances_candide instanceof Collection)
-        {
-            $request->soutenances_candide = new Collection();
+            $idAucuneOption = Option::where(Option::COL_INTITULE, 'Aucune')->first()->id;
+            $request[Enseignant::COL_RESPONSABLE_OPTION_ID] = $idAucuneOption;
         }
     }
 
@@ -184,13 +193,13 @@ class EnseignantController extends AbstractControllerCRUD
             Enseignant::COL_NOM    => ['required', 'string'],
             Enseignant::COL_PRENOM => ['required', 'string'],
             Enseignant::COL_EMAIL  => ['required', 'email'],
-            Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID => [
-                'required', 
+            Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID => [ 
+                'nullable',
                 'integer',
                 Rule::in(Departement::all()->pluck('id'))
             ],
             Enseignant::COL_RESPONSABLE_OPTION_ID => [
-                'required',
+                'nullable',
                 'integer',
                 Rule::in(Option::all()->pluck('id'))
             ]
