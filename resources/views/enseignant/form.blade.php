@@ -21,7 +21,7 @@
 </div>
 
 @if ( isset($enseignant) )
-<form method="POST" action="{{ route('enseignants.update', [$id ?? -1]) }}">
+<form method="POST" action="{{ route('enseignants.update', [$enseignant->id ?? -1]) }}">
 @method('PATCH')
 @else
 <form method="POST" action="{{ route('enseignants.store') }}">
@@ -51,15 +51,11 @@
 
     <label for="option_id">Responsable d'option ? (*)</label>
     <select name="option_id" id="option_id" value="{{ $enseignant->option_id ?? old('option_id') }}" >
-        @foreach($departements as $d)
-        <optgroup label="{{ $d->intitule }}">
-            @foreach($options as $o)
-                @if($d->id === $o->departement_id)
-                <option value="{{ $o->id }}">{{ $o->intitule }}</option>
-                @endif
-            @endforeach
-        </optgroup>
-        @endforeach
+        {{-- Liste les options de departement existants --}}
+        @include('includes.liste.options', [
+            'departements' => $departements,
+            'options'      => $options
+        ])
     </select>
     @error('option_id')
     <div class="alert alert-danger">{{ $message }}</div>
@@ -68,9 +64,10 @@
 
     <label for="departement_id">Responsable de département ? (*)</label>
     <select name="departement_id" id="departement_id" value="{{ $enseignant->departement_id ?? old('departement_id') }}" >
-        @foreach($departements as $d)
-        <option value="{{ $d->id }}">{{ $d->intitule }}</option>
-        @endforeach
+        {{-- Liste les departements existants --}}
+        @include('includes.liste.departements', [
+            'departements' => $departements
+        ])
     </select>
     @error('departement_id')
     <div class="alert alert-danger">{{ $message }}</div>

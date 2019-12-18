@@ -21,7 +21,7 @@
 </div>
 
 @if ( isset($contact) )
-<form method="POST" action="{{ route('contacts.update', [$id ?? -1]) }}">
+<form method="POST" action="{{ route('contacts.update', [$contact->id ?? -1]) }}">
 @method('PATCH')
 @else
 <form method="POST" action="{{ route('contacts.store') }}">

@@ -198,4 +198,8 @@ class EnseignantController extends AbstractControllerCRUD
         return Enseignant::find($id);
     }
 
+    protected function getAttributsModele()
+    {
+        return Schema::getColumnListing(Enseignant::NOM_TABLE);
+    }
 }
