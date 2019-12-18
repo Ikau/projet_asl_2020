@@ -167,7 +167,8 @@ class EtudiantController extends AbstractControllerCRUD
      */
     protected function normaliseInputsOptionnels(Request $request)
     {
-        if(null === $request[Etudiant::COL_MOBILITE])
+        if($request->missing(Etudiant::COL_MOBILITE)
+        || null === $request[Etudiant::COL_MOBILITE])
         {
             $request[Etudiant::COL_MOBILITE] = FALSE;
         }

@@ -166,16 +166,21 @@ class EtudiantControllerTest extends TestCase
     
     /**
      * @depends testValiderForm
+     * @dataProvider storeProvider
      */
-    public function testStore()
+    public function testStore(bool $boolAttendu, $valeurMobilite)
     {
         $etudiantSource = factory(Etudiant::class)->make();
+        $etudiantSource->mobilite = $valeurMobilite;
 
         // Verification redirection
         $response = $this->followingRedirects()
         ->from(route('etudiants.create'))
         ->post(route('etudiants.store'), $etudiantSource->toArray())
         ->assertViewIs('etudiant.index');
+
+        // La requete est finie : on remet une valeur boolean
+        $etudiantSource->mobilite = $boolAttendu;
 
         // Clause where
         $attributs = $this->getAttributsModele();
@@ -199,6 +204,20 @@ class EtudiantControllerTest extends TestCase
                 $this->assertEquals($etudiantTest[$a], $etudiantSource[$a]);
             }
         }
+    }
+
+    public function storeProvider()
+    {
+        //[$valeurMobilite, bool $boolAttendu]
+        return [
+            // Succes
+            'Mobilite bool'   => [FALSE, FALSE],
+            'Mobilite 1'      => [TRUE, 1],
+            'Mobilite 0'      => [FALSE, 0],
+            'Mobilite on'     => [TRUE, 'on'],
+            'Mobilite vide'   => [FALSE, ''],
+            'Mobilite null'   => [FALSE, null]
+        ];
     }
 
     /**
