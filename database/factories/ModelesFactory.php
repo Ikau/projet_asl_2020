@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 
 use App\Modeles\Contact;
 use App\Modeles\Enseignant;
+use App\Modeles\Entreprise;
 use App\Modeles\Etudiant;
 use App\Modeles\Departement;
 use App\Modeles\Option;
@@ -55,4 +56,17 @@ $factory->define(Etudiant::class, function (Faker $faker)
         Etudiant::COL_DEPARTEMENT_ID => $faker->randomElement($idsDepartement),
         Etudiant::COL_OPTION_ID      => $faker->randomElement($idsOption)
     ];
+});
+
+$factory->define(Entreprise::class, function (Faker $faker)
+{
+    return [
+        Entreprise::COL_NOM      => $faker->company,
+        Entreprise::COL_ADRESSE  => $faker->address,
+        Entreprise::COL_ADRESSE2 => $faker->address,
+        Entreprise::COL_CP       => $faker->postcode,
+        Entreprise::COL_VILLE    => $faker->city,
+        Entreprise::COL_REGION   => $faker->region,
+        Entreprise::COL_PAYS     => $faker->country,
+    ];  
 });
