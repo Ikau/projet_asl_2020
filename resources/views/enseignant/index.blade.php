@@ -16,43 +16,31 @@
 <div>
     <table>
         <tr>
-            <th>id</th>
-            <th>nom</th>
-            <th>prenom</th>
-            <th>email</th>
-            <th>responsable_option</th>
-            <th>responsable_departement</th>
-            <th>soutenances_candide</th>
-            <th>soutenances_referent</th>
-            <th>stages</th>
+            @foreach($attributs as $a)
+            <th>{{ $a }}</th>
+            @endforeach
         </tr>
-        @foreach($enseignants as $c)
+        @foreach($enseignants as $e)
         <tr>
-            <td>{{ $c->id }}</td>
-            <td>{{ $c->nom }}</td>
-            <td>{{ $c->prenom }}</td>
-            <td>{{ $c->email }}</td>
-            <td>{{ $c->responsable_option }}</td>
-            <td>{{ $c->responsable_departement }}</td>
-            <td>{{ $c->soutenances_candide }}</td>
-            <td>{{ $c->soutenances_referent }}</td>
-            <td>{{ $c->stages }}</td>
+            @foreach($attributs as $a)
+            <td>{{ $e[$a] }}</td>
+            @endforeach
             <td>
-                <form method="GET" action="{{ route('enseignants.show', [$c->id]) }}">
+                <form method="GET" action="{{ route('enseignants.show', [$e->id]) }}">
                     @csrf
                     @method('GET')
                     <button type="submit">Profil</button>
                 </form>
             </td>
             <td>
-                <form method="GET" action="{{ route('enseignants.edit', [$c->id]) }}">
+                <form method="GET" action="{{ route('enseignants.edit', [$e->id]) }}">
                     @csrf
                     @method('GET')
                     <button type="submit">Modifier</button>
                 </form>
             </td>
             <td>
-                <form method="POST" action="{{ route('enseignants.destroy', [$c->id]) }}">
+                <form method="POST" action="{{ route('enseignants.destroy', [$e->id]) }}">
                     @csrf
                     @method('DELETE')
                     <button type="submit">Supprimer</button>

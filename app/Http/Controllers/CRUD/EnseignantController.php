@@ -5,6 +5,7 @@ namespace App\Http\Controllers\CRUD;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Schema;
 
 use App\Abstracts\AbstractControllerCRUD;
 use App\Modeles\Enseignant;
@@ -31,10 +32,12 @@ class EnseignantController extends AbstractControllerCRUD
 
     public function index()
     {
+        $attributs   = $this->getAttributsModele();
         $enseignants = Enseignant::all();
 
         return view('enseignant.index', [
             'titre'       => EnseignantController::TITRE_INDEX,
+            'attributs'   => $attributs,
             'enseignants' => $enseignants,
         ]);
     }
@@ -109,6 +112,8 @@ class EnseignantController extends AbstractControllerCRUD
         $enseignant = $this->validerModele($id);
         if(null === $enseignant) abort('404');
         $enseignant->delete();
+
+        return redirect()->route('enseignants.index');
     }
 
     public function tests(Request $request)
