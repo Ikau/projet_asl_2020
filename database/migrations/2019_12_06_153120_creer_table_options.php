@@ -19,7 +19,7 @@ class CreerTableOptions extends Migration
         Schema::create(Option::NOM_TABLE, function(Blueprint $table){
             $table->bigIncrements('id');
 
-            $table->string('intitule');
+            $table->string(Option::COL_INTITULE);
             $table->unsignedBigInteger(Option::COL_DEPARTEMENT_ID);
 
             $table->foreign(Option::COL_DEPARTEMENT_ID)->references('id')->on(Departement::NOM_TABLE);

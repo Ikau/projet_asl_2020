@@ -20,9 +20,10 @@ class CreerTableEnseignants extends Migration
     {
         Schema::create(Enseignant::NOM_TABLE, function(Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nom');
-            $table->string('prenom');
-            $table->string('email');
+
+            $table->string(Enseignant::COL_NOM);
+            $table->string(Enseignant::COL_PRENOM);
+            $table->string(Enseignant::COL_EMAIL);
 
             $table->unsignedBigInteger(Enseignant::COL_RESPONSABLE_OPTION_ID);
             $table->unsignedBigInteger(Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID);
