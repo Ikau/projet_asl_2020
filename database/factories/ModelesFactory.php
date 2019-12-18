@@ -18,13 +18,13 @@ use App\Utils\Constantes;
 $factory->define(Contact::class, function (Faker $faker)
 {
     return [
-        'nom'       => $faker->lastName,
-        'prenom'    => $faker->firstName,
-        'civilite'  => $faker->randomElement(Constantes::CIVILITE),
-        'type'      => $faker->randomElement(Constantes::TYPE_CONTACT),
-        'email'     => $faker->unique()->safeEmail,
-        'telephone' => $faker->phoneNumber,
-        'adresse'   => $faker->address
+        Contact::COL_NOM       => $faker->lastName,
+        Contact::COL_PRENOM    => $faker->firstName,
+        Contact::COL_CIVILITE  => $faker->randomElement(Constantes::CIVILITE),
+        Contact::COL_TYPE      => $faker->randomElement(Constantes::TYPE_CONTACT),
+        Contact::COL_EMAIL     => $faker->unique()->safeEmail,
+        Contact::COL_TELEPHONE => $faker->phoneNumber,
+        Contact::COL_ADRESSE   => $faker->address
     ];
 });
 
