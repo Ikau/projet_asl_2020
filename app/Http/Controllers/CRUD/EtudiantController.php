@@ -102,10 +102,29 @@ class EtudiantController extends AbstractControllerCRUD
 
     public function update(Request $request, $id)
     {
+        $this->validerForm($request);
+        $etudiant = $this->validerModele($id);
+        if(null === $etudiant)
+        {
+            abort('404');
+        }
+        
+        $etudiant->update($request->all());
+        $etudiant->save();
+
+        return redirect()->route('etudiants.index');
     }
 
     public function destroy($id)
     {
+        $etudiant = $this->validerModele($id);
+        if(null === $etudiant)
+        {
+            abort('404');
+        }
+
+        $etudiant->delete();
+        return redirect()->route('etudiants.index');
     }
 
     public function tests(Request $request)

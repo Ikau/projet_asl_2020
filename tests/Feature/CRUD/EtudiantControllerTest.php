@@ -78,6 +78,7 @@ class EtudiantControllerTest extends TestCase
             // Succes
             'Etudiant valide' => [FALSE, 'aucune', 'aucune'],
             'Mobilite null'   => [FALSE, Etudiant::COL_MOBILITE, null],
+            'Mobilite vide'   => [FALSE, Etudiant::COL_MOBILITE, ''],
             
             // Echecs
             'Nom null'         => [TRUE, Etudiant::COL_NOM, null],
@@ -202,38 +203,14 @@ class EtudiantControllerTest extends TestCase
 
     /**
      * @depends testValiderModele
-     * @dataProvider idProvider
      */
-    public function testShow(bool $possedeErreur, string $idCase)
+    public function testShow()
     {
         $etudiant = factory(Etudiant::class)->create();
-        $id;
-
-        switch($idCase)
-        {
-            case 'id_valide': 
-                $id = $etudiant->id; 
-            break;
-
-            case 'id_numerique': 
-                $id = "$etudiant->id"; 
-            break;
-
-            case 'id_invalide': 
-                $id = -1;
-            break;
-        }
-
         // Verification redirection
         $response = $this->from(route('etudiants.tests'))
-        ->get(route('etudiants.show', $id));
-
-        if($possedeErreur)
-        {
-            $response->assertStatus(404);
-            return;
-        }
-        $response->assertOk()
+        ->get(route('etudiants.show', $etudiant->id))
+        ->assertOk()
         ->assertViewIs('etudiant.show')
         ->assertSee(EtudiantController::TITRE_SHOW);
 
@@ -267,10 +244,45 @@ class EtudiantControllerTest extends TestCase
     /**
      * @depends testValiderForm
      * @depends testValiderModele
+     * @dataProvider updateProvider
      */
-    public function testUpdate()
+    public function testUpdate(string $clefModifiee, $nouvelleValeur)
     {
-        $this->assertTrue(TRUE);
+        $etudiant                = factory(Etudiant::class)->create();
+        $etudiant[$clefModifiee] = $nouvelleValeur;
+
+        $response = $this->from(route('etudiants.tests'))
+        ->patch(route('etudiants.update', $etudiant->id), $etudiant->toArray())
+        ->assertRedirect(route('etudiants.index'));
+
+        // Verification de la maj
+        if('mobilite' === $clefModifiee)
+        {
+            $etudiant[$clefModifiee] = FALSE;
+        }
+        
+        $etudiantTest = Etudiant::find($etudiant->id);
+        foreach($this->getAttributsModele() as $a)
+        {
+            $this->assertEquals($etudiant[$a], $etudiantTest[$a]);
+        }
+    }
+
+    public function updateProvider()
+    {
+        //[string $clefModifiee, $nouvelleValeur]
+        return [
+            // Sucess
+            'Nom valide'         => [Etudiant::COL_NOM, 'valide'],
+            'Prenom valide'      => [Etudiant::COL_PRENOM, 'valide'],
+            'Email valide'       => [Etudiant::COL_EMAIL, 'valide@example.com'],
+            'Annee valide'       => [Etudiant::COL_ANNEE, 4],
+            'Mobilite valide'    => [Etudiant::COL_NOM, 'on'],
+            'Mobilite null'      => [Etudiant::COL_MOBILITE, null],
+            'Mobilite vide'      => [Etudiant::COL_MOBILITE, ''],
+            'Departement valide' => [Etudiant::COL_DEPARTEMENT_ID, 1],
+            'Option valide'      => [Etudiant::COL_OPTION_ID, 1]
+        ];
     }
 
     /**
@@ -278,20 +290,14 @@ class EtudiantControllerTest extends TestCase
      */
     public function testDestroy()
     {
-        $this->assertTrue(TRUE);
-    }
+        $etudiant = factory(Etudiant::class)->create();
 
-    public function idProvider()
-    {
-        //[bool $possedeErreur, string $idCase]
-        return [
-            // Succes
-            'Id valide'    => [FALSE, 'id_valide'],
-            'Id numerique' => [FALSE, 'id_numerique'],
+        $response = $this->from(route('etudiants.index'))
+        ->delete(route('etudiants.destroy', $etudiant->id))
+        ->assertRedirect(route('etudiants.index'));
 
-            // Echecs
-            'Id invalide'  => [TRUE, 'id_invalide']
-        ];
+        $etudiantTest = Etudiant::find($etudiant->id);
+        $this->assertNull($etudiantTest);
     }
 
     /**
