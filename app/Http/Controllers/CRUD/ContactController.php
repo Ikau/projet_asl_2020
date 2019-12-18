@@ -181,21 +181,21 @@ class ContactController extends AbstractControllerCRUD
     {
         // Validation du form et des donnees recues
         $validation = $request->validate([
-            'nom'       => ['required', 'string'],
-            'prenom'    => ['required', 'string'],
-            'type'      => ['required',
+            Contact::COL_NOM       => ['required', 'string'],
+            Contact::COL_PRENOM    => ['required', 'string'],
+            Contact::COL_TYPE      => ['required',
                 'integer', 
                 Rule::in(Constantes::TYPE_CONTACT)
             ],
-            'email'      => ['required', 'email'],
+            Contact::COL_EMAIL      => ['required', 'email'],
 
-            'civilite'  => [
+            Contact::COL_CIVILITE  => [
                 'nullable',
                 'integer',
                 Rule::in(Constantes::CIVILITE)
             ],
-            'telephone' => ['nullable', 'string'],
-            'adresse'   => ['nullable', 'string'],
+            Contact::COL_TELEPHONE => ['nullable', 'string'],
+            Contact::COL_ADRESSE   => ['nullable', 'string'],
         ]);
 
         // Mise a defaut des valeurs nullables

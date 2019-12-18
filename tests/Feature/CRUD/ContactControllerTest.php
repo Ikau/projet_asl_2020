@@ -174,6 +174,11 @@ class ContactControllerTest extends TestCase
         ->assertOK()
         ->assertViewIs('contact.index')
         ->assertSee(ContactController::TITRE_INDEX);
+
+        foreach($this->getAttributsModele() as $attribut)
+        {
+            $response->assertSee("<th>$attribut</th>");
+        }
     }
 
     /**
@@ -185,6 +190,14 @@ class ContactControllerTest extends TestCase
         ->assertOk()
         ->assertViewIs('contact.form')
         ->assertSee(ContactController::TITRE_CREATE);
+
+        foreach($this->getAttributsModele() as $attribut)
+        {
+            if($attribut !== 'id') 
+            {
+                $response->assertSee("name=\"$attribut\"");
+            }
+        }
     }
 
     /**
@@ -197,9 +210,10 @@ class ContactControllerTest extends TestCase
     {
         $contactSource = factory(Contact::class)->make();
 
-        $response = $this->from(route('contacts.create'))
-            ->post(route('contacts.store'), $contactSource->toArray())
-            ->assertRedirect(route('contacts.index'));
+        $response = $this->followingRedirects()
+        ->from(route('contacts.create'))
+        ->post(route('contacts.store'), $contactSource->toArray())
+        ->assertViewIs('contact.index');
 
         // Arguments pour la clause 'where'
         foreach($this->getAttributsModele() as $attribut)
@@ -210,11 +224,14 @@ class ContactControllerTest extends TestCase
             }
         }
         
-        $contact = Contact::where($arrayWhere)->first();
-        $this->assertNotNull($contact);
-        foreach($this->getAttributsModele() as $attribut)
+        $contactTest = Contact::where($arrayWhere)->first();
+        $this->assertNotNull($contactTest);
+        foreach($this->getAttributsModele() as $a)
         {
-            $this->assertEquals($contactSource[$attribut], $contact[$attribut]);
+            if('id' !== $a)
+            {
+                $this->assertEquals($contactSource[$a], $contactTest[$a]);
+            }
         }
     }
 
@@ -263,19 +280,25 @@ class ContactControllerTest extends TestCase
      * @dataProvider updateProvider
      * @return void
      */
-    public function testUpdate($clefModifiee, $nouvelleValeur)
+    public function testUpdate(string $clefModifiee, $nouvelleValeur, $valeurDefaut)
     {
         $contactSource = factory(Contact::class)->create();
-        $contactsource[$clefModifiee] = $nouvelleValeur;
+        $contactSource[$clefModifiee] = $nouvelleValeur;
         
         // Mise a jour et redirection OK
         $response = $this->from(route('contacts.edit', $contactSource->id))
         ->patch(route('contacts.update', $contactSource->id), $contactSource->toArray())
         ->assertRedirect(route('contacts.index'));
 
+        // Reaffectation par defaut
+        if(null !== $valeurDefaut)
+        {
+            $contactSource[$clefModifiee] = $valeurDefaut;
+        }
+
         // Verification de la MAJ
         $contactMaj = Contact::find($contactSource->id);
-        $this->assertEquals($contactSource->id, $contactMaj->id);
+        $this->assertNotNull($contactMaj);
         foreach($this->getAttributsModele() as $attribut)
         {
             $this->assertEquals($contactSource[$attribut], $contactMaj[$attribut]);
@@ -285,18 +308,20 @@ class ContactControllerTest extends TestCase
 
     public function updateProvider()
     {
+        //[string $clefModifiee, $nouvelleValeur, $valeurDefaut]
         return [
-            'Nom valide'       => ['nom', 'nouveau'],
-            'Prenom valide'    => ['prenom', 'nouveau'],
-            'Civilite valide'  => ['civilite', Constantes::CIVILITE['vide']],
-            'Type valide'      => ['type', Constantes::TYPE_CONTACT['vide']],
-            'Mail valide'      => ['email', 'nouveau@example.com'],
-            'Telephone valide' => ['telephone', 'nouveau'],
-            'Adresse valide'   => ['adresse', 'nouveau'],
+            // Succes
+            'Nom valide'       => [Contact::COL_NOM, 'nom', null],
+            'Prenom valide'    => [Contact::COL_PRENOM, 'prenom', null],
+            'Civilite valide'  => [Contact::COL_CIVILITE, Constantes::CIVILITE['vide'], null],
+            'Type valide'      => [Contact::COL_TYPE, Constantes::TYPE_CONTACT['vide'], null],
+            'Mail valide'      => [Contact::COL_EMAIL, 'nouveau@example.com', null],
+            'Telephone valide' => [Contact::COL_TELEPHONE, 'telephone', null],
+            'Adresse valide'   => [Contact::COL_ADRESSE, 'adresse', null],
 
-            'Civilite null'    => ['civilite', null],
-            'Telephone null'   => ['telephone', null],
-            'Adresse null'     => ['adresse', null],
+            'Civilite null'    => [Contact::COL_CIVILITE, null, Constantes::CIVILITE['vide']],
+            'Telephone null'   => [Contact::COL_TELEPHONE, null, Constantes::STRING_VIDE],
+            'Adresse null'     => [Contact::COL_ADRESSE, null, Constantes::STRING_VIDE],
         ];
     }
 
@@ -306,15 +331,15 @@ class ContactControllerTest extends TestCase
      */
     public function testDestroy()
     {
-        $idSource = factory(Contact::class)->create()->id;
+        $contact = factory(Contact::class)->create();
 
         // Verification redirection
         $response = $this->from('contacts.index')
-        ->delete(route('contacts.destroy', $idSource))
+        ->delete(route('contacts.destroy', $contact->id))
         ->assertRedirect(route('contacts.index'));
 
         // Verification suppression
-        $contact = Contact::find($idSource);
+        $contact = Contact::find($contact->id);
         $this->assertNull($contact);
     }
 
