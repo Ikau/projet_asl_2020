@@ -4,6 +4,7 @@ namespace Tests\Feature\CRUD;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
 
 use App\Modeles\Contact;
@@ -15,19 +16,6 @@ class ContactControllerTest extends TestCase
     // Rollback les modifications de la BDD a la fin des tests
     use RefreshDatabase;
 
-    /**
-     * Attributs sur lesquels effectuer les tests
-     */
-    private $attributs = [
-        'nom', 
-        'prenom',
-        'civilite',
-        'type',
-        'email',
-        'telephone',
-        'adresse'
-    ];
-
     /* ====================================================================
      *                           TESTS AUXILIAIRES
      * ====================================================================
@@ -38,24 +26,31 @@ class ContactControllerTest extends TestCase
      * 
      * @dataProvider normaliseInputsOptionnelsProvider
      */
-    public function testNormaliseOptionnels($clefModifiee)
+    public function testNormaliseOptionnels(string $clefModifiee, $nouvelleValeur)
     {
-        $donnee                = factory(Contact::class)->make()->toArray();
-        $donnee['test']        = 'normaliseInputsOptionnels';
-        $donnee[$clefModifiee] = null;
+        $contact                = factory(Contact::class)->make();
+        $contact['test']        = 'normaliseInputsOptionnels';
+        $contact[$clefModifiee] = $nouvelleValeur;
 
         $response = $this->from(route('contacts.tests'))
-        ->post(route('contacts.tests'), $donnee)
+        ->post(route('contacts.tests'), $contact->toArray())
         ->assertRedirect('/');
 
     }
 
     public function normaliseInputsOptionnelsProvider()
     {
+        //[string $clefModifiee, $nouvelleValeur]
         return [
-            'Civilite null' => ['civilite'],
-            'Telephone null' => ['telephone'],
-            'Adresse null' => ['adresse'],
+            'Adresse null'   => [Contact::COL_ADRESSE, null],
+            'Civilite null'  => [Contact::COL_CIVILITE, null],
+            'Telephone null' => [Contact::COL_TELEPHONE, null],
+
+            'Adresse invalide'   => [Contact::COL_ADRESSE, -1],
+            'Civilite invalide'  => [Contact::COL_CIVILITE, -1],
+            'Telephone invalide' => [Contact::COL_TELEPHONE, -1],
+
+            'Civilite non numerique' => [Contact::COL_CIVILITE, '']
         ];
     }
     
@@ -65,81 +60,57 @@ class ContactControllerTest extends TestCase
      * @depends testNormaliseOptionnels
      * @dataProvider validerFormProvider
      */
-    public function testValiderForm($routeAttendue, $possedeErreur, $clefErreurAttendue, $donnee)
+    public function testValiderForm(bool $possedeErreur, string $clefModifiee, $nouvelleValeur)
     {
-        $routeSource = route('contacts.tests');
+        $contact                = factory(Contact::class)->make();
+        $contact['test']        = 'validerForm';
+        $contact[$clefModifiee] = $nouvelleValeur;
 
-        $response = $this->from($routeSource)
-        ->post(route('contacts.tests'), $donnee);
+        $routeSource = route('contacts.tests');
+        $response    = $this->from($routeSource)
+        ->post(route('contacts.tests'), $contact->toArray());
 
         if($possedeErreur)
         {
-            $response->assertSessionHasErrors($clefErreurAttendue);
+            $response->assertSessionHasErrors($clefModifiee)
+            ->assertRedirect($routeSource);
         }
         else
         {
-            $response->assertSessionHasNoErrors();
+            $response->assertSessionHasNoErrors()
+            ->assertRedirect('/');
         }
-        $response->assertRedirect($routeAttendue);
     }
 
     public function validerFormProvider()
     {
-        $this->refreshApplication();
-
-        // Rappel : les affectations d'array sont par defaut des copies profondes
-        $arrayValide         = factory(Contact::class)->make()->toArray();
-        $arrayValide['test'] = 'validerForm';
-
-        // Succes
-        $civiliteNull  = $arrayValide;
-        $telephoneNull = $arrayValide;
-        $adresseNull   = $arrayValide;
-        $civiliteNull['civilite']   = null;
-        $telephoneNull['telephone'] = null;
-        $adresseNull['adresse']     = null;
-
-        // Echecs
-        $nomNull    = $arrayValide;
-        $prenomNull = $arrayValide;
-        $typeNull   = $arrayValide;
-        $mailNull   = $arrayValide;
-        $nomNull['nom']       = null;
-        $prenomNull['prenom'] = null;
-        $typeNull['type']     = null;
-        $mailNull['email']    = null;
-
-        $nomInvalide      = $arrayValide;
-        $prenomInvalide   = $arrayValide;
-        $civiliteInvalide = $arrayValide;
-        $typeInvalide     = $arrayValide;
-        $mailInvalide     = $arrayValide;
-        $nomInvalide['nom']           = 42;
-        $prenomInvalide['prenom']     = 42;
-        $civiliteInvalide['civilite'] = -1;
-        $typeInvalide['type']         = -1;
-        $mailInvalide['email']        = Constantes::STRING_VIDE;
-
-
-        //[$routeAttendue, $possedeErreur, $clefErreurAttendue, $donnee]
+        //[bool $possedeErreur, string $clefModifiee, $nouvelleValeur]
         return [
             // Succes
-            'Formulaire valide'  => ['/', FALSE, null, $arrayValide],
-            'Civilite null'      => ['/', FALSE, null, $civiliteNull],
-            'Telephone null'     => ['/', FALSE, null, $telephoneNull],
-            'Adresse null'       => ['/', FALSE, null, $adresseNull],
+            'Nom valide'    => [FALSE, Contact::COL_NOM, 'nom'],
+            'Prenom valide' => [FALSE, Contact::COL_PRENOM, 'prenom'],
+            'Type valide'   => [FALSE, Contact::COL_TYPE, Constantes::TYPE_CONTACT['vide']],
+            'Mail valide'   => [FALSE, Contact::COL_EMAIL, 'valide@example.com'],
+
+            'Civilite null'  => [FALSE, Contact::COL_CIVILITE, null],
+            'Telephone null' => [FALSE, Contact::COL_TELEPHONE, null],
+            'Adresse null'   => [FALSE, Contact::COL_ADRESSE, null],
 
             // Echecs
-            'Nom null'    => [route('contacts.tests'), TRUE, 'nom', $nomNull],
-            'Prenom null' => [route('contacts.tests'), TRUE, 'prenom', $prenomNull],
-            'Type null'   => [route('contacts.tests'), TRUE, 'type', $typeNull],
-            'Mail null'   => [route('contacts.tests'), TRUE, 'email', $mailNull],
+            'Nom null'    => [TRUE, Contact::COL_NOM, null],
+            'Prenom null' => [TRUE, Contact::COL_PRENOM, null],
+            'Type null'   => [TRUE, Contact::COL_TYPE, null],
+            'Mail null'   => [TRUE, Contact::COL_EMAIL, null],
 
-            'Nom invalide'      => [route('contacts.tests'), TRUE, 'nom',  $nomInvalide],
-            'Prenom invalide'   => [route('contacts.tests'), TRUE, 'prenom',  $prenomInvalide],
-            'Type invalide'     => [route('contacts.tests'), TRUE, 'type',  $typeInvalide],
-            'Mail invalide'     => [route('contacts.tests'), TRUE, 'email',  $mailInvalide],
-            'Civilite invalide' => [route('contacts.tests'), TRUE, 'civilite', $civiliteInvalide]
+            'Nom invalide'       => [TRUE, Contact::COL_NOM, -1],
+            'Prenom invalide'    => [TRUE, Contact::COL_PRENOM, -1],
+            'Type invalide'      => [TRUE, Contact::COL_TYPE, -1],
+            'Mail invalide'      => [TRUE, Contact::COL_EMAIL, 'invalideEmail'],
+            'Civilite invalide'  => [TRUE, Contact::COL_CIVILITE, -1],
+            'Telephone invalide' => [TRUE, Contact::COL_TELEPHONE, -1],
+            'Adresse invalide'   => [TRUE, Contact::COL_ADRESSE, -1],
+
+            'Type non numerique' => [TRUE, Contact::COL_TYPE, ''],
         ];
     }
 
@@ -148,29 +119,25 @@ class ContactControllerTest extends TestCase
      * 
      * @dataProvider validerModeleProvider
      */
-    public function testValiderModele($idCas, $statutAttendu)
+    public function testValiderModele(int $idCas, int $statutAttendu)
     {
+        $contact = factory(Contact::class)->create();
         $id;
         switch($idCas)
         {
-            case 'valide':
-                $id = factory(Contact::class)->create()->id;
+            case 0:
+                $id = $contact->id;
             break;
 
-            case 'string_numerique':
-                $idTemp = factory(Contact::class)->create()->id;
-                $id = "$idTemp";
+            case 1:
+                $id = "$contact->id";
             break;
 
-            case 'inexistant':
+            case 2:
                 $id = -1;
             break;
 
-            case 'non_int_ni_numerique':
-                $id = '';
-            break;
-
-            case 'null':
+            case 3:
                 $id = null;
             break;
         }
@@ -183,13 +150,12 @@ class ContactControllerTest extends TestCase
 
     public function validerModeleProvider()
     {
-        //[string $casId, int $statutAttendu]
+        //[int $idCas, bool $statutAttendu]
         return [
-            'Id valide'           => ['valide', 302],
-            'Id string numerique' => ['string_numerique', 302],
-            'Id inexistant'       => ['inexistant', 404],
-            'Id non int'          => ['non_int_ni_numerique', 404],
-            'Id null'             => ['null', 404],
+            'Id valide'     => [0, 302],
+            'Id numerique'  => [1, 302],
+            'Id invalide'   => [2, 404],
+            'Id null'       => [3, 404],
         ];
     }
 
@@ -236,15 +202,17 @@ class ContactControllerTest extends TestCase
             ->assertRedirect(route('contacts.index'));
 
         // Arguments pour la clause 'where'
-        $arrayWhere = [];
-        foreach($this->attributs as $attribut)
+        foreach($this->getAttributsModele() as $attribut)
         {
-            $arrayWhere[] = [$attribut, '=', $contactSource[$attribut]];
+            if('id' !== $attribut)
+            {
+                $arrayWhere[] = [$attribut, '=', $contactSource[$attribut]];
+            }
         }
         
         $contact = Contact::where($arrayWhere)->first();
         $this->assertNotNull($contact);
-        foreach($this->attributs as $attribut)
+        foreach($this->getAttributsModele() as $attribut)
         {
             $this->assertEquals($contactSource[$attribut], $contact[$attribut]);
         }
@@ -263,7 +231,7 @@ class ContactControllerTest extends TestCase
         ->assertOK()
         ->assertViewIs('contact.show')
         ->assertSee(ContactController::TITRE_SHOW);
-        foreach($this->attributs as $attribut)
+        foreach($this->getAttributsModele() as $attribut)
         {
             $response->assertSee($contact["$attribut"]);
         }
@@ -283,7 +251,7 @@ class ContactControllerTest extends TestCase
         ->assertOK()
         ->assertViewIs('contact.form')
         ->assertSee(ContactController::TITRE_EDIT);
-        foreach($this->attributs as $attribut)
+        foreach($this->getAttributsModele() as $attribut)
         {
             $response->assertSee($contact[$attribut]);
         }
@@ -308,7 +276,7 @@ class ContactControllerTest extends TestCase
         // Verification de la MAJ
         $contactMaj = Contact::find($contactSource->id);
         $this->assertEquals($contactSource->id, $contactMaj->id);
-        foreach($this->attributs as $attribut)
+        foreach($this->getAttributsModele() as $attribut)
         {
             $this->assertEquals($contactSource[$attribut], $contactMaj[$attribut]);
         }
@@ -348,5 +316,19 @@ class ContactControllerTest extends TestCase
         // Verification suppression
         $contact = Contact::find($idSource);
         $this->assertNull($contact);
+    }
+
+    
+    /* ====================================================================
+     *                       FONCTIONS UTILITAIRES
+     * ====================================================================
+     */
+
+    /**
+     * Fonction auxiliaire facilitant la recuperation des attributs du modele a tester
+     */
+    private function getAttributsModele()
+    {
+        return Schema::getColumnListing(Contact::NOM_TABLE);
     }
 }

@@ -106,9 +106,24 @@ class ContactController extends AbstractControllerCRUD
         {
             case 'normaliseInputsOptionnels':
                 $this->normaliseInputsOptionnels($request);
-                if(null === $request->civilite) abort('404');
-                if(null === $request->telephone) abort('404');
-                if(null === $request->adresse) abort('404');
+
+                if(null === $request[Contact::COL_CIVILITE]
+                || ! in_array($request[Contact::COL_CIVILITE], Constantes::CIVILITE)) 
+                {
+                    abort('404');
+                }
+
+                if(null === $request[Contact::COL_TELEPHONE]
+                || ! is_string($request[Contact::COL_TELEPHONE]))
+                {
+                    abort('404');
+                }
+
+                if(null === $request[Contact::COL_ADRESSE]
+                || ! is_string($request[Contact::COL_ADRESSE]))
+                {
+                    abort('404');
+                }
             return redirect('/');
 
             case 'validerForm':
@@ -117,7 +132,7 @@ class ContactController extends AbstractControllerCRUD
 
             case 'validerModele':
                 $contact = $this->validerModele($request->id);
-                if( is_null($contact) ) abort('404');
+                if( null === $contact ) abort('404');
             return redirect('/');
 
             default:
@@ -131,14 +146,32 @@ class ContactController extends AbstractControllerCRUD
      */
     protected function normaliseInputsOptionnels(Request $request)
     {
-        if(null === $request->civilite)
-            $request['civilite'] = Constantes::CIVILITE['vide'];
+        // Civilite
+        $civilite = $request[Contact::COL_CIVILITE];
+        if($request->missing(Contact::COL_CIVILITE)
+        || null === $civilite
+        || ! in_array($civilite, Constantes::CIVILITE))
+        {
+            $request[Contact::COL_CIVILITE] = Constantes::CIVILITE['vide'];
+        }
         
-        if(null === $request->telephone)
-            $request['telephone'] = Constantes::STRING_VIDE;
+        // Telephone
+        $telephone = $request[Contact::COL_TELEPHONE];
+        if($request->missing(Contact::COL_CIVILITE)
+        || null === $telephone
+        || ! is_string($telephone))
+        {
+            $request[Contact::COL_TELEPHONE] = Constantes::STRING_VIDE;
+        }
         
-        if(null === $request->adresse)
-            $request['adresse'] = Constantes::STRING_VIDE;
+        // Adresse
+        $adresse = $request[Contact::COL_ADRESSE];
+        if($request->missing(Contact::COL_ADRESSE)
+        || null === $adresse
+        || ! is_string($adresse))
+        {
+            $request[Contact::COL_ADRESSE] = Constantes::STRING_VIDE;
+        }
     }
 
     /**
