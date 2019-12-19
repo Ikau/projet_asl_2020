@@ -5,9 +5,10 @@ namespace App\Modeles;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Abstracts\AbstractEnseignant;
+use App\Interfaces\BaseDeDonnees;
 use App\Utils\Constantes;
 
-class Enseignant extends AbstractEnseignant
+class Enseignant extends AbstractEnseignant implements BaseDeDonnees
 {
     /*
      * Nom des colonnes dans la base de donnees
@@ -59,6 +60,26 @@ class Enseignant extends AbstractEnseignant
         Enseignant::COL_RESPONSABLE_OPTION_ID      => Constantes::ID_VIDE
     ];
 
+    /* ====================================================================
+     *                            INTERFACE
+     * ====================================================================
+     */
+    public static function getModeleDefaut()
+    {
+        $clauseWhere = [
+            ['nom', '=', 'Aucun'],
+            ['prenom', '=', 'Aucun'],
+            ['email', '=', 'aucun@null.com']
+        ];
+
+        return Enseignant::where($clauseWhere)->first();
+    }
+
+    /* ====================================================================
+     *                             RELATIONS
+     * ====================================================================
+     */
+
     /**
      * Renvoie l'option dont l'enseignant est responsable
      * @var array[App\Modeles\Option]
@@ -103,4 +124,6 @@ class Enseignant extends AbstractEnseignant
     {
         return $this->hasMany('App\Modeles\Stage', Stage::COL_REFERENT_ID);
     }
+
+
 }
