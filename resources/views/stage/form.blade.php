@@ -67,7 +67,7 @@
 
     {{-- WIP Choix de la date debut desactivee pour l'instant --}}
     <label for="date_debut">Date de debut du stage (*)</label>
-    <select name="date_debut" id="date_debut" disabled>
+    <select name="date_debut" id="date_debut">
         <option value="{{ $stage->date_debut ?? $wip_debut ?? old('date_debut') }}" selected>{{ $stage->date_debut ?? $wip_debut ?? ''}}</option>
     </select>
     @error('date_debut')
@@ -77,7 +77,7 @@
 
     {{-- WIP Choix de la date fin desactivee pour l'instant --}}
     <label for="date_fin">Date de fin du stage (*)</label>
-    <select name="date_fin" id="date_fin" disabled>
+    <select name="date_fin" id="date_fin">
         <option value="{{ $stage->date_fin ?? $wip_fin ?? old('date_fin') }}" selected>{{ $stage->date_fin ?? $wip_fin ?? ''}}</option>
     </select>
     @error('date_fin')
@@ -87,7 +87,7 @@
 
     @include('includes.form.input.text', [
         'attribut' => 'duree_semaines',
-        'intitule' => 'Duree du stage (*)',
+        'intitule' => 'Duree du stage (en semaines, *)',
         'valeur'   => $stage->duree_semaines ?? old('duree_semaines')
     ])
     <br/>
