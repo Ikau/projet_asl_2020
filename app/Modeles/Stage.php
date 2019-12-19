@@ -10,13 +10,35 @@ use App\Utils\Constantes;
 class Stage extends AbstractStage
 {
     /*
+     * Nom des colonnes dans la base de donnees
+     */
+    // Elements obligatoires a la creation
+    const COL_ANNEE              = 'annee_etudiant';
+    const COL_DATE_DEBUT         = 'date_debut';
+    const COL_DATE_FIN           = 'date_fin';
+    const COL_DUREE_SEMAINES     = 'duree_semaines';
+    const COL_GRATIFICATION      = 'gratification';
+    const COL_INTITULE           = 'intitule';
+    const COL_LIEU               = 'lieu';
+    const COL_RESUME             = 'resume';
+
+    // Elements optionnels a la creation
+    const COL_CONVENTION_ENVOYEE = 'convention_envoyee';
+    const COL_CONVENTION_SIGNEE  = 'convention_signee';
+    const COL_MOYEN_RECHERCHE    = 'moyen_recherche';
+
+
+    /*
      * Nom des colonnes des clefs etrangeres de Stage 
      */
-    const COL_REFERENT_ID   = 'referent_id';
+    // Elements obligatoires a la creation
     const COL_ETUDIANT_ID   = 'etudiant_id';
-    const COL_ENTREPRISE_ID = 'entreprise_id';
-    const COL_MDS_ID        = 'maitre_de_stage_id';
-    const COL_SOUTENANCE_ID = 'soutenance_id';
+
+    // Elements optionnels a la creation
+    const COL_REFERENT_ID   = 'referent_id';
+
+    //const COL_ENTREPRISE_ID = 'entreprise_id';
+    //const COL_MDS_ID        = 'maitre_de_stage_id';
 
     /**
      * @var string Nom de la table associe au modele 'Stage'
@@ -38,29 +60,30 @@ class Stage extends AbstractStage
     /**
      * @var array[string] Liste des attributs a assigner manuellement.
      */
-    protected $guarded = [];
+    protected $guarded = ['id'];
 
     /**
      * Valeurs par defaut des colonnes du modele 'Stage'.
      */
     protected $attributes = [
         // Attributs propres au modele
-        'annee_etudiant'                => Constantes::INT_VIDE,
-        'date_debut'                    => Constantes::DATE_VIDE,
-        'date_fin'                      => Constantes::DATE_VIDE,
-        'sujet'                         => Constantes::STRING_VIDE,
-        'convention_envoyee_entreprise' => FALSE,
-        'retour_convention_signee'      => FALSE,
-        'gratification'                 => Constantes::FLOAT_VIDE,
-        'nombre_de_semaines'            => Constantes::INT_VIDE,
-        'moyen_recherche_stage'         => Constantes::STRING_VIDE,
-
+        Stage::COL_ANNEE              => Constantes::INT_VIDE,
+        Stage::COL_CONVENTION_ENVOYEE => FALSE,
+        Stage::COL_CONVENTION_SIGNEE  => FALSE,
+        Stage::COL_DATE_DEBUT         => Constantes::DATE_VIDE,
+        Stage::COL_DATE_FIN           => Constantes::DATE_VIDE,
+        Stage::COL_DUREE_SEMAINES     => Constantes::INT_VIDE,
+        Stage::COL_GRATIFICATION      => Constantes::FLOAT_VIDE,
+        Stage::COL_INTITULE           => Constantes::STRING_VIDE,
+        Stage::COL_LIEU               => Constantes::STRING_VIDE,
+        Stage::COL_MOYEN_RECHERCHE    => Constantes::STRING_VIDE,
+        Stage::COL_RESUME             => Constantes::STRING_VIDE,
+        
         // Clefs etrangeres
         Stage::COL_REFERENT_ID   => Constantes::ID_VIDE,
         Stage::COL_ETUDIANT_ID   => Constantes::ID_VIDE,
-        Stage::COL_ENTREPRISE_ID => Constantes::ID_VIDE,
-        Stage::COL_MDS_ID        => Constantes::ID_VIDE,
-        Stage::COL_SOUTENANCE_ID => Constantes::ID_VIDE,
+        //Stage::COL_ENTREPRISE_ID => Constantes::ID_VIDE,
+        //Stage::COL_MDS_ID        => Constantes::ID_VIDE,
     ];
 
     /**
@@ -133,14 +156,5 @@ class Stage extends AbstractStage
     public function referent()
     {
         return $this->belongsTo('App\Modeles\Enseignant', Stage::COL_REFERENT_ID);
-    }
-
-    /**
-     * Renvoie la soutenance associee au stage
-     * @var App\Modeles\Soutenance
-     */
-    public function soutenance()
-    {
-        return $this->belongsTo('App\Modeles\Soutenance', Stage::COL_SOUTENANCE_ID);
     }
 }

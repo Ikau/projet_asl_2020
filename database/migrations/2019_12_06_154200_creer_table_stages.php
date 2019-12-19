@@ -23,26 +23,27 @@ class CreerTableStages extends Migration
         Schema::create(Stage::NOM_TABLE, function(Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->unsignedSmallInteger('annee_etudiant');
-            $table->date('date_debut');
-            $table->date('date_fin');
-            $table->string('sujet');
-            $table->boolean('convention_envoyee_entreprise');
-            $table->boolean('retour_convention_signee');
-            $table->float('gratification');
-            $table->smallInteger('nombre_de_semaines');
-            $table->string('moyen_recherche_stage');
+            $table->unsignedSmallInteger(Stage::COL_ANNEE);
+            $table->boolean(Stage::COL_CONVENTION_ENVOYEE);
+            $table->boolean(Stage::COL_CONVENTION_SIGNEE);
+            $table->date(Stage::COL_DATE_DEBUT);
+            $table->date(Stage::COL_DATE_FIN);
+            $table->smallInteger(Stage::COL_DUREE_SEMAINES);
+            $table->float(Stage::COL_GRATIFICATION, 10, 2);
+            $table->string(Stage::COL_INTITULE);
+            $table->string(Stage::COL_LIEU);
+            $table->string(Stage::COL_MOYEN_RECHERCHE);
+            $table->text(Stage::COL_RESUME);
+
             $table->unsignedBigInteger(Stage::COL_REFERENT_ID);
             $table->unsignedBigInteger(Stage::COL_ETUDIANT_ID);
-            $table->unsignedBigInteger(Stage::COL_ENTREPRISE_ID);
-            $table->unsignedBigInteger(Stage::COL_MDS_ID);
-            $table->unsignedBigInteger(Stage::COL_SOUTENANCE_ID);
+            //$table->unsignedBigInteger(Stage::COL_ENTREPRISE_ID);
+            //$table->unsignedBigInteger(Stage::COL_MDS_ID);
 
             $table->foreign(Stage::COL_REFERENT_ID)->references('id')->on(Enseignant::NOM_TABLE);
             $table->foreign(Stage::COL_ETUDIANT_ID)->references('id')->on(Etudiant::NOM_TABLE);
-            $table->foreign(Stage::COL_ENTREPRISE_ID)->references('id')->on(Entreprise::NOM_TABLE);
-            $table->foreign(Stage::COL_MDS_ID)->references('id')->on(Contact::NOM_TABLE);
-            $table->foreign(Stage::COL_SOUTENANCE_ID)->references('id')->on(Soutenance::NOM_TABLE);
+            //$table->foreign(Stage::COL_ENTREPRISE_ID)->references('id')->on(Entreprise::NOM_TABLE);
+            //$table->foreign(Stage::COL_MDS_ID)->references('id')->on(Contact::NOM_TABLE);
         });
     }
 
