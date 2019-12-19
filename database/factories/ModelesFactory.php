@@ -67,8 +67,8 @@ $factory->define(Stage::class, function (Faker $faker)
         Stage::COL_ANNEE              => $faker->randomElement([4, 5]),
         Stage::COL_CONVENTION_ENVOYEE => $faker->boolean(50),
         Stage::COL_CONVENTION_SIGNEE  => $faker->boolean(50),
-        Stage::COL_DATE_DEBUT         => $faker->date(),
-        Stage::COL_DATE_FIN           => $faker->date(),
+        Stage::COL_DATE_DEBUT         => $faker->dateTimeBetween('now', '+3 months'),
+        Stage::COL_DATE_FIN           => $faker->dateTimeBetween('+4 months', '+10 months'),
 
         //$nbMaxDecimals = NULL, $min = 0, $max = NULL
         Stage::COL_DUREE_SEMAINES     => $faker->randomFloat(0, 16, 32),
