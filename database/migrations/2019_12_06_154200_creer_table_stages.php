@@ -23,15 +23,17 @@ class CreerTableStages extends Migration
         Schema::create(Stage::NOM_TABLE, function(Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->unsignedSmallInteger(Stage::COL_ANNEE);
-            $table->boolean(Stage::COL_CONVENTION_ENVOYEE);
-            $table->boolean(Stage::COL_CONVENTION_SIGNEE);
-            $table->date(Stage::COL_DATE_DEBUT);
-            $table->date(Stage::COL_DATE_FIN);
-            $table->smallInteger(Stage::COL_DUREE_SEMAINES);
-            $table->float(Stage::COL_GRATIFICATION);
-            $table->string(Stage::COL_INTITULE);
-            $table->string(Stage::COL_MOYEN_RECHERCHE);
+            $table->unsignedSmallInteger(Stage::COL_ANNEE)
+            ->boolean(Stage::COL_CONVENTION_ENVOYEE)
+            ->boolean(Stage::COL_CONVENTION_SIGNEE)
+            ->date(Stage::COL_DATE_DEBUT)
+            ->date(Stage::COL_DATE_FIN)
+            ->smallInteger(Stage::COL_DUREE_SEMAINES)
+            ->float(Stage::COL_GRATIFICATION)
+            ->string(Stage::COL_INTITULE)
+            ->string(Stage::COL_LIEU)
+            ->string(Stage::COL_MOYEN_RECHERCHE)
+            ->text(Stage::COL_RESUME);
 
             $table->unsignedBigInteger(Stage::COL_REFERENT_ID);
             $table->unsignedBigInteger(Stage::COL_ETUDIANT_ID);

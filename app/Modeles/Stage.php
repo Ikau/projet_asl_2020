@@ -20,7 +20,9 @@ class Stage extends AbstractStage
     const COL_DUREE_SEMAINES     = 'duree_semaines';
     const COL_GRATIFICATION      = 'gratification';
     const COL_INTITULE           = 'intitule';
+    const COL_LIEU               = 'lieu';
     const COL_MOYEN_RECHERCHE    = 'moyen_recherch';
+    const COL_RESUME             = 'resume';
 
 
     /*
@@ -66,7 +68,9 @@ class Stage extends AbstractStage
         Stage::COL_DUREE_SEMAINES     => Constantes::INT_VIDE,
         Stage::COL_GRATIFICATION      => Constantes::FLOAT_VIDE,
         Stage::COL_INTITULE           => Constantes::STRING_VIDE,
+        Stage::COL_LIEU               => Constantes::STRING_VIDE,
         Stage::COL_MOYEN_RECHERCHE    => Constantes::STRING_VIDE,
+        Stage::COL_RESUME             => Constantes::STRING_VIDE,
         
         // Clefs etrangeres
         Stage::COL_REFERENT_ID   => Constantes::ID_VIDE,
