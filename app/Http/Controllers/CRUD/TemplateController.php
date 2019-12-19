@@ -27,6 +27,37 @@ class TemplateController extends AbstractControllerCRUD
      *                             RESOURCES
      * ====================================================================
      */
+    
+
+    /**
+     * Route de tests pour les fonctions auxiliaires.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function tests(Request $request)
+    {
+        switch($request->test)
+        {
+            case 'normaliseInputsOptionnels':
+                $this->normaliseInputsOptionnels($request);
+                abort('404');
+            return redirect('/');
+
+            case 'validerForm':
+                $this->validerForm($request);
+                abort('404');
+            return redirect('/');
+
+            case 'validerModele':
+                $etudiant = $this->validerModele($request->id);
+                abort('404');
+            return redirect('/');
+
+            default:
+                abort('404');
+            break;
+        }
+    }
 
     /**
      * Display a listing of the resource.
