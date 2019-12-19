@@ -60,7 +60,7 @@ class Stage extends AbstractStage
     /**
      * @var array[string] Liste des attributs a assigner manuellement.
      */
-    protected $guarded = [];
+    protected $guarded = ['id'];
 
     /**
      * Valeurs par defaut des colonnes du modele 'Stage'.
