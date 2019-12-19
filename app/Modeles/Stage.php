@@ -14,9 +14,8 @@ class Stage extends AbstractStage
      */
     const COL_REFERENT_ID   = 'referent_id';
     const COL_ETUDIANT_ID   = 'etudiant_id';
-    const COL_ENTREPRISE_ID = 'entreprise_id';
-    const COL_MDS_ID        = 'maitre_de_stage_id';
-    const COL_SOUTENANCE_ID = 'soutenance_id';
+    //const COL_ENTREPRISE_ID = 'entreprise_id';
+    //const COL_MDS_ID        = 'maitre_de_stage_id';
 
     /**
      * @var string Nom de la table associe au modele 'Stage'
@@ -58,9 +57,8 @@ class Stage extends AbstractStage
         // Clefs etrangeres
         Stage::COL_REFERENT_ID   => Constantes::ID_VIDE,
         Stage::COL_ETUDIANT_ID   => Constantes::ID_VIDE,
-        Stage::COL_ENTREPRISE_ID => Constantes::ID_VIDE,
-        Stage::COL_MDS_ID        => Constantes::ID_VIDE,
-        Stage::COL_SOUTENANCE_ID => Constantes::ID_VIDE,
+        //Stage::COL_ENTREPRISE_ID => Constantes::ID_VIDE,
+        //Stage::COL_MDS_ID        => Constantes::ID_VIDE,
     ];
 
     /**
@@ -133,14 +131,5 @@ class Stage extends AbstractStage
     public function referent()
     {
         return $this->belongsTo('App\Modeles\Enseignant', Stage::COL_REFERENT_ID);
-    }
-
-    /**
-     * Renvoie la soutenance associee au stage
-     * @var App\Modeles\Soutenance
-     */
-    public function soutenance()
-    {
-        return $this->belongsTo('App\Modeles\Soutenance', Stage::COL_SOUTENANCE_ID);
     }
 }

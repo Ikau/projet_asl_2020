@@ -34,15 +34,13 @@ class CreerTableStages extends Migration
             $table->string('moyen_recherche_stage');
             $table->unsignedBigInteger(Stage::COL_REFERENT_ID);
             $table->unsignedBigInteger(Stage::COL_ETUDIANT_ID);
-            $table->unsignedBigInteger(Stage::COL_ENTREPRISE_ID);
-            $table->unsignedBigInteger(Stage::COL_MDS_ID);
-            $table->unsignedBigInteger(Stage::COL_SOUTENANCE_ID);
+            //$table->unsignedBigInteger(Stage::COL_ENTREPRISE_ID);
+            //$table->unsignedBigInteger(Stage::COL_MDS_ID);
 
             $table->foreign(Stage::COL_REFERENT_ID)->references('id')->on(Enseignant::NOM_TABLE);
             $table->foreign(Stage::COL_ETUDIANT_ID)->references('id')->on(Etudiant::NOM_TABLE);
-            $table->foreign(Stage::COL_ENTREPRISE_ID)->references('id')->on(Entreprise::NOM_TABLE);
-            $table->foreign(Stage::COL_MDS_ID)->references('id')->on(Contact::NOM_TABLE);
-            $table->foreign(Stage::COL_SOUTENANCE_ID)->references('id')->on(Soutenance::NOM_TABLE);
+            //$table->foreign(Stage::COL_ENTREPRISE_ID)->references('id')->on(Entreprise::NOM_TABLE);
+            //$table->foreign(Stage::COL_MDS_ID)->references('id')->on(Contact::NOM_TABLE);
         });
     }
 
