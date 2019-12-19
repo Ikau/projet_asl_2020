@@ -137,9 +137,53 @@ class StageControllerTest extends TestCase
         ];
     }
 
-    public function testValiderModele()
+    /**
+     * @dataProvider validerModeleProvider
+     */
+    public function testValiderModele(int $idCase, int $statutAttendu)
     {
-        $this->assertTrue(TRUE);
+        $stage = factory(Stage::class)->create();
+        $id;
+        switch($idCase)
+        {
+            case 0: 
+                $id = $stage->id; 
+            break;
+
+            case 1: 
+                $id = "$stage->id"; 
+            break;
+
+            case 2: 
+                $id = -1; 
+            break;
+
+            case 3: 
+                $id = null; 
+            break;
+        }
+        
+        $response = $this->followingRedirects()
+        ->from(route('stages.tests'))
+        ->post(route('stages.tests'), [
+            'test' => 'validerModele',
+            'id'   => $id
+        ])
+        ->assertStatus($statutAttendu);
+    }
+
+    public function validerModeleProvider()
+    {
+        // [int $idCas, int $statutAttendu]
+        return [
+            // Succes
+            'Id valide'    => [0, 200],
+            'Id numerique' => [1, 200],
+
+            // Echecs
+            'Id invalide'  => [2, 404],
+            'Id null'      => [3, 404],
+        ];
     }
 
     /* ====================================================================

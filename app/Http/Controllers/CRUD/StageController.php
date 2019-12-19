@@ -63,8 +63,11 @@ class StageController extends AbstractControllerCRUD
             return redirect('/');
 
             case 'validerModele':
-                $etudiant = $this->validerModele($request->id);
-                abort('404');
+                $stage = $this->validerModele($request->id);
+                if(null === $stage)
+                {
+                    abort('404');
+                }
             return redirect('/');
 
             default:
@@ -235,7 +238,13 @@ class StageController extends AbstractControllerCRUD
      */
     protected function validerModele($id)
     {
-        abort('404');
+        if(null === $id
+        || ! is_numeric($id))
+        {
+            return null;
+        }
+
+        return Stage::find($id);
     }
 
     
