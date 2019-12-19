@@ -256,7 +256,17 @@ class StageControllerTest extends TestCase
      */
     public function testShow()
     {
-        $this->assertTrue(TRUE);
+        $stage = factory(Stage::class)->create();
+
+        $response = $this->from(route('stages.tests'))
+        ->get(route('stages.show', $stage->id))
+        ->assertViewIs('stage.show')
+        ->assertSee(StageController::TITRE_SHOW);
+
+        foreach($this->getAttributsModele() as $attribut)
+        {
+            $response->assertSee($stage[$attribut]);
+        }
     }
 
     /**
@@ -265,16 +275,65 @@ class StageControllerTest extends TestCase
      */
     public function testEdit()
     {
-        $this->assertTrue(TRUE);
+        $stage = factory(Stage::class)->create();
+        
+        $response = $this->from(route('stages.tests'))
+        ->get(route('stages.edit', $stage->id))
+        ->assertViewIs('stage.form')
+        ->assertSee(StageController::TITRE_EDIT);
+
+        foreach($this->getAttributsModele() as $attribut)
+        {
+            $response->assertSee($stage[$attribut]);
+        }
     }
 
     /**
      * @depends testValiderForm
      * @depends testValiderModele
+     * @dataProvider updateProvider
      */
-    public function testUpdate()
+    public function testUpdate(string $clefModifiee, $nouvelleValeur)
     {
-        $this->assertTrue(TRUE);
+        $stage                = factory(Stage::class)->create();
+        $stage[$clefModifiee] = $nouvelleValeur;
+
+        // Verification redirection
+        $response = $this->from(route('stages.index'))
+        ->patch(route('stages.update', $stage->id), $stage->toArray())
+        ->assertRedirect(route('stages.index'));
+
+        // Verification modification
+        $stageTest = Stage::find($stage->id);
+        foreach($this->getAttributsModele() as $a)
+        {
+            $this->assertEquals($stage[$a], $stageTest[$a]);
+        }
+    }
+
+    public function updateProvider()
+    {
+        //[string $clefModifiee, $nouvelleValeur]
+        return [
+            'Annee valide'          => [Stage::COL_ANNEE, 4],
+            'Date debut valide'     => [Stage::COL_DATE_DEBUT, date('Y-m-d', strtotime('now +1 day'))],
+            'Date fin valide'       => [Stage::COL_DATE_FIN, '3001-01-01'],
+            'Duree semaines valide' => [Stage::COL_DUREE_SEMAINES, 24],
+            'Gratification valide'  => [Stage::COL_GRATIFICATION, 800.00],
+            'Intitule valide'       => [Stage::COL_INTITULE, 'intitule'],
+            'Lieu valide'           => [Stage::COL_LIEU, 'lieu'],
+            'Resume valide'         => [Stage::COL_RESUME, 'resume'],
+
+            'Duree semaines float' => [Stage::COL_DUREE_SEMAINES, (float)24.0],
+            'Gratification int'    => [Stage::COL_GRATIFICATION, (int)800],
+
+            'Duree semaines numerique' => [Stage::COL_DUREE_SEMAINES, '24'],
+            'Gratification numerique'  => [Stage::COL_GRATIFICATION, '800'],
+
+            'Convention envoyee null' => [Stage::COL_CONVENTION_ENVOYEE, null],
+            'Convention signee null'  => [Stage::COL_CONVENTION_SIGNEE, null],
+            'Moyen de recherche null' => [Stage::COL_MOYEN_RECHERCHE, null],
+        ];
     }
 
     /**

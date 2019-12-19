@@ -151,7 +151,16 @@ class StageController extends AbstractControllerCRUD
      */
     public function show($id)
     {
-        abort('404');
+        $stage = $this->validerModele($id);
+        if(null === $stage)
+        {
+            abort('404');
+        }
+
+        return view('stage.show', [
+            'titre' => StageController::TITRE_SHOW,
+            'stage' => $stage
+        ]);
     }
 
     /**
@@ -162,7 +171,24 @@ class StageController extends AbstractControllerCRUD
      */
     public function edit($id)
     {
-        abort('404');
+        $stage = $this->validerModele($id);
+        if(null === $stage)
+        {
+            abort('404');
+        }
+
+        $attributs   = $this->getAttributsModele();
+        $enseignants = Enseignant::all();
+        $etudiants   = Etudiant::all();
+        
+        return view('stage.form', [
+            'titre'       => StageController::TITRE_EDIT,
+            'stage'       => $stage,
+            'attributs'   => $attributs,
+            'etudiants'   => $etudiants,
+            'enseignants' => $enseignants
+        ]);
+    
     }
 
     /**
@@ -174,7 +200,17 @@ class StageController extends AbstractControllerCRUD
      */
     public function update(Request $request, $id)
     {
-        abort('404');
+        $this->validerForm($request);
+        $stage = $this->validerModele($id);
+        if(null === $stage)
+        {
+            abort('404');
+        }
+
+        $stage->update($request->all());
+        $stage->save();
+
+        return redirect()->route('stages.index');
     }
 
     /**
