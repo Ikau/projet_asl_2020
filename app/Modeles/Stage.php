@@ -13,13 +13,13 @@ class Stage extends AbstractStage
      * Nom des colonnes dans la base de donnees
      */
     const COL_ANNEE              = 'annee_etudiant';
-    const COL_DATE_DEBUT         = 'date_debut';
-    const COL_DATE_FIN           = 'date_fin';
-    const COL_INTITULE           = 'intitule';
     const COL_CONVENTION_ENVOYEE = 'convention_envoyee';
     const COL_CONVENTION_SIGNEE  = 'convention_signee';
-    const COL_GRATIFICATION      = 'gratification';
+    const COL_DATE_DEBUT         = 'date_debut';
+    const COL_DATE_FIN           = 'date_fin';
     const COL_DUREE_SEMAINES     = 'duree_semaines';
+    const COL_GRATIFICATION      = 'gratification';
+    const COL_INTITULE           = 'intitule';
     const COL_MOYEN_RECHERCHE    = 'moyen_recherch';
 
 
@@ -59,13 +59,13 @@ class Stage extends AbstractStage
     protected $attributes = [
         // Attributs propres au modele
         Stage::COL_ANNEE              => Constantes::INT_VIDE,
-        Stage::COL_DATE_DEBUT         => Constantes::DATE_VIDE,
-        Stage::COL_DATE_FIN           => Constantes::DATE_VIDE,
-        Stage::COL_INTITULE           => Constantes::STRING_VIDE,
         Stage::COL_CONVENTION_ENVOYEE => FALSE,
         Stage::COL_CONVENTION_SIGNEE  => FALSE,
-        Stage::COL_GRATIFICATION      => Constantes::FLOAT_VIDE,
+        Stage::COL_DATE_DEBUT         => Constantes::DATE_VIDE,
+        Stage::COL_DATE_FIN           => Constantes::DATE_VIDE,
         Stage::COL_DUREE_SEMAINES     => Constantes::INT_VIDE,
+        Stage::COL_GRATIFICATION      => Constantes::FLOAT_VIDE,
+        Stage::COL_INTITULE           => Constantes::STRING_VIDE,
         Stage::COL_MOYEN_RECHERCHE    => Constantes::STRING_VIDE,
         
         // Clefs etrangeres

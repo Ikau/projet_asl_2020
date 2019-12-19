@@ -24,15 +24,15 @@ class CreerTableStages extends Migration
             $table->bigIncrements('id');
 
             $table->unsignedSmallInteger(Stage::COL_ANNEE);
-            $table->date(Stage::COL_DATE_DEBUT);
-            $table->date(Stage::COL_DATE_FIN);
-            $table->string(Stage::COL_INTITULE);
             $table->boolean(Stage::COL_CONVENTION_ENVOYEE);
             $table->boolean(Stage::COL_CONVENTION_SIGNEE);
-            $table->float(Stage::COL_GRATIFICATION);
+            $table->date(Stage::COL_DATE_DEBUT);
+            $table->date(Stage::COL_DATE_FIN);
             $table->smallInteger(Stage::COL_DUREE_SEMAINES);
+            $table->float(Stage::COL_GRATIFICATION);
+            $table->string(Stage::COL_INTITULE);
             $table->string(Stage::COL_MOYEN_RECHERCHE);
-            
+
             $table->unsignedBigInteger(Stage::COL_REFERENT_ID);
             $table->unsignedBigInteger(Stage::COL_ETUDIANT_ID);
             //$table->unsignedBigInteger(Stage::COL_ENTREPRISE_ID);
