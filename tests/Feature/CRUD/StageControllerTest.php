@@ -16,12 +16,6 @@ class StageControllerTest extends TestCase
     // Rollback les modifications de la BDD a la fin des tests
     use RefreshDatabase;
 
-    /**
-     * Fonction pour recuperer les attributs sur lesquels effectuer les tests
-     * 
-     * Schema::getColumnListing(Template::NOM_TABLE);
-     */
-
     /* ====================================================================
      *                           TESTS AUXILIAIRES
      * ====================================================================
