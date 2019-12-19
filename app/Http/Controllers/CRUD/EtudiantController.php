@@ -193,7 +193,7 @@ class EtudiantController extends AbstractControllerCRUD
             Etudiant::COL_DEPARTEMENT_ID => ['required', Rule::in($idsDepartement)],
             Etudiant::COL_OPTION_ID      => ['required', Rule::in($idsOption)],
             
-            // Ce n'est pas elegant mais je n'ai pas trouve mieux
+            // Ce n'est pas elegant mais je n'ai pas trouve mieux pour les boolean
             Etudiant::COL_MOBILITE => ['nullable', Rule::in(['on', FALSE, TRUE, 0, 1])],
         ]);
 

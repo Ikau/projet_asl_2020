@@ -9,6 +9,7 @@ use Illuminate\Validation\Rule;
 
 use App\Abstracts\AbstractControllerCRUD;
 use App\Modeles\Stage;
+use App\Modeles\Enseignant;
 use App\Utils\Constantes;
 
 class StageController extends AbstractControllerCRUD
@@ -51,11 +52,14 @@ class StageController extends AbstractControllerCRUD
                 {
                     abort('404');
                 }
+                if( ! is_numeric($request[Stage::COL_REFERENT_ID]) )
+                {
+                    abort('404');
+                }
             return redirect('/');
 
             case 'validerForm':
                 $this->validerForm($request);
-                abort('404');
             return redirect('/');
 
             case 'validerModele':
@@ -184,6 +188,14 @@ class StageController extends AbstractControllerCRUD
         {
             $request[Stage::COL_MOYEN_RECHERCHE] = Constantes::STRING_VIDE;
         }
+
+        // Referent
+        $referent = Enseignant::find($request[Stage::COL_REFERENT_ID]);
+        if($request->missing(Stage::COL_REFERENT_ID)
+        || null === $referent)
+        {
+            $request[Stage::COL_REFERENT_ID] = Enseignant::getModeleDefaut()->id;
+        }
     }
 
     /**
@@ -194,7 +206,25 @@ class StageController extends AbstractControllerCRUD
      */
     protected function validerForm(Request $request)
     {
-        abort('404');
+        $validation = $request->validate([
+            Stage::COL_ANNEE          => ['required', Rule::in([4, 5])],
+            Stage::COL_DATE_DEBUT     => ['required', 'date', 'before:'.Stage::COL_DATE_FIN],
+            Stage::COL_DATE_FIN       => ['required', 'date', 'after:'.Stage::COL_DATE_DEBUT],
+            Stage::COL_DUREE_SEMAINES => ['required', 'integer', 'between:10,40'],
+            Stage::COL_GRATIFICATION  => ['required', 'numeric'],
+            Stage::COL_INTITULE       => ['required', 'string'],
+            Stage::COL_LIEU           => ['required', 'string'],
+            Stage::COL_RESUME         => ['required', 'string'],
+            Stage::COL_ETUDIANT_ID    => ['required', 'integer', 'min:0'],
+
+            // Ce n'est pas elegant mais je n'ai pas trouve mieux pour les boolean
+            Stage::COL_CONVENTION_ENVOYEE => ['sometimes', 'nullable', Rule::in(['on', FALSE, TRUE, 0, 1])],
+            Stage::COL_CONVENTION_SIGNEE  => ['sometimes', 'nullable', Rule::in(['on', FALSE, TRUE, 0, 1])],
+            Stage::COL_MOYEN_RECHERCHE    => ['sometimes', 'nullable', 'string'],
+            Stage::COL_REFERENT_ID        => ['sometimes', 'nullable', 'integer', 'min:0'],
+        ]);
+
+        $this->normaliseInputsOptionnels($request);
     }
 
     /**
