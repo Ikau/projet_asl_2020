@@ -67,7 +67,7 @@ class Enseignant extends AbstractEnseignant implements BaseDeDonnees
     public static function getModeleDefaut()
     {
         $clauseWhere = [
-            ['nom', '=', 'Aucun'],
+            ['nom', '=', ''],
             ['prenom', '=', 'Aucun'],
             ['email', '=', 'aucun@null.com']
         ];

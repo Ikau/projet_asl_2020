@@ -22,7 +22,7 @@ class PeuplerTableEnseignants extends Migration
         $idAucuneOption     = Option::where(Option::COL_INTITULE, 'Aucune')->first()->id;
         // Enseignant vide
         DB::table(Enseignant::NOM_TABLE)->insert([
-            'nom'            => 'Aucun',
+            'nom'            => '',
             'prenom'         => 'Aucun',
             'email'          => 'aucun@null.com',
             'option_id'      => $idAucuneOption,
