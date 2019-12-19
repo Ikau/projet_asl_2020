@@ -45,7 +45,7 @@ class StageTest extends TestCase
         ];
 
         // Verification du constructeur
-        $nbCompte = 1;
+        $nbCompte = 1; // On suppose l'ID existant
         foreach($attributesTests as $attribut => $valeur)
         {
             $this->assertEquals($valeur, $stage[$attribut]);
