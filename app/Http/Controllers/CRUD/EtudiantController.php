@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\CRUD;
 
 use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Schema;
 
