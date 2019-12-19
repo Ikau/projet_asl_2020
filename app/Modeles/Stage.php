@@ -10,6 +10,20 @@ use App\Utils\Constantes;
 class Stage extends AbstractStage
 {
     /*
+     * Nom des colonnes dans la base de donnees
+     */
+    const COL_ANNEE              = 'annee_etudiant';
+    const COL_DATE_DEBUT         = 'date_debut';
+    const COL_DATE_FIN           = 'date_fin';
+    const COL_INTITULE           = 'intitule';
+    const COL_CONVENTION_ENVOYEE = 'convention_envoyee';
+    const COL_CONVENTION_SIGNEE  = 'convention_signee';
+    const COL_GRATIFICATION      = 'gratification';
+    const COL_DUREE_SEMAINES     = 'duree_semaines';
+    const COL_MOYEN_RECHERCHE    = 'moyen_recherch';
+
+
+    /*
      * Nom des colonnes des clefs etrangeres de Stage 
      */
     const COL_REFERENT_ID   = 'referent_id';
@@ -44,16 +58,16 @@ class Stage extends AbstractStage
      */
     protected $attributes = [
         // Attributs propres au modele
-        'annee_etudiant'                => Constantes::INT_VIDE,
-        'date_debut'                    => Constantes::DATE_VIDE,
-        'date_fin'                      => Constantes::DATE_VIDE,
-        'sujet'                         => Constantes::STRING_VIDE,
-        'convention_envoyee_entreprise' => FALSE,
-        'retour_convention_signee'      => FALSE,
-        'gratification'                 => Constantes::FLOAT_VIDE,
-        'nombre_de_semaines'            => Constantes::INT_VIDE,
-        'moyen_recherche_stage'         => Constantes::STRING_VIDE,
-
+        Stage::COL_ANNEE              => Constantes::INT_VIDE,
+        Stage::COL_DATE_DEBUT         => Constantes::DATE_VIDE,
+        Stage::COL_DATE_FIN           => Constantes::DATE_VIDE,
+        Stage::COL_INTITULE           => Constantes::STRING_VIDE,
+        Stage::COL_CONVENTION_ENVOYEE => FALSE,
+        Stage::COL_CONVENTION_SIGNEE  => FALSE,
+        Stage::COL_GRATIFICATION      => Constantes::FLOAT_VIDE,
+        Stage::COL_DUREE_SEMAINES     => Constantes::INT_VIDE,
+        Stage::COL_MOYEN_RECHERCHE    => Constantes::STRING_VIDE,
+        
         // Clefs etrangeres
         Stage::COL_REFERENT_ID   => Constantes::ID_VIDE,
         Stage::COL_ETUDIANT_ID   => Constantes::ID_VIDE,
