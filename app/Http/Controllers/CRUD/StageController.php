@@ -10,6 +10,7 @@ use Illuminate\Validation\Rule;
 use App\Abstracts\AbstractControllerCRUD;
 use App\Modeles\Stage;
 use App\Modeles\Enseignant;
+use App\Modeles\Etudiant;
 use App\Utils\Constantes;
 
 class StageController extends AbstractControllerCRUD
@@ -52,7 +53,7 @@ class StageController extends AbstractControllerCRUD
                 {
                     abort('404');
                 }
-                if( ! is_numeric($request[Stage::COL_REFERENT_ID]) )
+                if( ! is_integer($request[Stage::COL_REFERENT_ID]) )
                 {
                     abort('404');
                 }
@@ -83,7 +84,23 @@ class StageController extends AbstractControllerCRUD
      */
     public function index()
     {
-        abort('404');
+        $attributs = $this->getAttributsModele();
+
+        // Suppression de la colonne 'Resume'
+        for($i=0; $i<count($attributs); $i++)
+        {
+            if(Stage::COL_RESUME === $attributs[$i])
+            {
+                unset($attributs[$i]);
+            }
+        }
+        $stages = Stage::all();
+
+        return view('stage.index', [
+            'titre'     => StageController::TITRE_INDEX,
+            'attributs' => $attributs,
+            'stages'    => $stages,
+        ]);
     }
 
     /**
@@ -93,7 +110,20 @@ class StageController extends AbstractControllerCRUD
      */
     public function create()
     {
-        abort('404');
+        $attributs   = $this->getAttributsModele();
+        $enseignants = Enseignant::all();
+        $etudiants   = Etudiant::all();
+
+        // WIP : pour avoir des dates correctes pour tester le form
+        $stageTemp = factory(Stage::class)->make();
+
+        return view('stage.form', [
+            'titre'       => StageController::TITRE_CREATE,
+            'etudiants'   => $etudiants,
+            'enseignants' => $enseignants,
+            'wip_debut'   => $stageTemp->date_debut->format('Y-m-d'),
+            'wip_fin'     => $stageTemp->date_fin->format('Y-m-d')
+        ]);
     }
 
     /**
@@ -255,7 +285,7 @@ class StageController extends AbstractControllerCRUD
      */
     protected function getAttributsModele()
     {
-        abort('404');
+        return Schema::getColumnListing(Stage::NOM_TABLE);
     }
     
 }

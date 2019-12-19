@@ -193,12 +193,34 @@ class StageControllerTest extends TestCase
 
     public function testIndex()
     {
-        $this->assertTrue(TRUE);
+        $response = $this->get(route('stages.index'))
+        ->assertOk()
+        ->assertViewIs('stage.index')
+        ->assertSee(StageController::TITRE_INDEX);
+
+        foreach($this->getAttributsModele() as $a)
+        {
+            if(Stage::COL_RESUME !== $a)
+            {
+                $response->assertSee("<th>$a</th>");
+            }
+        }
     }
 
     public function testCreate()
     {
-        $this->assertTrue(TRUE);
+        $response = $this->get(route('stages.create'))
+        ->assertOk()
+        ->assertViewIs('stage.form')
+        ->assertSee(StageController::TITRE_CREATE);
+
+        foreach($this->getAttributsModele() as $a)
+        {
+            if('id' !== $a)
+            {
+                $response->assertSee($a);
+            }
+        }
     }
     
     /**
@@ -241,5 +263,18 @@ class StageControllerTest extends TestCase
     public function testDestroy()
     {
         $this->assertTrue(TRUE);
+    }
+
+    /* ====================================================================
+     *                       FONCTIONS UTILITAIRES
+     * ====================================================================
+     */
+
+    /**
+     * Fonction auxiliaire facilitant la recuperation des attributs du modele a tester
+     */
+    private function getAttributsModele()
+    {
+        return Schema::getColumnListing(Stage::NOM_TABLE);
     }
 }
