@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Validation\Rule;
 
 use App\Abstracts\AbstractControllerCRUD;
-use App\ModeleS\Stage;
+use App\Modeles\Stage;
 use App\Utils\Constantes;
 
 class StageController extends AbstractControllerCRUD
@@ -39,7 +39,18 @@ class StageController extends AbstractControllerCRUD
         {
             case 'normaliseInputsOptionnels':
                 $this->normaliseInputsOptionnels($request);
-                abort('404');
+                if( ! is_bool($request[Stage::COL_CONVENTION_ENVOYEE]) )
+                {
+                    abort('404');
+                }
+                if( ! is_bool($request[Stage::COL_CONVENTION_SIGNEE]) )
+                {
+                    abort('404');
+                }
+                if( ! is_string($request[Stage::COL_MOYEN_RECHERCHE]) )
+                {
+                    abort('404');
+                }
             return redirect('/');
 
             case 'validerForm':
@@ -147,7 +158,32 @@ class StageController extends AbstractControllerCRUD
      */
     protected function normaliseInputsOptionnels(Request $request)
     {
-        abort('404');
+        // Convention envoyee
+        $conventionEnvoyee = $request[Stage::COL_CONVENTION_ENVOYEE];
+        if($request->missing(Stage::COL_CONVENTION_ENVOYEE)
+        || null === $conventionEnvoyee
+        || ! is_bool($conventionEnvoyee))
+        {
+            $request[Stage::COL_CONVENTION_ENVOYEE] = FALSE;
+        }
+
+        // Convention signee
+        $conventionSignee = $request[Stage::COL_CONVENTION_SIGNEE];
+        if($request->missing(Stage::COL_CONVENTION_SIGNEE)
+        || null === $conventionSignee
+        || ! is_bool($conventionSignee))
+        {
+            $request[Stage::COL_CONVENTION_SIGNEE] = FALSE;
+        }
+
+        // Moyen de recherche
+        $moyenRecherche = $request[Stage::COL_MOYEN_RECHERCHE];
+        if($request->missing(Stage::COL_MOYEN_RECHERCHE)
+        || null === $moyenRecherche
+        || ! is_string($moyenRecherche))
+        {
+            $request[Stage::COL_MOYEN_RECHERCHE] = Constantes::STRING_VIDE;
+        }
     }
 
     /**

@@ -27,9 +27,37 @@ class StageControllerTest extends TestCase
      * ====================================================================
      */
 
-    public function testNormaliseOptionnels()
+     /**
+      * @dataProvider normaliseOptionnelsProvider
+      */
+    public function testNormaliseOptionnels(string $clefModifiee, $nouvelleValeur)
     {
-        $this->assertTrue(TRUE);
+        $stage                = factory(Stage::class)->make();
+        $stage['test']        = 'normaliseInputsOptionnels';
+        $stage[$clefModifiee] = $nouvelleValeur;
+
+        $response = $this->followingRedirects()
+        ->from(route('stages.tests'))
+        ->post(route('stages.tests'), $stage->toArray())
+        ->assertOk();
+    }
+
+    public function normaliseOptionnelsProvider()
+    {
+        // [string $clefModifiee, $nouvelleValeur]
+        return [
+            'Convention envoyee valide' => [Stage::COL_CONVENTION_ENVOYEE, FALSE],
+            'Convention signee valide'  => [Stage::COL_CONVENTION_SIGNEE, FALSE],
+            'Moyen de recherche valide' => [Stage::COL_MOYEN_RECHERCHE, 'valide'],
+
+            'Convention envoyee null' => [Stage::COL_CONVENTION_ENVOYEE, null],
+            'Convention signee null'  => [Stage::COL_CONVENTION_SIGNEE, null],
+            'Moyen de recherche null' => [Stage::COL_MOYEN_RECHERCHE, null],
+
+            'Convention envoyee invalide' => [Stage::COL_CONVENTION_ENVOYEE, 'invalide'],
+            'Convention signee invalide'  => [Stage::COL_CONVENTION_SIGNEE, 'invalide'],
+            'Moyen de recherche invalide' => [Stage::COL_MOYEN_RECHERCHE, -1],
+        ];
     }
 
     /**
