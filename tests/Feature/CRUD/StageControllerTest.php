@@ -222,7 +222,33 @@ class StageControllerTest extends TestCase
      */
     public function testStore()
     {
-        $this->assertTrue(TRUE);
+        $stage = factory(Stage::class)->make();
+
+        // Verification de la route
+        $response = $this->followingRedirects()
+        ->from(route('stages.create'))
+        ->post(route('stages.store'), $stage->toArray())
+        ->assertViewIs('stage.index');
+
+        // Verification de l'insertion
+        $clauseWhere = [];
+        foreach($this->getAttributsModele() as $attribut)
+        {
+            if('id' !== $attribut)
+            {
+                $clauseWhere[] = [$attribut, '=', $stage[$attribut]];
+            }
+        }
+
+        $stageTest = Stage::where($clauseWhere)->first();
+        $this->assertNotNull($stageTest);
+        foreach($this->getAttributsModele() as $a)
+        {
+            if('id' !== $a)
+            {
+                $this->assertEquals($stage[$a], $stageTest[$a]);
+            }
+        }
     }
 
     /**

@@ -121,8 +121,8 @@ class StageController extends AbstractControllerCRUD
             'titre'       => StageController::TITRE_CREATE,
             'etudiants'   => $etudiants,
             'enseignants' => $enseignants,
-            'wip_debut'   => $stageTemp->date_debut->format('Y-m-d'),
-            'wip_fin'     => $stageTemp->date_fin->format('Y-m-d')
+            'wip_debut'   => $stageTemp->date_debut,
+            'wip_fin'     => $stageTemp->date_fin,
         ]);
     }
 
@@ -134,7 +134,13 @@ class StageController extends AbstractControllerCRUD
      */
     public function store(Request $request)
     {
-        abort('404');
+        $this->validerForm($request);
+
+        $stage = new Stage();
+        $stage->fill($request->all());
+        $stage->save();
+
+        return redirect()->route('stages.index');
     }
 
     /**
@@ -203,6 +209,10 @@ class StageController extends AbstractControllerCRUD
         {
             $request[Stage::COL_CONVENTION_ENVOYEE] = FALSE;
         }
+        else if('on' === $request[Stage::COL_CONVENTION_ENVOYEE])
+        {
+            $request[Stage::COL_CONVENTION_ENVOYEE] = TRUE;
+        }
 
         // Convention signee
         $conventionSignee = $request[Stage::COL_CONVENTION_SIGNEE];
@@ -211,6 +221,10 @@ class StageController extends AbstractControllerCRUD
         || ! is_bool($conventionSignee))
         {
             $request[Stage::COL_CONVENTION_SIGNEE] = FALSE;
+        }
+        else if('on' === $request[Stage::COL_CONVENTION_SIGNEE])
+        {
+            $request[Stage::COL_CONVENTION_SIGNEE] = TRUE;
         }
 
         // Moyen de recherche
