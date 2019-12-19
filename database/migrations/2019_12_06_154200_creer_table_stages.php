@@ -29,7 +29,7 @@ class CreerTableStages extends Migration
             $table->date(Stage::COL_DATE_DEBUT);
             $table->date(Stage::COL_DATE_FIN);
             $table->smallInteger(Stage::COL_DUREE_SEMAINES);
-            $table->float(Stage::COL_GRATIFICATION);
+            $table->float(Stage::COL_GRATIFICATION, 10, 2);
             $table->string(Stage::COL_INTITULE);
             $table->string(Stage::COL_LIEU);
             $table->string(Stage::COL_MOYEN_RECHERCHE);
