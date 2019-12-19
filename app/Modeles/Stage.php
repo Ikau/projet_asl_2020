@@ -12,7 +12,7 @@ class Stage extends AbstractStage
     /*
      * Nom des colonnes dans la base de donnees
      */
-    // Elements obligatoire dans le form de creation
+    // Elements obligatoires a la creation
     const COL_ANNEE              = 'annee_etudiant';
     const COL_DATE_DEBUT         = 'date_debut';
     const COL_DATE_FIN           = 'date_fin';
@@ -22,7 +22,7 @@ class Stage extends AbstractStage
     const COL_LIEU               = 'lieu';
     const COL_RESUME             = 'resume';
 
-    // Elements optionnels dans le form de creation
+    // Elements optionnels a la creation
     const COL_CONVENTION_ENVOYEE = 'convention_envoyee';
     const COL_CONVENTION_SIGNEE  = 'convention_signee';
     const COL_MOYEN_RECHERCHE    = 'moyen_recherche';
@@ -31,8 +31,12 @@ class Stage extends AbstractStage
     /*
      * Nom des colonnes des clefs etrangeres de Stage 
      */
-    const COL_REFERENT_ID   = 'referent_id';
+    // Elements obligatoires a la creation
     const COL_ETUDIANT_ID   = 'etudiant_id';
+
+    // Elements optionnels a la creation
+    const COL_REFERENT_ID   = 'referent_id';
+
     //const COL_ENTREPRISE_ID = 'entreprise_id';
     //const COL_MDS_ID        = 'maitre_de_stage_id';
 
