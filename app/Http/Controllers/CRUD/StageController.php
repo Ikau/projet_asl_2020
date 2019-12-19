@@ -221,7 +221,14 @@ class StageController extends AbstractControllerCRUD
      */
     public function destroy($id)
     {
-        abort('404');
+        $stage = $this->validerModele($id);
+        if(null === $stage)
+        {
+            abort('404');
+        }
+        $stage->delete();
+
+        return redirect()->route('stages.index');
     }
 
     /* ====================================================================

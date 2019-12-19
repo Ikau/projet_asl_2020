@@ -341,7 +341,14 @@ class StageControllerTest extends TestCase
      */
     public function testDestroy()
     {
-        $this->assertTrue(TRUE);
+        $stage = factory(Stage::class)->create();
+
+        $response = $this->from(route('stages.tests'))
+        ->delete(route('stages.destroy', $stage->id))
+        ->assertRedirect(route('stages.index'));
+
+        $stageTest = Stage::find($stage->id);
+        $this->assertNull($stageTest);
     }
 
     /* ====================================================================
