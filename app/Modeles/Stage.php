@@ -12,17 +12,20 @@ class Stage extends AbstractStage
     /*
      * Nom des colonnes dans la base de donnees
      */
+    // Elements obligatoire dans le form de creation
     const COL_ANNEE              = 'annee_etudiant';
-    const COL_CONVENTION_ENVOYEE = 'convention_envoyee';
-    const COL_CONVENTION_SIGNEE  = 'convention_signee';
     const COL_DATE_DEBUT         = 'date_debut';
     const COL_DATE_FIN           = 'date_fin';
     const COL_DUREE_SEMAINES     = 'duree_semaines';
     const COL_GRATIFICATION      = 'gratification';
     const COL_INTITULE           = 'intitule';
     const COL_LIEU               = 'lieu';
-    const COL_MOYEN_RECHERCHE    = 'moyen_recherch';
     const COL_RESUME             = 'resume';
+
+    // Elements optionnels dans le form de creation
+    const COL_CONVENTION_ENVOYEE = 'convention_envoyee';
+    const COL_CONVENTION_SIGNEE  = 'convention_signee';
+    const COL_MOYEN_RECHERCHE    = 'moyen_recherche';
 
 
     /*
