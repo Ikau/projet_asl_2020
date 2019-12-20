@@ -73,7 +73,14 @@ class EntrepriseController extends AbstractControllerCRUD
      */
     public function index()
     {
-        abort('404');
+        $attributs   = $this->getAttributsModele();
+        $entreprises = Entreprise::all();
+        
+        return view('entreprise.index', [
+            'attributs'   => $attributs,
+            'entreprises' => $entreprises,
+            'titre'       => EntrepriseController::TITRE_INDEX,
+        ]);
     }
 
     /**
@@ -228,6 +235,6 @@ class EntrepriseController extends AbstractControllerCRUD
      */
     protected function getAttributsModele()
     {
-        abort('404');
+        return Schema::getColumnListing(Entreprise::NOM_TABLE);
     }
 }

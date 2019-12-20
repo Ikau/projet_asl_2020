@@ -133,7 +133,15 @@ class EntrepriseControllerTest extends TestCase
 
     public function testIndex()
     {
-        $this->assertTrue(TRUE);
+        $response = $this->from(route('entreprises.tests'))
+        ->get(route('entreprises.index'))
+        ->assertViewIs('entreprise.index')
+        ->assertSee(EntrepriseController::TITRE_INDEX);
+
+        foreach($this->getAttributsModele() as $attribut)
+        {
+            $response->assertSee("<th>$attribut</th>");
+        }
     }
 
     public function testCreate()
