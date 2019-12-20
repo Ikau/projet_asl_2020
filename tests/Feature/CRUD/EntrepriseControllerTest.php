@@ -110,7 +110,20 @@ class EntrepriseControllerTest extends TestCase
 
     public function testValiderModele()
     {
-        $this->assertTrue(TRUE);
+        $entreprise = factory(Entreprise::class)->create();
+
+        // Verification succes
+        $response = $this->from(route('entreprises.tests'))
+        ->post(route('entreprises.tests'), [
+            'test' => 'validerModele',
+            'id'   => $entreprise->id
+        ])->assertRedirect('/');
+
+        // Verification echec
+        $responsse = $this->post(route('entreprises.tests'), [
+            'test' => 'validerModele',
+            'id'   => -1
+        ])->assertStatus(404);
     }
 
     /* ====================================================================

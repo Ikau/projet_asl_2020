@@ -53,8 +53,11 @@ class EntrepriseController extends AbstractControllerCRUD
             return redirect('/');
 
             case 'validerModele':
-                $etudiant = $this->validerModele($request->id);
-                abort('404');
+                $entreprise = $this->validerModele($request->id);
+                if(null === $entreprise)
+                {
+                    abort('404');
+                }
             return redirect('/');
 
             default:
@@ -208,7 +211,13 @@ class EntrepriseController extends AbstractControllerCRUD
      */
     protected function validerModele($id)
     {
-        abort('404');
+        if(null === $id
+        || ! is_integer($id))
+        {
+            return null;
+        }
+
+        return Entreprise::find($id);
     }
 
     
