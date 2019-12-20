@@ -284,7 +284,8 @@ class StageControllerTest extends TestCase
 
         foreach($this->getAttributsModele() as $attribut)
         {
-            $response->assertSee($stage[$attribut]);
+            // La fonction e() echappe les apostrophes, chose faite par Blade automatiquement
+            $response->assertSee(e($stage[$attribut]));
         }
     }
 
