@@ -199,7 +199,24 @@ class EntrepriseControllerTest extends TestCase
      */
     public function testShow()
     {
-        $this->assertTrue(TRUE);
+        $entreprise = factory(Entreprise::class)->create();
+
+        // Succes
+        $response = $this->from(route('entreprises.tests'))
+        ->get(route('entreprises.show', $entreprise->id))
+        ->assertOk()
+        ->assertViewIs('entreprise.show')
+        ->assertSee(e(EntrepriseController::TITRE_SHOW));
+
+        foreach($this->getAttributsModele() as $attribut)
+        {
+            $response->assertSee($attribut)
+            ->assertSee(e($entreprise[$attribut]));
+        }
+
+        // Echec
+        $this->get(route('entreprises.show', -1))
+        ->assertStatus(404);
     }
 
     /**
@@ -208,7 +225,23 @@ class EntrepriseControllerTest extends TestCase
      */
     public function testEdit()
     {
-        $this->assertTrue(TRUE);
+        $entreprise = factory(Entreprise::class)->create();
+
+        // Succes
+        $response = $this->from(route('entreprises.tests'))
+        ->get(route('entreprises.edit', $entreprise->id))
+        ->assertOk()
+        ->assertViewIs('entreprise.form')
+        ->assertSee(EntrepriseController::TITRE_EDIT);
+
+        foreach($this->getAttributsModele() as $a)
+        {
+            $response->assertSee(e($entreprise[$a]));
+        }
+
+        // Echec
+        $this->get(route('entreprises.edit', -1))
+        ->assertStatus(404);
     }
 
     /**

@@ -122,7 +122,16 @@ class EntrepriseController extends AbstractControllerCRUD
      */
     public function show($id)
     {
-        abort('404');
+        $entreprise = $this->validerModele($id);
+        if(null === $entreprise)
+        {
+            abort('404');
+        }
+
+        return view('entreprise.show', [
+            'titre'      => EntrepriseController::TITRE_SHOW,
+            'entreprise' => $entreprise
+        ]);
     }
 
     /**
@@ -133,7 +142,18 @@ class EntrepriseController extends AbstractControllerCRUD
      */
     public function edit($id)
     {
-        abort('404');
+        $entreprise = $this->validerModele($id);
+        if(null === $entreprise)
+        {
+            abort('404');
+        }
+
+        $attributs = $this->getAttributsModele();
+        return view('entreprise.form', [
+            'titre'      => EntrepriseController::TITRE_EDIT,
+            'entreprise' => $entreprise,
+            'attributs'  => $attributs
+        ]);
     }
 
     /**
@@ -229,7 +249,7 @@ class EntrepriseController extends AbstractControllerCRUD
     protected function validerModele($id)
     {
         if(null === $id
-        || ! is_integer($id))
+        || ! is_numeric($id))
         {
             return null;
         }
