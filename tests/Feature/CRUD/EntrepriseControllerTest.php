@@ -51,10 +51,61 @@ class EntrepriseControllerTest extends TestCase
 
     /**
      * @depends testNormaliseInputsOptionnels
+     * @dataProvider validerFormProvider
      */
-    public function testValiderForm()
+    public function testValiderForm(bool $possedeErreur, string $clefModifiee, $nouvelleValeur)
     {
-        $this->assertTrue(TRUE);
+        $entreprise                = factory(Entreprise::class)->make();
+        $entreprise['test']        = 'validerForm';
+        $entreprise[$clefModifiee] = $nouvelleValeur;
+
+        $routeSource = route('entreprises.tests');
+        $response = $this->from($routeSource)
+        ->post(route('entreprises.tests'), $entreprise->toArray());
+
+        if($possedeErreur)
+        {
+            $response->assertSessionHasErrors($clefModifiee)
+            ->assertRedirect($routeSource);
+        }
+        else
+        {
+            $response->assertSessionDoesntHaveErrors()
+            ->assertRedirect('/');
+        }
+    }
+
+    public function validerFormProvider()
+    {
+        // [bool $possedeErreur, string $clefModifiee, $nouvelleValeur]
+        return [
+            // Succes
+            'Nom valide'      => [FALSE, Entreprise::COL_NOM, 'nom'],
+            'Adresse valide'  => [FALSE, Entreprise::COL_ADRESSE, 'adresse'],
+            'Ville valide'    => [FALSE, Entreprise::COL_VILLE, 'ville'],
+            'Pays valide'     => [FALSE, Entreprise::COL_PAYS, 'pays'],
+            'Adresse2 valide' => [FALSE, Entreprise::COL_ADRESSE2, 'adresse2'],
+            'CP valide'       => [FALSE, Entreprise::COL_CP, 'cp'],
+            'Region valide'   => [FALSE, Entreprise::COL_REGION, 'region'],
+
+            'Adresse2 null' => [FALSE, Entreprise::COL_ADRESSE2, null],
+            'CP null'       => [FALSE, Entreprise::COL_CP, null],
+            'Region null'   => [FALSE, Entreprise::COL_REGION, null],
+
+            // Echecs
+            'Nom null'      => [TRUE, Entreprise::COL_NOM, null],
+            'Adresse null'  => [TRUE, Entreprise::COL_ADRESSE, null],
+            'Ville null'    => [TRUE, Entreprise::COL_VILLE, null],
+            'Pays null'     => [TRUE, Entreprise::COL_PAYS, null],
+
+            'Nom invalide'      => [TRUE, Entreprise::COL_NOM, -1],
+            'Adresse invalide'  => [TRUE, Entreprise::COL_ADRESSE, -1],
+            'Ville invalide'    => [TRUE, Entreprise::COL_VILLE, -1],
+            'Pays invalide'     => [TRUE, Entreprise::COL_PAYS, -1],
+            'Adresse2 invalide' => [TRUE, Entreprise::COL_ADRESSE2, -1],
+            'CP invalide'       => [TRUE, Entreprise::COL_CP, -1],
+            'Region invalide'   => [TRUE, Entreprise::COL_REGION, -1],
+        ];
     }
 
     public function testValiderModele()

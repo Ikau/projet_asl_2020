@@ -50,7 +50,6 @@ class EntrepriseController extends AbstractControllerCRUD
 
             case 'validerForm':
                 $this->validerForm($request);
-                abort('404');
             return redirect('/');
 
             case 'validerModele':
@@ -186,7 +185,19 @@ class EntrepriseController extends AbstractControllerCRUD
      */
     protected function validerForm(Request $request)
     {
-        abort('404');
+        $validation = $request->validate([
+            Entreprise::COL_NOM     => ['required', 'string'],
+            Entreprise::COL_ADRESSE => ['required', 'string'],
+            Entreprise::COL_VILLE   => ['required', 'string'],
+            Entreprise::COL_PAYS    => ['required', 'string'],
+
+            Entreprise::COL_ADRESSE2 => ['sometimes', 'nullable', 'string'],
+            Entreprise::COL_CP       => ['sometimes', 'nullable', 'string'],
+            Entreprise::COL_REGION   => ['sometimes', 'nullable', 'string']
+
+        ]);
+
+        $this->normaliseInputsOptionnels($request);
     }
 
     /**
