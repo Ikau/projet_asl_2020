@@ -12,13 +12,16 @@ class Entreprise extends AbstractEntreprise
     /*
      * Nom des colonnes dans la base de donnees
      */
+    // Attributs obligatoire
     const COL_NOM      = 'nom';
     const COL_ADRESSE  = 'adresse';
+    const COL_VILLE    = 'ville';
+    const COL_PAYS     = 'pays';
+    
+    // Attributs optionnels
     const COL_ADRESSE2 = 'adresse2';
     const COL_CP       = 'cp';
-    const COL_VILLE    = 'ville';
     const COL_REGION   = 'region';
-    const COL_PAYS     = 'pays';
 
     /**
      * @var string Nom de la table associe au modele 'Entreprise'
