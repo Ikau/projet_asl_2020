@@ -105,7 +105,13 @@ class EntrepriseController extends AbstractControllerCRUD
      */
     public function store(Request $request)
     {
-        abort('404');
+        $this->validerForm($request);
+
+        $entreprise = new Entreprise();
+        $entreprise->fill($request->all());
+        $entreprise->save();
+
+        return redirect()->route('entreprises.index');
     }
 
     /**

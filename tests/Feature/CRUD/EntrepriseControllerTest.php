@@ -165,7 +165,33 @@ class EntrepriseControllerTest extends TestCase
      */
     public function testStore()
     {
-        $this->assertTrue(TRUE);
+        $entreprise = factory(Entreprise::class)->make();
+
+        // Verification de la redirection
+        $response = $this->from(route('entreprises.create'))
+        ->post(route('entreprises.store'), $entreprise->toArray())
+        ->assertRedirect(route('entreprises.index'));
+
+        // Verification de la sauvegarde
+        $attributs   = $this->getAttributsModele();
+        $clauseWhere = [];
+        foreach($attributs as $attribut)
+        {
+            if('id' !== $attribut)
+            {
+                $clauseWhere[] = [$attribut, '=', $entreprise[$attribut]];
+            }
+        }
+
+        $entrepriseTest = Entreprise::where($clauseWhere)->first();
+        $this->assertNotNull($entrepriseTest);
+        foreach($attributs as $attribut)
+        {
+            if('id' !== $attribut)
+            {
+                $this->assertEquals($entreprise[$attribut], $entrepriseTest[$attribut]);
+            }
+        }
     }
 
     /**
