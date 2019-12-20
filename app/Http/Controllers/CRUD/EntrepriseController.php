@@ -90,7 +90,11 @@ class EntrepriseController extends AbstractControllerCRUD
      */
     public function create()
     {
-        abort('404');
+        $attributs = $this->getAttributsModele();
+
+        return view('entreprise.form', [
+            'titre' => EntrepriseController::TITRE_CREATE
+        ]);
     }
 
     /**

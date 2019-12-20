@@ -146,7 +146,18 @@ class EntrepriseControllerTest extends TestCase
 
     public function testCreate()
     {
-        $this->assertTrue(TRUE);
+        $response = $this->from(route('entreprises.tests'))
+        ->get(route('entreprises.create'))
+        ->assertViewIs('entreprise.form')
+        ->assertSee(EntrepriseController::TITRE_CREATE);
+
+        foreach($this->getAttributsModele() as $attribut)
+        {
+            if('id' !== $attribut)
+            {
+                $response->assertSee($attribut);
+            }
+        }
     }
     
     /**
