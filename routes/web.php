@@ -20,6 +20,7 @@ Route::get('/', function () {
  */
 Route::resource('/tests/contacts', 'CRUD\ContactController');
 Route::resource('/tests/enseignants', 'CRUD\EnseignantController');
+Route::resource('/tests/entreprises', 'CRUD\EntrepriseController');
 Route::resource('/tests/etudiants', 'CRUD\EtudiantController');
 Route::resource('/tests/stages', 'CRUD\StageController');
 
@@ -30,5 +31,6 @@ Route::resource('/tests/stages', 'CRUD\StageController');
 Route::get('/tests', 'TestsController@tests');
 Route::post('contacts/tests', 'CRUD\ContactController@tests')->name('contacts.tests');
 Route::post('enseignants/tests', 'CRUD\EnseignantController@tests')->name('enseignants.tests');
+Route::post('entreprises/tests', 'CRUD\EntrepriseController@tests')->name('entreprises.tests');
 Route::post('etudiants/tests', 'CRUD\EtudiantController@tests')->name('etudiants.tests');
 Route::post('stages/tests', 'CRUD\StageController@tests')->name('stages.tests');

@@ -18,24 +18,18 @@ class TemplateControllerTest extends TestCase
     // Rollback les modifications de la BDD a la fin des tests
     use RefreshDatabase;
 
-    /**
-     * Fonction pour recuperer les attributs sur lesquels effectuer les tests
-     * 
-     * Schema::getColumnListing(Template::NOM_TABLE);
-     */
-
     /* ====================================================================
      *                           TESTS AUXILIAIRES
      * ====================================================================
      */
 
-    public function testNormaliseOptionnels()
+    public function testNormaliseInputsOptionnels()
     {
         $this->assertTrue(TRUE);
     }
 
     /**
-     * @depends testNormaliseOptionnels
+     * @depends testNormaliseInputsOptionnels
      */
     public function testValiderForm()
     {
@@ -102,5 +96,18 @@ class TemplateControllerTest extends TestCase
     public function testDestroy()
     {
         $this->assertTrue(TRUE);
+    }
+
+    /* ====================================================================
+     *                       FONCTIONS UTILITAIRES
+     * ====================================================================
+     */
+
+    /**
+     * Fonction auxiliaire facilitant la recuperation des attributs du modele a tester
+     */
+    private function getAttributsModele()
+    {
+        // return Schema::getColumnListing(Template::NOM_TABLE);
     }
 }

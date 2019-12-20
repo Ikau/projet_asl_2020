@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Validation\Rule;
 
 use App\Abstracts\AbstractControllerCRUD;
-//use App\ModeleS\Template;
+//use App\Modeles\Template;
 use App\Utils\Constantes;
 
 class TemplateController extends AbstractControllerCRUD
@@ -18,7 +18,7 @@ class TemplateController extends AbstractControllerCRUD
      * Valeur attendue du tag <title> pour les pages
      */
     const TITRE_INDEX  = 'Gestion des TEMPLATEs';
-    const TITRE_CREATE = 'Creer un TEMPLATE';
+    const TITRE_CREATE = 'ajouter un TEMPLATE';
     const TITRE_SHOW   = 'Details du TEMPLATE';
     const TITRE_EDIT   = 'Editer un TEMPLATE';
 
@@ -181,6 +181,6 @@ class TemplateController extends AbstractControllerCRUD
      */
     protected function getAttributsModele()
     {
-        abort('404');
+        //return Schema::getColumnListing(Entreprise::NOM_TABLE);
     }
 }

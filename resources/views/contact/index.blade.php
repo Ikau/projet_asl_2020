@@ -11,7 +11,8 @@
 </div>
 
 <div>
-    <a href="contacts/create">Créer</a>
+    <a href="/tests">Retour</a>
+    <a href="{{ route('contacts.create') }}">Créer</a>
 </div>
 <div>
     <table>

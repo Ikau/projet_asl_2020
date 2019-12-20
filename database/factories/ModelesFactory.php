@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 
 use App\Modeles\Contact;
 use App\Modeles\Enseignant;
+use App\Modeles\Entreprise;
 use App\Modeles\Etudiant;
 use App\Modeles\Departement;
 use App\Modeles\Option;
@@ -18,13 +19,13 @@ use App\Utils\Constantes;
 $factory->define(Contact::class, function (Faker $faker)
 {
     return [
-        'nom'       => $faker->lastName,
-        'prenom'    => $faker->firstName,
-        'civilite'  => $faker->randomElement(Constantes::CIVILITE),
-        'type'      => $faker->randomElement(Constantes::TYPE_CONTACT),
-        'email'     => $faker->unique()->safeEmail,
-        'telephone' => $faker->phoneNumber,
-        'adresse'   => $faker->address
+        Contact::COL_NOM       => $faker->lastName,
+        Contact::COL_PRENOM    => $faker->firstName,
+        Contact::COL_CIVILITE  => $faker->randomElement(Constantes::CIVILITE),
+        Contact::COL_TYPE      => $faker->randomElement(Constantes::TYPE_CONTACT),
+        Contact::COL_EMAIL     => $faker->unique()->safeEmail,
+        Contact::COL_TELEPHONE => $faker->phoneNumber,
+        Contact::COL_ADRESSE   => $faker->address
     ];
 });
 
@@ -56,6 +57,19 @@ $factory->define(Etudiant::class, function (Faker $faker)
         Etudiant::COL_DEPARTEMENT_ID => $faker->randomElement($idsDepartement),
         Etudiant::COL_OPTION_ID      => $faker->randomElement($idsOption)
     ];
+});
+
+$factory->define(Entreprise::class, function (Faker $faker)
+{
+    return [
+        Entreprise::COL_NOM      => $faker->company,
+        Entreprise::COL_ADRESSE  => $faker->address,
+        Entreprise::COL_ADRESSE2 => $faker->address,
+        Entreprise::COL_CP       => $faker->postcode,
+        Entreprise::COL_VILLE    => $faker->city,
+        Entreprise::COL_REGION   => $faker->region,
+        Entreprise::COL_PAYS     => $faker->country,
+    ];  
 });
 
 $factory->define(Stage::class, function (Faker $faker)
