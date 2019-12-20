@@ -23,7 +23,7 @@ class TemplateControllerTest extends TestCase
      * ====================================================================
      */
 
-    public function testNormaliseOptionnels()
+    public function testNormaliseInputsOptionnels()
     {
         $this->assertTrue(TRUE);
     }
