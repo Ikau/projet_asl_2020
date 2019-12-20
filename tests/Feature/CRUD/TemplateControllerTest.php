@@ -29,7 +29,7 @@ class TemplateControllerTest extends TestCase
     }
 
     /**
-     * @depends testNormaliseOptionnels
+     * @depends testNormaliseInputsOptionnels
      */
     public function testValiderForm()
     {
