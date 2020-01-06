@@ -117,7 +117,7 @@ $factory->define(Soutenance::class, function (Faker $faker)
         Soutenance::COL_HEURE           => $faker->time('H:i:00'),
         Soutenance::COL_INVITES         => $faker->randomElement(["$faker->firstName $faker->lastName", '']),
         Soutenance::COL_NB_REPAS        => $faker->randomElement([0, 1, 2, 3]),
-        Soutenance::COL_SALLE           => $faker->word,
+        Soutenance::COL_SALLE           => $faker->randomElement(['SA.101', 'SA.201', 'E.101', 'E.201']),
 
         // Clefs etrangeres
         Soutenance::COL_CANDIDE_ID             => $faker->randomElement($idsEnseignant),

@@ -159,7 +159,28 @@ class SoutenanceController extends AbstractControllerCRUD
      */
     public function edit($id)
     {
-        abort('404');
+        $soutenance = $this->validerModele($id);
+        if(null === $soutenance)
+        {
+            abort('404');
+        }
+
+        $enseignants  = Enseignant::all();
+        $etudiants    = Etudiant::all();
+        $departements = Departement::all();
+        $options      = Option::all();
+
+        return view('soutenance.form.admin', [
+            'titre'        => SoutenanceController::TITRE_EDIT,
+            'classe'       => Soutenance::class,
+            'soutenance'   => $soutenance,
+            'enseignants'  => $enseignants,
+            'etudiants'    => $etudiants,
+            'departements' => $departements,
+            'options'      => $options,
+            'wip_date'     => null,
+            'wip_heure'    => null,
+        ]);
     }
 
     /**
@@ -171,7 +192,17 @@ class SoutenanceController extends AbstractControllerCRUD
      */
     public function update(Request $request, $id)
     {
-        abort('404');
+        $this->validerForm($request);
+        $soutenance = $this->validerModele($id);
+        if(null === $soutenance)
+        {
+            abort('404');
+        }
+
+        $soutenance->update($request->all());
+        $soutenance->save();
+
+        return redirect()->route('soutenances.index');
     }
 
     /**
@@ -182,7 +213,15 @@ class SoutenanceController extends AbstractControllerCRUD
      */
     public function destroy($id)
     {
-        abort('404');
+        $soutenance = $this->validerModele($id);
+        if(null === $soutenance)
+        {
+            abort('404');
+        }
+
+        $soutenance->delete();
+
+        return redirect()->route('soutenances.index');
     }
 
     /* ====================================================================

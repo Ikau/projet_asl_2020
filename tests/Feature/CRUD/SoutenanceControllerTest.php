@@ -286,16 +286,74 @@ class SoutenanceControllerTest extends TestCase
      */
     public function testEdit()
     {
-        $this->assertTrue(TRUE);
+        $soutenance = factory(Soutenance::class)->create();
+
+        // Verification redirection
+        $response = $this->from(route('soutenances.tests'))
+        ->get(route('soutenances.edit', $soutenance->id))
+        ->assertViewIs('soutenance.form.admin')
+        ->assertSee(SoutenanceController::TITRE_EDIT);
+
+        // Verification integrite des donnees
+        foreach($this->getAttributsModele() as $attribut)
+        {
+            $response->assertSee($soutenance[$attribut]);
+        }
+
+        // Verification echec
+        $response = $this->from(route('soutenances.tests'))
+        ->get(route('soutenances.edit', -1))
+        ->assertStatus(404);
     }
 
     /**
      * @depends testValiderForm
      * @depends testValiderModele
+     * @dataProvider updateProvider
      */
-    public function testUpdate()
+    public function testUpdate(string $clefModifiee, $nouvelleValeur)
     {
-        $this->assertTrue(TRUE);
+        $soutenance = factory(Soutenance::class)->create();
+        $soutenance[$clefModifiee] = $nouvelleValeur;
+
+        // Verification route
+        $response = $this->from(route('soutenances.tests'))
+        ->patch(route('soutenances.update', $soutenance->id), $soutenance->toArray())
+        ->assertRedirect(route('soutenances.index'));
+
+        // Verificaiton de la modification
+        $soutenanceTest = Soutenance::find($soutenance->id);
+        foreach($this->getAttributsModele() as $a)
+        {
+            $this->assertEquals($soutenance[$a], $soutenanceTest[$a]);
+        }
+    }
+
+    public function updateProvider()
+    {
+        // [string $clefModifiee, $nouvelleValeur]
+        return [
+            'Annee valide'          => [Soutenance::COL_ANNEE_ETUDIANT, 5],
+            'Campus valide'         => [Soutenance::COL_CAMPUS, 'Bourges'],
+            'Commentaire valide'    => [Soutenance::COL_COMMENTAIRE, 'Commentaire valide'],
+            'Confidentielle valide' => [Soutenance::COL_CONFIDENTIELLE, TRUE],
+            'Date valide'           => [Soutenance::COL_DATE, date('Y-m-d', strtotime('now +1 day'))],
+            'Heure valide'          => [Soutenance::COL_HEURE, '12:00:00'],
+            'Invites valide'        => [Soutenance::COL_INVITES, 'John Doe'],
+            'Nombre repas valide'   => [Soutenance::COL_NB_REPAS, 2],
+            'Salle valide'          => [Soutenance::COL_SALLE, 'SA.101'],
+            'Candide valide'        => [Soutenance::COL_CANDIDE_ID, 1],
+            //'Contact valide'        => [Soutenance::COL_CONTACT_ENTREPRISE_ID, 1],
+            'Departement valide'    => [Soutenance::COL_DEPARTEMENT_ID, 1],
+            'Etudiant valide'       => [Soutenance::COL_ETUDIANT_ID, 1],
+            'Option valide'         => [Soutenance::COL_OPTION_ID, 1],
+            'Referent valide'       => [Soutenance::COL_REFERENT_ID, 1],
+
+            'Commentaire null'     => [Soutenance::COL_COMMENTAIRE, null],
+            'Confidentielle null'  => [Soutenance::COL_CONFIDENTIELLE, null],
+            'Invite null'          => [Soutenance::COL_INVITES, null],
+            'Nombre de repas null' => [Soutenance::COL_NB_REPAS, null],
+        ];
     }
 
     /**
@@ -303,7 +361,21 @@ class SoutenanceControllerTest extends TestCase
      */
     public function testDestroy()
     {
-        $this->assertTrue(TRUE);
+        $soutenance = factory(Soutenance::class)->create();
+
+        // Verification route
+        $response = $this->from(route('soutenances.tests'))
+        ->delete(route('soutenances.destroy', $soutenance->id))
+        ->assertRedirect(route('soutenances.index'));
+
+        // Verification suppression
+        $soutenanceTest = Soutenance::find($soutenance->id);
+        $this->assertNull($soutenanceTest);
+
+        // Verification echec
+        $response = $this->from(route('soutenances.tests'))
+        ->delete(route('soutenances.destroy', -1))
+        ->assertStatus(404);
     }
 
     /* ====================================================================
