@@ -9,13 +9,28 @@ use App\Utils\Constantes;
 
 class Soutenance extends AbstractSoutenance
 {
+
+    /*
+     * Nom des colonnes dans la base de donnees
+     */
+    const COL_ANNEE_ETUDIANT  = 'annee_etudiant';
+    const COL_CAMPUS          = 'campus';
+    const COL_COMMENTAIRE     = 'commentaire';
+    const COL_CONFIDENTIELLE  = 'confidentielle';
+    const COL_DATE            = 'date';
+    const COL_HEURE           = 'heure';
+    const COL_INVITES         = 'invites';
+    const COL_NB_REPAS        = 'repas';
+    const COL_OPTION_ETUDIANT = 'option_etudiant';
+    const COL_SALLE           = 'salle';
+
     /*
      * Nom des colonnes des clefs etrangeres 
      */
-    const COL_REFERENT_ID           = 'referent_id';
     const COL_CANDIDE_ID            = 'candide_id';
-    const COL_ETUDIANT_ID           = 'etudiant_id';
     const COL_CONTACT_ENTREPRISE_ID = 'contact_entreprise_id';
+    const COL_ETUDIANT_ID           = 'etudiant_id';
+    const COL_REFERENT_ID           = 'referent_id';
 
     /**
      * @var string Nom de la table associe au modele 'Soutenance'
