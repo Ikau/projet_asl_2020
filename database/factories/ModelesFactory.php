@@ -13,6 +13,7 @@ use App\Modeles\Etudiant;
 use App\Modeles\Departement;
 use App\Modeles\Option;
 use App\Modeles\Stage;
+use App\Modeles\Soutenance;
 
 use App\Utils\Constantes;
 
@@ -96,5 +97,34 @@ $factory->define(Stage::class, function (Faker $faker)
         // Clefs etrangeres
         Stage::COL_REFERENT_ID   => $faker->randomElement($idsEnseignant),
         Stage::COL_ETUDIANT_ID   => $faker->unique()->randomElement($idsEtudiant),
+    ];
+});
+
+$factory->define(Soutenance::class, function (Faker $faker)
+{
+    //$idsContact     = DB::table(Contact::NOM_TABLE)->pluck('id');
+    $idsDepartement = DB::table(Departement::NOM_TABLE)->pluck('id');
+    $idsEnseignant  = DB::table(Enseignant::NOM_TABLE)->pluck('id');
+    $idsEtudiant    = DB::table(Etudiant::NOM_TABLE)->pluck('id');
+    $idsOption      = DB::table(Option::NOM_TABLE)->pluck('id');
+
+    return [
+        Soutenance::COL_ANNEE_ETUDIANT  => $faker->randomElement([4,5]),
+        Soutenance::COL_CAMPUS          => $faker->randomElement(['Bourges', 'Blois']),
+        Soutenance::COL_COMMENTAIRE     => $faker->text,
+        Soutenance::COL_CONFIDENTIELLE  => $faker->boolean(50),
+        Soutenance::COL_DATE            => $faker->dateTimeBetween('+4 months', '+10 months')->format('Y-m-d'),
+        Soutenance::COL_HEURE           => $faker->time('H:i:00'),
+        Soutenance::COL_INVITES         => $faker->randomElement(["$faker->firstName $faker->lastName", '']),
+        Soutenance::COL_NB_REPAS        => $faker->randomElement([0, 1, 2, 3]),
+        Soutenance::COL_SALLE           => $faker->randomElement(['SA.101', 'SA.201', 'E.101', 'E.201']),
+
+        // Clefs etrangeres
+        Soutenance::COL_CANDIDE_ID             => $faker->randomElement($idsEnseignant),
+        //Soutenance::COL_CONTACT_ENTREPRISE_ID  => $faker->randomElement($idsContact),
+        Soutenance::COL_DEPARTEMENT_ID         => $faker->randomElement($idsDepartement),
+        Soutenance::COL_ETUDIANT_ID            => $faker->randomElement($idsEtudiant),
+        Soutenance::COL_OPTION_ID              => $faker->randomElement($idsOption),
+        Soutenance::COL_REFERENT_ID            => $faker->randomElement($idsEnseignant),
     ];
 });

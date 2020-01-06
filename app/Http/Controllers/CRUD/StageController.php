@@ -41,19 +41,10 @@ class StageController extends AbstractControllerCRUD
         {
             case 'normaliseInputsOptionnels':
                 $this->normaliseInputsOptionnels($request);
-                if( ! is_bool($request[Stage::COL_CONVENTION_ENVOYEE]) )
-                {
-                    abort('404');
-                }
-                if( ! is_bool($request[Stage::COL_CONVENTION_SIGNEE]) )
-                {
-                    abort('404');
-                }
-                if( ! is_string($request[Stage::COL_MOYEN_RECHERCHE]) )
-                {
-                    abort('404');
-                }
-                if( ! is_integer($request[Stage::COL_REFERENT_ID]) )
+                if( ! is_bool($request[Stage::COL_CONVENTION_ENVOYEE])
+                ||  ! is_bool($request[Stage::COL_CONVENTION_SIGNEE])
+                ||  ! is_string($request[Stage::COL_MOYEN_RECHERCHE])
+                ||  ! is_integer($request[Stage::COL_REFERENT_ID]) )
                 {
                     abort('404');
                 }

@@ -107,20 +107,9 @@ class ContactController extends AbstractControllerCRUD
             case 'normaliseInputsOptionnels':
                 $this->normaliseInputsOptionnels($request);
 
-                if(null === $request[Contact::COL_CIVILITE]
-                || ! in_array($request[Contact::COL_CIVILITE], Constantes::CIVILITE)) 
-                {
-                    abort('404');
-                }
-
-                if(null === $request[Contact::COL_TELEPHONE]
-                || ! is_string($request[Contact::COL_TELEPHONE]))
-                {
-                    abort('404');
-                }
-
-                if(null === $request[Contact::COL_ADRESSE]
-                || ! is_string($request[Contact::COL_ADRESSE]))
+                if(! in_array($request[Contact::COL_CIVILITE], Constantes::CIVILITE)
+                || ! is_string($request[Contact::COL_TELEPHONE])
+                || ! is_string($request[Contact::COL_ADRESSE])) 
                 {
                     abort('404');
                 }

@@ -127,10 +127,11 @@ class EnseignantController extends AbstractControllerCRUD
             case 'normaliseInputsOptionnels':
                 $this->normaliseInputsOptionnels($request);
 
-                // On verifie seulement que c'est numerique.
-                // Si l'affectation par defaut a echoue alors on a une reponse 500
-                if(! is_numeric($request[Enseignant::COL_RESPONSABLE_OPTION_ID]))       abort('404');
-                if(! is_numeric($request[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID]))  abort('404');
+                if(! is_numeric($request[Enseignant::COL_RESPONSABLE_OPTION_ID])
+                || ! is_numeric($request[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID]))
+                {
+                    abort('404');
+                }
             return redirect('/');
 
             case 'validerForm':

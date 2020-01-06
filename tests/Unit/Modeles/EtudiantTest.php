@@ -4,6 +4,7 @@ namespace Tests\Unit\Modeles;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Collection;
 use Tests\TestCase;
 
@@ -23,12 +24,34 @@ class EtudiantTest extends TestCase
     {
         $etudiant = new Etudiant();
 
-        $this->assertEquals(Constantes::STRING_VIDE, $etudiant[Etudiant::COL_NOM]);
-        $this->assertEquals(Constantes::STRING_VIDE, $etudiant[Etudiant::COL_PRENOM]);
-        $this->assertEquals(Constantes::STRING_VIDE, $etudiant[Etudiant::COL_EMAIL]);
-        $this->assertEquals(Constantes::INT_VIDE, $etudiant[Etudiant::COL_ANNEE]);
-        $this->assertEquals(FALSE, $etudiant[Etudiant::COL_MOBILITE]);
-        $this->assertEquals(Constantes::ID_VIDE, $etudiant[Etudiant::COL_DEPARTEMENT_ID]);
-        $this->assertEquals(Constantes::ID_VIDE, $etudiant[Etudiant::COL_OPTION_ID]);
+        $attributsTests = [
+            //Etudiant::COL_MATRICULE     => Constantes::STRING_VIDE, 
+            Etudiant::COL_NOM           => Constantes::STRING_VIDE,
+            Etudiant::COL_PRENOM        => Constantes::STRING_VIDE,
+            Etudiant::COL_EMAIL         => Constantes::STRING_VIDE,
+            //Etudiant::COL_CIVILITE      => Constantes::CIVILITE['vide'],
+            //Etudiant::COL_INSCRIPTION   => Constantes::DATE_VIDE,
+            //Etudiant::COL_NATIONALITE   => Constantes::NATIONALITE['vide'],
+            //Etudiant::COL_FORMATION     => Constantes::FORMATION['vide'],
+            //Etudiant::COL_MASTER        => Constantes::MASTER['vide'],
+            //Etudiant::COL_DIPLOME       => Constantes::DIPLOME['vide'],
+            Etudiant::COL_ANNEE         => Constantes::INT_VIDE,
+            Etudiant::COL_MOBILITE      => FALSE,
+            
+            Etudiant::COL_DEPARTEMENT_ID => Constantes::ID_VIDE,
+            Etudiant::COL_OPTION_ID      => Constantes::ID_VIDE
+        ];
+
+        // Verification du constructeur
+        $nbCompte = 1; // On suppose l'ID existant
+        foreach($attributsTests as $attribut => $valeur)
+        {
+            $this->assertEquals($valeur, $etudiant[$attribut]);
+            $nbCompte++;
+        }
+
+        // Verification du nombre d'attributs
+        $nbAttributs = count(Schema::getColumnListing(Etudiant::NOM_TABLE));
+        $this->assertEquals($nbAttributs, $nbCompte);
     }
 }
