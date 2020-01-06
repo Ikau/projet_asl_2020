@@ -128,9 +128,9 @@
     <br/>
 
     @if ( isset($stage) )
-    <button type="submit"> Modifier l'stage</button>
+    <button type="submit"> Modifier le stage</button>
     @else
-    <button type="submit"> Créer l'stage</button>
+    <button type="submit"> Créer le stage</button>
     @endif
 </form>
 
