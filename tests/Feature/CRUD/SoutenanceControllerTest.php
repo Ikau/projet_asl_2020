@@ -225,7 +225,34 @@ class SoutenanceControllerTest extends TestCase
      */
     public function testStore()
     {
-        $this->assertTrue(TRUE);
+        $soutenance = factory(Soutenance::class)->make();
+
+        // Verification de la route
+        $response = $this->followingRedirects()
+        ->from(route('soutenances.create'))
+        ->post(route('soutenances.store'), $soutenance->toArray())
+        ->assertViewIs('soutenance.index');
+
+        // Verification de l'insertion
+        $clauseWhere = [];
+        foreach($this->getAttributsModele() as $attribut)
+        {
+            if('id' !== $attribut)
+            {
+                $clauseWhere[] = [$attribut, '=', $soutenance[$attribut]];
+            }
+        }
+
+        $soutenanceTest = Soutenance::where($clauseWhere)->first();
+        $this->assertNotNull($soutenanceTest);
+        foreach($this->getAttributsModele() as $a)
+        {
+            if('id' !== $a)
+            {
+                $this->assertEquals($soutenance[$a], $soutenanceTest[$a]);
+            }
+        }
+
     }
 
     /**
@@ -233,7 +260,20 @@ class SoutenanceControllerTest extends TestCase
      */
     public function testShow()
     {
-        $this->assertTrue(TRUE);
+        $soutenance = factory(Soutenance::class)->create();
+
+        // Verification route
+        $response = $this->from(route('soutenances.tests'))
+        ->get(route('soutenances.show'), $soutenance->id)
+        ->assertOk()
+        ->assertViewIs('soutenance.show')
+        ->assertSee(SoutenanceController::TITRE_SHOW);
+
+        // Verification integrite des donnees
+        foreach($this->getAttributsModele() as $attribut)
+        {
+            $response->assertSee($soutenance[$attribut]);
+        }
     }
 
     /**

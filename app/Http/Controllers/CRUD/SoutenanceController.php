@@ -122,7 +122,13 @@ class SoutenanceController extends AbstractControllerCRUD
      */
     public function store(Request $request)
     {
-        abort('404');
+        $this->validerForm($request);
+
+        $soutenance = new Soutenance();
+        $soutenance->fill($request->all());
+        $soutenance->save();
+
+        return redirect(route('soutenances.index'));
     }
 
     /**
@@ -236,7 +242,7 @@ class SoutenanceController extends AbstractControllerCRUD
             Soutenance::COL_ANNEE_ETUDIANT  => ['required', Rule::in([4,5])],
             Soutenance::COL_CAMPUS          => ['required', Rule::in(['Blois', 'Bourges'])],
             Soutenance::COL_DATE            => ['required', 'date', 'after:'.date('Y-m-d', strtotime('now'))],
-            Soutenance::COL_HEURE           => ['required', 'date_format:H:i'],
+            Soutenance::COL_HEURE           => ['required', 'date_format:H:i:00'],
             Soutenance::COL_SALLE           => ['required', 'string'],
             
             Soutenance::COL_CONFIDENTIELLE  => ['sometimes', 'nullable', Rule::in(['on', FALSE, TRUE, 0, 1])],
