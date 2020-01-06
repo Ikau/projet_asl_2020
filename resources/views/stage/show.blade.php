@@ -7,7 +7,7 @@
 
 @section('contenu')
 <div>
-    Information sur un etudiant
+    Information sur un stage
 </div>
 
 @foreach($stage->toArray() as $key => $value)
