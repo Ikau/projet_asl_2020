@@ -114,7 +114,7 @@ $factory->define(Soutenance::class, function (Faker $faker)
         Soutenance::COL_COMMENTAIRE     => $faker->text,
         Soutenance::COL_CONFIDENTIELLE  => $faker->boolean(50),
         Soutenance::COL_DATE            => $faker->dateTimeBetween('+4 months', '+10 months')->format('Y-m-d'),
-        Soutenance::COL_HEURE           => $faker->time('H:i'),
+        Soutenance::COL_HEURE           => $faker->time('H:i:00'),
         Soutenance::COL_INVITES         => $faker->randomElement(["$faker->firstName $faker->lastName", '']),
         Soutenance::COL_NB_REPAS        => $faker->randomElement([0, 1, 2, 3]),
         Soutenance::COL_SALLE           => $faker->word,
