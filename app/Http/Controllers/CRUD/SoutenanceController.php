@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Validation\Rule;
 
 use App\Abstracts\AbstractControllerCRUD;
+use App\Modeles\Enseignant;
+use App\Modeles\Etudiant;
+use App\Modeles\Departement;
 use App\Modeles\Option;
 use App\Modeles\Soutenance;
 use App\Utils\Constantes;
@@ -92,9 +95,23 @@ class SoutenanceController extends AbstractControllerCRUD
      */
     public function create()
     {
-        $attributs = $this->getAttributsModele();
-        $options   = Option::all();
-        
+        $attributs    = $this->getAttributsModele();
+        $enseignants  = Enseignant::all();
+        $etudiants    = Etudiant::all();
+        $departements = Departement::all();
+        $options      = Option::all();
+        $soutenanceTemp = factory(Soutenance::class)->make();
+
+        return view('soutenance.form.admin', [
+            'titre'        => SoutenanceController::TITRE_CREATE,
+            'classe'       => Soutenance::class,
+            'enseignants'  => $enseignants,
+            'etudiants'    => $etudiants,
+            'departements' => $departements,
+            'options'      => $options,
+            'wip_date'     => $soutenanceTemp->date,
+            'wip_heure'    => $soutenanceTemp->heure,
+        ]);
     }
 
     /**

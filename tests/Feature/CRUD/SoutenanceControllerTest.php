@@ -204,7 +204,20 @@ class SoutenanceControllerTest extends TestCase
 
     public function testCreate()
     {
-        $this->assertTrue(TRUE);
+        $response = $this->get(route('soutenances.create'))
+        ->assertOk()
+        ->assertViewIs('soutenance.form.admin')
+        ->assertSee(SoutenanceController::TITRE_CREATE);
+
+        foreach($this->getAttributsModele() as $attribut)
+        {
+            if('id' !== $attribut
+            //&& Soutenance::COL_CONTACT_ENTREPRISE_ID !== $attribut
+            )
+            {
+                $response->assertSee("name=\"$attribut\"");
+            }
+        }
     }
     
     /**
