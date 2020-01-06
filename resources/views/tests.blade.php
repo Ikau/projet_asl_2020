@@ -8,4 +8,6 @@
     <a href="{{ route('entreprises.index') }}">Entreprises</a>
     <a href="{{ route('etudiants.index') }}">Etudiant</a>
     <a href="{{ route('stages.index') }}">Stage</a>
+    <a href="{{ route('soutenances.index') }}">Soutenances</a>
+
 </html>
