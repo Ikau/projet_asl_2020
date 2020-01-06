@@ -264,8 +264,7 @@ class SoutenanceControllerTest extends TestCase
 
         // Verification route
         $response = $this->from(route('soutenances.tests'))
-        ->get(route('soutenances.show'), $soutenance->id)
-        ->assertOk()
+        ->get(route('soutenances.show', $soutenance->id))
         ->assertViewIs('soutenance.show')
         ->assertSee(SoutenanceController::TITRE_SHOW);
 
@@ -274,6 +273,11 @@ class SoutenanceControllerTest extends TestCase
         {
             $response->assertSee($soutenance[$attribut]);
         }
+
+        // Verification echec
+        $response = $this->from(route('soutenances.tests'))
+        ->get(route('soutenances.show', -1))
+        ->assertStatus(404);
     }
 
     /**

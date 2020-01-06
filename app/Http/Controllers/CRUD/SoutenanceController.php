@@ -139,7 +139,16 @@ class SoutenanceController extends AbstractControllerCRUD
      */
     public function show($id)
     {
-        abort('404');
+        $soutenance = $this->validerModele($id);
+        if(null === $soutenance)
+        {
+            abort('404');
+        }
+
+        return view('soutenance.show', [
+            'titre'      => SoutenanceController::TITRE_SHOW,
+            'soutenance' => $soutenance
+        ]);
     }
 
     /**
