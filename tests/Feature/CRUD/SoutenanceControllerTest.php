@@ -21,9 +21,40 @@ class SoutenanceControllerTest extends TestCase
      * ====================================================================
      */
 
-    public function testNormaliseInputsOptionnels()
+    /**
+     * @dataProvider normaliseInputsOptionnelsProvider
+     */
+    public function testNormaliseInputsOptionnels(string $clefModifiee, $nouvelleValeur)
     {
-        $this->assertTrue(TRUE);
+        $soutenance                = factory(Soutenance::class)->make();
+        $soutenance['test']        = 'normaliseInputsOptionnels';
+        $soutenance[$clefModifiee] = $nouvelleValeur;
+
+        $response = $this->from(route('soutenances.tests'))
+        ->post(route('soutenances.tests', $soutenance->toArray()))
+        ->assertRedirect('/');
+    }
+
+    public function normaliseInputsOptionnelsProvider()
+    {
+        return [
+            'Soutenance valide' => [Soutenance::COL_ANNEE_ETUDIANT, 4],
+
+            'Commentaire null'    => [Soutenance::COL_COMMENTAIRE, null],
+            'Invites null'        => [Soutenance::COL_INVITES, null],
+            'Confidentielle null' => [Soutenance::COL_CONFIDENTIELLE, null],
+            'Nombre repas null'   => [Soutenance::COL_NB_REPAS, null],
+
+            'Commentaire vide'    => [Soutenance::COL_COMMENTAIRE, ''],
+            'Invites vide'        => [Soutenance::COL_INVITES, ''],
+            'Confidentielle vide' => [Soutenance::COL_CONFIDENTIELLE, ''],
+            'Nombre repas vide'   => [Soutenance::COL_NB_REPAS, ''],
+
+            'Commentaire invalide'    => [Soutenance::COL_COMMENTAIRE, -1],
+            'Invites invalide'        => [Soutenance::COL_INVITES, -1],
+            'Confidentielle invalide' => [Soutenance::COL_CONFIDENTIELLE, 'invalide'],
+            'Nombre repas invalide'   => [Soutenance::COL_NB_REPAS, 'invalide'],
+        ];
     }
 
     /**

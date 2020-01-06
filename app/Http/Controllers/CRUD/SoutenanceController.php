@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Validation\Rule;
 
 use App\Abstracts\AbstractControllerCRUD;
+use App\Modeles\Option;
 use App\Modeles\Soutenance;
 use App\Utils\Constantes;
 
@@ -40,7 +41,13 @@ class SoutenanceController extends AbstractControllerCRUD
         {
             case 'normaliseInputsOptionnels':
                 $this->normaliseInputsOptionnels($request);
-                abort('404');
+                if( ! is_string($request[Soutenance::COL_COMMENTAIRE]) 
+                ||  ! is_string($request[Soutenance::COL_INVITES])
+                ||  ! is_bool($request[Soutenance::COL_CONFIDENTIELLE])
+                ||  ! is_integer($request[Soutenance::COL_NB_REPAS]))
+                {
+                    abort('404');
+                }
             return redirect('/');
 
             case 'validerForm':
@@ -83,7 +90,9 @@ class SoutenanceController extends AbstractControllerCRUD
      */
     public function create()
     {
-        abort('404');
+        $attributs = $this->getAttributsModele();
+        $options   = Option::all();
+        
     }
 
     /**
@@ -155,7 +164,45 @@ class SoutenanceController extends AbstractControllerCRUD
      */
     protected function normaliseInputsOptionnels(Request $request)
     {
-        abort('404');
+        // Commentaire
+        $commentaire = $request[Soutenance::COL_COMMENTAIRE];
+        if($request->missing(Soutenance::COL_COMMENTAIRE)
+        || null == $commentaire
+        || ! is_string($commentaire))
+        {
+            $request[Soutenance::COL_COMMENTAIRE] = Constantes::STRING_VIDE;
+        }
+
+        // Confidentielle
+        $confidentielle = $request[Soutenance::COL_CONFIDENTIELLE];
+        if($request->missing(Soutenance::COL_CONFIDENTIELLE)
+        || null == $confidentielle
+        || ! is_bool($confidentielle))
+        {
+            $request[Soutenance::COL_CONFIDENTIELLE] = FALSE;
+        }
+        else if ('on' === $confidentielle)
+        {
+            $request[Soutenance::COL_CONFIDENTIELLE] = TRUE;
+        }
+
+        // Invites
+        $invites = $request[Soutenance::COL_INVITES];
+        if($request->missing(Soutenance::COL_INVITES)
+        || null == $invites
+        || ! is_string($invites))
+        {
+            $request[Soutenance::COL_INVITES] = Constantes::STRING_VIDE;
+        }
+
+        // Nombre de repas
+        $nbRepas = $request[Soutenance::COL_NB_REPAS];
+        if($request->missing(Soutenance::COL_NB_REPAS)
+        || null == $nbRepas
+        || ! is_integer($nbRepas))
+        {
+            $request[Soutenance::COL_NB_REPAS] = Constantes::INT_VIDE;
+        }
     }
 
     /**
