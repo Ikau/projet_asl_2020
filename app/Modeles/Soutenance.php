@@ -21,15 +21,16 @@ class Soutenance extends AbstractSoutenance
     const COL_HEURE           = 'heure';
     const COL_INVITES         = 'invites';
     const COL_NB_REPAS        = 'repas';
-    const COL_OPTION_ETUDIANT = 'option_etudiant';
     const COL_SALLE           = 'salle';
-
+    
     /*
      * Nom des colonnes des clefs etrangeres 
      */
     const COL_CANDIDE_ID            = 'candide_id';
-    const COL_CONTACT_ENTREPRISE_ID = 'contact_entreprise_id';
+    //const COL_CONTACT_ENTREPRISE_ID = 'departement';
+    const COL_DEPARTEMENT_ID        = 'departement_id';
     const COL_ETUDIANT_ID           = 'etudiant_id';
+    const COL_OPTION_ID             = 'option_etudiant';
     const COL_REFERENT_ID           = 'referent_id';
 
     /**
@@ -61,23 +62,23 @@ class Soutenance extends AbstractSoutenance
      */
     protected $attributes = [
         // Attributs propres au modele
-        'commentaire'           => Constantes::STRING_VIDE,
-        'invites'               => Constantes::STRING_VIDE,
-        'repas'                 => Constantes::INT_VIDE,
-        'salle'                 => Constantes::STRING_VIDE,
-        'heure'                 => Constantes::HEURE_VIDE,
-        'date'                  => Constantes::DATE_VIDE,
-        'departement_ou_option' => Constantes::STRING_VIDE,
-        'nom_entreprise'        => Constantes::STRING_VIDE,
-        'annee_etudiant'        => Constantes::INT_VIDE,
-        'campus'                => Constantes::STRING_VIDE,
-        'confidentielle'        => FALSE,
+        Soutenance::COL_ANNEE_ETUDIANT  => Constantes::INT_VIDE,
+        Soutenance::COL_CAMPUS          => Constantes::STRING_VIDE,
+        Soutenance::COL_COMMENTAIRE     => Constantes::STRING_VIDE,
+        Soutenance::COL_CONFIDENTIELLE  => TRUE,
+        Soutenance::COL_DATE            => Constantes::DATE_VIDE,
+        Soutenance::COL_HEURE           => Constantes::HEURE_VIDE,
+        Soutenance::COL_INVITES         => Constantes::STRING_VIDE,
+        Soutenance::COL_NB_REPAS        => Constantes::INT_VIDE,
+        Soutenance::COL_SALLE           => Constantes::STRING_VIDE,
 
         // Clefs etrangeres
-        Soutenance::COL_REFERENT_ID            => Constantes::ID_VIDE,
         Soutenance::COL_CANDIDE_ID             => Constantes::ID_VIDE,
+        //Soutenance::COL_CONTACT_ENTREPRISE_ID  => Constantes::ID_VIDE,
+        Soutenance::COL_DEPARTEMENT_ID         => Constantes::ID_VIDE,
         Soutenance::COL_ETUDIANT_ID            => Constantes::ID_VIDE,
-        Soutenance::COL_CONTACT_ENTREPRISE_ID  => Constantes::ID_VIDE,
+        Soutenance::COL_OPTION_ID              => Constantes::ID_VIDE,
+        Soutenance::COL_REFERENT_ID            => Constantes::ID_VIDE,
     ];
 
     /**
