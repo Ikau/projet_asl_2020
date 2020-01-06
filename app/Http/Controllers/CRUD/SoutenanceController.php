@@ -55,8 +55,11 @@ class SoutenanceController extends AbstractControllerCRUD
             return redirect('/');
 
             case 'validerModele':
-                $etudiant = $this->validerModele($request->id);
-                abort('404');
+                $soutenance = $this->validerModele($request->id);
+                if(null === $soutenance)
+                {
+                    abort('404');
+                }
             return redirect('/');
 
             default:
@@ -244,7 +247,13 @@ class SoutenanceController extends AbstractControllerCRUD
      */
     protected function validerModele($id)
     {
-        abort('404');
+        if(null === $id
+        || ! is_numeric($id))
+        {
+            return null;
+        }
+
+        return Soutenance::find($id);
     }
 
     
