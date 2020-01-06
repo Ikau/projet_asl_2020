@@ -51,10 +51,10 @@
     <br/>
 
     @include('includes.form.input.select.enseignants', [
-        'attribut'  => 'referent_id',
-        'etudiants' => $enseignants,
-        'intitule'  => 'Referent(e)',
-        'valeur'    => $stage->referent_id ?? old('referent_id')
+        'attribut'    => 'referent_id',
+        'enseignants' => $enseignants,
+        'intitule'    => 'Referent(e)',
+        'valeur'      => $stage->referent_id ?? old('referent_id')
     ])
     <br/>
 
