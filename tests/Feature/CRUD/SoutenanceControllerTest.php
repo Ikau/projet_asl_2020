@@ -37,6 +37,7 @@ class SoutenanceControllerTest extends TestCase
 
     public function normaliseInputsOptionnelsProvider()
     {
+        // [string $clefModifiee, $nouvelleValeur]
         return [
             'Soutenance valide' => [Soutenance::COL_ANNEE_ETUDIANT, 4],
 
@@ -59,10 +60,78 @@ class SoutenanceControllerTest extends TestCase
 
     /**
      * @depends testNormaliseInputsOptionnels
+     * @dataProvider validerFormProvider
      */
-    public function testValiderForm()
+    public function testValiderForm(bool $possedeErreur, string $clefModifiee, $nouvelleValeur)
     {
-        $this->assertTrue(TRUE);
+        $soutenance                = factory(Soutenance::class)->make();
+        $soutenance['test']        = 'validerForm';
+        $soutenance[$clefModifiee] = $nouvelleValeur;
+
+        $routeSource = route('soutenances.tests');
+        $response = $this->from(route('soutenances.tests'))
+        ->post(route('soutenances.tests'), $soutenance->toArray());
+
+        if($possedeErreur)
+        {
+            $response->assertSessionHasErrors($clefModifiee)
+            ->assertRedirect($routeSource);
+        }
+        else 
+        {
+            $response->assertSessionDoesntHaveErrors()
+            ->assertRedirect('/');
+        }
+    }
+
+    public function validerFormProvider()
+    {
+        // [bool $possedeErreur, string $clefModifiee, $nouvelleValeur]
+        return [
+            // Succes
+            'Soutenance valide' => [FALSE, Soutenance::COL_ANNEE_ETUDIANT, 4],
+            
+            'Commentaire null'     => [FALSE, Soutenance::COL_COMMENTAIRE, null],
+            'Confidentielle null'  => [FALSE, Soutenance::COL_CONFIDENTIELLE, null],
+            'Invite null'          => [FALSE, Soutenance::COL_INVITES, null],
+            'Nombre de repas null' => [FALSE, Soutenance::COL_NB_REPAS, null],
+
+            // Echecs
+            'Annee etudiant null' => [TRUE, Soutenance::COL_ANNEE_ETUDIANT, null],
+            'Date null'           => [TRUE, Soutenance::COL_DATE, null],
+            'Heure null'          => [TRUE, Soutenance::COL_HEURE, null],
+            'Salle null'          => [TRUE, Soutenance::COL_SALLE, null],
+            'Candide null'        => [TRUE, Soutenance::COL_CANDIDE_ID, null],
+            //'Contact null'         => [TRUE, Soutenance::COL_CONTACT_ID, null],
+            'Departement null'    => [TRUE, Soutenance::COL_DEPARTEMENT_ID, null],
+            'Option null'         => [TRUE, Soutenance::COL_OPTION_ID, null],
+            'Rerefent null'       => [TRUE, Soutenance::COL_REFERENT_ID, null],
+
+            'Annee etudiant invalide'  => [TRUE, Soutenance::COL_ANNEE_ETUDIANT, 'invalide'],
+            'Commentaire invalide'     => [TRUE, Soutenance::COL_COMMENTAIRE, -1],
+            'Confidentielle invalide'  => [TRUE, Soutenance::COL_CONFIDENTIELLE, 'invalide'],
+            'Date invalide'            => [TRUE, Soutenance::COL_DATE, 'invalide'],
+            'Heure invalide'           => [TRUE, Soutenance::COL_HEURE, 'invalide'],
+            'Salle invalide'           => [TRUE, Soutenance::COL_SALLE, -1],
+            'Candide invalide'         => [TRUE, Soutenance::COL_CANDIDE_ID, 'invalide'],
+            //'Contact invalide'         => [TRUE, Soutenance::COL_CONTACT_ID, 'invalide'],
+            'Departement invalide'     => [TRUE, Soutenance::COL_DEPARTEMENT_ID, 'invalide'],
+            'Invite invalide'          => [TRUE, Soutenance::COL_INVITES, -1],
+            'Nombre de repas invalide' => [TRUE, Soutenance::COL_NB_REPAS, 'invalide'],
+            'Option invalide'          => [TRUE, Soutenance::COL_OPTION_ID, 'invalide'],
+            'Rerefent invalide'        => [TRUE, Soutenance::COL_REFERENT_ID, 'invalide'],
+
+            'Date depassee' => [TRUE, Soutenance::COL_DATE, date('Y-m-d', strtotime('now -1 day'))],
+
+            'Candide inexistant'     => [TRUE, Soutenance::COL_CANDIDE_ID, -1],
+            //'Contact inexistant'     => [TRUE, Soutenance::COL_CONTACT_ID, -1],
+            'Departement inexistant' => [TRUE, Soutenance::COL_DEPARTEMENT_ID, -1],
+            'Option inexistant'      => [TRUE, Soutenance::COL_OPTION_ID, -1],
+            'Rerefent inexistant'    => [TRUE, Soutenance::COL_REFERENT_ID, -1],
+            
+            'Invite negatif'          => [TRUE, Soutenance::COL_INVITES, -1],
+            'Nombre de repas negatif' => [TRUE, Soutenance::COL_NB_REPAS, -1],
+        ];
     }
 
     public function testValiderModele()

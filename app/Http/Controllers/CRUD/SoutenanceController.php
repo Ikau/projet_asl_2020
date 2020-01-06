@@ -44,7 +44,7 @@ class SoutenanceController extends AbstractControllerCRUD
                 if( ! is_string($request[Soutenance::COL_COMMENTAIRE]) 
                 ||  ! is_string($request[Soutenance::COL_INVITES])
                 ||  ! is_bool($request[Soutenance::COL_CONFIDENTIELLE])
-                ||  ! is_integer($request[Soutenance::COL_NB_REPAS]))
+                ||  ! is_numeric($request[Soutenance::COL_NB_REPAS]))
                 {
                     abort('404');
                 }
@@ -52,7 +52,6 @@ class SoutenanceController extends AbstractControllerCRUD
 
             case 'validerForm':
                 $this->validerForm($request);
-                abort('404');
             return redirect('/');
 
             case 'validerModele':
@@ -213,7 +212,28 @@ class SoutenanceController extends AbstractControllerCRUD
      */
     protected function validerForm(Request $request)
     {
-        abort('404');
+        $validation = $request->validate([
+            Soutenance::COL_ANNEE_ETUDIANT  => ['required', Rule::in([4,5])],
+            Soutenance::COL_CAMPUS          => ['required', Rule::in(['Blois', 'Bourges'])],
+            Soutenance::COL_DATE            => ['required', 'date', 'after:'.date('Y-m-d', strtotime('now'))],
+            Soutenance::COL_HEURE           => ['required', 'date_format:H:i'],
+            Soutenance::COL_SALLE           => ['required', 'string'],
+            
+            Soutenance::COL_CONFIDENTIELLE  => ['sometimes', 'nullable', Rule::in(['on', FALSE, TRUE, 0, 1])],
+            Soutenance::COL_COMMENTAIRE     => ['sometimes', 'nullable', 'string'],
+            Soutenance::COL_INVITES         => ['sometimes', 'nullable', 'string'],
+            Soutenance::COL_NB_REPAS        => ['sometimes', 'nullable', 'integer', 'min:0'],
+
+            // Clefs etrangeres
+            Soutenance::COL_CANDIDE_ID             => ['required', 'exists:enseignants,id'],
+            //Soutenance::COL_CONTACT_ENTREPRISE_ID  => ['required'],
+            Soutenance::COL_DEPARTEMENT_ID         => ['required', 'exists:departements,id'],
+            Soutenance::COL_ETUDIANT_ID            => ['required', 'exists:etudiants,id'],
+            Soutenance::COL_OPTION_ID              => ['required', 'exists:options,id'],
+            Soutenance::COL_REFERENT_ID            => ['required', 'exists:enseignants,id'],
+        ]);
+
+        $this->normaliseInputsOptionnels($request);
     }
 
     /**
