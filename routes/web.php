@@ -16,21 +16,29 @@ Route::get('/', function () {
 });
 
 /*
+ |--------------------------------------------------------------------------
+ | Routes Temporaires des controllers a modifier pour la mise en prod
+ |--------------------------------------------------------------------------
+ */
+
+/*
  * Route resources CRUD pour les modeles 
  */
-Route::resource('/tests/contacts', 'CRUD\ContactController');
-Route::resource('/tests/enseignants', 'CRUD\EnseignantController');
-Route::resource('/tests/entreprises', 'CRUD\EntrepriseController');
-Route::resource('/tests/etudiants', 'CRUD\EtudiantController');
-Route::resource('/tests/stages', 'CRUD\StageController');
+Route::resource('contacts', 'CRUD\ContactController');
+Route::resource('enseignants', 'CRUD\EnseignantController');
+Route::resource('entreprises', 'CRUD\EntrepriseController');
+Route::resource('etudiants', 'CRUD\EtudiantController');
+Route::resource('stages', 'CRUD\StageController');
+Route::resource('soutenances', 'CRUD\SoutenanceController');
 
 /* 
  * Route de test... 
  * C'est sale mais je n'ai rien trouve de plus simple ni elegant
  */
 Route::get('/tests', 'TestsController@tests');
-Route::post('contacts/tests', 'CRUD\ContactController@tests')->name('contacts.tests');
-Route::post('enseignants/tests', 'CRUD\EnseignantController@tests')->name('enseignants.tests');
-Route::post('entreprises/tests', 'CRUD\EntrepriseController@tests')->name('entreprises.tests');
-Route::post('etudiants/tests', 'CRUD\EtudiantController@tests')->name('etudiants.tests');
-Route::post('stages/tests', 'CRUD\StageController@tests')->name('stages.tests');
+Route::post('tests/controller/contacts/', 'CRUD\ContactController@tests')->name('contacts.tests');
+Route::post('tests/controller/enseignants/', 'CRUD\EnseignantController@tests')->name('enseignants.tests');
+Route::post('tests/controller/entreprises/', 'CRUD\EntrepriseController@tests')->name('entreprises.tests');
+Route::post('tests/controller/etudiants/', 'CRUD\EtudiantController@tests')->name('etudiants.tests');
+Route::post('tests/controller/stages/', 'CRUD\StageController@tests')->name('stages.tests');
+Route::post('tests/controller/soutenances/', 'CRUD\SoutenanceController@tests')->name('soutenances.tests');
