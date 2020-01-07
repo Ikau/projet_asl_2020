@@ -5,10 +5,24 @@ namespace App\Modeles;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Abstracts\AbstractEnseignant;
+use App\Interfaces\BaseDeDonnees;
 use App\Utils\Constantes;
 
-class Enseignant extends AbstractEnseignant
+class Enseignant extends AbstractEnseignant implements BaseDeDonnees
 {
+    /*
+     * Nom des colonnes dans la base de donnees
+     */
+    const COL_NOM    = 'nom';
+    const COL_PRENOM = 'prenom';
+    const COL_EMAIL  = 'email';
+
+    /*
+     * Nom des colonnes des clefs etrangeres
+     */
+    const COL_RESPONSABLE_DEPARTEMENT_ID = 'departement_id';
+    const COL_RESPONSABLE_OPTION_ID      = 'option_id';
+
     /**
      * @var string Nom de la table associe au modele 'Enseignant'
      */
@@ -29,7 +43,9 @@ class Enseignant extends AbstractEnseignant
     /**
      * @var array[string] Liste des attributs a assigner manuellement
      */
-    protected $guarded = ['responsable_option'];
+    protected $guarded = [
+        'id', 
+    ];
 
     /**
      * Valeurs par defaut des colonnes du modele 'Enseignant'
@@ -37,12 +53,51 @@ class Enseignant extends AbstractEnseignant
      * @var array[string]string
      */
     protected $attributes = [
-        'nom'                     => Constantes::STRING_VIDE,
-        'prenom'                  => Constantes::STRING_VIDE,
-        'email'                   => Constantes::STRING_VIDE,
-        'responsable_option'      => Constantes::OPTION['vide'],
-        'responsable_departement' => Constantes::DEPARTEMENT['vide']
+        Enseignant::COL_NOM                        => Constantes::STRING_VIDE,
+        Enseignant::COL_PRENOM                     => Constantes::STRING_VIDE,
+        Enseignant::COL_EMAIL                      => Constantes::STRING_VIDE,
+        
+        Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID => Constantes::ID_VIDE,
+        Enseignant::COL_RESPONSABLE_OPTION_ID      => Constantes::ID_VIDE
     ];
+
+    /* ====================================================================
+     *                            INTERFACE
+     * ====================================================================
+     */
+    public static function getModeleDefaut()
+    {
+        $clauseWhere = [
+            ['nom', '=', ''],
+            ['prenom', '=', 'Aucun'],
+            ['email', '=', 'aucun@null.com']
+        ];
+
+        return Enseignant::where($clauseWhere)->first();
+    }
+
+    /* ====================================================================
+     *                             RELATIONS
+     * ====================================================================
+     */
+
+    /**
+     * Renvoie l'option dont l'enseignant est responsable
+     * @var array[App\Modeles\Option]
+     */
+    public function responsable_option()
+    {
+        return $this->belongsTo('App\Modeles\Option', Enseignant::COL_RESPONSABLE_OPTION_ID);
+    }
+
+    /**
+     * Renvoie le departement dont l'enseignant est responsable
+     * @var array[App\Modeles\Departement]
+     */
+    public function responsable_departement()
+    {
+        return $this->belongsTo('App\Modeles\Departement', Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID);
+    }
 
     /**
      * Renvoie la liste des soutenances dont l'enseignant est candide.
@@ -70,4 +125,6 @@ class Enseignant extends AbstractEnseignant
     {
         return $this->hasMany('App\Modeles\Stage', Stage::COL_REFERENT_ID);
     }
+
+
 }

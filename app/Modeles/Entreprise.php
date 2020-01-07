@@ -9,6 +9,20 @@ use App\Utils\Constantes;
 
 class Entreprise extends AbstractEntreprise
 {
+    /*
+     * Nom des colonnes dans la base de donnees
+     */
+    // Attributs obligatoire
+    const COL_NOM      = 'nom';
+    const COL_ADRESSE  = 'adresse';
+    const COL_VILLE    = 'ville';
+    const COL_PAYS     = 'pays';
+    
+    // Attributs optionnels
+    const COL_ADRESSE2 = 'adresse2';
+    const COL_CP       = 'cp';
+    const COL_REGION   = 'region';
+
     /**
      * @var string Nom de la table associe au modele 'Entreprise'
      */
@@ -29,7 +43,7 @@ class Entreprise extends AbstractEntreprise
     /**
      * @var array[string] Liste des attributs a assigner manuellement.
      */
-    protected $guarded = [];
+    protected $guarded = ['id'];
 
     /**
      * Valeurs par defaut des colonnes du modele 'Entreprise'.
@@ -37,13 +51,13 @@ class Entreprise extends AbstractEntreprise
      * @var array[string]string
      */
     protected $attributes = [
-        'nom'      => Constantes::STRING_VIDE,
-        'adresse'  => Constantes::STRING_VIDE,
-        'adresse2' => Constantes::STRING_VIDE,
-        'cp'       => Constantes::STRING_VIDE,
-        'ville'    => Constantes::STRING_VIDE,
-        'region'   => Constantes::STRING_VIDE,
-        'pays'     => Constantes::STRING_VIDE,
+        Entreprise::COL_NOM      => Constantes::STRING_VIDE,
+        Entreprise::COL_ADRESSE  => Constantes::STRING_VIDE,
+        Entreprise::COL_ADRESSE2 => Constantes::STRING_VIDE,
+        Entreprise::COL_CP       => Constantes::STRING_VIDE,
+        Entreprise::COL_VILLE    => Constantes::STRING_VIDE,
+        Entreprise::COL_REGION   => Constantes::STRING_VIDE,
+        Entreprise::COL_PAYS     => Constantes::STRING_VIDE,
     ];
 
     /**

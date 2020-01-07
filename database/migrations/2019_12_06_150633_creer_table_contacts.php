@@ -17,13 +17,14 @@ class CreerTableContacts extends Migration
     {
         Schema::create(Contact::NOM_TABLE, function(Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nom');
-            $table->string('prenom');
-            $table->string('civilite');
-            $table->string('type');
-            $table->string('mail');
-            $table->string('telephone');
-            $table->text('adresse');
+
+            $table->string(Contact::COL_NOM);
+            $table->string(Contact::COL_PRENOM);
+            $table->unsignedSmallInteger(Contact::COL_CIVILITE);
+            $table->unsignedSmallInteger(Contact::COL_TYPE);
+            $table->string(Contact::COL_EMAIL);
+            $table->string(Contact::COL_TELEPHONE);
+            $table->text(Contact::COL_ADRESSE);
         });
     }
 

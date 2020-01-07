@@ -23,27 +23,39 @@ class Constantes
     const HEURE_VIDE  = '00:00:00';
 
     /**
+     * @var array[string]int Contient les index minimaux des constantes
+     */
+    const MIN = [
+        'civilite'     => 0,
+        'diplome'      => 0,
+        'type_contact' => 0,
+    ];
+
+    /**
+     * @var array[string]int Contient les index minimaux des constantes
+     */
+    const MAX = [
+        'civilite'     => 2,
+        'diplome'      => 2,
+        'type_contact' => 3,
+    ];
+
+    /**
      * @var array[string]string Indique la civilite du contact
      */
     const CIVILITE = [
-        'vide'     => '',
-        'madame'   => 'madame',
-        'monsieur' => 'monsieur'
-    ];
-
-    const DEPARTEMENT = [
-        'vide' => '',
-        'MRI'  => 'MRI',
-        'STI'  => 'STI'
+        'vide'     => 0,
+        'Madame'   => 1,
+        'Monsieur' => 2,
     ];
 
     /**
      * @var array[string]string Diplome prepare par l'etudiant
      */
     const DIPLOME = [
-        'vide' => '',
-        'STI'  => 'STI',
-        'MRI'  => 'MRI'
+        'vide' => 0,
+        'STI'  => 1,
+        'MRI'  => 2
     ];
 
     /**
@@ -73,28 +85,12 @@ class Constantes
     ];
 
     /**
-     * @var array[string]string Option suivie par l'etudiant
-     */
-    const OPTION = [
-        'vide' => '',
-        'MRI'  => [
-            'opt1' => 'opt1',
-            'opt2' => 'opt2'
-        ],
-        'STI'  => [
-            '2SU' => '2SU',
-            '4AS' => '4AS',
-            'ASL' => 'ASL'
-        ]
-    ];
-
-    /**
      * @var array[string]string Indique le type de contact
      */
     const TYPE_CONTACT = [
-        'vide'                => '',
-        'administration_insa' => 'administration_insa',
-        'entreprise'          => 'entreprise',
-        'maitre_de_stage'     => 'maitre_de_stage'
+        'vide'                => 0,
+        'administration_insa' => 1,
+        'entreprise'          => 2,
+        'maitre_de_stage'     => 3,
     ];
 }

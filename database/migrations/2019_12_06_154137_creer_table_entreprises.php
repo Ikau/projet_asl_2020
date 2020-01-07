@@ -17,13 +17,14 @@ class CreerTableEntreprises extends Migration
     {
         Schema::create(Entreprise::NOM_TABLE, function(Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nom');
-            $table->text('adresse');
-            $table->text('adresse2');
-            $table->string('cp');
-            $table->string('ville');
-            $table->string('region');
-            $table->string('pays');
+
+            $table->string(Entreprise::COL_NOM);
+            $table->text(Entreprise::COL_ADRESSE);
+            $table->text(Entreprise::COL_ADRESSE2);
+            $table->string(Entreprise::COL_CP);
+            $table->string(Entreprise::COL_VILLE);
+            $table->string(Entreprise::COL_REGION);
+            $table->string(Entreprise::COL_PAYS);
         });
     }
 
