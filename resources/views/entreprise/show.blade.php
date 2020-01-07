@@ -2,8 +2,6 @@
 
 @section('titre', $titre)
 
-@section('sidebar')
-@endsection
 
 @section('contenu')
 <div>
