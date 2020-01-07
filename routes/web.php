@@ -15,6 +15,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+/*
+ |--------------------------------------------------------------------------
+ | Routes generees par Laravel pour la gestion de l'authentification
+ | Voir :
+ | vendor/laravel/framework/src/Illuminate/Routing/Router->auth()
+ |--------------------------------------------------------------------------
+ */
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+
 /*
  |--------------------------------------------------------------------------
  | Routes Temporaires des controllers a modifier pour la mise en prod
