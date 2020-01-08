@@ -10,13 +10,33 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+
+    /*
+     * Nom des colonnes dans la base de donnees
+     */
+    const COL_EMAIL            = 'email';
+    const COL_EMAIL_VERIFIE_LE = 'email_verified_at';
+    const COL_HASH_PASSWORD    = 'password';
+    const COL_REMEMBER_TOKEN   = 'remember_token';
+
+    /**
+     * @var string Nom de la table associee au model 'User'.
+     */
+    const NOM_TABLE = 'users';
+
+    /**
+     * On indique a Laravel le nom de la table dans la BDD
+     */
+    protected $table = User::NOM_TABLE;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        User::COL_EMAIL,
+        User::COL_HASH_PASSWORD,
     ];
 
     /**
@@ -25,7 +45,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        User::COL_HASH_PASSWORD, 
+        User::COL_REMEMBER_TOKEN,
     ];
 
     /**
@@ -34,6 +55,6 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        User::COL_EMAIL_VERIFIE_LE => 'datetime',
     ];
 }

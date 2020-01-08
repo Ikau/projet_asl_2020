@@ -17,7 +17,6 @@ class PeuplerTableUsers extends Migration
     {
         // Creation d'un compte basique
         DB::table('users')->insert([
-            'name'     => 'admin',
             'email'    => 'admin@insa-cvl.fr',
             'password' => Hash::make('admin')
         ]);
