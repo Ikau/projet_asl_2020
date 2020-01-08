@@ -5,8 +5,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 use App\User;
+use App\TypeUser;
 
-class CreateUsersTable extends Migration
+class CreerTableUsers extends Migration
 {
     /**
      * Run the migrations.
@@ -17,11 +18,16 @@ class CreateUsersTable extends Migration
     {
         Schema::create(User::NOM_TABLE, function (Blueprint $table) {
             $table->bigIncrements('id');
+
             $table->string(User::COL_EMAIL)->unique();
             $table->timestamp(User::COL_EMAIL_VERIFIE_LE)->nullable();
             $table->string(User::COL_HASH_PASSWORD);
             $table->rememberToken();
-            $table->timestamps();
+            
+            // Clefs etrangeres
+            $table->unsignedBigInteger(User::COL_TYPE_ID);
+
+            $table->foreign(User::COL_TYPE_ID)->references('id')->on(TypeUser::NOM_TABLE);
         });
     }
 

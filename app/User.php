@@ -19,10 +19,23 @@ class User extends Authenticatable
     const COL_HASH_PASSWORD    = 'password';
     const COL_REMEMBER_TOKEN   = 'remember_token';
 
+    /*
+     * Nom des colonnes des clefs etrangeres 
+     */
+    const COL_TYPE_ID     = 'type_id';
+    const COL_IDENTITE_ID = 'identite_id';
+
     /**
      * @var string Nom de la table associee au model 'User'.
      */
     const NOM_TABLE = 'users';
+
+    /**
+     * Indique a Laravel de ne pas creer ni de gerer les tables 'created_at' et 'updated_at'.
+     * 
+     * @var bool Gestion des timestamps
+     */
+    public $timestamps = false;
 
     /**
      * On indique a Laravel le nom de la table dans la BDD
@@ -37,6 +50,7 @@ class User extends Authenticatable
     protected $fillable = [
         User::COL_EMAIL,
         User::COL_HASH_PASSWORD,
+        User::COL_TYPE_ID,
     ];
 
     /**

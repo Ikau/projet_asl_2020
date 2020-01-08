@@ -2,11 +2,11 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\Hash;
 
-class PeuplerTableUsers extends Migration
+use App\TypeUser;
+
+class CreerTableTypesUser extends Migration
 {
     /**
      * Run the migrations.
@@ -15,12 +15,11 @@ class PeuplerTableUsers extends Migration
      */
     public function up()
     {
-        // Creation d'un compte basique
-        DB::table('users')->insert([
-            'email'    => 'admin@insa-cvl.fr',
-            'password' => Hash::make('admin')
-        ]);
-        
+        Schema::create(TypeUser::NOM_TABLE, function(Blueprint $table) {
+            $table->bigIncrements('id');
+
+            $table->string(TypeUser::COL_INTITULE);
+        });
     }
 
     /**
@@ -30,6 +29,6 @@ class PeuplerTableUsers extends Migration
      */
     public function down()
     {
-        DB::table('users')->delete();
+        Schema::dropIfExists(TypeUser::NOM_TABLE);
     }
 }
