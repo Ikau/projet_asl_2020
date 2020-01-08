@@ -6,7 +6,9 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+use App\Interfaces\Utilisateur;
+
+class User extends Authenticatable implements Utilisateur
 {
     use Notifiable;
 
@@ -71,4 +73,14 @@ class User extends Authenticatable
     protected $casts = [
         User::COL_EMAIL_VERIFIE_LE => 'datetime',
     ];
+
+    /**
+     * Renvoie le type de l'utilisateur.
+     *
+     * @return App\TypeUser Renvoie une reference vers l'objet TypeUser auquel est rattache l'utilisateur
+     */
+    public function type()
+    {
+        return $this->belongsTo('App\TypeUser', User::COL_TYPE_ID);
+    }
 }
