@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
 
+use App\User;
 use App\Modeles\Privilege;
 use App\Http\Controllers\CRUD\PrivilegeController;
 use App\Utils\Constantes;
@@ -177,7 +178,34 @@ class PrivilegeControllerTest extends TestCase
      */
     public function testStore()
     {
-        $this->assertTrue(TRUE);
+        $privilege = factory(Privilege::class)->make();
+
+        // Verification de la route
+        $response = $this->from(route('privileges.tests'))
+        ->post(route('privileges.store'), $privilege->toArray())
+        ->assertRedirect(route('privileges.index'));
+
+        // Verification de la creation
+        $clauseWhere = [];
+        foreach($this->getAttributsModele() as $attribut)
+        {
+            if('id' !== $attribut)
+            {
+                $clauseWhere[] = [$attribut, '=', $privilege[$attribut]];
+            }
+        }
+
+        $privilegeTest = Privilege::where($clauseWhere)->first();
+        $this->assertNotNull($privilegeTest);
+
+        // Verification de l'integrite des donnees
+        foreach($this->getAttributsModele() as $attribut)
+        {
+            if('id' !== $attribut)
+            {
+                $this->assertEquals($privilege[$attribut], $privilegeTest[$attribut]);
+            }
+        }
     }
 
     /**
@@ -185,7 +213,25 @@ class PrivilegeControllerTest extends TestCase
      */
     public function testShow()
     {
-        $this->assertTrue(TRUE);
+        // Creation d'un privilege aleatoire
+        $privilege = factory(Privilege::class)->create();
+
+        // Verification de la route
+        $response = $this->from(route('privileges.tests'))
+        ->get(route('privileges.show', $privilege->id))
+        ->assertViewIs('admin.modeles.privilege.show')
+        ->assertSee(PrivilegeController::TITRE_SHOW);
+
+        // Verification de l'integrite des donnees
+        foreach($this->getAttributsModele() as $attribut)
+        {
+            $response->assertSee(e($privilege[$attribut]));   
+        }
+
+        // Verification 404
+        $this->from(route('privileges.tests'))
+        ->get(route('privileges.show', -1))
+        ->assertStatus(404);
     }
 
     /**
@@ -194,16 +240,71 @@ class PrivilegeControllerTest extends TestCase
      */
     public function testEdit()
     {
-        $this->assertTrue(TRUE);
+        // Creation d'un privilege aleatoire
+        $privilege = factory(Privilege::class)->create();
+
+        // Verification de la route
+        $response = $this->from(route('privileges.tests'))
+        ->get(route('privileges.edit', $privilege->id))
+        ->assertViewIs('admin.modeles.privilege.form')
+        ->assertSee(PrivilegeController::TITRE_EDIT);
+
+        // Integrite des donnees
+        foreach($this->getAttributsModele() as $attribut)
+        {
+            if('id' !== $attribut)
+            {
+                $response->assertSee("name=\"$attribut\"")
+                ->assertSee(e($privilege[$attribut]));
+            }
+        }
+
+        // Verification 404
+        $this->from(route('privileges.tests'))
+        ->get(route('privileges.edit', -1))
+        ->assertStatus(404);
     }
 
     /**
      * @depends testValiderForm
      * @depends testValiderModele
+     * @dataProvider updateProvider
      */
-    public function testUpdate()
+    public function testUpdate(string $clefModifiee, $nouvelleValeur)
     {
-        $this->assertTrue(TRUE);
+        // Creation privilege aleatoire et modif
+        $privilege                = factory(Privilege::class)->create();
+        $privilege[$clefModifiee] = $nouvelleValeur;
+
+        // Routage
+        $response = $this->from(route('privileges.edit', $privilege->id))
+        ->patch(route('privileges.update', $privilege->id), $privilege->toArray())
+        ->assertRedirect(route('privileges.index'));
+
+        // Verification update
+        $clauseWhere = [];
+        foreach($this->getAttributsModele() as $attribut)
+        {
+            if('id' !== $attribut)
+            {
+                $clauseWhere[] = [$attribut, '=', $privilege[$attribut]];
+            }
+        }
+
+        $privilegeTest = Privilege::where($clauseWhere)->first();
+        $this->assertNotNull($privilegeTest);
+        foreach($this->getAttributsModele() as $attribut)
+        {
+            $this->assertEquals($privilege[$attribut], $privilegeTest[$attribut]);
+        }
+    }
+
+    public function updateProvider()
+    {
+        // [string $clefModifiee, $nouvelleValeur]
+        return [
+            'Intitule valide' => [Privilege::COL_INTITULE, 'intitule']
+        ];
     }
 
     /**
@@ -211,7 +312,35 @@ class PrivilegeControllerTest extends TestCase
      */
     public function testDestroy()
     {
-        $this->assertTrue(TRUE);
+        // Creation privilege aleatoire avec utilisateurs
+        $privilege = factory(Privilege::class)->create();
+        
+        for($i=0; $i<10; $i++)
+        {
+            $user = factory(User::class)->create();
+            $user->privileges()->attach($privilege->id);
+        }
+
+        // Routage
+        $response = $this->from(route('privileges.tests'))
+        ->delete(route('privileges.destroy', $privilege->id))
+        ->assertRedirect(route('privileges.index'));
+
+        // Verification suppression du privilege
+        $privilegeTest = Privilege::find($privilege->id);
+        $this->assertNull($privilegeTest);
+
+        // Verification suppression table pivot
+        $users = User::has('privileges')->get();
+        foreach($users as $user)
+        {
+            $this->assertFalse($user->privileges->contains($privilege->id));
+        }
+        
+        // Verification 404
+        $this->from(route('privileges.tests'))
+        ->delete(route('privileges.destroy', -1))
+        ->assertStatus(404);
     }
 
     /* ====================================================================

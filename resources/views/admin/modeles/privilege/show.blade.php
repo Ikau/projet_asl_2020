@@ -5,10 +5,10 @@
 
 @section('contenu')
 <div>
-    Information sur un stage
+    Information sur un privilege
 </div>
 
-@foreach($stage->toArray() as $key => $value)
+@foreach($privilege->toArray() as $key => $value)
 <div>
     {{ $key }} : {{ $value }}
 </div>

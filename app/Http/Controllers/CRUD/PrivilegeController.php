@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Validation\Rule;
 
+use App\User;
 use App\Abstracts\AbstractControllerCRUD;
 use App\Modeles\Privilege;
 use App\Utils\Constantes;
@@ -106,7 +107,13 @@ class PrivilegeController extends AbstractControllerCRUD
      */
     public function store(Request $request)
     {
-        abort('404');
+        $this->validerForm($request);
+
+        $privilege = new Privilege;
+        $privilege->fill($request->all());
+        $privilege->save();
+
+        return redirect()->route('privileges.index');
     }
 
     /**
@@ -117,7 +124,16 @@ class PrivilegeController extends AbstractControllerCRUD
      */
     public function show($id)
     {
-        abort('404');
+        $privilege = $this->validerModele($id);
+        if(null === $privilege)
+        {
+            abort('404');
+        }
+
+        return view('admin.modeles.privilege.show', [
+            'titre'     => PrivilegeController::TITRE_SHOW,
+            'privilege' => $privilege
+        ]);
     }
 
     /**
@@ -128,7 +144,17 @@ class PrivilegeController extends AbstractControllerCRUD
      */
     public function edit($id)
     {
-        abort('404');
+        $privilege = $this->validerModele($id);
+        if(null === $privilege)
+        {
+            abort('404');
+        }
+
+        return view('admin.modeles.privilege.form', [
+            'titre' => PrivilegeController::TITRE_EDIT,
+            'privilege' => $privilege,
+            'attributs' => $this->getAttributsModele()
+        ]);
     }
 
     /**
@@ -140,7 +166,18 @@ class PrivilegeController extends AbstractControllerCRUD
      */
     public function update(Request $request, $id)
     {
-        abort('404');
+        $this->validerForm($request);
+
+        $privilege = Privilege::find($id);
+        if(null === $privilege)
+        {
+            abort('404');
+        }
+
+        $privilege->update($request->all());
+        $privilege->save();
+
+        return redirect()->route('privileges.index');
     }
 
     /**
@@ -151,7 +188,24 @@ class PrivilegeController extends AbstractControllerCRUD
      */
     public function destroy($id)
     {
-        abort('404');
+        $privilege = $this->validerModele($id);
+        if(null === $privilege)
+        {
+            abort('404');
+        }
+
+        // Suppression du role chez les utilisateurs
+        $users = User::has('privileges')->get();
+        foreach($users as $user)
+        {
+            $user->privileges()->detach($privilege->id);
+            $user->save();
+        }
+
+        // Suppression du privilege
+        $privilege->delete();
+
+        return redirect()->route('privileges.index');
     }
 
     /* ====================================================================
