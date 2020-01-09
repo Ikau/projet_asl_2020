@@ -28,10 +28,11 @@ class User extends Authenticatable implements Utilisateur
     const COL_REMEMBER_TOKEN   = 'remember_token';
 
     /*
-     * Nom des colonnes des clefs etrangeres 
+     * Nom des colonnes polymorphique 
      */
-    const COL_TYPE_ID     = 'usertype_id';
-    const COL_IDENTITE_ID = 'identite_id';
+    const COL_POLY_MODELE      = 'userable';
+    const COL_POLY_MODELE_ID   = 'userable_id';
+    const COL_POLY_MODELE_TYPE = 'userable_type';
 
     /*
      * Nom de la table de jointure pour une relation Mane-to-Many 
@@ -65,7 +66,6 @@ class User extends Authenticatable implements Utilisateur
     protected $fillable = [
         User::COL_EMAIL,
         User::COL_HASH_PASSWORD,
-        User::COL_TYPE_ID,
     ];
 
     /**
@@ -87,6 +87,11 @@ class User extends Authenticatable implements Utilisateur
         User::COL_EMAIL_VERIFIE_LE => 'datetime',
     ];
 
+    /* ====================================================================
+     *                         INTERFACE 'UTILISATEUR'
+     * ====================================================================
+     */
+
     /**
      * Renvoie le type de l'utilisateur.
      *
@@ -107,5 +112,21 @@ class User extends Authenticatable implements Utilisateur
         // Args : modele de la relation, nom table pivot, nom colonne user_id, nom colonne privilege_id
         return $this->belongsToMany('App\Modeles\Privilege', User::NOM_TABLE_PIVOT_PRIVILEGE_USER,
                                     User::COL_PIVOT_PRIVILEGE_USER, Privilege::COL_PIVOT_PRIVILEGE_USER);
+    }
+
+    /**
+     * Renvoie le modele associe au compte utilisateur.abnf
+     * 
+     * C'est une relation One-to-One polymorphique qui peut renvoyer :
+     *  - un enseignant
+     *  - un contact
+     * Peut etre etendu a un etudiant si besoin
+     * [DOC] : https://laravel.com/docs/6.x/eloquent-relationships#one-to-one-polymorphic-relations
+     *
+     * @return App\Modeles\Contact|App\Modeles\Enseignant
+     */
+    public function userable()
+    {
+        return $this->morphTo();
     }
 }

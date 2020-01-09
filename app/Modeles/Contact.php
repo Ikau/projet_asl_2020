@@ -4,10 +4,12 @@ namespace App\Modeles;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\User;
 use App\Abstracts\AbstractContact;
+use App\Interfaces\CompteUser;
 use App\Utils\Constantes;
 
-class Contact extends AbstractContact
+class Contact extends AbstractContact implements CompteUser
 {
     /*
      * Nom des colonnes dans la base de donnees
@@ -84,6 +86,21 @@ class Contact extends AbstractContact
     public function stages_mds()
     {
         return $this->hasMany('App\Modeles\Stage', Stage::COL_MDS_ID);
+    }
+
+
+    /* ====================================================================
+     *                         INTERFACE 'CompteUser'
+     * ====================================================================
+     */
+    /**
+     * Renvoie le compte user associe au contact le cas echeant
+     * 
+     * @return Null|App\User
+     */
+    public function user()
+    {
+        return $this->morphOne('App\User', User::COL_POLY_MODELE);
     }
     
 }
