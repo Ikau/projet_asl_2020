@@ -139,7 +139,18 @@ class PrivilegeControllerTest extends TestCase
 
     public function testIndex()
     {
-        $this->assertTrue(TRUE);
+        // Verification de l'acces a la route
+        $response = $this->from(route('privileges.tests'))
+        ->get(route('privileges.index'))
+        ->assertOk()
+        ->assertViewIs('admin.modeles.privilege.index')
+        ->assertSee(PrivilegeController::TITRE_INDEX);
+
+        // Verification des attributs
+        foreach($this->getAttributsModele() as $attribut)
+        {
+            $response->assertSee("<th>$attribut</th>");
+        }
     }
 
     public function testCreate()
@@ -199,6 +210,6 @@ class PrivilegeControllerTest extends TestCase
      */
     private function getAttributsModele()
     {
-        // return Schema::getColumnListing(Template::NOM_TABLE);
+        return Schema::getColumnListing(Privilege::NOM_TABLE);
     }
 }

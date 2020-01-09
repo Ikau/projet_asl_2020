@@ -73,7 +73,14 @@ class PrivilegeController extends AbstractControllerCRUD
      */
     public function index()
     {
-        abort('404');
+        $privileges = Privilege::all();
+        $attributs  = $this->getAttributsModele();
+
+        return view('admin.modeles.privilege.index', [
+            'titre'      => PrivilegeController::TITRE_INDEX,
+            'attributs'  => $attributs,
+            'privileges' => $privileges,
+        ]);
     }
 
     /**
@@ -197,6 +204,6 @@ class PrivilegeController extends AbstractControllerCRUD
      */
     protected function getAttributsModele()
     {
-        //return Schema::getColumnListing(Entreprise::NOM_TABLE);
+        return Schema::getColumnListing(Privilege::NOM_TABLE);
     }
 }
