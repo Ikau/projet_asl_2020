@@ -42,6 +42,7 @@ Route::resource('contacts', 'CRUD\ContactController');
 Route::resource('enseignants', 'CRUD\EnseignantController');
 Route::resource('entreprises', 'CRUD\EntrepriseController');
 Route::resource('etudiants', 'CRUD\EtudiantController');
+Route::resource('privileges', 'CRUD\PrivilegeController');
 Route::resource('stages', 'CRUD\StageController');
 Route::resource('soutenances', 'CRUD\SoutenanceController');
 
@@ -54,5 +55,6 @@ Route::post('tests/controller/contacts/', 'CRUD\ContactController@tests')->name(
 Route::post('tests/controller/enseignants/', 'CRUD\EnseignantController@tests')->name('enseignants.tests');
 Route::post('tests/controller/entreprises/', 'CRUD\EntrepriseController@tests')->name('entreprises.tests');
 Route::post('tests/controller/etudiants/', 'CRUD\EtudiantController@tests')->name('etudiants.tests');
+Route::post('tests/controller/privileges/', 'CRUD\PrivilegeController@tests')->name('privileges.tests');
 Route::post('tests/controller/stages/', 'CRUD\StageController@tests')->name('stages.tests');
 Route::post('tests/controller/soutenances/', 'CRUD\SoutenanceController@tests')->name('soutenances.tests');
