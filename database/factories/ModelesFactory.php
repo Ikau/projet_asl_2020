@@ -12,6 +12,7 @@ use App\Modeles\Entreprise;
 use App\Modeles\Etudiant;
 use App\Modeles\Departement;
 use App\Modeles\Option;
+use App\Modeles\Privilege;
 use App\Modeles\Stage;
 use App\Modeles\Soutenance;
 
@@ -71,6 +72,13 @@ $factory->define(Entreprise::class, function (Faker $faker)
         Entreprise::COL_REGION   => $faker->region,
         Entreprise::COL_PAYS     => $faker->country,
     ];  
+});
+
+$factory->define(Privilege::class, function (Faker $faker)
+{
+    return [
+        Privilege::COL_INTITULE => $faker->jobTitle,
+    ];
 });
 
 $factory->define(Stage::class, function (Faker $faker)
