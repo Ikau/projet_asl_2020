@@ -15,7 +15,14 @@ interface Utilisateur
     /**
      * Renvoie le type de l'utilisateur.
      *
-     * @return App\TypeUser Renvoie une reference vers l'objet TypeUser auquel est rattache l'utilisateur
+     * @return App\UserType Renvoie une reference vers l'objet UserType auquel est rattache l'utilisateur
      */
     public function type();
+
+    /**
+     * Renvoie les privileges de l'utilisateur.
+     * 
+     * @return array[App\Modeles\Privileges] Array de tous les privileges de l'utilisateur.
+     */
+    public function privileges();
 }

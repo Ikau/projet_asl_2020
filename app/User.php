@@ -8,6 +8,8 @@ use Illuminate\Notifications\Notifiable;
 
 use App\Interfaces\Utilisateur;
 
+use App\Modeles\Privilege;
+
 class User extends Authenticatable implements Utilisateur
 {
     use Notifiable;
@@ -33,8 +35,15 @@ class User extends Authenticatable implements Utilisateur
 
     /*
      * Nom de la table de jointure pour une relation Mane-to-Many 
+     * Convention de nommage Laravel utilisee : ordre_alphabethique_class
      */
-    const NOM_TABLE_PRIVILEGE_USER = 'privilege_user';
+    const NOM_TABLE_PIVOT_PRIVILEGE_USER = 'privilege_user';
+
+    /*
+     * Nom de la colonne dans la table de jointure
+     * Convention de nommage Laravel utilise : class_id
+     */
+    const COL_PIVOT_PRIVILEGE_USER = 'user_id';
 
     /**
      * Indique a Laravel de ne pas creer ni de gerer les tables 'created_at' et 'updated_at'.
@@ -95,6 +104,8 @@ class User extends Authenticatable implements Utilisateur
      */
     public function privileges()
     {
-        return $this->belongsToMany('App\Modeles\Privilege', User::NOM_TABLE_PRIVILEGE_USER);
+        // Args : modele de la relation, nom table pivot, nom colonne user_id, nom colonne privilege_id
+        return $this->belongsToMany('App\Modeles\Privilege', User::NOM_TABLE_PIVOT_PRIVILEGE_USER,
+                                    User::COL_PIVOT_PRIVILEGE_USER, Privilege::COL_PIVOT_PRIVILEGE_USER);
     }
 }
