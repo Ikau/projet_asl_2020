@@ -155,7 +155,21 @@ class PrivilegeControllerTest extends TestCase
 
     public function testCreate()
     {
-        $this->assertTrue(TRUE);
+        // Verification de la route
+        $response = $this->from(route('privileges.tests'))
+        ->get(route('privileges.create'))
+        ->assertOk()
+        ->assertViewIs('admin.modeles.privilege.form')
+        ->assertSee(PrivilegeController::TITRE_CREATE);
+
+        // Verification du form
+        foreach($this->getAttributsModele() as $attribut)
+        {
+            if('id' !== $attribut)
+            {
+                $response->assertSee("name=\"$attribut\"");
+            }
+        }
     }
     
     /**

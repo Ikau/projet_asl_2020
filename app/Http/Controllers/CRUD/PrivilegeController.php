@@ -79,7 +79,7 @@ class PrivilegeController extends AbstractControllerCRUD
         return view('admin.modeles.privilege.index', [
             'titre'      => PrivilegeController::TITRE_INDEX,
             'attributs'  => $attributs,
-            'privileges' => $privileges,
+            'privileges' => $privileges
         ]);
     }
 
@@ -90,7 +90,12 @@ class PrivilegeController extends AbstractControllerCRUD
      */
     public function create()
     {
-        abort('404');
+        $attributs = $this->getAttributsModele();
+
+        return view('admin.modeles.privilege.form', [
+            'titre'     => PrivilegeController::TITRE_CREATE,
+            'attributs' => $attributs
+        ]);
     }
 
     /**
