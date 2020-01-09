@@ -4,9 +4,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-use App\TypeUser;
+use App\UserType;
 
-class CreerTableTypesUser extends Migration
+class CreerTableUsertypes extends Migration
 {
     /**
      * Run the migrations.
@@ -15,10 +15,10 @@ class CreerTableTypesUser extends Migration
      */
     public function up()
     {
-        Schema::create(TypeUser::NOM_TABLE, function(Blueprint $table) {
+        Schema::create(UserType::NOM_TABLE, function(Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->string(TypeUser::COL_INTITULE);
+            $table->string(UserType::COL_INTITULE);
         });
     }
 
@@ -29,6 +29,6 @@ class CreerTableTypesUser extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists(TypeUser::NOM_TABLE);
+        Schema::dropIfExists(UserType::NOM_TABLE);
     }
 }

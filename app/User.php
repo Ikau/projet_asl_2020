@@ -12,6 +12,10 @@ class User extends Authenticatable implements Utilisateur
 {
     use Notifiable;
 
+    /**
+     * @var string Nom de la table associee au model 'User'.
+     */
+    const NOM_TABLE = 'users';
 
     /*
      * Nom des colonnes dans la base de donnees
@@ -24,13 +28,13 @@ class User extends Authenticatable implements Utilisateur
     /*
      * Nom des colonnes des clefs etrangeres 
      */
-    const COL_TYPE_ID     = 'type_id';
+    const COL_TYPE_ID     = 'usertype_id';
     const COL_IDENTITE_ID = 'identite_id';
 
-    /**
-     * @var string Nom de la table associee au model 'User'.
+    /*
+     * Nom de la table de jointure pour une relation Mane-to-Many 
      */
-    const NOM_TABLE = 'users';
+    const NOM_TABLE_PRIVILEGE_USER = 'privilege_user';
 
     /**
      * Indique a Laravel de ne pas creer ni de gerer les tables 'created_at' et 'updated_at'.
@@ -77,10 +81,20 @@ class User extends Authenticatable implements Utilisateur
     /**
      * Renvoie le type de l'utilisateur.
      *
-     * @return App\TypeUser Renvoie une reference vers l'objet TypeUser auquel est rattache l'utilisateur
+     * @return App\UserType Renvoie une reference vers l'objet UserType auquel est rattache l'utilisateur
      */
     public function type()
     {
-        return $this->belongsTo('App\TypeUser', User::COL_TYPE_ID);
+        return $this->belongsTo('App\UserType', User::COL_TYPE_ID);
+    }
+
+    /**
+     * Renvoie les privileges de l'utilisateur.
+     * 
+     * @return array[App\Modeles\Privileges] Array de tous les privileges de l'utilisateur.
+     */
+    public function privileges()
+    {
+        return $this->belongsToMany('App\Modeles\Privilege', User::NOM_TABLE_PRIVILEGE_USER);
     }
 }

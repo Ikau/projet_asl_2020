@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Hash;
 
 use App\User;
-use App\TypeUser;
+use App\UserType;
 
 class PeuplerTableUsers extends Migration
 {
@@ -19,7 +19,7 @@ class PeuplerTableUsers extends Migration
     public function up()
     {
         // Recuperation des types
-        $idTypeAdmin = TypeUser::where(TypeUser::COL_INTITULE, '=', 'Admin')->first()->id;
+        $idTypeAdmin = UserType::where(UserType::COL_INTITULE, '=', 'Admin')->first()->id;
 
         // Creation d'un compte basique
         DB::table(User::NOM_TABLE)->insert([

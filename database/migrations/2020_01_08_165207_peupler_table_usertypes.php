@@ -5,9 +5,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
-use App\TypeUser;
+use App\UserType;
 
-class PeuplerTableTypesUser extends Migration
+class PeuplerTableUsertypes extends Migration
 {
     /**
      * Run the migrations.
@@ -27,8 +27,8 @@ class PeuplerTableTypesUser extends Migration
 
         foreach($types as $type)
         {
-            $nouveauType = new TypeUser;
-            $nouveauType[TypeUser::COL_INTITULE] = $type;
+            $nouveauType = new UserType;
+            $nouveauType[UserType::COL_INTITULE] = $type;
             $nouveauType->save();
         }
     }
@@ -40,6 +40,6 @@ class PeuplerTableTypesUser extends Migration
      */
     public function down()
     {
-        DB::table(TypeUser::NOM_TABLE)->delete();
+        DB::table(UserType::NOM_TABLE)->delete();
     }
 }

@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 use App\User;
-use App\TypeUser;
+use App\UserType;
 
 class CreerTableUsers extends Migration
 {
@@ -27,7 +27,7 @@ class CreerTableUsers extends Migration
             // Clefs etrangeres
             $table->unsignedBigInteger(User::COL_TYPE_ID);
 
-            $table->foreign(User::COL_TYPE_ID)->references('id')->on(TypeUser::NOM_TABLE);
+            $table->foreign(User::COL_TYPE_ID)->references('id')->on(UserType::NOM_TABLE);
         });
     }
 
