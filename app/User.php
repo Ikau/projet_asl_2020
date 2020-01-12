@@ -74,7 +74,6 @@ class User extends Authenticatable implements Utilisateur
      * @var array
      */
     protected $hidden = [
-        User::COL_HASH_PASSWORD, 
         User::COL_REMEMBER_TOKEN,
     ];
 
