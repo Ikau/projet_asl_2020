@@ -10,7 +10,7 @@ use App\Interfaces\Utilisateur;
 
 use App\Modeles\Privilege;
 
-class User extends Authenticatable implements Utilisateur
+class User extends Authenticatable implements Utilisateur, MustVerifyEmail
 {
     use Notifiable;
 
@@ -23,16 +23,16 @@ class User extends Authenticatable implements Utilisateur
      * Nom des colonnes dans la base de donnees
      */
     const COL_EMAIL            = 'email';
-    const COL_EMAIL_VERIFIE_LE = 'email_verified_at';
+    const COL_EMAIL_VERIFIE_LE = 'email_verified_at'; // Nommage Laravel
     const COL_HASH_PASSWORD    = 'password';
-    const COL_REMEMBER_TOKEN   = 'remember_token';
+    const COL_REMEMBER_TOKEN   = 'remember_token';    // Nommage Laravel
 
     /*
      * Nom des colonnes polymorphique 
      */
-    const COL_POLY_MODELE      = 'userable';
-    const COL_POLY_MODELE_ID   = 'userable_id';
-    const COL_POLY_MODELE_TYPE = 'userable_type';
+    const COL_POLY_MODELE      = 'userable';      // Nommage Laravel
+    const COL_POLY_MODELE_ID   = 'userable_id';   // Nommage Laravel
+    const COL_POLY_MODELE_TYPE = 'userable_type'; // Nommage Laravel
 
     /*
      * Nom de la table de jointure pour une relation Mane-to-Many 
@@ -85,6 +85,13 @@ class User extends Authenticatable implements Utilisateur
     protected $casts = [
         User::COL_EMAIL_VERIFIE_LE => 'datetime',
     ];
+
+    /**
+     * Indique l'adresse a laquelle renvoyer un utilisateur validant son email
+     * 
+     * @var string
+     */
+    protected $redirectTo = '/home';
 
     /* ====================================================================
      *                         INTERFACE 'UTILISATEUR'
