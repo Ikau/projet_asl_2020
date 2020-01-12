@@ -88,9 +88,9 @@ class Constantes
      * @var array[string]string Indique le type de contact
      */
     const TYPE_CONTACT = [
-        'vide'                => 0,
-        'administration_insa' => 1,
-        'entreprise'          => 2,
-        'maitre_de_stage'     => 3,
+        'vide'            => 0,
+        'insa'            => 1,
+        'entreprise'      => 2,
+        'maitre_de_stage' => 3,
     ];
 }
