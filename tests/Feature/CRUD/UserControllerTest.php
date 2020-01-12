@@ -84,14 +84,10 @@ class UserControllerTest extends TestCase
         return [
             // Succes
             'Email valide'    => [FALSE, User::COL_EMAIL, 'email@valide.com'],
-            'Password valide' => [FALSE, User::COL_HASH_PASSWORD, 'password'],
 
             // Echec
             'Email null'    => [TRUE, User::COL_EMAIL, null],
-            'Password null' => [TRUE, User::COL_HASH_PASSWORD, null],
-
             'Email invalide'    => [TRUE, User::COL_EMAIL, 'emailInvalide'],
-            'Password invalide' => [TRUE, User::COL_HASH_PASSWORD, -1],
         ];
     }
 
@@ -156,12 +152,30 @@ class UserControllerTest extends TestCase
 
     public function testIndex()
     {
-        $this->assertTrue(TRUE);
+        // Routage
+        $response = $this->from(route('users.tests'))
+        ->get(route('users.index'))
+        ->assertViewIs('admin.modeles.user.index')
+        ->assertSee(UserController::TITRE_INDEX);
+
+        // Attributs
+        foreach($this->getAttributsModele() as $attribut)
+        {
+            $response->assertSee($attribut);
+        }
+
     }
 
     public function testCreate()
     {
-        $this->assertTrue(TRUE);
+        // Routage
+        $response = $this->from(route('users.tests'))
+        ->get(route('users.create'))
+        ->assertViewIs('admin.modeles.user.form')
+        ->assertSee(UserController::TITRE_CREATE);
+
+        // Form
+        $response->assertSee("name=\"email\"");
     }
     
     /**
@@ -169,7 +183,19 @@ class UserControllerTest extends TestCase
      */
     public function testStore()
     {
-        $this->assertTrue(TRUE);
+        // Creation d'un contact aleatoire pour l'associer a un nouvel utilisateur
+        $contact = factory(Contact::class)->create();
+
+        // Routage
+        $this->from(route('users.create'))
+        ->post(route('users.store'), [User::COL_EMAIL => $contact[Contact::COL_EMAIL]])
+        ->assertRedirect(route('users.index'));
+
+        // Verification insertion
+        $userTest = User::where(User::COL_EMAIL, '=', $contact[User::COL_EMAIL])->first();
+        $this->assertNotNull($userTest);
+        $this->assertEquals($contact[User::COL_EMAIL], $userTest[User::COL_EMAIL]);
+        $this->assertEquals(FALSE, $userTest[User::COL_EMAIL_VERIFIE_LE]);
     }
 
     /**
@@ -216,6 +242,6 @@ class UserControllerTest extends TestCase
      */
     private function getAttributsModele()
     {
-        // return Schema::getColumnListing(Template::NOM_TABLE);
+        return Schema::getColumnListing(User::NOM_TABLE);
     }
 }
