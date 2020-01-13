@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 
 use App\User;
 use App\Modeles\Contact;
+use App\Modeles\Enseignant;
 
 class PeuplerTableUsers extends Migration
 {
@@ -28,6 +29,20 @@ class PeuplerTableUsers extends Migration
         ]);
         $userAdmin->userable()->associate($contactAdmin);
         $userAdmin->save();
+
+        // Creation de comptes aleatoires
+        $nbUsers = 20;
+        for($i=0; $i<$nbUsers; $i++)
+        {
+            // Creation d'un enseignant aleatoire
+            $enseignant = factory(Enseignant::class)->create();
+
+            // Creation du compte user associe
+            $user = factory(User::class)->make();
+            $user[User::COL_EMAIL] = $enseignant[Enseignant::COL_EMAIL];
+            $user->userable()->associate($enseignant);
+            $user->save();
+        }
         
     }
 
