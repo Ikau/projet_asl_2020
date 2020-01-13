@@ -193,7 +193,7 @@ class SoutenanceControllerTest extends TestCase
     {
         $response = $this->get(route('soutenances.index'))
         ->assertOk()
-        ->assertViewIs('soutenance.index')
+        ->assertViewIs('admin.modeles.soutenance.index')
         ->assertSee(SoutenanceController::TITRE_INDEX);
 
         foreach($this->getAttributsModele() as $attribut)
@@ -206,7 +206,7 @@ class SoutenanceControllerTest extends TestCase
     {
         $response = $this->get(route('soutenances.create'))
         ->assertOk()
-        ->assertViewIs('soutenance.form.admin')
+        ->assertViewIs('admin.modeles.soutenance.form')
         ->assertSee(SoutenanceController::TITRE_CREATE);
 
         foreach($this->getAttributsModele() as $attribut)
@@ -231,7 +231,7 @@ class SoutenanceControllerTest extends TestCase
         $response = $this->followingRedirects()
         ->from(route('soutenances.create'))
         ->post(route('soutenances.store'), $soutenance->toArray())
-        ->assertViewIs('soutenance.index');
+        ->assertViewIs('admin.modeles.soutenance.index');
 
         // Verification de l'insertion
         $clauseWhere = [];
@@ -265,7 +265,7 @@ class SoutenanceControllerTest extends TestCase
         // Verification route
         $response = $this->from(route('soutenances.tests'))
         ->get(route('soutenances.show', $soutenance->id))
-        ->assertViewIs('soutenance.show')
+        ->assertViewIs('admin.modeles.soutenance.show')
         ->assertSee(SoutenanceController::TITRE_SHOW);
 
         // Verification integrite des donnees
@@ -291,7 +291,7 @@ class SoutenanceControllerTest extends TestCase
         // Verification redirection
         $response = $this->from(route('soutenances.tests'))
         ->get(route('soutenances.edit', $soutenance->id))
-        ->assertViewIs('soutenance.form.admin')
+        ->assertViewIs('admin.modeles.soutenance.form')
         ->assertSee(SoutenanceController::TITRE_EDIT);
 
         // Verification integrite des donnees

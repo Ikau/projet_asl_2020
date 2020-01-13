@@ -28,7 +28,7 @@ class ContactController extends AbstractControllerCRUD
     {
         $contacts = Contact::all();
 
-        return view('contact.index', [
+        return view('admin.modeles.contact.index', [
             'titre'    => ContactController::TITRE_INDEX,
             'contacts' => $contacts,
         ]);
@@ -36,7 +36,7 @@ class ContactController extends AbstractControllerCRUD
 
     public function create() 
     {
-        return view('contact.form', [
+        return view('admin.modeles.contact.form', [
             'titre'    => ContactController::TITRE_CREATE,
             'type'     => Constantes::TYPE_CONTACT,
             'civilite' => Constantes::CIVILITE
@@ -59,7 +59,7 @@ class ContactController extends AbstractControllerCRUD
         $contact = $this->validerModele($id);
         if(null === $contact) abort('404');
 
-        return view('contact.show', [
+        return view('admin.modeles.contact.show', [
             'titre'   => ContactController::TITRE_SHOW,
             'contact' => $contact,
         ]);
@@ -70,7 +70,7 @@ class ContactController extends AbstractControllerCRUD
         $contact = Contact::find($id);
         if(null === $contact) abort('404');
 
-        return view('contact.form', [
+        return view('admin.modeles.contact.form', [
             'id'       => $id,
             'contact'  => $contact,
             'type'     => Constantes::TYPE_CONTACT,

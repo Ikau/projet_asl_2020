@@ -172,7 +172,7 @@ class ContactControllerTest extends TestCase
     {
         $response = $this->get(route('contacts.index'))
         ->assertOK()
-        ->assertViewIs('contact.index')
+        ->assertViewIs('admin.modeles.contact.index')
         ->assertSee(ContactController::TITRE_INDEX);
 
         foreach($this->getAttributsModele() as $attribut)
@@ -188,7 +188,7 @@ class ContactControllerTest extends TestCase
     {
         $response = $this->get(route('contacts.create'))
         ->assertOk()
-        ->assertViewIs('contact.form')
+        ->assertViewIs('admin.modeles.contact.form')
         ->assertSee(ContactController::TITRE_CREATE);
 
         foreach($this->getAttributsModele() as $attribut)
@@ -213,7 +213,7 @@ class ContactControllerTest extends TestCase
         $response = $this->followingRedirects()
         ->from(route('contacts.create'))
         ->post(route('contacts.store'), $contactSource->toArray())
-        ->assertViewIs('contact.index');
+        ->assertViewIs('admin.modeles.contact.index');
 
         // Arguments pour la clause 'where'
         foreach($this->getAttributsModele() as $attribut)
@@ -246,7 +246,7 @@ class ContactControllerTest extends TestCase
 
         $response = $this->get(route('contacts.show', $contact->id))
         ->assertOK()
-        ->assertViewIs('contact.show')
+        ->assertViewIs('admin.modeles.contact.show')
         ->assertSee(ContactController::TITRE_SHOW);
         foreach($this->getAttributsModele() as $attribut)
         {
@@ -266,7 +266,7 @@ class ContactControllerTest extends TestCase
 
         $response = $this->get(route('contacts.edit', $contact->id))
         ->assertOK()
-        ->assertViewIs('contact.form')
+        ->assertViewIs('admin.modeles.contact.form')
         ->assertSee(ContactController::TITRE_EDIT);
         foreach($this->getAttributsModele() as $attribut)
         {

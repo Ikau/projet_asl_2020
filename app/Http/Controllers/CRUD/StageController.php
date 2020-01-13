@@ -87,7 +87,7 @@ class StageController extends AbstractControllerCRUD
         }
         $stages = Stage::all();
 
-        return view('stage.index', [
+        return view('admin.modeles.stage.index', [
             'titre'     => StageController::TITRE_INDEX,
             'attributs' => $attributs,
             'stages'    => $stages,
@@ -108,7 +108,7 @@ class StageController extends AbstractControllerCRUD
         // WIP : pour avoir des dates correctes pour tester le form
         $stageTemp = factory(Stage::class)->make();
 
-        return view('stage.form', [
+        return view('admin.modeles.stage.form', [
             'titre'       => StageController::TITRE_CREATE,
             'etudiants'   => $etudiants,
             'enseignants' => $enseignants,
@@ -148,7 +148,7 @@ class StageController extends AbstractControllerCRUD
             abort('404');
         }
 
-        return view('stage.show', [
+        return view('admin.modeles.stage.show', [
             'titre' => StageController::TITRE_SHOW,
             'stage' => $stage
         ]);
@@ -172,7 +172,7 @@ class StageController extends AbstractControllerCRUD
         $enseignants = Enseignant::all();
         $etudiants   = Etudiant::all();
         
-        return view('stage.form', [
+        return view('admin.modeles.stage.form', [
             'titre'       => StageController::TITRE_EDIT,
             'stage'       => $stage,
             'attributs'   => $attributs,

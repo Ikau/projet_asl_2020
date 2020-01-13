@@ -35,6 +35,18 @@ Route::get('/home', 'HomeController@index')->name('home');
  |--------------------------------------------------------------------------
  */
 
+
+/*
+ |--------------------------------------------------------------------------
+ |  Routes zone administration
+ |--------------------------------------------------------------------------
+ */
+Route::prefix('admin')->group(function() {
+    // Home admin
+    Route::get('/', 'Admin\AdminController@index')->name('admin.index');
+
+});
+
 /*
  * Route resources CRUD pour les modeles 
  */
@@ -47,16 +59,22 @@ Route::resource('stages', 'CRUD\StageController');
 Route::resource('soutenances', 'CRUD\SoutenanceController');
 Route::resource('users', 'CRUD\UserController');
 
+
 /* 
  * Route de test... 
  * C'est sale mais je n'ai rien trouve de plus simple ni elegant
  */
-Route::get('/tests', 'TestsController@tests');
-Route::post('tests/controller/contacts/', 'CRUD\ContactController@tests')->name('contacts.tests');
-Route::post('tests/controller/enseignants/', 'CRUD\EnseignantController@tests')->name('enseignants.tests');
-Route::post('tests/controller/entreprises/', 'CRUD\EntrepriseController@tests')->name('entreprises.tests');
-Route::post('tests/controller/etudiants/', 'CRUD\EtudiantController@tests')->name('etudiants.tests');
-Route::post('tests/controller/privileges/', 'CRUD\PrivilegeController@tests')->name('privileges.tests');
-Route::post('tests/controller/stages/', 'CRUD\StageController@tests')->name('stages.tests');
-Route::post('tests/controller/soutenances/', 'CRUD\SoutenanceController@tests')->name('soutenances.tests');
-Route::post('tests/controller/users/', 'CRUD\UserController@tests')->name('users.tests');
+Route::prefix('tests')->group(function() {
+
+    Route::prefix('controllers')->group(function() {
+
+        Route::post('contacts/', 'CRUD\ContactController@tests')->name('contacts.tests');
+        Route::post('enseignants/', 'CRUD\EnseignantController@tests')->name('enseignants.tests');
+        Route::post('entreprises/', 'CRUD\EntrepriseController@tests')->name('entreprises.tests');
+        Route::post('etudiants/', 'CRUD\EtudiantController@tests')->name('etudiants.tests');
+        Route::post('privileges/', 'CRUD\PrivilegeController@tests')->name('privileges.tests');
+        Route::post('stages/', 'CRUD\StageController@tests')->name('stages.tests');
+        Route::post('soutenances/', 'CRUD\SoutenanceController@tests')->name('soutenances.tests');
+        Route::post('users/', 'CRUD\UserController@tests')->name('users.tests');
+    });
+});

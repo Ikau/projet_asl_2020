@@ -35,7 +35,7 @@ class EnseignantController extends AbstractControllerCRUD
         $attributs   = $this->getAttributsModele();
         $enseignants = Enseignant::all();
 
-        return view('enseignant.index', [
+        return view('admin.modeles.enseignant.index', [
             'titre'       => EnseignantController::TITRE_INDEX,
             'attributs'   => $attributs,
             'enseignants' => $enseignants,
@@ -44,7 +44,7 @@ class EnseignantController extends AbstractControllerCRUD
 
     public function create()
     {
-        return view('enseignant.form', [
+        return view('admin.modeles.enseignant.form', [
             'titre'        => EnseignantController::TITRE_CREATE,
             'options'      => Option::all(),
             'departements' => Departement::all(),
@@ -70,7 +70,7 @@ class EnseignantController extends AbstractControllerCRUD
             abort('404');
         }
 
-        return view('enseignant.show', [
+        return view('admin.modeles.enseignant.show', [
             'titre'      => EnseignantController::TITRE_SHOW,
             'enseignant' => $enseignant
         ]);
@@ -84,7 +84,7 @@ class EnseignantController extends AbstractControllerCRUD
             abort('404');
         }
 
-        return view('enseignant.form', [
+        return view('admin.modeles.enseignant.form', [
             'titre'        => EnseignantController::TITRE_EDIT,
             'enseignant'   => $enseignant,
             'options'      => Option::all(),

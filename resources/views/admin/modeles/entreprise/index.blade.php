@@ -5,12 +5,12 @@
 
 @section('contenu')
 <div>
-    Nombre d'entrees dans la base : {{ $etudiants->count() }}
+    Nombre d'entrees dans la base : {{ $entreprises->count() }}
 </div>
 
 <div>
-<a href="/tests">Retour</a>
-<a href="{{ route('etudiants.create') }}">Créer</a>
+<a href="{{ route('admin.index') }}">Zone administrateur</a>
+<a href="{{ route('entreprises.create') }}">Créer</a>
 </div>
 <div>
     <table>
@@ -19,28 +19,28 @@
             <th>{{ $attribut }}</th>
             @endforeach
         </tr>
-        @foreach($etudiants as $etudiant)
+        @foreach($entreprises as $entreprise)
         <tr>
             @foreach($attributs as $attribut)
-            <td>{{ $etudiant[$attribut] }}</td>
+            <td>{{ $entreprise[$attribut] }}</td>
             @endforeach
             
             <td>
-                <form method="GET" action="{{ route('etudiants.show', [$etudiant->id]) }}">
+                <form method="GET" action="{{ route('entreprises.show', [$entreprise->id]) }}">
                     @csrf
                     @method('GET')
                     <button type="submit">Profil</button>
                 </form>
             </td>
             <td>
-                <form method="GET" action="{{ route('etudiants.edit', [$etudiant->id]) }}">
+                <form method="GET" action="{{ route('entreprises.edit', [$entreprise->id]) }}">
                     @csrf
                     @method('GET')
                     <button type="submit">Modifier</button>
                 </form>
             </td>
             <td>
-                <form method="POST" action="{{ route('etudiants.destroy', [$etudiant->id]) }}">
+                <form method="POST" action="{{ route('entreprises.destroy', [$entreprise->id]) }}">
                     @csrf
                     @method('DELETE')
                     <button type="submit">Supprimer</button>

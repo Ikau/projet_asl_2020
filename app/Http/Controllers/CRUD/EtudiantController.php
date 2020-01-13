@@ -34,7 +34,7 @@ class EtudiantController extends AbstractControllerCRUD
         $attributs = $this->getAttributsModele();
         $etudiants = Etudiant::all();
 
-        return view('etudiant.index', [
+        return view('admin.modeles.etudiant.index', [
             'titre'     => EtudiantController::TITRE_INDEX,
             'attributs' => $attributs,
             'etudiants' => $etudiants,
@@ -47,7 +47,7 @@ class EtudiantController extends AbstractControllerCRUD
         $options      = Option::all();
         $departements = Departement::all();
 
-        return view('etudiant.form', [
+        return view('admin.modeles.etudiant.form', [
             'titre'        => EtudiantController::TITRE_CREATE,
             'attributs'    => $attributs,
             'options'      => $options,
@@ -74,7 +74,7 @@ class EtudiantController extends AbstractControllerCRUD
             abort('404');
         }
         
-        return view('etudiant.show', [
+        return view('admin.modeles.etudiant.show', [
             'titre'    => EtudiantController::TITRE_SHOW,
             'etudiant' => $etudiant
         ]);
@@ -91,7 +91,7 @@ class EtudiantController extends AbstractControllerCRUD
         $departements = Departement::all();
         $options      = Option::all();
 
-        return view('etudiant.form', [
+        return view('admin.modeles.etudiant.form', [
             'titre'        => EtudiantController::TITRE_EDIT,
             'etudiant'     => $etudiant,
             'departements' => $departements,

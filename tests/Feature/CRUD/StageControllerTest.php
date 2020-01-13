@@ -189,7 +189,7 @@ class StageControllerTest extends TestCase
     {
         $response = $this->get(route('stages.index'))
         ->assertOk()
-        ->assertViewIs('stage.index')
+        ->assertViewIs('admin.modeles.stage.index')
         ->assertSee(StageController::TITRE_INDEX);
 
         foreach($this->getAttributsModele() as $a)
@@ -205,7 +205,7 @@ class StageControllerTest extends TestCase
     {
         $response = $this->get(route('stages.create'))
         ->assertOk()
-        ->assertViewIs('stage.form')
+        ->assertViewIs('admin.modeles.stage.form')
         ->assertSee(StageController::TITRE_CREATE);
 
         foreach($this->getAttributsModele() as $a)
@@ -228,7 +228,7 @@ class StageControllerTest extends TestCase
         $response = $this->followingRedirects()
         ->from(route('stages.create'))
         ->post(route('stages.store'), $stage->toArray())
-        ->assertViewIs('stage.index');
+        ->assertViewIs('admin.modeles.stage.index');
 
         // Verification de l'insertion
         $clauseWhere = [];
@@ -260,7 +260,7 @@ class StageControllerTest extends TestCase
 
         $response = $this->from(route('stages.tests'))
         ->get(route('stages.show', $stage->id))
-        ->assertViewIs('stage.show')
+        ->assertViewIs('admin.modeles.stage.show')
         ->assertSee(StageController::TITRE_SHOW);
 
         foreach($this->getAttributsModele() as $attribut)
@@ -280,7 +280,7 @@ class StageControllerTest extends TestCase
         
         $response = $this->from(route('stages.tests'))
         ->get(route('stages.edit', $stage->id))
-        ->assertViewIs('stage.form')
+        ->assertViewIs('admin.modeles.stage.form')
         ->assertSee(StageController::TITRE_EDIT);
 
         foreach($this->getAttributsModele() as $attribut)
