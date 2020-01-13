@@ -35,23 +35,34 @@ Route::get('/home', 'HomeController@index')->name('home');
  |--------------------------------------------------------------------------
  */
 
+
 /*
- * Route resources CRUD pour les modeles 
+ |--------------------------------------------------------------------------
+ |  Routes zone administration
+ |--------------------------------------------------------------------------
  */
-Route::resource('contacts', 'CRUD\ContactController');
-Route::resource('enseignants', 'CRUD\EnseignantController');
-Route::resource('entreprises', 'CRUD\EntrepriseController');
-Route::resource('etudiants', 'CRUD\EtudiantController');
-Route::resource('privileges', 'CRUD\PrivilegeController');
-Route::resource('stages', 'CRUD\StageController');
-Route::resource('soutenances', 'CRUD\SoutenanceController');
-Route::resource('users', 'CRUD\UserController');
+Route::prefix('admin')->group(function() {
+    // Home admin
+    Route::get('/', 'Admin\AdminController@home');
+
+    /*
+     * Route resources CRUD pour les modeles 
+     */
+    Route::resource('contacts', 'CRUD\ContactController');
+    Route::resource('enseignants', 'CRUD\EnseignantController');
+    Route::resource('entreprises', 'CRUD\EntrepriseController');
+    Route::resource('etudiants', 'CRUD\EtudiantController');
+    Route::resource('privileges', 'CRUD\PrivilegeController');
+    Route::resource('stages', 'CRUD\StageController');
+    Route::resource('soutenances', 'CRUD\SoutenanceController');
+    Route::resource('users', 'CRUD\UserController');
+});
+
 
 /* 
  * Route de test... 
  * C'est sale mais je n'ai rien trouve de plus simple ni elegant
  */
-Route::get('/tests', 'TestsController@tests');
 Route::post('tests/controller/contacts/', 'CRUD\ContactController@tests')->name('contacts.tests');
 Route::post('tests/controller/enseignants/', 'CRUD\EnseignantController@tests')->name('enseignants.tests');
 Route::post('tests/controller/entreprises/', 'CRUD\EntrepriseController@tests')->name('entreprises.tests');
