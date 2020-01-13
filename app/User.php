@@ -75,6 +75,7 @@ class User extends Authenticatable implements Utilisateur, MustVerifyEmail
      */
     protected $hidden = [
         User::COL_REMEMBER_TOKEN,
+        User::COL_HASH_PASSWORD
     ];
 
     /**
