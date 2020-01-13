@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
 
 use App\User;
+use App\Modeles\Contact;
 use App\Modeles\Privilege;
 use App\Http\Controllers\CRUD\PrivilegeController;
 use App\Utils\Constantes;
@@ -317,7 +318,13 @@ class PrivilegeControllerTest extends TestCase
         
         for($i=0; $i<10; $i++)
         {
-            $user = factory(User::class)->create();
+            // Creation d'un contact
+            $contact = factory(Contact::class)->create();
+
+            // Creation de l'utilisateur associe
+            $user = factory(User::class)->make();
+            $user->userable()->associate($contact);
+            $user->save();
             $user->privileges()->attach($privilege->id);
         }
 

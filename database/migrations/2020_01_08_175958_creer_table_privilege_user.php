@@ -26,6 +26,9 @@ class CreerTablePrivilegeUser extends Migration
 
             $table->foreign(User::COL_PIVOT_PRIVILEGE_USER)->references('id')->on(User::NOM_TABLE);
             $table->foreign(Privilege::COL_PIVOT_PRIVILEGE_USER)->references('id')->on(Privilege::NOM_TABLE);
+
+            // On indique que la combinaison est unique
+            $table->unique([User::COL_PIVOT_PRIVILEGE_USER, Privilege::COL_PIVOT_PRIVILEGE_USER]);
         });
     }
 

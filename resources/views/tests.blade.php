@@ -10,5 +10,6 @@
     <a href="{{ route('stages.index') }}">Stages</a>
     <a href="{{ route('soutenances.index') }}">Soutenances</a>
     <a href="{{ route('privileges.index') }}">Privileges</a>
+    <a href="{{ route('users.index') }}">Users</a>
 
 </html>

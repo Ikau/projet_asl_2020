@@ -25,4 +25,17 @@ interface Utilisateur
      * @return array[App\Modeles\Privileges] Array de tous les privileges de l'utilisateur.
      */
     public function privileges();
+
+    /**
+     * Renvoie le modele associe au compte utilisateur.abnf
+     * 
+     * C'est une relation One-to-One polymorphique qui peut renvoyer :
+     *  - un enseignant
+     *  - un contact
+     * Peut etre etendu a un etudiant si besoin
+     * [DOC] : https://laravel.com/docs/6.x/eloquent-relationships#one-to-one-polymorphic-relations
+     *
+     * @return App\Modeles\Contact|App\Modeles\Enseignant
+     */
+    public function userable();
 }

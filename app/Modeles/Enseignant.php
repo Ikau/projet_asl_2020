@@ -4,8 +4,10 @@ namespace App\Modeles;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\User;
 use App\Abstracts\AbstractEnseignant;
 use App\Interfaces\BaseDeDonnees;
+use App\Interfaces\CompteUser;
 use App\Utils\Constantes;
 
 class Enseignant extends AbstractEnseignant implements BaseDeDonnees
@@ -62,8 +64,14 @@ class Enseignant extends AbstractEnseignant implements BaseDeDonnees
     ];
 
     /* ====================================================================
-     *                            INTERFACE
+     *                      INTERFACE 'BaseDeDonnees'
      * ====================================================================
+     */
+
+    /**
+     * Renvoie le modele enseignant par defaut (vide)
+     * 
+     * @return App\Modeles\Enseignant
      */
     public static function getModeleDefaut()
     {
@@ -74,6 +82,19 @@ class Enseignant extends AbstractEnseignant implements BaseDeDonnees
         ];
 
         return Enseignant::where($clauseWhere)->first();
+    }
+
+    /* ====================================================================
+     *                      INTERFACE 'CompteUser'
+     * ====================================================================
+     */
+
+    /**
+     * Renvoie le modele user associe a l'enseignant
+     */
+    public function user()
+    {
+        return $this->morphOne('App\User', User::COL_POLY_MODELE);
     }
 
     /* ====================================================================

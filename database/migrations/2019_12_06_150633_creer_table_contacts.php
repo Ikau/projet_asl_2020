@@ -22,7 +22,7 @@ class CreerTableContacts extends Migration
             $table->string(Contact::COL_PRENOM);
             $table->unsignedSmallInteger(Contact::COL_CIVILITE);
             $table->unsignedSmallInteger(Contact::COL_TYPE);
-            $table->string(Contact::COL_EMAIL);
+            $table->string(Contact::COL_EMAIL)->unique();
             $table->string(Contact::COL_TELEPHONE);
             $table->text(Contact::COL_ADRESSE);
         });

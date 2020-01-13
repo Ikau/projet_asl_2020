@@ -24,10 +24,8 @@ class CreerTableUsers extends Migration
             $table->string(User::COL_HASH_PASSWORD);
             $table->rememberToken();
             
-            // Clefs etrangeres
-            $table->unsignedBigInteger(User::COL_TYPE_ID);
-
-            $table->foreign(User::COL_TYPE_ID)->references('id')->on(UserType::NOM_TABLE);
+            // Clefs etrangeres polymorphique
+            $table->morphs(User::COL_POLY_MODELE);
         });
     }
 

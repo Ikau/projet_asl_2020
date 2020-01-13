@@ -45,6 +45,7 @@ Route::resource('etudiants', 'CRUD\EtudiantController');
 Route::resource('privileges', 'CRUD\PrivilegeController');
 Route::resource('stages', 'CRUD\StageController');
 Route::resource('soutenances', 'CRUD\SoutenanceController');
+Route::resource('users', 'CRUD\UserController');
 
 /* 
  * Route de test... 
@@ -58,3 +59,4 @@ Route::post('tests/controller/etudiants/', 'CRUD\EtudiantController@tests')->nam
 Route::post('tests/controller/privileges/', 'CRUD\PrivilegeController@tests')->name('privileges.tests');
 Route::post('tests/controller/stages/', 'CRUD\StageController@tests')->name('stages.tests');
 Route::post('tests/controller/soutenances/', 'CRUD\SoutenanceController@tests')->name('soutenances.tests');
+Route::post('tests/controller/users/', 'CRUD\UserController@tests')->name('users.tests');
