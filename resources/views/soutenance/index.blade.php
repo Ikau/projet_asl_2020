@@ -9,7 +9,7 @@
 </div>
 
 <div>
-<a href="/tests">Retour</a>
+<a href="{{ route('admin.index') }}">Zone administrateur</a>
 <a href="{{ route('soutenances.create') }}">Créer</a>
 </div>
 <div>

@@ -43,7 +43,7 @@ Route::get('/home', 'HomeController@index')->name('home');
  */
 Route::prefix('admin')->group(function() {
     // Home admin
-    Route::get('/', 'Admin\AdminController@home');
+    Route::get('/', 'Admin\AdminController@index')->name('admin.index');
 
     /*
      * Route resources CRUD pour les modeles 
