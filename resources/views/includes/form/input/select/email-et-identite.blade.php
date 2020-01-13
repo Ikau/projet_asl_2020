@@ -14,7 +14,8 @@
     @include('includes.foreach.email', [
         'enseignants'   => $enseignants,
         'contacts_insa' => $contacts_insa,
-        'type'          => $type
+        'type'          => $type,
+        'valeur'        => $valeur
     ])
 </select>
 @error($attribut)

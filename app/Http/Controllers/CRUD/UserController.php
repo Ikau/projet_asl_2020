@@ -120,16 +120,9 @@ class UserController extends AbstractControllerCRUD
         $user = new User;
         
         // Recuperation de l'identite
-        $email = $request->input(User::COL_EMAIL);
-        $identite = Enseignant::where(Enseignant::COL_EMAIL, '=', $email)->first();
-        if(null === $identite)
-        {
-            $identite = Contact::where(Contact::COL_EMAIL, '=', $email)->first();
-        }
-        if(null === $identite)
-        {
-            abort('404');
-        }
+        $email    = $request->input(User::COL_EMAIL);
+        $identite = $this->getIdentite($email);
+
         $user->userable()->associate($identite);
         $user[User::COL_EMAIL] = $email;
 
@@ -155,7 +148,17 @@ class UserController extends AbstractControllerCRUD
      */
     public function show($id)
     {
-        abort('404');
+        $user = $this->validerModele($id);
+        if(null === $user)
+        {
+            abort('404');
+        }
+
+        return view('admin.modeles.user.show', [
+            'titre'     => UserController::TITRE_SHOW,
+            'attributs' => $this->getAttributsModele(),
+            'user'      => $user
+        ]);
     }
 
     /**
@@ -166,7 +169,25 @@ class UserController extends AbstractControllerCRUD
      */
     public function edit($id)
     {
-        abort('404');
+        $user = $this->validerModele($id);
+        if(null === $user)
+        {
+            abort('404');
+        }
+
+        $enseignants   = Enseignant::all()->sortBy(Enseignant::COL_NOM);
+        $contacts_insa = Contact::where(Contact::COL_TYPE, '=', Constantes::TYPE_CONTACT['insa'])
+        ->orderBy(Contact::COL_NOM)
+        ->get();
+
+        return view('admin.modeles.user.form', [
+            'titre'         => UserController::TITRE_EDIT,
+            'classe'        => User::class,
+            'contacts_insa' => $contacts_insa,
+            'enseignants'   => $enseignants,
+            'type'          => Constantes::TYPE_CONTACT['insa'],
+            'user'          => $user
+        ]);
     }
 
     /**
@@ -178,7 +199,32 @@ class UserController extends AbstractControllerCRUD
      */
     public function update(Request $request, $id)
     {
-        abort('404');
+        $this->validerForm($request);
+        $user = $this->validerModele($id);
+        if(null === $user)
+        {
+            abort('404');
+        }
+        
+        // Recuperation de l'existant
+        $email    = $request->input(User::COL_EMAIL);
+        $identite = $this->getIdentite($email);
+        
+        // MaJ de la liaison
+        $user->userable()->dissociate();
+        $user->userable()->associate($identite);
+
+        // MaJ de l'email + confirmation nouvel email
+        $user[User::COL_EMAIL] = $identite->email;
+        $user[User::COL_EMAIL_VERIFIE_LE] = null;
+        
+        /* TODO
+         * Renvoyer un nouvel email pour la confirmation de l'email
+         */
+
+        $user->save();
+
+        return redirect()->route('users.index');
     }
 
     /**
@@ -189,7 +235,14 @@ class UserController extends AbstractControllerCRUD
      */
     public function destroy($id)
     {
-        abort('404');
+        $user = $this->validerModele($id);
+        if(null === $user)
+        {
+            abort('404');
+        }
+
+        $user->delete();
+        return redirect()->route('users.index');
     }
 
     /* ====================================================================
@@ -217,7 +270,24 @@ class UserController extends AbstractControllerCRUD
     protected function validerForm(Request $request)
     {
         $request->validate([
-            User::COL_EMAIL         => ['required', 'email'],
+            User::COL_EMAIL => [
+                'required',
+                'email',
+                'unique:' . User::NOM_TABLE,
+                // L'email doit exister pour un enseignant ou contact INSA
+                // [DOC] https://laravel.com/docs/5.7/validation#using-closures
+                function($attribute, $value, $fail) {
+                    if(null === Enseignant::where(Enseignant::COL_EMAIL, '=', $value)->first()
+                    && null === Contact::where([
+                            [Contact::COL_TYPE, '=', Constantes::TYPE_CONTACT['insa']],
+                            [Contact::COL_EMAIL, '=', $value]
+                        ])->first()
+                    )
+                    {
+                        $fail("L'email ne correspond a aucun membre de l'INSA");
+                    }
+                }
+            ]
         ]);
 
         $this->normaliseInputsOptionnels($request);
@@ -240,7 +310,6 @@ class UserController extends AbstractControllerCRUD
         return User::find($id);
     }
 
-    
     /**
      * Renvoie l'output de la fonction Schema::getColumnListing(Modele::NOM_TABLE)
      * 
@@ -249,5 +318,35 @@ class UserController extends AbstractControllerCRUD
     protected function getAttributsModele()
     {
         return Schema::getColumnListing(User::NOM_TABLE);
+    }
+
+    /**
+     * Renvoie le Contact INSA ou l'Enseignant associe a l'email donne.
+     * La fonction ne devrait pas renvoyer null car la methode de validation du form verifie deja la nullite
+     *
+     * @param  string $email L'email dont on recherche le proprietaire.
+     *
+     * @return App\Modeles\Enseignant|App\Modeles\Contact
+     */
+    protected function getIdentite(string $email)
+    {
+        $identite = null;
+
+        // On recherche chez les contacts
+        $identite = Contact::where([
+            [Contact::COL_TYPE, '=', Constantes::TYPE_CONTACT['insa']],
+            [Contact::COL_EMAIL, '=', $email]
+        ])->first();
+
+        if(null === $identite)
+        {
+            // On renvoie le resultat chez les enseignants
+            return $identite = Enseignant::where(Enseignant::COL_EMAIL, '=', $email)->first();
+        }
+        else
+        {
+            // OK : un contact insa existe bien
+            return $identite;
+        }
     }
 }

@@ -32,7 +32,7 @@
         'contacts_insa' => $contacts_insa,
         'type'          => $type,
         'intitule'      => 'Email de l\'utilisateur (*)',
-        'valeur'        => $user->intitule ?? old($classe::COL_EMAIL)
+        'valeur'        => $user->email ?? old($classe::COL_EMAIL)
     ])
     <br/> 
 

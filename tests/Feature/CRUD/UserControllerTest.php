@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 use App\User;
-use App\Modeles\Contact;
+use App\Modeles\Enseignant;
 use App\Http\Controllers\CRUD\UserController;
 use App\Utils\Constantes;
 
@@ -58,8 +58,8 @@ class UserControllerTest extends TestCase
         $user['test']        = 'validerForm';
         $user[$clefModifiee] = $nouvelleValeur;
 
-        // Creation d'un contact
-        $user->userable()->associate(factory(Contact::class)->create());
+        // Creation d'un enseignant
+        $user->userable()->associate(factory(Enseignant::class)->create());
 
         // Routage
         $routeSource = route('users.tests');
@@ -83,11 +83,12 @@ class UserControllerTest extends TestCase
         // [bool $possedeErreur, string $clefModifiee, $nouvelleValeur]
         return [
             // Succes
-            'Email valide'    => [FALSE, User::COL_EMAIL, 'email@valide.com'],
+            'Email valide'   => [FALSE, User::COL_EMAIL, 'aucun@null.com'],
 
             // Echec
-            'Email null'    => [TRUE, User::COL_EMAIL, null],
-            'Email invalide'    => [TRUE, User::COL_EMAIL, 'emailInvalide'],
+            'Email null'     => [TRUE, User::COL_EMAIL, null],
+            'Email existant' => [TRUE, User::COL_EMAIL, 'admin@insa-cvl.fr'],
+            'Email invalide' => [TRUE, User::COL_EMAIL, 'emailInvalide'],
         ];
     }
 
@@ -98,8 +99,8 @@ class UserControllerTest extends TestCase
     {
         $user = factory(User::class)->make();
 
-        // Creation d'un contact
-        $user->userable()->associate(factory(Contact::class)->create());
+        // Creation d'un enseignant
+        $user->userable()->associate(factory(Enseignant::class)->create());
         $user->save();
 
         $id;
@@ -183,19 +184,18 @@ class UserControllerTest extends TestCase
      */
     public function testStore()
     {
-        // Creation d'un contact aleatoire pour l'associer a un nouvel utilisateur
-        $contact = factory(Contact::class)->create();
+        // Creation d'un enseignant aleatoire pour l'associer a un nouvel utilisateur
+        $enseignant = factory(Enseignant::class)->create();
 
         // Routage
         $this->from(route('users.create'))
-        ->post(route('users.store'), [User::COL_EMAIL => $contact[Contact::COL_EMAIL]])
+        ->post(route('users.store'), [User::COL_EMAIL => $enseignant[Enseignant::COL_EMAIL]])
         ->assertRedirect(route('users.index'));
 
         // Verification insertion
-        $userTest = User::where(User::COL_EMAIL, '=', $contact[User::COL_EMAIL])->first();
+        $userTest = User::where(User::COL_EMAIL, '=', $enseignant[User::COL_EMAIL])->first();
         $this->assertNotNull($userTest);
-        $this->assertEquals($contact[User::COL_EMAIL], $userTest[User::COL_EMAIL]);
-        $this->assertEquals(FALSE, $userTest[User::COL_EMAIL_VERIFIE_LE]);
+        $this->assertEquals($enseignant[User::COL_EMAIL], $userTest[User::COL_EMAIL]);
     }
 
     /**
@@ -203,7 +203,31 @@ class UserControllerTest extends TestCase
      */
     public function testShow()
     {
-        $this->assertTrue(TRUE);
+        // Creation d'un compte aleatoire
+        $user = $this->creerUtilisateurAleatoire();
+
+        // Routage
+        $response = $this->from(route('users.tests'))
+        ->get(route('users.show', $user->id))
+        ->assertViewIs('admin.modeles.user.show')
+        ->assertSee(e(UserController::TITRE_SHOW));
+
+        // Integrite des donnees
+        $userTest = User::where(User::COL_EMAIL, '=', $user[User::COL_EMAIL])->first();
+        $this->assertNotNull($userTest);
+        foreach($this->getAttributsModele() as $attribut)
+        {
+            if(User::COL_REMEMBER_TOKEN !== $attribut
+            && User::COL_HASH_PASSWORD !== $attribut)
+            {
+                $response->assertSee(e($userTest[$attribut]));
+            }
+        }
+
+        // Verification echec
+        $this->from(route('users.tests'))
+        ->get(route('users.show', -1))
+        ->assertStatus(404);
     }
 
     /**
@@ -212,7 +236,17 @@ class UserControllerTest extends TestCase
      */
     public function testEdit()
     {
-        $this->assertTrue(TRUE);
+        // Creation d'un utilisateur
+        $user = $this->creerUtilisateurAleatoire();
+
+        // Routage
+        $response = $this->from(route('users.tests'))
+        ->get(route('users.edit', $user->id))
+        ->assertViewIs('admin.modeles.user.form')
+        ->assertSee(UserController::TITRE_EDIT);
+
+        // Integrite des donnees modifiables
+        $response->assertSee($user[User::COL_EMAIL]);
     }
 
     /**
@@ -221,7 +255,33 @@ class UserControllerTest extends TestCase
      */
     public function testUpdate()
     {
-        $this->assertTrue(TRUE);
+        // Creation d'un nouvel utilisateur
+        $user = $this->creerUtilisateurAleatoire();
+        
+        // Creation d'un noucel email
+        $nouvelEmail = factory(Enseignant::class)->create()->email;
+
+        // Routage
+        $this->from(route('users.tests'))
+        ->patch(route('users.update', $user->id), [User::COL_EMAIL => $nouvelEmail])
+        ->assertRedirect(route('users.index'));
+
+        // Verification update
+        $userTest = User::find($user->id);
+        $this->assertNotNull($userTest);
+        $this->assertEquals($nouvelEmail, $userTest[User::COL_EMAIL]);
+        $this->assertNull($userTest[User::COL_EMAIL_VERIFIE_LE]);
+
+        // Verification echec email
+        $this->from(route('users.tests'))
+        ->patch(route('users.update', -1))
+        ->assertStatus(302)
+        ->assertRedirect(route('users.tests'));
+
+        // Verification echec Id
+        $this->from(route('users.tests'))
+        ->patch(route('users.update', -1), [User::COL_EMAIL => 'aucun@null.com'])
+        ->assertStatus(404);
     }
 
     /**
@@ -229,7 +289,22 @@ class UserControllerTest extends TestCase
      */
     public function testDestroy()
     {
-        $this->assertTrue(TRUE);
+        // Creation nouvel utilisateur
+        $user = $this->creerUtilisateurAleatoire();
+
+        // Routage
+        $this->from(route('users.tests'))
+        ->delete(route('users.destroy', $user->id))
+        ->assertRedirect(route('users.index'));
+
+        // Verification suppression
+        $userTest = User::where(User::COL_EMAIL, '=', $user[User::COL_EMAIL])->first();
+        $this->assertNull($userTest);
+
+        // Verification id invalide
+        $this->from(route('users.tests'))
+        ->delete(route('users.destroy', -1))
+        ->assertStatus(404);
     }
 
     /* ====================================================================
@@ -243,5 +318,24 @@ class UserControllerTest extends TestCase
     private function getAttributsModele()
     {
         return Schema::getColumnListing(User::NOM_TABLE);
+    }
+
+    /**
+     * Cree et renvoie un utilisateur cree aleatoirement.
+     *
+     * @return App\User Utilisateur aleatoirement cree
+     */
+    private function creerUtilisateurAleatoire()
+    {
+        // Creation d'un enseignant
+        $enseignant = factory(Enseignant::class)->create();
+
+        // Creation utilisateur
+        $user = factory(User::class)->make();
+        $user[User::COL_EMAIL] = $enseignant->email;
+        $user->userable()->associate($enseignant);
+        $user->save();
+
+        return $user;
     }
 }
