@@ -81,7 +81,7 @@ class SoutenanceController extends AbstractControllerCRUD
         $attributs   = $this->getAttributsModele();
         $soutenances = Soutenance::all();
 
-        return view('soutenance.index', [
+        return view('admin.modeles.soutenance.index', [
             'titre'       => SoutenanceController::TITRE_INDEX,
             'attributs'   => $attributs,
             'soutenances' => $soutenances
@@ -102,7 +102,7 @@ class SoutenanceController extends AbstractControllerCRUD
         $options      = Option::all();
         $soutenanceTemp = factory(Soutenance::class)->make();
 
-        return view('soutenance.form.admin', [
+        return view('admin.modeles.soutenance.form', [
             'titre'        => SoutenanceController::TITRE_CREATE,
             'classe'       => Soutenance::class,
             'enseignants'  => $enseignants,
@@ -145,7 +145,7 @@ class SoutenanceController extends AbstractControllerCRUD
             abort('404');
         }
 
-        return view('soutenance.show', [
+        return view('admin.modeles.soutenance.show', [
             'titre'      => SoutenanceController::TITRE_SHOW,
             'soutenance' => $soutenance
         ]);
@@ -170,7 +170,7 @@ class SoutenanceController extends AbstractControllerCRUD
         $departements = Departement::all();
         $options      = Option::all();
 
-        return view('soutenance.form.admin', [
+        return view('admin.modeles.soutenance.form', [
             'titre'        => SoutenanceController::TITRE_EDIT,
             'classe'       => Soutenance::class,
             'soutenance'   => $soutenance,

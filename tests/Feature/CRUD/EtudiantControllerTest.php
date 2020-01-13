@@ -164,7 +164,7 @@ class EtudiantControllerTest extends TestCase
     {
         $response = $this->get(route('etudiants.index'))
         ->assertOK()
-        ->assertViewIs('etudiant.index')
+        ->assertViewIs('admin.modeles.etudiant.index')
         ->assertSee(EtudiantController::TITRE_INDEX);
 
         foreach($this->getAttributsModele() as $attribut)
@@ -177,7 +177,7 @@ class EtudiantControllerTest extends TestCase
     {
         $response = $this->get(route('etudiants.create'))
         ->assertOK()
-        ->assertViewIs('etudiant.form')
+        ->assertViewIs('admin.modeles.etudiant.form')
         ->assertSee(EtudiantController::TITRE_CREATE);
 
         foreach($this->getAttributsModele() as $attribut)
@@ -200,7 +200,7 @@ class EtudiantControllerTest extends TestCase
         $response = $this->followingRedirects()
         ->from(route('etudiants.create'))
         ->post(route('etudiants.store'), $etudiantSource->toArray())
-        ->assertViewIs('etudiant.index');
+        ->assertViewIs('admin.modeles.etudiant.index');
 
         // Clause where
         $attributs = $this->getAttributsModele();
@@ -236,7 +236,7 @@ class EtudiantControllerTest extends TestCase
         $response = $this->from(route('etudiants.tests'))
         ->get(route('etudiants.show', $etudiant->id))
         ->assertOk()
-        ->assertViewIs('etudiant.show')
+        ->assertViewIs('admin.modeles.etudiant.show')
         ->assertSee(EtudiantController::TITRE_SHOW);
 
         // Verification donnees
@@ -257,7 +257,7 @@ class EtudiantControllerTest extends TestCase
         $response = $this->from(route('etudiants.tests'))
         ->get(route('etudiants.edit', $etudiant->id))
         ->assertOk()
-        ->assertViewIs('etudiant.form')
+        ->assertViewIs('admin.modeles.etudiant.form')
         ->assertSee(EtudiantController::TITRE_EDIT);
 
         foreach($this->getAttributsModele() as $a)

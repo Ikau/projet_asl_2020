@@ -135,7 +135,7 @@ class EntrepriseControllerTest extends TestCase
     {
         $response = $this->from(route('entreprises.tests'))
         ->get(route('entreprises.index'))
-        ->assertViewIs('entreprise.index')
+        ->assertViewIs('admin.modeles.entreprise.index')
         ->assertSee(EntrepriseController::TITRE_INDEX);
 
         foreach($this->getAttributsModele() as $attribut)
@@ -148,7 +148,7 @@ class EntrepriseControllerTest extends TestCase
     {
         $response = $this->from(route('entreprises.tests'))
         ->get(route('entreprises.create'))
-        ->assertViewIs('entreprise.form')
+        ->assertViewIs('admin.modeles.entreprise.form')
         ->assertSee(EntrepriseController::TITRE_CREATE);
 
         foreach($this->getAttributsModele() as $attribut)
@@ -205,7 +205,7 @@ class EntrepriseControllerTest extends TestCase
         $response = $this->from(route('entreprises.tests'))
         ->get(route('entreprises.show', $entreprise->id))
         ->assertOk()
-        ->assertViewIs('entreprise.show')
+        ->assertViewIs('admin.modeles.entreprise.show')
         ->assertSee(e(EntrepriseController::TITRE_SHOW));
 
         foreach($this->getAttributsModele() as $attribut)
@@ -231,7 +231,7 @@ class EntrepriseControllerTest extends TestCase
         $response = $this->from(route('entreprises.tests'))
         ->get(route('entreprises.edit', $entreprise->id))
         ->assertOk()
-        ->assertViewIs('entreprise.form')
+        ->assertViewIs('admin.modeles.entreprise.form')
         ->assertSee(EntrepriseController::TITRE_EDIT);
 
         foreach($this->getAttributsModele() as $a)

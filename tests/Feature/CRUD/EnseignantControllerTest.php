@@ -164,7 +164,7 @@ class EnseignantControllerTest extends TestCase
     {
         $response = $this->get(route('enseignants.index'))
         ->assertOk()
-        ->assertViewIs('enseignant.index')
+        ->assertViewIs('admin.modeles.enseignant.index')
         ->assertSee(EnseignantController::TITRE_INDEX);
 
         foreach($this->getAttributsModele() as $attribut)
@@ -178,7 +178,7 @@ class EnseignantControllerTest extends TestCase
         // Affichage de la page
         $response = $this->get(route('enseignants.create'))
         ->assertOK()
-        ->assertViewIs('enseignant.form')
+        ->assertViewIs('admin.modeles.enseignant.form')
         ->assertSee(EnseignantController::TITRE_CREATE);
 
         // Verification des inputs
@@ -248,7 +248,7 @@ class EnseignantControllerTest extends TestCase
 
         $response = $this->get(route('enseignants.show', $enseignant->id))
         ->assertOk()
-        ->assertViewIs('enseignant.show')
+        ->assertViewIs('admin.modeles.enseignant.show')
         ->assertSee(EnseignantController::TITRE_SHOW);
 
         foreach($this->getAttributsModele() as $a)
@@ -267,7 +267,7 @@ class EnseignantControllerTest extends TestCase
         
         $response = $this->get(route('enseignants.edit', $enseignant->id))
         ->assertOk()
-        ->assertViewIs('enseignant.form')
+        ->assertViewIs('admin.modeles.enseignant.form')
         ->assertSee(EnseignantController::TITRE_EDIT);
 
         foreach($this->getAttributsModele() as $attribut)

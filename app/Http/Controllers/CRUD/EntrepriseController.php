@@ -76,7 +76,7 @@ class EntrepriseController extends AbstractControllerCRUD
         $attributs   = $this->getAttributsModele();
         $entreprises = Entreprise::all();
         
-        return view('entreprise.index', [
+        return view('admin.modeles.entreprise.index', [
             'attributs'   => $attributs,
             'entreprises' => $entreprises,
             'titre'       => EntrepriseController::TITRE_INDEX,
@@ -92,7 +92,7 @@ class EntrepriseController extends AbstractControllerCRUD
     {
         $attributs = $this->getAttributsModele();
 
-        return view('entreprise.form', [
+        return view('admin.modeles.entreprise.form', [
             'titre' => EntrepriseController::TITRE_CREATE
         ]);
     }
@@ -128,7 +128,7 @@ class EntrepriseController extends AbstractControllerCRUD
             abort('404');
         }
 
-        return view('entreprise.show', [
+        return view('admin.modeles.entreprise.show', [
             'titre'      => EntrepriseController::TITRE_SHOW,
             'entreprise' => $entreprise
         ]);
@@ -149,7 +149,7 @@ class EntrepriseController extends AbstractControllerCRUD
         }
 
         $attributs = $this->getAttributsModele();
-        return view('entreprise.form', [
+        return view('admin.modeles.entreprise.form', [
             'titre'      => EntrepriseController::TITRE_EDIT,
             'entreprise' => $entreprise,
             'attributs'  => $attributs
