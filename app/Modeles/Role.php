@@ -74,7 +74,7 @@ class Role extends AbstractRole
      */
     public function privileges()
     {
-        // Args : modele de la relation, nom table pivot, nom colonne privilege_id, nom colonne user_id
+        // Args : modele de la relation, nom table pivot, nom colonne privilege_id, nom colonne privilege_id
         return $this->belongsToMany('App\Modeles\Privilege', Role::NOM_TABLE_PIVOT_PRIVILEGE_ROLE,
                                     Role::COL_PIVOT, Privilege::COL_PIVOT);
     }
