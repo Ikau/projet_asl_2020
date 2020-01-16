@@ -4,7 +4,7 @@ namespace App\Modeles;
 
 use Illuminate\Database\Eloquent\Model;
 
-use App\Abstracts\AbstractEntreprise;
+use App\Abstracts\Modeles\AbstractEntreprise;
 use App\Utils\Constantes;
 
 class Entreprise extends AbstractEntreprise

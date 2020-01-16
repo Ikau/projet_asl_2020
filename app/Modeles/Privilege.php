@@ -4,7 +4,7 @@ namespace App\Modeles;
 
 use Illuminate\Database\Eloquent\Model;
 
-use App\Abstracts\AbstractPrivilege;
+use App\Abstracts\Modeles\AbstractPrivilege;
 use App\Utils\Constantes;
 
 use App\User;

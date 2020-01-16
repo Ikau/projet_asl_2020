@@ -4,7 +4,7 @@ namespace App\Modeles;
 
 use Illuminate\Database\Eloquent\Model;
 
-use App\Abstracts\AbstractEtudiant;
+use App\Abstracts\Modeles\AbstractEtudiant;
 use App\Utils\Constantes;
 
 class Etudiant extends AbstractEtudiant

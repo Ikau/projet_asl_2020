@@ -4,7 +4,7 @@ namespace App\Modeles;
 
 use Illuminate\Database\Eloquent\Model;
 
-use App\Abstracts\AbstractFiche;
+use App\Abstracts\Modeles\AbstractFiche;
 use App\Utils\Constantes;
 
 class FicheSoutenance extends AbstractFiche

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Abstracts;
+namespace App\Abstracts\Modeles;
 
 use Illuminate\Database\Eloquent\Model;
 

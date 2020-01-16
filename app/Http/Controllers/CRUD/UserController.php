@@ -12,7 +12,7 @@ use Illuminate\Validation\Rule;
 use App\User;
 use App\Modeles\Enseignant;
 use App\Modeles\Contact;
-use App\Abstracts\AbstractControllerCRUD;
+use App\Abstracts\Controllers\AbstractControllerCRUD;
 use App\Utils\Constantes;
 
 class UserController extends AbstractControllerCRUD

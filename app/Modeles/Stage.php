@@ -4,7 +4,7 @@ namespace App\Modeles;
 
 use Illuminate\Database\Eloquent\Model;
 
-use App\Abstracts\AbstractStage;
+use App\Abstracts\Modeles\AbstractStage;
 use App\Utils\Constantes;
 
 class Stage extends AbstractStage
