@@ -131,7 +131,7 @@ class User extends Authenticatable implements Utilisateur, MustVerifyEmail
     public function roles()
     {
         // Args : modele de la relation, nom table pivot, nom colonne user_id, nom colonne privilege_id
-        return $this->belongsToMany('App\Modeles\Role', User::NOM_TABLE_PIVOT_PRIVILEGE_USER,
+        return $this->belongsToMany('App\Modeles\Role', User::NOM_TABLE_PIVOT_ROLE_USER,
                                     User::COL_PIVOT, Role::COL_PIVOT);
     }
 
