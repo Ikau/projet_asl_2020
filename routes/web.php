@@ -78,3 +78,11 @@ Route::prefix('tests')->group(function() {
         Route::post('users/', 'CRUD\UserController@tests')->name('users.tests');
     });
 });
+
+
+/*
+ |--------------------------------------------------------------------------
+ |                        Routes partie 'Enseignant'
+ |--------------------------------------------------------------------------
+ */
+Route::get('/accueil/enseignant/', 'Enseignant\ReferentController@index')->name('referents.index');

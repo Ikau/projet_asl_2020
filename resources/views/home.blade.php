@@ -13,8 +13,10 @@
                             {{ session('status') }}
                         </div>
                     @endif
+                </div>
 
-                    You are logged in!
+                </div>
+                    Bienvenue {{ $identite->prenom }} {{ $identite->nom }}
                 </div>
             </div>
         </div>
