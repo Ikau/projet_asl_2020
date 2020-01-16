@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Enseignant;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
-use App\Abstracts\Controllers\AbstractReferentController;
+use App\Abstracts\Controllers\Enseignant\AbstractReferentController;
 use App\Utils\Constantes;
 
 class ReferentController extends AbstractReferentController
@@ -19,6 +20,19 @@ class ReferentController extends AbstractReferentController
     const TITRE_SHOW   = 'Details du TEMPLATE';
     const TITRE_EDIT   = 'Editer un TEMPLATE';
 
+    /**
+     * Nom des differents gates pour le controller 'Referent'
+     */
+    const GATE_GET_ACCUEIL = 'get-accueil-enseignant';
+
+    /**
+     * Indique a Lavel que toutes les fonctions de callback demandent un utilisateur
+     * authentifie
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     /* ====================================================================
      *                             RESOURCES
@@ -30,12 +44,7 @@ class ReferentController extends AbstractReferentController
      */
     public function index() 
     {
-        $user = Auth::user();
-
-        if(null === $user)
-        {
-            abort('404');
-        }
+        Gate::authorize(ReferentController::GATE_GET_ACCUEIL);
 
         return view('enseignant.commun.index', [
             'titre' => ReferentController::TITRE_INDEX,

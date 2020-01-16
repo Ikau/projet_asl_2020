@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
 
-abstract class AbstractControllerCRUD extends Controller
+abstract class AbstractAdminController extends Controller
 {
     /**
      * Renvoie la page d'accueil de la zone admin
