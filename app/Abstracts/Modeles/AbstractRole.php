@@ -5,7 +5,7 @@ namespace App\Abstracts\Modeles;
 
 use Illuminate\Database\Eloquent\Model;
 
-abstract class AbstractPrivilege extends Model
+abstract class AbstractRole extends Model
 {
     /**
      * Renvoie la liste des utilisateurs ayant ce role
