@@ -22,9 +22,16 @@ interface Utilisateur
     /**
      * Renvoie les privileges de l'utilisateur.
      * 
-     * @return array[App\Modeles\Privileges] Array de tous les privileges de l'utilisateur.
+     * @return array[App\Modeles\Privilege] Array de tous les privileges de l'utilisateur.
      */
     public function privileges();
+
+    /**
+     * Renvoie les roles de l'utilisateur. 
+     * 
+     * @return Collection[app\Modeles\Role]
+     */
+    public function roles();
 
     /**
      * Renvoie le modele associe au compte utilisateur.abnf
