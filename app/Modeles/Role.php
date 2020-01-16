@@ -13,10 +13,25 @@ use App\Modeles\Privilege;
 class Role extends AbstractRole
 {
 
+    /* ====================================================================
+     *                         VALEURS DISPONIBLES
+     * ====================================================================
+     */
+    const VAL_ADMIN     = 'admin';
+    const VAL_REFERENT  = 'enseignant';
+    const VAL_SCOLARITE = 'scolarite';
+
+    /* ====================================================================
+     *                   STRUCTURE DE LA TABLE DU MODELE
+     * ====================================================================
+     */
     /**
      * @var string Nom de la table associe au modele 'Role'
      */
     const NOM_TABLE = 'roles';
+
+    // Indiquer a Laravel d'utiliser le nom de la table definie 
+    protected $table = Role::NOM_TABLE;
 
     /*
      * Nom des colonnes de la tables 
@@ -50,10 +65,10 @@ class Role extends AbstractRole
         'id',
     ];
 
-    /*
-     * Indiquer a Laravel d'utiliser le nom de la table definie 
+    /* ====================================================================
+     *                          RELATIONS ELOQUENT
+     * ====================================================================
      */
-    protected $table = Role::NOM_TABLE;
 
     /**
      * Renvoie la liste des utilisateurs ayant ce role

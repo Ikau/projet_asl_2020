@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 use App\User;
 use App\Modeles\Privilege;
@@ -18,7 +19,7 @@ class CreerTablePrivilegeUser extends Migration
     public function up()
     {
         // Rappel : User::NOM_TABLE_PIVOT_PRIVILEGE_USER === Privilege::NOM_TABLE_PIVOT_PRIVILEGE_USER
-        Schema::create(User::NOM_TABLE_PIVOT_PRIVILEGE_USER, function(Blueprint $table) {
+        Schema::create(Privilege::NOM_TABLE_PIVOT_PRIVILEGE_USER, function(Blueprint $table) {
 
             // Clefs etrangeres
             $table->unsignedBigInteger(User::COL_PIVOT);
@@ -39,6 +40,6 @@ class CreerTablePrivilegeUser extends Migration
      */
     public function down()
     {
-        //
+        DB::dropIfExists(Privilege::NOM_TABLE_PIVOT_PRIVILEGE_USER);
     }
 }
