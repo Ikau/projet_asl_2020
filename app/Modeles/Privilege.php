@@ -19,6 +19,19 @@ class Privilege extends AbstractPrivilege
      */
     const VAL_REFERENT = 'referent';
 
+    /**
+     * Fonction auxiliaire permettant d'avoir une liste des intitules possibles
+     * 
+     * @return array(string)
+     */
+    public static function getIntitules()
+    {
+        return [
+            Privilege::VAL_REFERENT
+        ];
+    }
+
+
     /* ====================================================================
      *                   STRUCTURE DE LA TABLE DU MODELE
      * ====================================================================

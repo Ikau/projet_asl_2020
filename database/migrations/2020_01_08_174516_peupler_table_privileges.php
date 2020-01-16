@@ -16,15 +16,11 @@ class PeuplerTablePrivileges extends Migration
      */
     public function up()
     {
-        $privileges = [
-            Privilege::VAL_REFERENT,
-        ];
-
-        foreach($privileges as $privilege)
+        foreach(Privilege::getIntitules() as $intitule)
         {
-            $nouveauPrivilege = new Privilege;
-            $nouveauPrivilege[Privilege::COL_INTITULE] = $privilege;
-            $nouveauPrivilege->save();
+            $privilege = new Privilege;
+            $privilege[Privilege::COL_INTITULE] = $intitule;
+            $privilege->save();
         }
     }
 

@@ -21,6 +21,20 @@ class Role extends AbstractRole
     const VAL_REFERENT  = 'enseignant';
     const VAL_SCOLARITE = 'scolarite';
 
+    /**
+     * Fonction auxiliaire permettant d'avoir une liste des intitules possibles
+     * 
+     * @return array(string)
+     */
+    public static function getIntitules()
+    {
+        return [
+            Role::VAL_ADMIN,
+            Role::VAL_REFERENT,
+            Role::VAL_SCOLARITE
+        ];
+    }
+
     /* ====================================================================
      *                   STRUCTURE DE LA TABLE DU MODELE
      * ====================================================================

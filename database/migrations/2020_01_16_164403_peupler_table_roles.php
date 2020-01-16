@@ -17,17 +17,11 @@ class PeuplerTableRoles extends Migration
     public function up()
     {
         // Insertions de quelques roles standards
-        $roles = [
-            Role::VAL_ADMIN,
-            Role::VAL_REFERENT,
-            Role::VAL_SCOLARITE,
-        ];
-
-        foreach($roles as $role)
+        foreach(Role::getIntitules() as $intitules)
         {
-            $nouveauRole = new Role;
-            $nouveauRole[Role::COL_INTITULE] = $role;
-            $nouveauRole->save();
+            $role = new Role;
+            $role[Role::COL_INTITULE] = $intitules;
+            $role->save();
         }
     }
 
