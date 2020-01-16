@@ -53,7 +53,7 @@ class Role extends AbstractRole
     /*
      * Indiquer a Laravel d'utiliser le nom de la table definie 
      */
-    protected $table = Privilege::NOM_TABLE;
+    protected $table = Role::NOM_TABLE;
 
     /**
      * Renvoie la liste des utilisateurs ayant ce role
