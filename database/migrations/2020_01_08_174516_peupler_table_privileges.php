@@ -17,10 +17,7 @@ class PeuplerTablePrivileges extends Migration
     public function up()
     {
         $privileges = [
-            'Referent',
-            'Responsable_option',
-            'Scolarite',
-            'Admin',
+            Privilege::VAL_REFERENT,
         ];
 
         foreach($privileges as $privilege)

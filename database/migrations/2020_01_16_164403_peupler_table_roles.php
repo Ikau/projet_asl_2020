@@ -18,11 +18,9 @@ class PeuplerTableRoles extends Migration
     {
         // Insertions de quelques roles standards
         $roles = [
-            'admin',
-            'referent',
-            'scolarite',
-            'responsable_departement',
-            'responsable_option'
+            Role::VAL_ADMIN,
+            Role::VAL_REFERENT,
+            Role::VAL_SCOLARITE,
         ];
 
         foreach($roles as $role)
