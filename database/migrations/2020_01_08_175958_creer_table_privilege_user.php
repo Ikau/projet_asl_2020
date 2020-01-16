@@ -21,14 +21,14 @@ class CreerTablePrivilegeUser extends Migration
         Schema::create(User::NOM_TABLE_PIVOT_PRIVILEGE_USER, function(Blueprint $table) {
 
             // Clefs etrangeres
-            $table->unsignedBigInteger(User::COL_PIVOT_PRIVILEGE_USER);
-            $table->unsignedBigInteger(Privilege::COL_PIVOT_PRIVILEGE_USER);
+            $table->unsignedBigInteger(User::COL_PIVOT);
+            $table->unsignedBigInteger(Privilege::COL_PIVOT);
 
-            $table->foreign(User::COL_PIVOT_PRIVILEGE_USER)->references('id')->on(User::NOM_TABLE);
-            $table->foreign(Privilege::COL_PIVOT_PRIVILEGE_USER)->references('id')->on(Privilege::NOM_TABLE);
+            $table->foreign(User::COL_PIVOT)->references('id')->on(User::NOM_TABLE);
+            $table->foreign(Privilege::COL_PIVOT)->references('id')->on(Privilege::NOM_TABLE);
 
             // On indique que la combinaison est unique
-            $table->unique([User::COL_PIVOT_PRIVILEGE_USER, Privilege::COL_PIVOT_PRIVILEGE_USER]);
+            $table->unique([User::COL_PIVOT, Privilege::COL_PIVOT]);
         });
     }
 
