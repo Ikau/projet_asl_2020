@@ -18,7 +18,7 @@ class Role extends AbstractRole
      * ====================================================================
      */
     const VAL_ADMIN     = 'admin';
-    const VAL_REFERENT  = 'enseignant';
+    const VAL_ENSEIGNANT  = 'enseignant';
     const VAL_SCOLARITE = 'scolarite';
 
     /**
@@ -30,7 +30,7 @@ class Role extends AbstractRole
     {
         return [
             Role::VAL_ADMIN,
-            Role::VAL_REFERENT,
+            Role::VAL_ENSEIGNANT,
             Role::VAL_SCOLARITE
         ];
     }

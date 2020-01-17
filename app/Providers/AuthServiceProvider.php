@@ -6,8 +6,10 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Auth\Access\Response;
 
+use App\User;
 use App\Interfaces\Gates;
 use App\Modeles\Privilege;
+use App\Modeles\Role;
 use App\Http\Controllers\Enseignant\ReferentController;
 
 class AuthServiceProvider extends ServiceProvider implements Gates
@@ -42,12 +44,24 @@ class AuthServiceProvider extends ServiceProvider implements Gates
     public function enregistrerGatesReferent()
     {
         Gate::define(ReferentController::GATE_GET_ACCUEIL, function($user) {
-            // Recuperation privilege referent
-            $privilegeReferent = Privilege::where(Privilege::COL_INTITULE, '=', 'Referent')->first();
+            // Verification si enseignant
+            if(Enseignant::class !== $user[User::COL_POLY_MODELE_TYPE])
+            {
+                return Response::deny('Seuls les enseignants peuvent acceder a cette partie du site.');
+            }
 
-            return $user->privileges()->get()->contains($privilegeReferent)
-                ? Response::allow()
-                : Response::deny('Seuls les enseignants autorises peuvent acceder a cette partie du site.');
+            // Verification si role autorise
+            $roleReferent = Role::where(Role::COL_INTITULE, '=', Role::VAL_ENSEIGNANT)->first();
+            if($user->privileges()->contains($roleReferent))
+            {
+                return Response::allow();
+            }
+            else
+            {
+                return Response::deny('Votre compte enseignant n\'est pas autorise a cette partie du site.');
+            }
+
+            abort('404');
         });
     }
 }

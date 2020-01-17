@@ -17,7 +17,7 @@ class Privilege extends AbstractPrivilege
      *                         VALEURS DISPONIBLES
      * ====================================================================
      */
-    const VAL_REFERENT = 'referent';
+    const VAL_ENSEIGNANT = 'referent';
 
     /**
      * Fonction auxiliaire permettant d'avoir une liste des intitules possibles
@@ -27,7 +27,7 @@ class Privilege extends AbstractPrivilege
     public static function getIntitules()
     {
         return [
-            Privilege::VAL_REFERENT
+            Privilege::VAL_ENSEIGNANT
         ];
     }
 

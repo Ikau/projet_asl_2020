@@ -10,7 +10,7 @@ use Tests\TestCase;
 use App\User;
 use App\Modeles\Contact;
 use App\Modeles\Enseignant;
-use App\Modeles\Privilege;
+use App\Modeles\Role;
 use App\Http\Controllers\Enseignant\ReferentController;
 use App\Utils\Constantes;
 
@@ -33,14 +33,11 @@ class ReferentControllerTest extends TestCase
         $enseignant = factory(Enseignant::class)->create();
         
         // Creation de l'utilisteur associe
-        $user                  = factory(User::class)->make();
-        $user[User::COL_EMAIL] = $enseignant[Enseignant::COL_EMAIL];
-        $user->identite()->associate($enseignant);
-        $user->save();
+        $user = User::fromEnseignant($enseignant->id, 'azerty');
         
-        // Ajout des droits
-        $privilegeReferent = Privilege::where(Privilege::COL_INTITULE, '=', 'Referent')->first();
-        $user->privileges()->attach($privilegeReferent);
+        // Ajout du role 'referent'
+        $roleReferent = Role::where([Role::COL_INTITULE, '=', Role::VAL_ENSEIGNANT])->first();
+        $user->roles()->associate($roleReferent);
         $user->save();
         
         // Routage OK
@@ -90,7 +87,6 @@ class ReferentControllerTest extends TestCase
         $enseignant = factory(Enseignant::class)->create();
         $user       = factory(User::class)->make();
         $user->identite()->associate($enseignant);
-        $user->privileges()->detach();
         $user->save();
 
         // Route echec

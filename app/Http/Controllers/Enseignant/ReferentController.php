@@ -22,6 +22,7 @@ class ReferentController extends AbstractReferentController
 
     /**
      * Nom des differents gates pour le controller 'Referent'
+     * Pour rappel : les gates sont enregistres dans App\Provider\AuthServiceProvider
      */
     const GATE_GET_ACCUEIL = 'get-accueil-enseignant';
 
