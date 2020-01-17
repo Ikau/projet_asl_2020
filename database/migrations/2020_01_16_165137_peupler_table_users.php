@@ -85,13 +85,7 @@ class PeuplerTableUsers extends Migration
         $contactAdmin->save();
 
         // Creation d'un compte basique
-        $userAdmin = new User;
-        $userAdmin->fill([
-            User::COL_EMAIL         => $contactAdmin[Contact::COL_EMAIL],
-            User::COL_HASH_PASSWORD => Hash::make('azerty')
-        ]);
-        $userAdmin->identite()->associate($contactAdmin);
-        $userAdmin->save();
+        $userAdmin = User::fromContact($contactAdmin->id, 'azerty');
 
         // Ajout des roles et privileges le cas echeant
         $roleAdmin = Role::where(Role::COL_INTITULE, '=', Role::VAL_ADMIN)->first();
@@ -119,13 +113,7 @@ class PeuplerTableUsers extends Migration
         ])->save();
 
         // Creation du compte de Bob DUPONT
-        $userDupont = new User;
-        $userDupont->fill([
-            User::COL_EMAIL            => $bobDupont[Enseignant::COL_EMAIL],
-            User::COL_HASH_PASSWORD    => Hash::make('azerty'),
-        ]);
-        $userDupont->identite()->associate($bobDupont);
-        $userDupont->save();
+        $userDupont = User::fromEnseignant($bobDupont->id, 'azerty');
 
         // Ajout des roles et des privileges au compte
         $roleEnseignant = Role::where(Role::COL_INTITULE, '=', Role::VAL_ENSEIGNANT)->first();
@@ -158,13 +146,7 @@ class PeuplerTableUsers extends Migration
         ])->save();
 
         // Creation du compte d'Alice DUBOIS
-        $userToire = new User;
-        $userToire->fill([
-            User::COL_EMAIL         => $aliceToire[Contact::COL_EMAIL],
-            User::COL_HASH_PASSWORD => Hash::make('azerty'),
-        ]);
-        $userToire->identite()->associate($aliceToire);
-        $userToire->save();
+        $userToire = User::fromContact($aliceToire->id, 'azerty');
 
         // Ajout des roles et des privileges au compte
         $roleScolarite = Role::where(Role::COL_INTITULE, '=', Role::VAL_SCOLARITE)->first();

@@ -7,9 +7,13 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Auth\Access\Response;
 
 use App\User;
+
 use App\Interfaces\Gates;
+
+use App\Modeles\Enseignant;
 use App\Modeles\Privilege;
 use App\Modeles\Role;
+
 use App\Http\Controllers\Enseignant\ReferentController;
 
 class AuthServiceProvider extends ServiceProvider implements Gates
@@ -52,7 +56,7 @@ class AuthServiceProvider extends ServiceProvider implements Gates
 
             // Verification si role autorise
             $roleEnseignant = Role::where(Role::COL_INTITULE, '=', Role::VAL_ENSEIGNANT)->first();
-            if($user->privileges()->contains($roleEnseignant))
+            if($user->roles->contains($roleEnseignant))
             {
                 return Response::allow();
             }
