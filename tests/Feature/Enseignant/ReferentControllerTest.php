@@ -29,11 +29,6 @@ class ReferentControllerTest extends TestCase
       */
     public function testIndex()
     {
-        // Routages echecs
-        $this->indexNonAuth();
-        $this->indexNonEnseignant();
-        $this->indexEnseignantNonAutorise();
-
         // Creation d'un enseignant permis
         $enseignant = factory(Enseignant::class)->create();
         
@@ -57,7 +52,10 @@ class ReferentControllerTest extends TestCase
         ->assertSee(ReferentController::TITRE_INDEX);
     }
 
-    private function indexNonAuth()
+    /**
+     * Echec de l'index si non authentifie
+     */
+    public function testIndexNonAuth()
     {
         $this->assertGuest()
         ->from('/')
@@ -65,7 +63,10 @@ class ReferentControllerTest extends TestCase
         ->assertRedirect(route('login'));
     }
 
-    private function indexNonEnseignant()
+    /**
+     * Echec de l'index si non enseignant
+     */
+    public function testIndexNonEnseignant()
     {
         // Creation d'un utilisateur aleatoire
         $contact = factory(Contact::class)->create();
@@ -80,7 +81,10 @@ class ReferentControllerTest extends TestCase
         ->assertStatus(403);
     }
 
-    private function indexEnseignantNonAutorise()
+    /**
+     * Echec de l'index si enseignant non autorisé
+     */
+    public function testIndexEnseignantNonAutorise()
     {
         // Creation d'un enseignant aleatoire
         $enseignant = factory(Enseignant::class)->create();
