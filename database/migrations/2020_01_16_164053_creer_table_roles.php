@@ -3,11 +3,11 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
-use App\Modeles\Contact;
-use App\Utils\Constantes;
+use App\Modeles\Role;
 
-class PeuplerTableContacts extends Migration
+class CreerTableRoles extends Migration
 {
     /**
      * Run the migrations.
@@ -16,13 +16,11 @@ class PeuplerTableContacts extends Migration
      */
     public function up()
     {
-        // Ajout de contacts aleatoires
-        $nbContact = 20;
-        for($i=0; $i<$nbContact; $i++)
-        {
-            factory(Contact::class)->create();
-        }
+        Schema::create(Role::NOM_TABLE, function(Blueprint $table) {
+            $table->bigIncrements('id');
 
+            $table->string(Role::COL_INTITULE);
+        });
     }
 
     /**
@@ -32,6 +30,6 @@ class PeuplerTableContacts extends Migration
      */
     public function down()
     {
-        DB::table(Contact::NOM_TABLE)->delete();
+        DB::dropIfExists(Role::NOM_TABLE);
     }
 }

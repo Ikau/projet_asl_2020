@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-use App\Http\Controllers\Controller;
+use App\Abstracts\Controllers\AbstractAdminController;
 
-class AdminController extends Controller
+class AdminController extends AbstractAdminController
 {
     /**
      * Renvoie la page d'accueil de la zone administrateur.

@@ -13,8 +13,16 @@
                             {{ session('status') }}
                         </div>
                     @endif
+                </div>
 
-                    You are logged in!
+                </div>
+                    Bienvenue {{ $identite->prenom }} {{ $identite->nom }}
+                </div>
+                <div>
+                    Liens de test
+                    <div>
+                        <a href="{{ route('referents.index') }}">Espace enseignant</a>
+                    </div>
                 </div>
             </div>
         </div>

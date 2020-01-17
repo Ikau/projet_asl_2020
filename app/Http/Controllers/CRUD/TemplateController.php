@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Validation\Rule;
 
-use App\Abstracts\AbstractControllerCRUD;
+use App\Abstracts\Controllers\AbstractControllerCRUD;
 //use App\Modeles\Template;
 use App\Utils\Constantes;
 

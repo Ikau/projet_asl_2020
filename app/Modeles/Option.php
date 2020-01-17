@@ -4,7 +4,7 @@ namespace App\Modeles;
 
 use Illuminate\Database\Eloquent\Model;
 
-use App\Abstracts\AbstractOption;
+use App\Abstracts\Modeles\AbstractOption;
 use App\Utils\Constantes;
 use App\Modeles\Enseignant;
 use App\Modeles\Etudiant;

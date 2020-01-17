@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Validation\Rule;
 
 use App\User;
-use App\Abstracts\AbstractControllerCRUD;
+use App\Abstracts\Controllers\AbstractControllerCRUD;
 use App\Modeles\Privilege;
 use App\Utils\Constantes;
 

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Schema;
 
-use App\Abstracts\AbstractControllerCRUD;
+use App\Abstracts\Controllers\AbstractControllerCRUD;
 use App\Modeles\Enseignant;
 use App\Modeles\Departement;
 use App\Modeles\Option;
