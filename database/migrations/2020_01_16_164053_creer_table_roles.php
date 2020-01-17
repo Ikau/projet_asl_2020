@@ -5,9 +5,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
-use App\Modeles\Privilege;
+use App\Modeles\Role;
 
-class PeuplerTablePrivileges extends Migration
+class CreerTableRoles extends Migration
 {
     /**
      * Run the migrations.
@@ -16,12 +16,11 @@ class PeuplerTablePrivileges extends Migration
      */
     public function up()
     {
-        foreach(Privilege::getIntitules() as $intitule)
-        {
-            $privilege = new Privilege;
-            $privilege[Privilege::COL_INTITULE] = $intitule;
-            $privilege->save();
-        }
+        Schema::create(Role::NOM_TABLE, function(Blueprint $table) {
+            $table->bigIncrements('id');
+
+            $table->string(Role::COL_INTITULE);
+        });
     }
 
     /**
@@ -31,6 +30,6 @@ class PeuplerTablePrivileges extends Migration
      */
     public function down()
     {
-        DB::table(Privilege::NOM_TABLE)->delete();
+        DB::dropIfExists(Role::NOM_TABLE);
     }
 }

@@ -6,8 +6,9 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
 use App\Modeles\Privilege;
+use App\Modeles\Role;
 
-class PeuplerTablePrivileges extends Migration
+class PeuplerTablePrivilegeRole extends Migration
 {
     /**
      * Run the migrations.
@@ -16,12 +17,12 @@ class PeuplerTablePrivileges extends Migration
      */
     public function up()
     {
-        foreach(Privilege::getIntitules() as $intitule)
-        {
-            $privilege = new Privilege;
-            $privilege[Privilege::COL_INTITULE] = $intitule;
-            $privilege->save();
-        }
+        /*
+         * Pour l'instant, la liste des privileges et des roles n'est pas determinee
+         * 
+         * On ajoutera la creation et l'affinage des roles au fur et a mesure du developpement 
+         */
+        
     }
 
     /**
@@ -31,6 +32,6 @@ class PeuplerTablePrivileges extends Migration
      */
     public function down()
     {
-        DB::table(Privilege::NOM_TABLE)->delete();
+        DB::dropIfExists(Privilege::NOM_TABLE_PIVOT_PRIVILEGE_ROLE);
     }
 }

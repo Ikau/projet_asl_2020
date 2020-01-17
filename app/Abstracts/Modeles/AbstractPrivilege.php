@@ -7,6 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 abstract class AbstractPrivilege extends Model
 {
+
+    /**
+     * Fonction auxiliaire permettant d'avoir une liste des intitules possibles
+     * 
+     * @return array(string)
+     */
+    abstract public static function getIntitules();
+
     /**
      * Renvoie la liste des utilisateurs ayant le privilege associe
      *

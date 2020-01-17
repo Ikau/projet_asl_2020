@@ -5,9 +5,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
-use App\Modeles\Privilege;
+use App\Modeles\Role;
 
-class PeuplerTablePrivileges extends Migration
+class PeuplerTableRoles extends Migration
 {
     /**
      * Run the migrations.
@@ -16,11 +16,12 @@ class PeuplerTablePrivileges extends Migration
      */
     public function up()
     {
-        foreach(Privilege::getIntitules() as $intitule)
+        // Insertions de quelques roles standards
+        foreach(Role::getIntitules() as $intitules)
         {
-            $privilege = new Privilege;
-            $privilege[Privilege::COL_INTITULE] = $intitule;
-            $privilege->save();
+            $role = new Role;
+            $role[Role::COL_INTITULE] = $intitules;
+            $role->save();
         }
     }
 
@@ -31,6 +32,6 @@ class PeuplerTablePrivileges extends Migration
      */
     public function down()
     {
-        DB::table(Privilege::NOM_TABLE)->delete();
+        DB::table(Role::NOM_TABLE)->delete();
     }
 }

@@ -13,10 +13,37 @@ use App\Modeles\Role;
 class Privilege extends AbstractPrivilege
 {
 
+    /* ====================================================================
+     *                         VALEURS DISPONIBLES
+     * ====================================================================
+     */
+    const VAL_REFERENT = 'referent';
+
+    /**
+     * Fonction auxiliaire permettant d'avoir une liste des intitules possibles
+     * 
+     * @return array(string)
+     */
+    public static function getIntitules()
+    {
+        return [
+            Privilege::VAL_REFERENT
+        ];
+    }
+
+
+    /* ====================================================================
+     *                   STRUCTURE DE LA TABLE DU MODELE
+     * ====================================================================
+     */
+
     /**
      * @var string Nom de la table associe au modele 'Privilege'
      */
     const NOM_TABLE = 'privileges';
+
+    //Indiquer a Laravel d'utiliser le nom de la table definie 
+    protected $table = Privilege::NOM_TABLE;
 
     /*
      * Nom des colonnes de la tables 
@@ -50,10 +77,10 @@ class Privilege extends AbstractPrivilege
         'id',
     ];
 
-    /*
-     * Indiquer a Laravel d'utiliser le nom de la table definie 
+    /* ====================================================================
+     *                          RELATIONS ELOQUENT
+     * ====================================================================
      */
-    protected $table = Privilege::NOM_TABLE;
 
     /**
      * Renvoie la liste des utilisateurs ayant le privilege associe
