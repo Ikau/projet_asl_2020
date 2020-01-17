@@ -78,6 +78,13 @@ class Role extends AbstractRole
     protected $guarded = [
         'id',
     ];
+    
+    /**
+     * Valeurs par defaut pour un constructeur vide
+     */
+    protected $attributes = [
+        Role::COL_INTITULE => Constantes::STRING_VIDE
+    ];
 
     /* ====================================================================
      *                          RELATIONS ELOQUENT

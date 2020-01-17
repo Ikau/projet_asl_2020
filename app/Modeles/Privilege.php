@@ -77,6 +77,13 @@ class Privilege extends AbstractPrivilege
         'id',
     ];
 
+    /**
+     * Valeurs par defaut pour un constructeur vide
+     */
+    protected $attributes = [
+        Privilege::COL_INTITULE => Constantes::STRING_VIDE
+    ];
+
     /* ====================================================================
      *                          RELATIONS ELOQUENT
      * ====================================================================
