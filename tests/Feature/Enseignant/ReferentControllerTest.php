@@ -36,8 +36,9 @@ class ReferentControllerTest extends TestCase
         $user = User::fromEnseignant($enseignant->id, 'azerty');
         
         // Ajout du role 'referent'
-        $roleReferent = Role::where([Role::COL_INTITULE, '=', Role::VAL_ENSEIGNANT])->first();
-        $user->roles()->associate($roleReferent);
+        $roleEnseignant = Role::where([Role::COL_INTITULE, '=', Role::VAL_ENSEIGNANT])->first();
+        $user->save();
+        $user->roles()->associate($roleEnseignant);
         $user->save();
         
         // Routage OK

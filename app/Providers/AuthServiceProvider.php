@@ -51,8 +51,8 @@ class AuthServiceProvider extends ServiceProvider implements Gates
             }
 
             // Verification si role autorise
-            $roleReferent = Role::where(Role::COL_INTITULE, '=', Role::VAL_ENSEIGNANT)->first();
-            if($user->privileges()->contains($roleReferent))
+            $roleEnseignant = Role::where(Role::COL_INTITULE, '=', Role::VAL_ENSEIGNANT)->first();
+            if($user->privileges()->contains($roleEnseignant))
             {
                 return Response::allow();
             }

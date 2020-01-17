@@ -128,8 +128,8 @@ class PeuplerTableUsers extends Migration
         $userDupont->save();
 
         // Ajout des roles et des privileges au compte
-        $roleReferent = Role::where(Role::COL_INTITULE, '=', Role::VAL_ENSEIGNANT)->first();
-        $userDupont->roles()->attach($roleReferent);
+        $roleEnseignant = Role::where(Role::COL_INTITULE, '=', Role::VAL_ENSEIGNANT)->first();
+        $userDupont->roles()->attach($roleEnseignant);
         $userDupont->save();
     }
 
