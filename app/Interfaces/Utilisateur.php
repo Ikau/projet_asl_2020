@@ -44,5 +44,5 @@ interface Utilisateur
      *
      * @return App\Modeles\Contact|App\Modeles\Enseignant
      */
-    public function userable();
+    public function identite();
 }

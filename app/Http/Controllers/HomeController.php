@@ -35,7 +35,7 @@ class HomeController extends Controller
         }
         else // Authentifie
         {
-            $identite = $user->userable;
+            $identite = $user->identite;
 
             return view('home', [
                 'identite' => $identite,

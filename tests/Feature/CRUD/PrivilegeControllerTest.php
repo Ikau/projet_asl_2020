@@ -323,7 +323,7 @@ class PrivilegeControllerTest extends TestCase
 
             // Creation de l'utilisateur associe
             $user = factory(User::class)->make();
-            $user->userable()->associate($contact);
+            $user->identite()->associate($contact);
             $user->save();
             $user->privileges()->attach($privilege->id);
         }

@@ -35,7 +35,7 @@ class ReferentControllerTest extends TestCase
         // Creation de l'utilisteur associe
         $user                  = factory(User::class)->make();
         $user[User::COL_EMAIL] = $enseignant[Enseignant::COL_EMAIL];
-        $user->userable()->associate($enseignant);
+        $user->identite()->associate($enseignant);
         $user->save();
         
         // Ajout des droits
@@ -71,7 +71,7 @@ class ReferentControllerTest extends TestCase
         // Creation d'un utilisateur aleatoire
         $contact = factory(Contact::class)->create();
         $user    = factory(User::class)->make();
-        $user->userable()->associate($contact);
+        $user->identite()->associate($contact);
         $user->save();
 
         // Routage echec
@@ -89,7 +89,7 @@ class ReferentControllerTest extends TestCase
         // Creation d'un enseignant aleatoire
         $enseignant = factory(Enseignant::class)->create();
         $user       = factory(User::class)->make();
-        $user->userable()->associate($enseignant);
+        $user->identite()->associate($enseignant);
         $user->privileges()->detach();
         $user->save();
 

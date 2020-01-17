@@ -123,7 +123,7 @@ class UserController extends AbstractControllerCRUD
         $email    = $request->input(User::COL_EMAIL);
         $identite = $this->getIdentite($email);
 
-        $user->userable()->associate($identite);
+        $user->identite()->associate($identite);
         $user[User::COL_EMAIL] = $email;
 
         /*
@@ -211,8 +211,8 @@ class UserController extends AbstractControllerCRUD
         $identite = $this->getIdentite($email);
         
         // MaJ de la liaison
-        $user->userable()->dissociate();
-        $user->userable()->associate($identite);
+        $user->identite()->dissociate();
+        $user->identite()->associate($identite);
 
         // MaJ de l'email + confirmation nouvel email
         $user[User::COL_EMAIL] = $identite->email;

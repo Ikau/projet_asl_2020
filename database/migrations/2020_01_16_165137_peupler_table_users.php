@@ -38,7 +38,7 @@ class PeuplerTableUsers extends Migration
             // Creation du compte user associe
             $user = factory(User::class)->make();
             $user[User::COL_EMAIL] = $enseignant[Enseignant::COL_EMAIL];
-            $user->userable()->associate($enseignant);
+            $user->identite()->associate($enseignant);
             $user->save();
         }
         
@@ -90,7 +90,7 @@ class PeuplerTableUsers extends Migration
             User::COL_EMAIL         => $contactAdmin[Contact::COL_EMAIL],
             User::COL_HASH_PASSWORD => Hash::make('azerty')
         ]);
-        $userAdmin->userable()->associate($contactAdmin);
+        $userAdmin->identite()->associate($contactAdmin);
         $userAdmin->save();
 
         // Ajout des roles et privileges le cas echeant
@@ -124,7 +124,7 @@ class PeuplerTableUsers extends Migration
             User::COL_EMAIL            => $bobDupont[Enseignant::COL_EMAIL],
             User::COL_HASH_PASSWORD    => Hash::make('azerty'),
         ]);
-        $userDupont->userable()->associate($bobDupont);
+        $userDupont->identite()->associate($bobDupont);
         $userDupont->save();
 
         // Ajout des roles et des privileges au compte
@@ -163,7 +163,7 @@ class PeuplerTableUsers extends Migration
             User::COL_EMAIL         => $aliceToire[Contact::COL_EMAIL],
             User::COL_HASH_PASSWORD => Hash::make('azerty'),
         ]);
-        $userToire->userable()->associate($aliceToire);
+        $userToire->identite()->associate($aliceToire);
         $userToire->save();
 
         // Ajout des roles et des privileges au compte

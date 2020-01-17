@@ -15,10 +15,18 @@ class User extends Authenticatable implements Utilisateur, MustVerifyEmail
 {
     use Notifiable;
 
+    /* ====================================================================
+     *                   STRUCTURE DE LA TABLE DU MODELE
+     * ====================================================================
+     */
+
     /**
      * @var string Nom de la table associee au model 'User'.
      */
     const NOM_TABLE = 'users';
+
+    //On indique a Laravel le nom de la table dans la BDD
+    protected $table = User::NOM_TABLE;
 
     /*
      * Nom des colonnes dans la base de donnees
@@ -31,9 +39,9 @@ class User extends Authenticatable implements Utilisateur, MustVerifyEmail
     /*
      * Nom des colonnes polymorphique 
      */
-    const COL_POLY_MODELE      = 'userable';      // Nommage Laravel
-    const COL_POLY_MODELE_ID   = 'userable_id';   // Nommage Laravel
-    const COL_POLY_MODELE_TYPE = 'userable_type'; // Nommage Laravel
+    const COL_POLY_MODELE      = 'identite';      // Nommage Laravel
+    const COL_POLY_MODELE_ID   = 'identite_id';   // Nommage Laravel
+    const COL_POLY_MODELE_TYPE = 'identite_type'; // Nommage Laravel
 
     /*
      * Nom de la table de jointure pour une relation Mane-to-Many 
@@ -54,11 +62,6 @@ class User extends Authenticatable implements Utilisateur, MustVerifyEmail
      * @var bool Gestion des timestamps
      */
     public $timestamps = false;
-
-    /**
-     * On indique a Laravel le nom de la table dans la BDD
-     */
-    protected $table = User::NOM_TABLE;
 
     /**
      * The attributes that are mass assignable.
@@ -146,7 +149,7 @@ class User extends Authenticatable implements Utilisateur, MustVerifyEmail
      *
      * @return App\Modeles\Contact|App\Modeles\Enseignant
      */
-    public function userable()
+    public function identite()
     {
         return $this->morphTo();
     }
