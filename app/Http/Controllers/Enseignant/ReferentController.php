@@ -24,7 +24,7 @@ class ReferentController extends AbstractReferentController
      * Nom des differents gates pour le controller 'Referent'
      * Pour rappel : les gates sont enregistres dans App\Provider\AuthServiceProvider
      */
-    const GATE_GET_ACCUEIL = 'get-accueil-enseignant';
+    const GATE_ROLE_ENSEIGNANT = 'role-enseignant';
 
     /**
      * Indique a Lavel que toutes les fonctions de callback demandent un utilisateur
@@ -45,7 +45,7 @@ class ReferentController extends AbstractReferentController
      */
     public function index() 
     {
-        Gate::authorize(ReferentController::GATE_GET_ACCUEIL);
+        Gate::authorize(ReferentController::GATE_ROLE_ENSEIGNANT);
 
         return view('enseignant.commun.index', [
             'titre' => ReferentController::TITRE_INDEX,

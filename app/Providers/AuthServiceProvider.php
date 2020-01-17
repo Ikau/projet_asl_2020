@@ -47,7 +47,7 @@ class AuthServiceProvider extends ServiceProvider implements Gates
      */
     public function enregistrerGatesReferent()
     {
-        Gate::define(ReferentController::GATE_GET_ACCUEIL, function($user) {
+        Gate::define(ReferentController::GATE_ROLE_ENSEIGNANT, function($user) {
             // Verification si enseignant
             if(Enseignant::class !== $user[User::COL_POLY_MODELE_TYPE])
             {
