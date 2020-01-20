@@ -87,4 +87,5 @@ Route::prefix('tests')->group(function() {
  */
 Route::prefix('enseignant')->group(function() {
     Route::get('accueil/', 'Enseignant\ReferentController@index')->name('referents.index');
+    Route::get('affectations/', 'Enseignant\ReferentController@affectations')->name('referents.affectations');
 });

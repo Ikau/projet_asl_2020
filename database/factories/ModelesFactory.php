@@ -57,7 +57,8 @@ $factory->define(Etudiant::class, function (Faker $faker)
         Etudiant::COL_ANNEE          => $faker->randomElement([4,5]),
         Etudiant::COL_MOBILITE       => $faker->boolean(50),
         Etudiant::COL_DEPARTEMENT_ID => $faker->randomElement($idsDepartement),
-        Etudiant::COL_OPTION_ID      => $faker->randomElement($idsOption)
+        Etudiant::COL_OPTION_ID      => $faker->randomElement($idsOption),
+        Etudiant::COL_PROMOTION      => $faker->randomElement(['2020', '2021'])
     ];
 });
 

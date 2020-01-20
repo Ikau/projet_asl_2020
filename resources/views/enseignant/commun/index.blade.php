@@ -17,4 +17,7 @@
     <div>
         Bienvenue {{$user->prenom}} {{$user->nom}}
     </div>
+    <div>
+        <a href="{{ route('referents.affectations') }}">Mes affectations</a>
+    </div>
 @endsection
