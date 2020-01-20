@@ -47,6 +47,13 @@
     ])
     <br/>
 
+    @include('includes.form.input.text', [
+        'attribut' => 'promotion',
+        'intitule' => 'Promotion (*)',
+        'valeur'   => $etudiant->email ?? old('promotion')
+    ])
+    <br/>
+
     @include('includes.form.input.select.annee', [
         'attribut' => 'annee',
         'intitule' => 'Année suivie (*)',

@@ -73,6 +73,7 @@ class Etudiant extends AbstractEtudiant
         //Etudiant::COL_DIPLOME       => Constantes::DIPLOME['vide'],
         Etudiant::COL_ANNEE         => Constantes::INT_VIDE,
         Etudiant::COL_MOBILITE      => FALSE,
+        Etudiant::COL_PROMOTION     => Constantes::STRING_VIDE,
         
         Etudiant::COL_DEPARTEMENT_ID => Constantes::ID_VIDE,
         Etudiant::COL_OPTION_ID      => Constantes::ID_VIDE
