@@ -83,6 +83,7 @@ class EtudiantControllerTest extends TestCase
             'Annee valide'       => [FALSE, Etudiant::COL_ANNEE, 4],
             'Departement valide' => [FALSE, Etudiant::COL_DEPARTEMENT_ID, 1],
             'Option valide'      => [FALSE, Etudiant::COL_OPTION_ID, 1],
+            'Promotion valide'   => [FALSE, Etudiant::COL_PROMOTION, '2020'],
 
             'Mobilite on'        => [FALSE, Etudiant::COL_MOBILITE, 'on'],
             'Mobilite null'      => [FALSE, Etudiant::COL_MOBILITE, null],
@@ -98,6 +99,7 @@ class EtudiantControllerTest extends TestCase
             'Annee null'           => [TRUE, Etudiant::COL_ANNEE, null],
             'Departement null'     => [TRUE, Etudiant::COL_DEPARTEMENT_ID, null],
             'Option null'          => [TRUE, Etudiant::COL_OPTION_ID, null],
+            'Promotion null'       => [TRUE, Etudiant::COL_PROMOTION, null],
 
             'Nom invalide'         => [TRUE, Etudiant::COL_NOM, 42],
             'Prenom invalide'      => [TRUE, Etudiant::COL_PRENOM, 42],
@@ -106,6 +108,7 @@ class EtudiantControllerTest extends TestCase
             'Mobilite invalide'    => [TRUE, Etudiant::COL_MOBILITE, -1],
             'Departement invalide' => [TRUE, Etudiant::COL_DEPARTEMENT_ID, -1],
             'Option invalide'      => [TRUE, Etudiant::COL_OPTION_ID, -1],
+            'Promotion invalide'   => [TRUE, Etudiant::COL_PROMOTION, -1]
         ];
     }
 
@@ -304,6 +307,7 @@ class EtudiantControllerTest extends TestCase
             'Annee valide'       => [Etudiant::COL_ANNEE, 4, null],
             'Departement valide' => [Etudiant::COL_DEPARTEMENT_ID, 1, null],
             'Option valide'      => [Etudiant::COL_OPTION_ID, 1, null],
+            'Promotion valide'   => [Etudiant::COL_PROMOTION, '2030', null],
 
             'Mobilite on'        => [Etudiant::COL_MOBILITE, 'on', TRUE],
             'Mobilite null'      => [Etudiant::COL_MOBILITE, null, FALSE],

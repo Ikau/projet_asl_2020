@@ -3,7 +3,6 @@
 
     Variables a definir depuis la vue appelante :
         'titre'   : string                        Le titre de l'onglet
-        'classe'  : App\Modeles\Stage             La classe 'Stage'
         'user'    : App\User                      Le compte de l'enseignant authentifie
         'entetes' : array(String)                 Array des entetes du tableau
         'stages   : Collection(App\Modeles\Stage) Collection des stages affectes a l'enseignant
@@ -41,9 +40,9 @@
             <tr>
                 <td>{{ $stage->etudiant->nom }}</td>
                 <td>{{ $stage->etudiant->prenom }}</td>
-                <td>{{ $stage[$classe::COL_ANNEE] }}</td>
-                <td> {{ $stage->etudiant->departement->intitule }} {{ $stage->etudiant->annee }}</td>
-                <td>{{ $stage[$classe::COL_INTITULE] }}</td>
+                <td>{{ $stage->annee_etudiant }}A</td>
+                <td>{{ $stage->etudiant->departement->intitule }} {{ $stage->etudiant->promotion }}</td>
+                <td>{{ $stage->intitule }}</td>
                 <td> Entreprise </td>
                 <td> Rapport </td>
                 <td> Soutenance </td>

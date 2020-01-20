@@ -32,6 +32,7 @@ class CreerTableEtudiants extends Migration
             //$table->string(Etudiant::COL_DIPLOME);
             $table->unsignedSmallInteger(Etudiant::COL_ANNEE);
             $table->boolean(Etudiant::COL_MOBILITE);
+            $table->string(Etudiant::COL_PROMOTION);
 
             $table->unsignedBigInteger(Etudiant::COL_DEPARTEMENT_ID);
             $table->unsignedBigInteger(Etudiant::COL_OPTION_ID);
