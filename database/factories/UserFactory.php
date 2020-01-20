@@ -23,7 +23,7 @@ $factory->define(User::class, function (Faker $faker) {
     return [
         User::COL_EMAIL            => $faker->unique()->safeEmail,
         User::COL_EMAIL_VERIFIE_LE => now(),
-        User::COL_HASH_PASSWORD    => Hash::make('azerty'), // password
+        User::COL_HASH_PASSWORD    => Hash::make($faker->word), // password
         User::COL_REMEMBER_TOKEN   => Str::random(10),
     ];
 });
