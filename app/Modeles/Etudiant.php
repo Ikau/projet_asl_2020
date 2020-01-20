@@ -24,6 +24,7 @@ class Etudiant extends AbstractEtudiant
     //const COL_DIPLOME  = 'diplome';
     const COL_ANNEE    = 'annee';
     const COL_MOBILITE = 'mobilite';
+    const COL_PROMOTION = 'promotion';
 
     /*
      * Nom des colonnes des clefs etrangeres
