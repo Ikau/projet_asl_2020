@@ -40,10 +40,17 @@ class Stage extends AbstractStage
     //const COL_ENTREPRISE_ID = 'entreprise_id';
     //const COL_MDS_ID        = 'maitre_de_stage_id';
 
+    /* ====================================================================
+     *                   STRUCTURE DE LA TABLE DU MODELE
+     * ====================================================================
+     */
     /**
      * @var string Nom de la table associe au modele 'Stage'
      */
     const NOM_TABLE = 'stages';
+
+    // On indique a Laravel d'utiliser le nom que l'on a defini
+    protected $table = Stage::NOM_TABLE;
 
     /**
      * Indique a Laravel de ne pas creer ni de gerer les tables 'created_at' et 'updated_at'.
@@ -51,11 +58,6 @@ class Stage extends AbstractStage
      * @var bool Gestion des timestamps
      */
     public $timestamps = false;
-
-    /**
-     * @var string Nom de la table associee au model 'Stage'.
-     */
-    protected $table = Stage::NOM_TABLE;
 
     /**
      * @var array[string] Liste des attributs a assigner manuellement.
@@ -85,6 +87,11 @@ class Stage extends AbstractStage
         //Stage::COL_ENTREPRISE_ID => Constantes::ID_VIDE,
         //Stage::COL_MDS_ID        => Constantes::ID_VIDE,
     ];
+
+    /* ====================================================================
+     *                          RELATIONS ELOQUENT
+     * ====================================================================
+     */
 
     /**
      * Renvoie l'entreprise associee au stage
