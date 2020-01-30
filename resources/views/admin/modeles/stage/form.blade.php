@@ -1,3 +1,15 @@
+{{-- 
+    Formulaire de creation d'un stage / d'une affectation de stage
+
+    Variables a definir depuis la vue appelante :
+        'titre'       => string Le titre de l'onglet
+        'enseignant'  => En cas d'edit : l'enseignant concerne
+        'enseignants' => Collection de App\Modeles\Enseignant
+        'etudiant'    => En cas d'edit : l'etudiant concerne
+        'etudiants'   => Collection de App\Modeles\Etudiant
+        'classeStage' => Stage  Stage::class
+--}}
+
 @extends('layouts.app')
 
 @section('titre', $titre)
@@ -6,9 +18,9 @@
 @section('contenu')
 <div>
     @if ( isset($stage) )
-    Formulaire d'édition d'un stage
+    Formulaire d'édition d'une affectation de stage
     @else
-    Formulaire de creation d'un stage
+    Formulaire de creation d'une affectation de stage
     @endif
 </div>
 <div>
