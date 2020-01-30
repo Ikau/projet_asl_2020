@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 
+use App\Interfaces\Authentification;
 use App\Interfaces\Utilisateur;
 
 use App\Modeles\Contact;
@@ -23,7 +24,7 @@ use App\Modeles\Role;
  * Bien sur, le fait d'utiliser cette classe risque de faire apparaitre des problemes en cas de mise a niveau de Laravel
  * C'est pour cette raison que l'on utilisera beaucoup d'interfaces pour lister les fonctions personnalisees a implementer
  */
-class User extends Authenticatable implements Utilisateur, MustVerifyEmail
+class User extends Authenticatable implements Utilisateur, Authentification,  MustVerifyEmail
 {
     use Notifiable;
 
@@ -245,5 +246,36 @@ class User extends Authenticatable implements Utilisateur, MustVerifyEmail
     public function identite()
     {
         return $this->morphTo();
+    }
+
+    /* ====================================================================
+     *                     INTERFACE 'AUTHENTIFICATION'
+     * ====================================================================
+     */
+    /**
+     * @return bool Renvoie TRUE si l'utilisateur est un enseignant, FALSE sinon.
+     */
+    public function estEnseignant() : bool
+    {
+        $roleEnseignant = Role::where(Role::COL_INTITULE, '=', Role::VAL_ENSEIGNANT)->first();
+        return $this->roles->contains($roleEnseignant);
+    }
+
+    /**
+     * @return bool Renvoie TRUE si l'utilisateur possede le role 'responsable_option', FALSE sinon.
+     */
+    public function estResponsableOption() : bool
+    {
+        $roleResponsableOption = Role::where(Role::COL_INTITULE, '=', Role::VAL_RESP_OPTION)->first();
+        return $this->roles->contains($roleResponsableOption);
+    }
+
+    /**
+     * @return bool Renvoie TRUE si l'utilisateur possede le role 'responsable_departement', FALSE sinon.
+     */
+    public function estResponsableDepartement() : bool
+    {
+        $roleResponsableDepartement = Role::where(Role::COL_INTITULE, '=', Role::VAL_RESP_DEPARTEMENT)->first();
+        return $this->roles->contains($roleResponsableDepartement);
     }
 }
