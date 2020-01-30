@@ -5,6 +5,7 @@ namespace App\Http\Controllers\CRUD;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 use App\Abstracts\Controllers\AbstractControllerCRUD;
@@ -131,6 +132,12 @@ class StageController extends AbstractControllerCRUD
         $stage->fill($request->all());
         $stage->save();
 
+        // Redirection selon l'utilisateur
+        $user = Auth::user();
+        if(null !== $user && ($user->estResponsableOption() || $user->estResponsableDepartement()))
+        {
+            return redirect()->route('referents.index');
+        }
         return redirect()->route('stages.index');
     }
 

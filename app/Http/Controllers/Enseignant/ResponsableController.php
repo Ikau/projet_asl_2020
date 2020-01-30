@@ -1,7 +1,6 @@
 <?php 
 
 namespace App\Http\Controllers\Enseignant;
-
 use Illuminate\Support\Facades\Gate;
 
 use App\Modeles\Etudiant;
