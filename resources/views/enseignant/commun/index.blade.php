@@ -20,7 +20,7 @@
     <div>
         <a href="{{ route('referents.affectations') }}">Mes affectations</a>
 
-        @if( Auth::user()->estResponsableOption() || Auth::user()->estResponsableDepartement())
+        @if( Auth::user()->estResponsableOption() || Auth::user()->estResponsableDepartement() )
         <a href="{{ route('responsables.affectations.get') }}">Proposer une affectation</a>
         @endif
     </div>
