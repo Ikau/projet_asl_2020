@@ -88,6 +88,11 @@ class ReferentControllerTest extends TestCase
         ];
     }
 
+    /* ------------------------------------------------------------------
+     *                        Tests des routes
+     * ------------------------------------------------------------------
+     */
+
     /**
      * Test de feature pour acceder a l'accueil de l'espace 'enseignant'
      */
@@ -102,7 +107,11 @@ class ReferentControllerTest extends TestCase
         ->get(route('referents.index'))
         ->assertOk()
         ->assertViewIs('enseignant.commun.index')
-        ->assertSee(ReferentController::TITRE_INDEX);
+        ->assertSee(ReferentController::TITRE_INDEX)
+
+        // Controle d'acces des actions
+        ->assertSee(route('referents.affectations'))
+        ->assertDontSee(route('responsables.affectations.get'));
     }
 
     /**
@@ -142,33 +151,5 @@ class ReferentControllerTest extends TestCase
 
         // Integrite des donnees
 
-    }
-
-
-    /* ====================================================================
-     *                          FONCTIONS PRIVEES
-     * ====================================================================
-     */
-
-    /**
-     * Fonction auxiliaire permettant de creer un compte user avec le role 'enseignant'
-     * Le compte user est lie a un compte enseignant valide
-     * 
-     * @return App\User
-     */
-    private function creerUserRoleEnseignant()
-    {
-        // Creation d'un enseignant permis
-        $enseignant = factory(Enseignant::class)->create();
-        
-        // Creation de l'utilisteur associe
-        $user = User::fromEnseignant($enseignant->id, 'azerty');
-        
-        // Ajout du role 'referent'
-        $roleEnseignant = Role::where(Role::COL_INTITULE, '=', Role::VAL_ENSEIGNANT)->first();
-        $user->roles()->attach($roleEnseignant);
-        $user->save();
-
-        return $user;
     }
 }
