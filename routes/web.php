@@ -89,3 +89,14 @@ Route::prefix('enseignant')->group(function() {
     Route::get('accueil/', 'Enseignant\ReferentController@index')->name('referents.index');
     Route::get('affectations/', 'Enseignant\ReferentController@affectations')->name('referents.affectations');
 });
+
+
+/*
+ |--------------------------------------------------------------------------
+ |                        Routes partie 'Responsable'
+ |--------------------------------------------------------------------------
+ */
+Route::prefix('responsable')->group(function() {
+    Route::get('affectations/', 'Enseignent\ResponsableController@getFormAffectation')->name('responsables.affectations.get');
+    Route::post('affectations/', 'Enseignent\ResponsableController@postFormAffectation')->name('responsable.affectations.store');
+});
