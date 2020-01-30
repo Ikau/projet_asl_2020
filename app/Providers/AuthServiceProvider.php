@@ -15,6 +15,7 @@ use App\Modeles\Privilege;
 use App\Modeles\Role;
 
 use App\Http\Controllers\Enseignant\ReferentController;
+use App\Http\Controllers\Enseignant\ResponsableController;
 
 class AuthServiceProvider extends ServiceProvider implements Gates
 {
@@ -38,6 +39,7 @@ class AuthServiceProvider extends ServiceProvider implements Gates
 
         // Gates personnalises
         $this->enregistrerGatesReferent();
+        $this->enregistrerGatesResponsable();
     }
 
     /**
@@ -48,19 +50,15 @@ class AuthServiceProvider extends ServiceProvider implements Gates
     public function enregistrerGatesReferent()
     {
         Gate::define(ReferentController::GATE_ROLE_ENSEIGNANT, function($user) {
-            // Verification si enseignant
-            if(Enseignant::class !== $user[User::COL_POLY_MODELE_TYPE])
+            if( ! $user->estEnseignant() )
             {
                 return Response::deny('Seuls les enseignants peuvent acceder a cette partie du site.');
             }
 
-            // Verification si role autorise
-            $roleEnseignant             = Role::where(Role::COL_INTITULE, '=', Role::VAL_ENSEIGNANT)->first();
-            $roleResponsableDepartement = Role::where(Role::COL_INTITULE, '=', Role::VAL_RESP_DEPARTEMENT)->first();
-            $roleResponsableOption      = Role::where(Role::COL_INTITULE, '=', Role::VAL_RESP_OPTION)->first();
-            if($user->roles->contains($roleEnseignant)
-            || $user->roles->contains($roleResponsableDepartement)
-            || $user->roles->contains($roleResponsableOption))
+            // Verification si role enseignant+ autorise
+            if($user->estEnseignant()
+            || $user->estResponsableOption()
+            || $user->estResponsableDepartement())
             {
                 return Response::allow();
             }
@@ -68,8 +66,27 @@ class AuthServiceProvider extends ServiceProvider implements Gates
             {
                 return Response::deny('Votre compte enseignant n\'est pas autorise a cette partie du site.');
             }
+        });
+    }
 
-            abort('404');
+    public function enregistrerGatesResponsable()
+    {
+        Gate::define(ResponsableController::GATE_ROLE_RESPONSABLE, function($user) {
+            if( ! $user->estEnseignant() )
+            {
+                return Response::deny('Seuls les enseignants peuvent acceder a cette partie du site.');
+            }
+
+            // Verification si role responsable+ autorise
+            if($user->estResponsableOption()
+            || $user->estResponsableDepartement())
+            {
+                return Response::allow();
+            }
+            else 
+            {
+                return Response::deny('Votre compte enseignant n\'est pas autorise a cette partie du site.');
+            }
         });
     }
 }
