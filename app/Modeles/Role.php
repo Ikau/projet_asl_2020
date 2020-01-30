@@ -17,9 +17,11 @@ class Role extends AbstractRole
      *                         VALEURS DISPONIBLES
      * ====================================================================
      */
-    const VAL_ADMIN     = 'admin';
-    const VAL_ENSEIGNANT  = 'enseignant';
-    const VAL_SCOLARITE = 'scolarite';
+    const VAL_ADMIN            = 'admin';
+    const VAL_ENSEIGNANT       = 'enseignant';
+    const VAL_RESP_OPTION      = 'responsable_option';
+    const VAL_RESP_DEPARTEMENT = 'responsable_departement';
+    const VAL_SCOLARITE        = 'scolarite';
 
     /**
      * Fonction auxiliaire permettant d'avoir une liste des intitules possibles
@@ -31,6 +33,8 @@ class Role extends AbstractRole
         return [
             Role::VAL_ADMIN,
             Role::VAL_ENSEIGNANT,
+            Role::VAL_RESP_DEPARTEMENT,
+            Role::VAL_RESP_OPTION,
             Role::VAL_SCOLARITE
         ];
     }
