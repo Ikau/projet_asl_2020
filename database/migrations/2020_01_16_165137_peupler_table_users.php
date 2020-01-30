@@ -138,7 +138,9 @@ class PeuplerTableUsers extends Migration
         $userAtan = User::fromEnseignant($charlesAtan->id, 'azerty');
 
         // Ajout des roles et des privileges au compte
+        $roleEnseignant             = Role::where(Role::COL_INTITULE, '=', Role::VAL_ENSEIGNANT)->first();
         $roleResponsableDepartement = Role::where(Role::COL_INTITULE, '=', Role::VAL_RESP_DEPARTEMENT)->first();
+        $userAtan->roles()->attach($roleEnseignant);
         $userAtan->roles()->attach($roleResponsableDepartement);
         $userAtan->save();
     }
