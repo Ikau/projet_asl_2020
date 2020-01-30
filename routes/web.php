@@ -97,6 +97,6 @@ Route::prefix('enseignant')->group(function() {
  |--------------------------------------------------------------------------
  */
 Route::prefix('responsable')->group(function() {
-    Route::get('affectations/', 'Enseignent\ResponsableController@getFormAffectation')->name('responsables.affectations.get');
-    Route::post('affectations/', 'Enseignent\ResponsableController@postFormAffectation')->name('responsable.affectations.store');
+    Route::get('affectations/', 'Enseignant\ResponsableController@getFormAffectation')->name('responsables.affectations.get');
+    Route::post('affectations/', 'Enseignant\ResponsableController@postFormAffectation')->name('responsable.affectations.store');
 });
