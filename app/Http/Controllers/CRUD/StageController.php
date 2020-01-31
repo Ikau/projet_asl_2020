@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 use App\Abstracts\Controllers\AbstractControllerCRUD;
+
+use App\Http\Controllers\Enseignant\ResponsableController;
+
 use App\Modeles\Stage;
 use App\Modeles\Enseignant;
 use App\Modeles\Etudiant;
@@ -109,8 +112,16 @@ class StageController extends AbstractControllerCRUD
         // WIP : pour avoir des dates correctes pour tester le form
         $stageTemp = factory(Stage::class)->make();
 
+        // Si redirection depuis une zone de responsable
+        $titre = StageController::TITRE_CREATE;
+        if(null !== Auth::user() 
+        && (Auth::user()->estResponsableOption() || Auth::user()->estResponsableDepartement()))
+        {
+            $titre = ResponsableController::TITRE_GET_FORM_AFFECTATION;
+        }
+
         return view('admin.modeles.stage.form', [
-            'titre'       => StageController::TITRE_CREATE,
+            'titre'       => $titre,
             'etudiants'   => $etudiants,
             'enseignants' => $enseignants,
             'wip_debut'   => $stageTemp->date_debut,

@@ -97,20 +97,21 @@ class ResponsableControllerTest extends TestCase
      */
     public function testGetFormAffectation()
     {
-        // Creation d'un enseignant valide
+        // Creation d'un enseignant responsable d'option
         $user = $this->creerUserRoleEnseignant();
+        $this->ajouteRoleResponsableDepartement($user);
 
         // Routage OK
         $response = $this->actingAs($user)
+        ->followingRedirects()
         ->from('/')
         ->get(route('responsables.affectations.get'))
         ->assertOk()
-        ->assertViewIs('enseignant.responsable.forms.affectation')
+        ->assertViewIs('admin.modeles.stage.form')
         ->assertSee(ResponsableController::TITRE_GET_FORM_AFFECTATION);
 
         // Integrite du form
-        
-
+        // Redondate car deja verifiee dans StageControllerTest
     }
 
 
