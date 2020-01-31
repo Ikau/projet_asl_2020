@@ -3,7 +3,7 @@
 
     Variables a definir depuis la vue appelante :
         'titre'  : string   Le titre de l'onglet
-        'user'   : App\User Le compte de l'enseignant authentifie
+
 --}}
 @extends('layouts.app')
 
@@ -15,9 +15,13 @@
     </div>
 
     <div>
-        Bienvenue {{$user->prenom}} {{$user->nom}}
+        Bienvenue {{Auth::user()->identite->prenom}} {{Auth::user()->identite->nom}}
     </div>
     <div>
         <a href="{{ route('referents.affectations') }}">Mes affectations</a>
+
+        @if( Auth::user()->estResponsableOption() || Auth::user()->estResponsableDepartement() )
+        <a href="{{ route('responsables.affectations.get') }}">Proposer une affectation</a>
+        @endif
     </div>
 @endsection

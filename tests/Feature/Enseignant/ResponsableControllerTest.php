@@ -8,13 +8,16 @@ use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
 
 use App\User;
+
 use App\Modeles\Contact;
 use App\Modeles\Enseignant;
 use App\Modeles\Role;
-use App\Http\Controllers\Enseignant\ReferentController;
+
+use App\Http\Controllers\Enseignant\ResponsableController;
+
 use App\Utils\Constantes;
 
-class ReferentControllerTest extends TestCase
+class ResponsableControllerTest extends TestCase
 {
     // Rollback les modifications de la BDD a la fin des tests
     use RefreshDatabase;
@@ -92,64 +95,24 @@ class ReferentControllerTest extends TestCase
      *                        Tests des routes
      * ------------------------------------------------------------------
      */
-
-    /**
-     * Test de feature pour acceder a l'accueil de l'espace 'enseignant'
-     */
-    public function testIndex()
-    {   
-        // Creation d'un enseignant valide
-        $user = $this->creerUserRoleEnseignant();
-
-        // Routage OK
-        $this->actingAs($user)
-        ->from('/')
-        ->get(route('referents.index'))
-        ->assertOk()
-        ->assertViewIs('enseignant.commun.index')
-        ->assertSee(ReferentController::TITRE_INDEX)
-
-        // Controle d'acces des actions
-        ->assertSee(route('referents.affectations'))
-        ->assertDontSee(route('responsables.affectations.get'));
-    }
-
-    /**
-     * Test de feature pour acceder a la page des affections d'un enseignant
-     */
-    public function testAffectations()
+    public function testGetFormAffectation()
     {
-        // Creation d'un enseignant valide
+        // Creation d'un enseignant responsable d'option
         $user = $this->creerUserRoleEnseignant();
+        $this->ajouteRoleResponsableDepartement($user);
 
         // Routage OK
         $response = $this->actingAs($user)
+        ->followingRedirects()
         ->from('/')
-        ->get(route('referents.affectations'))
+        ->get(route('responsables.affectations.get'))
         ->assertOk()
-        ->assertViewIs('enseignant.commun.affectations')
-        ->assertSee(ReferentController::TITRE_AFFECTATIONS);
+        ->assertViewIs('admin.modeles.stage.form')
+        ->assertSee(ResponsableController::TITRE_GET_FORM_AFFECTATION);
 
-        // Integrite des colonnes
-        $entetes = [
-            'Nom stagiaire',
-            'Prenom stagiaire',
-            'Annee',
-            'Promotion',
-            'Departement',
-            'Sujet',
-            'Entreprise',
-            'Rapport',
-            'Soutenance',
-            'Synthese'
-        ];
-
-        foreach($entetes as $entete)
-        {
-            $response->assertSee($entete);
-        }
-
-        // Integrite des donnees
-
+        // Integrite du form
+        // Redondate car deja verifiee dans StageControllerTest
     }
+
+
 }

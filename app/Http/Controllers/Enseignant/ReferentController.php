@@ -22,7 +22,7 @@ class ReferentController extends AbstractReferentController
      * ====================================================================
      */
 
-    /**
+    /*
      * Valeur attendue du tag <title> pour les pages
      */
     const TITRE_INDEX        = 'Enseignant - Tableau de bord';
@@ -59,8 +59,7 @@ class ReferentController extends AbstractReferentController
         Gate::authorize(ReferentController::GATE_ROLE_ENSEIGNANT);
 
         return view('enseignant.commun.index', [
-            'titre' => ReferentController::TITRE_INDEX,
-            'user'  => Auth::user()
+            'titre' => ReferentController::TITRE_INDEX
         ]);
     }
 

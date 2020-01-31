@@ -26,6 +26,7 @@ class PeuplerTableUsers extends Migration
         // Insertions de test
         $this->insertAdmin();
         $this->insertEnseignantBobDupont();
+        $this->insertCharlesAtan();
         $this->insertScolariteAliceToire();
 
         // Creation de comptes aleatoires
@@ -119,6 +120,29 @@ class PeuplerTableUsers extends Migration
         $roleEnseignant = Role::where(Role::COL_INTITULE, '=', Role::VAL_ENSEIGNANT)->first();
         $userDupont->roles()->attach($roleEnseignant);
         $userDupont->save();
+    }
+
+    private function insertCharlesAtan()
+    {
+        // Creation de l'enseignant Charels Atan, responsable de departement
+        $charlesAtan = new Enseignant;
+        $charlesAtan->fill([
+            Enseignant::COL_NOM                        => 'Atan',
+            Enseignant::COL_PRENOM                     => 'Charles',
+            Enseignant::COL_EMAIL                      => 'atan.charles@exemple.fr',
+            Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID => Departement::where(Departement::COL_INTITULE, '=', Departement::VAL_MRI)->first()->id,
+            Enseignant::COL_RESPONSABLE_OPTION_ID      => Option::where(Option::COL_INTITULE, '=', Option::VAL_AUCUN)->first()->id
+        ])->save();
+
+        // Creation du compte de Charles Atan
+        $userAtan = User::fromEnseignant($charlesAtan->id, 'azerty');
+
+        // Ajout des roles et des privileges au compte
+        $roleEnseignant             = Role::where(Role::COL_INTITULE, '=', Role::VAL_ENSEIGNANT)->first();
+        $roleResponsableDepartement = Role::where(Role::COL_INTITULE, '=', Role::VAL_RESP_DEPARTEMENT)->first();
+        $userAtan->roles()->attach($roleEnseignant);
+        $userAtan->roles()->attach($roleResponsableDepartement);
+        $userAtan->save();
     }
 
     /**
