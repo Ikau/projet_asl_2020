@@ -41,7 +41,8 @@
                 <td>{{ $stage->etudiant->nom }}</td>
                 <td>{{ $stage->etudiant->prenom }}</td>
                 <td>{{ $stage->annee_etudiant }}A</td>
-                <td>{{ $stage->etudiant->departement->intitule }} {{ $stage->etudiant->promotion }}</td>
+                <td>{{ $stage->etudiant->departement->intitule }}</td>
+                <td>{{ $stage->etudiant->promotion }}</td>
                 <td>{{ $stage->intitule }}</td>
                 <td> Entreprise </td>
                 <td> Rapport </td>
