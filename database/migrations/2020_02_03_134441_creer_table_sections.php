@@ -20,10 +20,14 @@ class CreerTableSections extends Migration
 
             // Colonnes de la table
             $table->string(Section::COL_INTITULE);
+            $table->unsignedInteger(Section::COL_ORDRE);
 
             // Clefs etrangeres
             $table->unsignedBigInteger(Section::COL_MODELE_ID);
             $table->foreign(Section::COL_MODELE_ID)->references('id')->on(ModeleFiche::NOM_TABLE);
+
+            // Unicite de la combinaison Modele-Intitule-Ordre
+            $table->unique([Section::COL_ORDRE, Section::COL_MODELE_ID, Section::COL_INTITULE]);
         });
     }
 

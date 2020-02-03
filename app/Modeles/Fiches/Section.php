@@ -25,6 +25,7 @@ class Section extends AbstractSection
      * Nom des colonnes dans la base de donnees
      */
     const COL_INTITULE = 'intitule';
+    const COL_ORDRE    = 'ordre';
 
     /*
      * Nom des colonnes des clefs etrangeres de Section
@@ -48,7 +49,8 @@ class Section extends AbstractSection
     protected $attributes = [
         // Attributs propres au modele
         self::COL_INTITULE  => Constantes::STRING_VIDE,
-        self::COL_MODELE_ID => Constantes::ID_VIDE
+        self::COL_MODELE_ID => Constantes::ID_VIDE,
+        self::COL_ORDRE     => Constantes::INT_VIDE
     ];
 
     /* ====================================================================
