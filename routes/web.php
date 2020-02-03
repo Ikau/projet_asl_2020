@@ -48,7 +48,7 @@ Route::prefix('admin')->group(function() {
 });
 
 /*
- * Route resources CRUD pour les modeles 
+ * Route resources CRUD pour les modeles
  */
 Route::resource('contacts', 'CRUD\ContactController');
 Route::resource('enseignants', 'CRUD\EnseignantController');
@@ -60,8 +60,8 @@ Route::resource('soutenances', 'CRUD\SoutenanceController');
 Route::resource('users', 'CRUD\UserController');
 
 
-/* 
- * Route de test... 
+/*
+ * Route de test...
  * C'est sale mais je n'ai rien trouve de plus simple ni elegant
  */
 Route::prefix('tests')->group(function() {
@@ -90,6 +90,23 @@ Route::prefix('enseignant')->group(function() {
     Route::get('affectations/', 'Enseignant\ReferentController@affectations')->name('referents.affectations');
 });
 
+
+/*
+ |--------------------------------------------------------------------------
+ |                        Routes partie 'Fiche'
+ |--------------------------------------------------------------------------
+ */
+Route::prefix('fiches')->group(function() {
+    // Entreprise
+
+    // Rapport
+    Route::get('{idProjet}/rapport/{id}', 'Fiches\FicheRapportController@show')->name('fiches.rapports.show');
+    Route::post('{idProjet}/rapport/{id}', 'Fiches\FicheRapportController@store')->name('fiches.rapports.store');
+
+    // Soutenance
+
+    // Synthese
+});
 
 /*
  |--------------------------------------------------------------------------
