@@ -46,6 +46,23 @@ class FicheSynthese extends AbstractFiche
         FicheSynthese::COL_STAGE_ID => Constantes::ID_VIDE,
     ];
 
+    /* ====================================================================
+     *                            OVERRIDES
+     * ====================================================================
+     */
+    /**
+     * Renvoie la note finale de la fiche
+     * @return float
+     */
+    public function getNote(): float
+    {
+        // TODO: Implement getNote() method.
+    }
+
+    /* ====================================================================
+     *                            RELATIONS
+     * ====================================================================
+     */
     /**
      * Renvoie le stage associe a cette fiche synthese
      * @var App\Modeles\Stage

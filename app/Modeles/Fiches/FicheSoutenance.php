@@ -48,6 +48,23 @@ class FicheSoutenance extends AbstractFiche
         FicheSoutenance::COL_SYNTHESE_ID   => Constantes::ID_VIDE,
     ];
 
+    /* ====================================================================
+     *                            OVERRIDES
+     * ====================================================================
+     */
+    /**
+     * Renvoie la note finale de la fiche
+     * @return float
+     */
+    public function getNote(): float
+    {
+        // TODO: Implement getNote() method.
+    }
+
+    /* ====================================================================
+     *                            RELATIONS
+     * ====================================================================
+     */
     /**
      * Renvoie la soutenance associe a cette fiche de soutenance
      * @var App\Modeles\Soutenance

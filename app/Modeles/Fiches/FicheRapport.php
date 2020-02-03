@@ -63,6 +63,18 @@ class FicheRapport extends AbstractFiche
         FicheRapport::COL_SYNTHESE_ID => Constantes::ID_VIDE,
         FicheRapport::COL_STAGE_ID    => Constantes::ID_VIDE,
     ];
+    /* ====================================================================
+     *                            OVERRIDES
+     * ====================================================================
+     */
+    /**
+     * Renvoie la note finale de la fiche
+     * @return float
+     */
+    public function getNote(): float
+    {
+        // TODO: Implement getNote() method.
+    }
 
     /* ====================================================================
      *                            RELATIONS
