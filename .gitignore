@@ -154,4 +154,7 @@ fabric.properties
 .idea/**/markdown-navigator.xml
 .idea/**/markdown-navigator/
 
+# Plugin helper
+_ide_helper.php
+
 # End of https://www.gitignore.io/api/phpstorm
