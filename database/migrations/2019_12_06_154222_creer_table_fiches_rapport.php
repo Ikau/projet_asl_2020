@@ -20,8 +20,12 @@ class CreerTableFichesRapport extends Migration
         Schema::create(FicheRapport::NOM_TABLE, function(Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->text('appreciation');
-            $table->unsignedDecimal('note');
+            // Definition du schema de la table
+            $table->text(FicheRapport::COL_APPRECIATION);
+            $table->text(FicheRapport::COL_CONTENU);
+            $table->unsignedInteger(FicheRapport::COL_VERSION);
+
+            // Clefs etrangeres
             $table->unsignedBigInteger(FicheRapport::COL_STAGE_ID);
             $table->unsignedBigInteger(FicheRapport::COL_SYNTHESE_ID);
 
