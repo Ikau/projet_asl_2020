@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Modeles;
+namespace App\Modeles\Fiches;
 
-use App\Abstracts\Modeles\AbstractConfigFiche;
+use App\Abstracts\Modeles\Fiches\AbstractConfigFiche;
 use App\Utils\Constantes;
 
 class ConfigFiche extends AbstractConfigFiche
@@ -60,5 +60,6 @@ class ConfigFiche extends AbstractConfigFiche
      *                            RELATIONS
      * ====================================================================
      */
+
 
 }

@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Modeles;
 
-use App\Modeles\ConfigFiche;
+use App\Modeles\Fiches\ConfigFiche;
 use App\Utils\Constantes;
 use Tests\TestCase;
 

@@ -4,14 +4,14 @@ namespace App\Modeles;
 
 use Illuminate\Database\Eloquent\Model;
 
-use App\Abstracts\Modeles\AbstractFiche;
+use App\Abstracts\Modeles\Fiches\AbstractFiche;
 use App\Utils\Constantes;
 
 class FicheSynthese extends AbstractFiche
 {
 
     /*
-     * Nom des colonnes des clefs etrangeres 
+     * Nom des colonnes des clefs etrangeres
      */
     const COL_STAGE_ID = 'stage_id';
 
@@ -32,7 +32,7 @@ class FicheSynthese extends AbstractFiche
 
     /**
      * Valeurs par defaut des colonnes du modele 'FicheSynthese'.
-     * 
+     *
      * @var array[string]float
      */
     protected $attributes = [
@@ -80,5 +80,5 @@ class FicheSynthese extends AbstractFiche
     public function fiche_soutenance()
     {
         return $this->hasOne('App\Modeles\FicheSoutenance', FicheSoutenance::COL_SYNTHESE_ID);
-    } 
+    }
 }

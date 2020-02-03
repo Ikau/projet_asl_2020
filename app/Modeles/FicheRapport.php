@@ -4,7 +4,7 @@ namespace App\Modeles;
 
 use Illuminate\Database\Eloquent\Model;
 
-use App\Abstracts\Modeles\AbstractFiche;
+use App\Abstracts\Modeles\Fiches\AbstractFiche;
 use App\Utils\Constantes;
 
 class FicheRapport extends AbstractFiche

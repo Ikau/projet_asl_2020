@@ -4,13 +4,13 @@ namespace App\Modeles;
 
 use Illuminate\Database\Eloquent\Model;
 
-use App\Abstracts\Modeles\AbstractFiche;
+use App\Abstracts\Modeles\Fiches\AbstractFiche;
 use App\Utils\Constantes;
 
 class FicheSoutenance extends AbstractFiche
 {
     /*
-     * Nom des colonnes des clefs etrangeres 
+     * Nom des colonnes des clefs etrangeres
      */
     const COL_SOUTENANCE_ID = 'soutenance_id';
     const COL_STAGE_ID      = 'stage_id';
@@ -33,7 +33,7 @@ class FicheSoutenance extends AbstractFiche
 
     /**
      * Valeurs par defaut des colonnes du modele 'FicheSoutenance'
-     * 
+     *
      * @var array[string]mixed
      */
     protected $attributes = [
