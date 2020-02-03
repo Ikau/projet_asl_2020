@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Tests\Unit\Modeles;
 
@@ -15,21 +15,12 @@ class PrivilegeTest extends TestCase
      */
     public function testConstructeur()
     {
-        $privilege        = new Privilege;
-        $compteurAttribut = 1; // On suppose l'ID existant
+        $privilege = new Privilege;
+
         $attributs = [
             Privilege::COL_INTITULE => Constantes::STRING_VIDE
         ];
 
-        // Integrite du constructeur
-        foreach($attributs as $clef => $valeur)
-        {
-            $this->assertEquals($valeur, $privilege[$clef]);
-            $compteurAttribut++;
-        }
-
-        // Integrite des attributs
-        $nbAttributs = count(Schema::getColumnListing(Privilege::NOM_TABLE));
-        $this->assertEquals($nbAttributs, $compteurAttribut);
+        $this->verifieIntegriteConstructeurEloquent($attributs, $privilege, Privilege::NOM_TABLE);
     }
 }

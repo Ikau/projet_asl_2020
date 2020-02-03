@@ -17,7 +17,7 @@ class SoutenanceTest extends TestCase
 {
     /**
      * Test du constructeur du modele
-     * 
+     *
      * @return void
      */
     public function testConstructeur()
@@ -25,7 +25,7 @@ class SoutenanceTest extends TestCase
         $soutenance = new Soutenance();
 
         // Copier/Coller des attributs 'protected' du modele
-        $attributesTests = [
+        $attributsTests = [
             // Attributs propres au modele
             Soutenance::COL_ANNEE_ETUDIANT  => Constantes::INT_VIDE,
             Soutenance::COL_CAMPUS          => Constantes::STRING_VIDE,
@@ -46,16 +46,6 @@ class SoutenanceTest extends TestCase
             Soutenance::COL_REFERENT_ID            => Constantes::ID_VIDE,
         ];
 
-        // Verification du constructeur
-        $nbCompte = 1; // On suppose l'ID existant
-        foreach($attributesTests as $attribut => $valeur)
-        {
-            $this->assertEquals($valeur, $soutenance[$attribut]);
-            $nbCompte++;
-        }
-
-        // Verification du nombre d'attributs
-        $nbAttributs = count(Schema::getColumnListing(Soutenance::NOM_TABLE));
-        $this->assertEquals($nbAttributs, $nbCompte);
+        $this->verifieIntegriteConstructeurEloquent($attributsTests, $soutenance, Soutenance::NOM_TABLE);
     }
 }
