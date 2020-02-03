@@ -6,7 +6,7 @@ use App\Modeles\Fiches\ModeleFiche;
 use App\Utils\Constantes;
 use Tests\TestCase;
 
-class ConfigFicheTest extends TestCase
+class ModeleFicheTest extends TestCase
 {
     public function testContructeurEloquent()
     {
