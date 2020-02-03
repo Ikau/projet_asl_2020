@@ -5,7 +5,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreerTableConfigsFiches extends Migration
+class CreerTableModelesFiches extends Migration
 {
     /**
      * Run the migrations.
