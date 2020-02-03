@@ -2,10 +2,10 @@
 
 namespace App\Modeles\Fiches;
 
-use App\Abstracts\Modeles\Fiches\AbstractConfigFiche;
+use App\Abstracts\Modeles\Fiches\AbstractModeleFiche;
 use App\Utils\Constantes;
 
-class ConfigFiche extends AbstractConfigFiche
+class ModeleFiche extends AbstractModeleFiche
 {
     /* ====================================================================
      *                         VALEURS DU MODELE
@@ -21,14 +21,14 @@ class ConfigFiche extends AbstractConfigFiche
      * ====================================================================
      */
     /**
-     * @var string Nom de la table associe au modele 'ConfigFiche'
+     * @var string Nom de la table associe au modele 'ModeleFiche'
      */
-    const NOM_TABLE = 'configs_fiches';
+    const NOM_TABLE = 'modeles_fiches';
 
     /**
      * On indique explicitement a Laravel d'utiliser ce nom pour la table
      */
-    protected $table = ConfigFiche::NOM_TABLE;
+    protected $table = ModeleFiche::NOM_TABLE;
 
     /*
      * Nom des colonnes dans la base de donnees
@@ -46,7 +46,7 @@ class ConfigFiche extends AbstractConfigFiche
     protected $guarded = ['id'];
 
     /**
-     * Valeurs par defaut des colonnes du modele 'FicheRapport'
+     * Valeurs par defaut des colonnes du modele 'ModeleFiche'
      *
      * @var array[string]mixed
      */
