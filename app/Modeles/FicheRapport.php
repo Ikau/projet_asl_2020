@@ -47,7 +47,7 @@ class FicheRapport extends AbstractFiche
     /**
      * @var array[string] Liste des attributs a assigner manuellement.
      */
-    protected $guarded = [];
+    protected $guarded = ['id'];
 
     /**
      * Valeurs par defaut des colonnes du modele 'FicheRapport'
@@ -59,7 +59,7 @@ class FicheRapport extends AbstractFiche
         'appreciation' => Constantes::STRING_VIDE,
         'note'         => Constantes::FLOAT_VIDE,
 
-        // Clefs etrangeres
+        // Clefs etrangeres_
         FicheRapport::COL_SYNTHESE_ID => Constantes::ID_VIDE,
         FicheRapport::COL_STAGE_ID    => Constantes::ID_VIDE,
     ];
