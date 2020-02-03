@@ -15,9 +15,14 @@ class CreerTableModelesFiches extends Migration
     public function up()
     {
         Schema::create(ModeleFiche::NOM_TABLE, function(Blueprint $table) {
+            $table->bigIncrements('id');
+
             // Definition du schema de la table
             $table->string(ModeleFiche::COL_TYPE);
             $table->unsignedInteger(ModeleFiche::COL_VERSION);
+
+            // Relations polymorphique
+            $table->morphs(ModeleFiche::COL_POLY_MODELE);
 
             // On indique que la combinaison est unique
             $table->unique([ModeleFiche::COL_VERSION, ModeleFiche::COL_TYPE]);

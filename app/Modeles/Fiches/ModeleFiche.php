@@ -36,6 +36,13 @@ class ModeleFiche extends AbstractModeleFiche
     const COL_TYPE      = 'type';
     const COL_VERSION   = 'version';
 
+    /*
+     * Nom des colonnes polymorphiques
+     */
+    const COL_POLY_MODELE      = 'fiche';
+    const COL_POLY_MODELE_ID   = 'fiche_id';
+    const COL_POLY_MODELE_TYPE = 'fiche_type';
+
     /* ====================================================================
      *                            PROPRIETES
      * ====================================================================
@@ -52,14 +59,32 @@ class ModeleFiche extends AbstractModeleFiche
      */
     protected $attributes = [
         // Attributs propres au modele
-        self::COL_TYPE     => Constantes::STRING_VIDE,
-        self::COL_VERSION  => Constantes::INT_VIDE,
+        self::COL_TYPE             => Constantes::STRING_VIDE,
+        self::COL_VERSION          => Constantes::INT_VIDE,
+        self::COL_POLY_MODELE_ID   => Constantes::ID_VIDE,
+        self::COL_POLY_MODELE_TYPE => Constantes::STRING_VIDE,
     ];
 
     /* ====================================================================
      *                            RELATIONS
      * ====================================================================
      */
+    /**
+     * Renvoie la fiche liee a cette section via une relation Many-to-One polymorphique
+     * @return FicheEntreprise|FicheRapport|FicheSoutenance|FicheSynthese
+     */
+    public function fiche()
+    {
+        return $this->morphTo();
+    }
 
+    /**
+     * Renvoie la liste des sections (avec leur questions) composant le modele de la fiche
+     * @return Section
+     */
+    public function sections()
+    {
+        return $this->hasMany(Section::class, Section::COL_MODELE_ID);
+    }
 
 }

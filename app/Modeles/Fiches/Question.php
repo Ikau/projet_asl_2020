@@ -70,10 +70,9 @@ class Question extends AbstractQuestion
      */
     /**
      * Renvoie la section a cette question et ses choix via une relation Many-to-One
-     * @return Section
      */
     public function section()
     {
-        return $this->morphTo();
+        return $this->belongsTo(Section::class, Question::COL_SECTION_ID);
     }
 }

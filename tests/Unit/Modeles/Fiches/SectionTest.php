@@ -13,9 +13,8 @@ class SectionTest extends TestCase
         $section = new Section;
 
         $attributsTests = [
-            Section::COL_INTITULE => Constantes::STRING_VIDE,
-            Section::COL_POLY_MODELE_ID   => Constantes::ID_VIDE,
-            Section::COL_POLY_MODELE_TYPE => Constantes::STRING_VIDE
+            Section::COL_INTITULE  => Constantes::STRING_VIDE,
+            Section::COL_MODELE_ID => Constantes::ID_VIDE
         ];
 
         $this->verifieIntegriteConstructeurEloquent($attributsTests, $section, Section::NOM_TABLE);

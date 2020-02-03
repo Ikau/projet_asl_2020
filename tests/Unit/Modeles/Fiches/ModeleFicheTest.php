@@ -13,11 +13,13 @@ class ModeleFicheTest extends TestCase
         $configFiche = new ModeleFiche;
 
         $attributsTest = [
-            ModeleFiche::COL_TYPE     => Constantes::STRING_VIDE,
-            ModeleFiche::COL_VERSION  => Constantes::INT_VIDE,
+            ModeleFiche::COL_TYPE             => Constantes::STRING_VIDE,
+            ModeleFiche::COL_VERSION          => Constantes::INT_VIDE,
+            ModeleFiche::COL_POLY_MODELE_ID   => Constantes::ID_VIDE,
+            ModeleFiche::COL_POLY_MODELE_TYPE => Constantes::STRING_VIDE,
         ];
 
-        $this->verifieIntegriteConstructeurEloquent($attributsTest, $configFiche, ModeleFiche::NOM_TABLE, 0);
+        $this->verifieIntegriteConstructeurEloquent($attributsTest, $configFiche, ModeleFiche::NOM_TABLE);
 
     }
 }

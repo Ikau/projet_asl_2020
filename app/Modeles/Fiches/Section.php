@@ -27,11 +27,9 @@ class Section extends AbstractSection
     const COL_INTITULE = 'intitule';
 
     /*
-     * Nom des colonnes polymorphiques
+     * Nom des colonnes des clefs etrangeres de Section
      */
-    const COL_POLY_MODELE      = 'fiche';
-    const COL_POLY_MODELE_ID   = 'fiche_id';
-    const COL_POLY_MODELE_TYPE = 'fiche_type';
+    const COL_MODELE_ID = 'modele_id';
 
     /* ====================================================================
      *                            PROPRIETES
@@ -49,30 +47,29 @@ class Section extends AbstractSection
      */
     protected $attributes = [
         // Attributs propres au modele
-        self::COL_INTITULE         => Constantes::STRING_VIDE,
-        self::COL_POLY_MODELE_ID   => Constantes::ID_VIDE,
-        self::COL_POLY_MODELE_TYPE => Constantes::STRING_VIDE
+        self::COL_INTITULE  => Constantes::STRING_VIDE,
+        self::COL_MODELE_ID => Constantes::ID_VIDE
     ];
-
-
-    /**
-     * @inheritDoc
-     */
-    public function questions()
-    {
-        // TODO: Implement questions() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function fiche()
-    {
-        // TODO: Implement fiche() method.
-    }
 
     /* ====================================================================
      *                            RELATIONS
      * ====================================================================
      */
+
+    /**
+     * Renvoie la liste des questions liees a cette section via une relation One-to-Many
+     * @return mixed Collection de Question
+     */
+    public function questions()
+    {
+        return $this->hasMany(Question::class, Question::COL_SECTION_ID);
+    }
+
+    /**
+     * Renvoie le modele de la fiche auquel est lie cette section
+     */
+    public function modeleFiche()
+    {
+        return $this->belongsTo(ModeleFiche::class, Section::COL);
+    }
 }

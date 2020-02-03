@@ -1,5 +1,6 @@
 <?php
 
+use App\Modeles\Fiches\ModeleFiche;
 use App\Modeles\Fiches\Section;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -20,8 +21,9 @@ class CreerTableSections extends Migration
             // Colonnes de la table
             $table->string(Section::COL_INTITULE);
 
-            // Clef etrangeres polymorphiques
-            $table->morphs(Section::COL_POLY_MODELE);
+            // Clefs etrangeres
+            $table->unsignedBigInteger(Section::COL_MODELE_ID);
+            $table->foreign(Section::COL_MODELE_ID)->references('id')->on(ModeleFiche::NOM_TABLE);
         });
     }
 
