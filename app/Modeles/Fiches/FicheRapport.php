@@ -20,7 +20,6 @@ class FicheRapport extends AbstractFiche
      */
     const COL_APPRECIATION = 'appreciation';
     const COL_CONTENU      = 'contenu';
-    const COL_VERSION      = 'version';
 
     /*
      * Nom des colonnes des clefs etrangeres
@@ -56,13 +55,14 @@ class FicheRapport extends AbstractFiche
      */
     protected $attributes = [
         // Attributs propres au modele
-        'appreciation' => Constantes::STRING_VIDE,
-        'note'         => Constantes::FLOAT_VIDE,
+        self::COL_APPRECIATION => Constantes::STRING_VIDE,
+        self::COL_CONTENU      => Constantes::STRING_VIDE,
 
         // Clefs etrangeres_
-        FicheRapport::COL_SYNTHESE_ID => Constantes::ID_VIDE,
-        FicheRapport::COL_STAGE_ID    => Constantes::ID_VIDE,
+        self::COL_SYNTHESE_ID => Constantes::ID_VIDE,
+        self::COL_STAGE_ID    => Constantes::ID_VIDE,
     ];
+
     /* ====================================================================
      *                            OVERRIDES
      * ====================================================================
