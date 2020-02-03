@@ -27,6 +27,7 @@ class Critere extends AbstractCritere
      */
     const COL_CHOIX    = 'choix';
     const COL_INTITULE = 'intitule';
+    const COL_ORDRE    = 'ordre';
 
     /*
      * Nom des colonnes des clefs etrangeres de Critere
@@ -61,7 +62,8 @@ class Critere extends AbstractCritere
     protected $attributes = [
         self::COL_CHOIX      => Constantes::STRING_VIDE,
         self::COL_INTITULE   => Constantes::STRING_VIDE,
-        self::COL_SECTION_ID => Constantes::ID_VIDE
+        self::COL_SECTION_ID => Constantes::ID_VIDE,
+        self::COL_ORDRE      => Constantes::INT_VIDE
     ];
 
     /* ====================================================================

@@ -21,6 +21,7 @@ class CreerTableCriteres extends Migration
             // Colonnes de la table
             $table->text(Critere::COL_INTITULE);
             $table->text(Critere::COL_CHOIX);
+            $table->unsignedInteger(Critere::COL_ORDRE);
 
             // Clefs etrangeres
             $table->unsignedBigInteger(Critere::COL_SECTION_ID);
