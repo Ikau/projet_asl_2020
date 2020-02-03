@@ -2,10 +2,10 @@
 
 namespace App\Modeles\Fiches;
 
-use App\Abstracts\Modeles\Fiches\AbstractQuestion;
+use App\Abstracts\Modeles\Fiches\AbstractCritere;
 use App\Utils\Constantes;
 
-class Question extends AbstractQuestion
+class Critere extends AbstractCritere
 {
 
     /* ====================================================================
@@ -13,9 +13,9 @@ class Question extends AbstractQuestion
      * ====================================================================
      */
     /**
-     * @var string Nom de la table associe au modele 'Question'
+     * @var string Nom de la table associe au modele 'Critere'
      */
-    const NOM_TABLE = 'questions';
+    const NOM_TABLE = 'critere';
 
     /**
      * On indique explicitement a Laravel d'utiliser ce nom pour la table
@@ -29,7 +29,7 @@ class Question extends AbstractQuestion
     const COL_INTITULE = 'intitule';
 
     /*
-     * Nom des colonnes des clefs etrangeres de Question
+     * Nom des colonnes des clefs etrangeres de Critere
      */
     // Element obligatoire
     const COL_SECTION_ID = 'section_id';
@@ -54,7 +54,7 @@ class Question extends AbstractQuestion
     protected $guarded = ['id'];
 
     /**
-     * Valeurs par defaut des colonnes du modele 'Question'
+     * Valeurs par defaut des colonnes du modele 'Critere'
      *
      * @var array[string]mixed
      */
@@ -73,6 +73,6 @@ class Question extends AbstractQuestion
      */
     public function section()
     {
-        return $this->belongsTo(Section::class, Question::COL_SECTION_ID);
+        return $this->belongsTo(Section::class, Critere::COL_SECTION_ID);
     }
 }

@@ -9,9 +9,9 @@ abstract class AbstractSection extends Model
 {
     /**
      * Renvoie la liste des questions liees a cette section via une relation One-to-Many
-     * @return mixed Collection de Question
+     * @return mixed Collection de Critere
      */
-    abstract public function questions();
+    abstract public function criteres();
 
     /**
      * Renvoie le modele de la fiche auquel est lie cette section

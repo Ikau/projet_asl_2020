@@ -59,12 +59,12 @@ class Section extends AbstractSection
      */
 
     /**
-     * Renvoie la liste des questions liees a cette section via une relation One-to-Many
-     * @return mixed Collection de Question
+     * Renvoie la liste des criteres liees a cette section via une relation One-to-Many
+     * @return mixed Collection de Critere
      */
-    public function questions()
+    public function criteres()
     {
-        return $this->hasMany(Question::class, Question::COL_SECTION_ID);
+        return $this->hasMany(Critere::class, Critere::COL_SECTION_ID);
     }
 
     /**
