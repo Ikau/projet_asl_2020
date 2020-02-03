@@ -4,8 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-use App\Modeles\FicheRapport;
-use App\Modeles\FicheSynthese;
+use App\Modeles\Fiches\FicheRapport;
+use App\Modeles\Fiches\FicheSynthese;
 use App\Modeles\Stage;
 
 class CreerTableFichesRapport extends Migration

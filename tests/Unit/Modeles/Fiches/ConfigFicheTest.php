@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Modeles;
+namespace Tests\Unit\Modeles\Fiches;
 
 use App\Modeles\Fiches\ConfigFiche;
 use App\Utils\Constantes;
