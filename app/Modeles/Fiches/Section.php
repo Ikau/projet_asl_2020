@@ -71,6 +71,16 @@ class Section extends AbstractSection
      *                            RELATIONS
      * ====================================================================
      */
+    /**
+     * Renvoie le nombre de points associe à l'index du critere en argument
+     *
+     * @param int $indexChoix L'index du choix des points
+     * @return float Le nombre de points attribues
+     */
+    public function getPoints(int $indexChoix): float
+    {
+        return $this->choix[$indexChoix][0];
+    }
 
     /**
      * Renvoie la liste des criteres liees a cette section via une relation One-to-Many

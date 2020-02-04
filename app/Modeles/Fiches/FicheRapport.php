@@ -2,6 +2,7 @@
 
 namespace App\Modeles\Fiches;
 
+use App\Interfaces\Fiche;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Abstracts\Modeles\Fiches\AbstractFiche;
@@ -77,18 +78,51 @@ class FicheRapport extends AbstractFiche
      * ====================================================================
      */
     /**
-     * Renvoie la note finale de la fiche
-     * @return float
+     * @return float La note finale de la fiche
      */
-    public function getNote(): float
+    public function getNote() : float
     {
-        // TODO: Implement getNote() method.
+        // Verification basique
+        $note = 0.0;
+        if(null === $this->contenu)
+        {
+            return $note;
+        }
+
+        // Recuperation du json
+        $notation = json_decode($this->contenu);
+        if(null == $notation)
+        {
+            return $note;
+        }
+
+        // Calcule de la note
+        $sections = $this->modele->sections()->orderBy(Section::COL_ORDRE)->get();
+        foreach($notation as $indexSection => $criteres)
+        {
+            $section = $sections->get($indexSection);
+            foreach($criteres as $indexPoints)
+            {
+                $note += $section->getPoints($indexPoints);
+            }
+        }
+
+        return $note;
     }
 
     /* ====================================================================
      *                            RELATIONS
      * ====================================================================
      */
+    /**
+     * Renvoie le modele de notation sur lequel est basee la fiche
+     * @return App\Modeles\Fiches\ModeleNotation
+     */
+    public function modele()
+    {
+        return $this->belongsTo(ModeleNotation::class, FicheRapport::COL_MODELE_ID);
+    }
+
     /**
      * Renvoie la fiche synthese liee a cette fiche rapport
      * @var App\Modeles\FicheSynthese

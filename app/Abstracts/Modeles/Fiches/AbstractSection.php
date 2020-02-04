@@ -14,8 +14,15 @@ abstract class AbstractSection extends Model
     abstract public function criteres();
 
     /**
+     * Renvoie la note totale de la section
+     * @return float
+     */
+    abstract public function getPoints(int $indexChoix) : float ;
+
+    /**
      * Renvoie le modele de la fiche auquel est lie cette section
      * @return ModeleNotation
      */
     abstract public function modeleNotation();
+
 }

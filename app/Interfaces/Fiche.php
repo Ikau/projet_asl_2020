@@ -14,13 +14,13 @@ namespace App\Interfaces;
 interface Fiche
 {
     /**
-     * @return Array Renvoie le contenu de la fiche sous forme d'un array associatif
+     * @return array Renvoie le contenu de la fiche sous forme d'un array associatif
      */
-    public function getContenu() : Array;
+    public function getContenu() : array ;
 
     /**
      * @return float La note finale de la fiche
      */
-    public function getNotation() : float;
+    public function getNote() : float;
 }
 
