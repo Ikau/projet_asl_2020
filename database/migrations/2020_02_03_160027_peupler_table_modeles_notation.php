@@ -40,7 +40,7 @@ class PeuplerTableModelesNotation extends Migration
         // Creation du modele
         $modeleRapport = new ModeleNotation();
         $modeleRapport->fill([
-            ModeleNotation::COL_VERSION => '1',
+            ModeleNotation::COL_VERSION => 1,
             ModeleNotation::COL_TYPE    => ModeleNotation::VAL_RAPPORT
         ]);
         $modeleRapport->save();

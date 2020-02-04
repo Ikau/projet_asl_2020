@@ -10,6 +10,10 @@ use App\Utils\Constantes;
 class FicheSynthese extends AbstractFiche
 {
 
+    /* ====================================================================
+     *                          BASE DE DONNEES
+     * ====================================================================
+     */
     /*
      * Nom des colonnes des clefs etrangeres
      */
@@ -24,6 +28,17 @@ class FicheSynthese extends AbstractFiche
      * @var string Nom de la table associee au modele 'FicheSynthese'.
      */
     protected $table = FicheSynthese::NOM_TABLE;
+
+    /* ====================================================================
+     *                            PROPRIETES
+     * ====================================================================
+     */
+    /**
+     * Indique a Laravel de ne pas creer ni de gerer les tables 'created_at' et 'updated_at'.
+     *
+     * @var bool Gestion des timestamps
+     */
+    public $timestamps = false;
 
     /**
      * @var array[string] Liste des attributs a assigner manuellement.

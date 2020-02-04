@@ -45,6 +45,13 @@ class FicheRapport extends AbstractFiche
      * ====================================================================
      */
     /**
+     * Indique a Laravel de ne pas creer ni de gerer les tables 'created_at' et 'updated_at'.
+     *
+     * @var bool Gestion des timestamps
+     */
+    public $timestamps = false;
+
+    /**
      * @var array[string] Liste des attributs a assigner manuellement.
      */
     protected $guarded = ['id'];
