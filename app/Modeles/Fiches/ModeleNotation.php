@@ -36,13 +36,6 @@ class ModeleNotation extends AbstractModeleNotation
     const COL_TYPE      = 'type';
     const COL_VERSION   = 'version';
 
-    /*
-     * Nom des colonnes polymorphiques
-     */
-    const COL_POLY_MODELE      = 'fiche';
-    const COL_POLY_MODELE_ID   = 'fiche_id';
-    const COL_POLY_MODELE_TYPE = 'fiche_type';
-
     /**
      * Indique a Laravel de ne pas creer ni de gerer les tables 'created_at' et 'updated_at'.
      */
