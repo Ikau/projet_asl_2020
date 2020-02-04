@@ -33,4 +33,6 @@ class PeuplerTableStages extends Migration
     {
         DB::table(Stage::NOM_TABLE)->delete();
     }
+
+
 }
