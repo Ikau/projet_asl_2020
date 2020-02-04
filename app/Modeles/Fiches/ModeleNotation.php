@@ -69,35 +69,6 @@ class ModeleNotation extends AbstractModeleNotation
     ];
 
     /* ====================================================================
-     *                           CONSTRUCTEUR
-     * ====================================================================
-     */
-    /**
-     * Constructeur de la classe ModeleNotation
-     *
-     * @param string $type Le type de modele a creer
-     * @param int $id L'ID de la fiche liee a ce modele
-     * @param int $version
-     */
-    public function ModeleNotation(string $type, int $id, int $version)
-    {
-        switch ($type)
-        {
-            case self::VAL_ENTREPRISE:
-                break;
-
-            case self::VAL_RAPPORT:
-                break;
-
-            case self::VAL_SOUTENANCE:
-                break;
-
-            case self::VAL_SYNTHESE:
-                break;
-        }
-    }
-
-    /* ====================================================================
      *                            RELATIONS
      * ====================================================================
      */
