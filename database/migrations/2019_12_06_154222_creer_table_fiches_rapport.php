@@ -1,5 +1,6 @@
 <?php
 
+use App\Modeles\Fiches\ModeleNotation;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -25,9 +26,11 @@ class CreerTableFichesRapport extends Migration
             $table->text(FicheRapport::COL_CONTENU);
 
             // Clefs etrangeres
+            $table->unsignedBigInteger(FicheRapport::COL_MODELE_ID);
             $table->unsignedBigInteger(FicheRapport::COL_STAGE_ID);
             $table->unsignedBigInteger(FicheRapport::COL_SYNTHESE_ID);
 
+            $table->foreign(FicheRapport::COL_MODELE_ID)->references('id')->on(ModeleNotation::NOM_TABLE);
             $table->foreign(FicheRapport::COL_STAGE_ID)->references('id')->on(Stage::NOM_TABLE);
             $table->foreign(FicheRapport::COL_SYNTHESE_ID)->references('id')->on(FicheSynthese::NOM_TABLE);
         });

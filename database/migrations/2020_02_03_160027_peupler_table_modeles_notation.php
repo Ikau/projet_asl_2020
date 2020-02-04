@@ -58,7 +58,7 @@ class PeuplerTableModelesNotation extends Migration
         $section = new Section();
 
         // Creation des criteres
-        $intitulesCritere = [
+        $criteres = [
             "Présenter le rapport de façon conforme (respect des consignes de présentation, mise en page, utilisé des annexes)",
 
             "S'exprimer de manière correcte en français (orthographe, syntaxe, fluidité de l'expression écrite",
@@ -73,13 +73,6 @@ class PeuplerTableModelesNotation extends Migration
             2 => [1.0, "Moyen"],
             3 => [0.5, "Insuffisant"]
         ];
-
-        // Insertion dans la section
-        $criteres = [];
-        foreach($intitulesCritere as $intituleCritere)
-        {
-            $criteres[$intituleCritere] = -1;
-        }
 
         // Sauvegarde de la section
         $section->fill([
@@ -97,7 +90,7 @@ class PeuplerTableModelesNotation extends Migration
         $section = new Section();
 
         // Creation des criteres
-        $intitulesCritere = [
+        $criteres = [
             "Pertinence (préblématique bien cernée",
 
             "Exhaustivité (le contexte, les objectifs, la démarche et les résultats du stage",
@@ -115,13 +108,6 @@ class PeuplerTableModelesNotation extends Migration
             3 => [0.5, "Insuffisant"]
         ];
 
-        // Insertion dans la section
-        $criteres = [];
-        foreach($intitulesCritere as $intituleCritere)
-        {
-            $criteres[$intituleCritere] = -1;
-        }
-
         // Sauvegarde de la section
         $section->fill([
             Section::COL_CHOIX     => $choix,
@@ -138,7 +124,7 @@ class PeuplerTableModelesNotation extends Migration
         $section = new Section();
 
         // Creation des criteres
-        $intitulesCritere = [
+        $criteres = [
             "Être capable de s'autoévaluer",
 
             "Montrer l'apport du stage"
@@ -151,13 +137,6 @@ class PeuplerTableModelesNotation extends Migration
             2 => [1.0, "Moyen"],
             3 => [0.5, "Insuffisant"]
         ];
-
-        // Insertion dans la section
-        $criteres = [];
-        foreach($intitulesCritere as $intituleCritere)
-        {
-            $criteres[$intituleCritere] = -1;
-        }
 
         // Sauvegarde de la section
         $section->fill([
