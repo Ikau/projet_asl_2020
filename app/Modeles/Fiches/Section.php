@@ -24,6 +24,7 @@ class Section extends AbstractSection
     /*
      * Nom des colonnes dans la base de donnees
      */
+    const COL_CRITERES = 'criteres';
     const COL_INTITULE = 'intitule';
     const COL_ORDRE    = 'ordre';
 
@@ -41,6 +42,10 @@ class Section extends AbstractSection
      */
     protected $guarded = ['id'];
 
+    protected $casts = [
+        self::COL_CRITERES => 'array'
+    ];
+
     /**
      * Valeurs par defaut des colonnes du modele 'ModeleNotation'
      *
@@ -48,6 +53,7 @@ class Section extends AbstractSection
      */
     protected $attributes = [
         // Attributs propres au modele
+        self::COL_CRITERES  => Constantes::STRING_VIDE,
         self::COL_INTITULE  => Constantes::STRING_VIDE,
         self::COL_MODELE_ID => Constantes::ID_VIDE,
         self::COL_ORDRE     => Constantes::INT_VIDE
