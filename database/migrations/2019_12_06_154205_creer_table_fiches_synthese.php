@@ -19,12 +19,10 @@ class CreerTableFichesSynthese extends Migration
         Schema::create(FicheSynthese::NOM_TABLE, function(Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->float('total_points');
-            $table->float('modifieur');
-            $table->unsignedDecimal('note_brute');
-            $table->unsignedDecimal('note_finale');
-            $table->unsignedBigInteger(FicheSynthese::COL_STAGE_ID);
+            $table->text(FicheSynthese::COL_COEFFICIENTS);
+            $table->float(FicheSynthese::COL_MODIFIEUR);
 
+            $table->unsignedBigInteger(FicheSynthese::COL_STAGE_ID);
             $table->foreign(FicheSynthese::COL_STAGE_ID)->references('id')->on(Stage::NOM_TABLE);
         });
     }

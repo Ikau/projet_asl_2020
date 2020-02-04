@@ -15,6 +15,12 @@ class FicheSynthese extends AbstractFiche
      * ====================================================================
      */
     /*
+     * Nom des colonnes dans la base de donnees
+     */
+    const COL_COEFFICIENTS = 'coefficients';
+    const COL_MODIFIEUR    = 'modifieur';
+
+    /*
      * Nom des colonnes des clefs etrangeres
      */
     const COL_STAGE_ID = 'stage_id';
@@ -28,6 +34,13 @@ class FicheSynthese extends AbstractFiche
      * @var string Nom de la table associee au modele 'FicheSynthese'.
      */
     protected $table = FicheSynthese::NOM_TABLE;
+
+    /**
+     * @var array Valeurs de cast des attributs
+     */
+    protected $casts = [
+        self::COL_COEFFICIENTS => 'array'
+    ];
 
     /* ====================================================================
      *                            PROPRIETES
@@ -52,13 +65,11 @@ class FicheSynthese extends AbstractFiche
      */
     protected $attributes = [
         // Attributs propres au modele
-        'total_points' => Constantes::FLOAT_VIDE,
-        'modifieur'    => Constantes::FLOAT_VIDE,
-        'note_brute'   => Constantes::FLOAT_VIDE,
-        'note_finale'  => Constantes::FLOAT_VIDE,
+        self::COL_COEFFICIENTS => Constantes::STRING_VIDE,
+        self::COL_MODIFIEUR    => Constantes::FLOAT_VIDE,
 
         // Clefs etrangeres
-        FicheSynthese::COL_STAGE_ID => Constantes::ID_VIDE,
+        self::COL_STAGE_ID => Constantes::ID_VIDE,
     ];
 
     /* ====================================================================
