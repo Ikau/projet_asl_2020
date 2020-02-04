@@ -1,6 +1,6 @@
 <?php
 
-use App\Modeles\Fiches\ModeleFiche;
+use App\Modeles\Fiches\ModeleNotation;
 use App\Modeles\Fiches\Section;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -24,7 +24,7 @@ class CreerTableSections extends Migration
 
             // Clefs etrangeres
             $table->unsignedBigInteger(Section::COL_MODELE_ID);
-            $table->foreign(Section::COL_MODELE_ID)->references('id')->on(ModeleFiche::NOM_TABLE);
+            $table->foreign(Section::COL_MODELE_ID)->references('id')->on(ModeleNotation::NOM_TABLE);
 
             // Unicite de la combinaison Modele-Intitule-Ordre
             $table->unique([Section::COL_ORDRE, Section::COL_MODELE_ID, Section::COL_INTITULE]);

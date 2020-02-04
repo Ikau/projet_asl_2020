@@ -1,11 +1,11 @@
 <?php
 
-use App\Modeles\Fiches\ModeleFiche;
+use App\Modeles\Fiches\ModeleNotation;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreerTableModelesFiches extends Migration
+class CreerTableModelesNotation extends Migration
 {
     /**
      * Run the migrations.
@@ -14,18 +14,18 @@ class CreerTableModelesFiches extends Migration
      */
     public function up()
     {
-        Schema::create(ModeleFiche::NOM_TABLE, function(Blueprint $table) {
+        Schema::create(ModeleNotation::NOM_TABLE, function(Blueprint $table) {
             $table->bigIncrements('id');
 
             // Definition du schema de la table
-            $table->string(ModeleFiche::COL_TYPE);
-            $table->unsignedInteger(ModeleFiche::COL_VERSION);
+            $table->string(ModeleNotation::COL_TYPE);
+            $table->unsignedInteger(ModeleNotation::COL_VERSION);
 
             // Relations polymorphique
-            $table->morphs(ModeleFiche::COL_POLY_MODELE);
+            $table->morphs(ModeleNotation::COL_POLY_MODELE);
 
             // On indique que la combinaison est unique
-            $table->unique([ModeleFiche::COL_VERSION, ModeleFiche::COL_TYPE]);
+            $table->unique([ModeleNotation::COL_VERSION, ModeleNotation::COL_TYPE]);
         });
     }
 
@@ -36,6 +36,6 @@ class CreerTableModelesFiches extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists(ModeleFiche::NOM_TABLE);
+        Schema::dropIfExists(ModeleNotation::NOM_TABLE);
     }
 }

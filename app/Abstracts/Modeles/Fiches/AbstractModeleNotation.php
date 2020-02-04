@@ -8,7 +8,7 @@ use App\Modeles\Fiches\FicheSoutenance;
 use App\Modeles\Fiches\FicheSynthese;
 use Illuminate\Database\Eloquent\Model;
 
-abstract class AbstractModeleFiche extends Model
+abstract class AbstractModeleNotation extends Model
 {
     /**
      * Renvoie la fiche liee a cette section via une relation Many-to-One polymorphique

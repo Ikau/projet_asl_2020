@@ -2,10 +2,10 @@
 
 namespace App\Modeles\Fiches;
 
-use App\Abstracts\Modeles\Fiches\AbstractModeleFiche;
+use App\Abstracts\Modeles\Fiches\AbstractModeleNotation;
 use App\Utils\Constantes;
 
-class ModeleFiche extends AbstractModeleFiche
+class ModeleNotation extends AbstractModeleNotation
 {
     /* ====================================================================
      *                         VALEURS DU MODELE
@@ -21,14 +21,14 @@ class ModeleFiche extends AbstractModeleFiche
      * ====================================================================
      */
     /**
-     * @var string Nom de la table associe au modele 'ModeleFiche'
+     * @var string Nom de la table associe au modele 'ModeleNotation'
      */
-    const NOM_TABLE = 'modeles_fiches';
+    const NOM_TABLE = 'modeles_notation';
 
     /**
      * On indique explicitement a Laravel d'utiliser ce nom pour la table
      */
-    protected $table = ModeleFiche::NOM_TABLE;
+    protected $table = ModeleNotation::NOM_TABLE;
 
     /*
      * Nom des colonnes dans la base de donnees
@@ -53,7 +53,7 @@ class ModeleFiche extends AbstractModeleFiche
     protected $guarded = ['id'];
 
     /**
-     * Valeurs par defaut des colonnes du modele 'ModeleFiche'
+     * Valeurs par defaut des colonnes du modele 'ModeleNotation'
      *
      * @var array[string]mixed
      */
@@ -70,13 +70,13 @@ class ModeleFiche extends AbstractModeleFiche
      * ====================================================================
      */
     /**
-     * Constructeur de la classe ModeleFiche
+     * Constructeur de la classe ModeleNotation
      *
      * @param string $type Le type de modele a creer
      * @param int $id L'ID de la fiche liee a ce modele
      * @param int $version
      */
-    public function ModeleFiche(string $type, int $id, int $version)
+    public function ModeleNotation(string $type, int $id, int $version)
     {
         switch ($type)
         {

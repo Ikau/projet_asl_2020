@@ -42,7 +42,7 @@ class Section extends AbstractSection
     protected $guarded = ['id'];
 
     /**
-     * Valeurs par defaut des colonnes du modele 'ModeleFiche'
+     * Valeurs par defaut des colonnes du modele 'ModeleNotation'
      *
      * @var array[string]mixed
      */
@@ -70,8 +70,8 @@ class Section extends AbstractSection
     /**
      * Renvoie le modele de la fiche auquel est lie cette section
      */
-    public function modeleFiche()
+    public function modeleNotation()
     {
-        return $this->belongsTo(ModeleFiche::class, Section::COL);
+        return $this->belongsTo(ModeleNotation::class, Section::COL);
     }
 }

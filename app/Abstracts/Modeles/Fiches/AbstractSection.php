@@ -2,7 +2,7 @@
 
 namespace App\Abstracts\Modeles\Fiches;
 
-use App\Modeles\Fiches\ModeleFiche;
+use App\Modeles\Fiches\ModeleNotation;
 use Illuminate\Database\Eloquent\Model;
 
 abstract class AbstractSection extends Model
@@ -15,7 +15,7 @@ abstract class AbstractSection extends Model
 
     /**
      * Renvoie le modele de la fiche auquel est lie cette section
-     * @return ModeleFiche
+     * @return ModeleNotation
      */
-    abstract public function modeleFiche();
+    abstract public function modeleNotation();
 }
