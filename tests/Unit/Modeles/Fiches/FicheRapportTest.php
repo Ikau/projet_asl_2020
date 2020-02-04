@@ -32,12 +32,14 @@ class FicheRapportTest extends TestCase
     }
 
     public function testGetNote()
-    {;
+    {
+        // Recuperation d'un modele de notation
         $modele = ModeleNotation::where(ModeleNotation::COL_TYPE, '=', ModeleNotation::VAL_RAPPORT)
             ->orderBy(ModeleNotation::COL_VERSION, 'desc')
             ->limit(1)
             ->first();
 
+        // Test d'un contenu 20 / 20 selon le modele
         $contenuModel = [
             0 => [0, 0, 0],
             1 => [0, 0, 0, 0],
@@ -45,15 +47,12 @@ class FicheRapportTest extends TestCase
         ];
 
         $stage         = factory(Stage::class)->create();
-        $ficheRapport  = factory(FicheRapport::class)->make();
-
-        $ficheRapport->fill([
-            FicheRapport::COL_CONTENU     => json_encode($contenuModel),
-            FicheRapport::COL_MODELE_ID   => $modele->id,
-            FicheRapport::COL_STAGE_ID    => $stage->id
+        $ficheRapport  = factory(FicheRapport::class)->create([
+            FicheRapport::COL_STAGE_ID  => $stage->id,
+            FicheRapport::COL_CONTENU   => json_encode($contenuModel),
+            FicheRapport::COL_MODELE_ID => $modele->id
         ]);
 
-        $ficheRapport->save();
         $this->assertEquals(20.0, $ficheRapport->getNote());
     }
 }
