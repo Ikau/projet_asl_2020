@@ -13,6 +13,7 @@ class SectionTest extends TestCase
         $section = new Section;
 
         $attributsTests = [
+            Section::COL_CHOIX     => Constantes::STRING_VIDE,
             Section::COL_CRITERES  => Constantes::STRING_VIDE,
             Section::COL_INTITULE  => Constantes::STRING_VIDE,
             Section::COL_MODELE_ID => Constantes::ID_VIDE,

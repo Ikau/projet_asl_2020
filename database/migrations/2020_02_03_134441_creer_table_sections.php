@@ -19,6 +19,7 @@ class CreerTableSections extends Migration
             $table->bigIncrements('id');
 
             // Colonnes de la table
+            $table->text(Section::COL_CHOIX);
             $table->text(Section::COL_CRITERES);
             $table->string(Section::COL_INTITULE);
             $table->unsignedInteger(Section::COL_ORDRE);

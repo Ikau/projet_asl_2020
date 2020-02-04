@@ -24,6 +24,7 @@ class Section extends AbstractSection
     /*
      * Nom des colonnes dans la base de donnees
      */
+    const COL_CHOIX    = 'choix';
     const COL_CRITERES = 'criteres';
     const COL_INTITULE = 'intitule';
     const COL_ORDRE    = 'ordre';
@@ -32,6 +33,11 @@ class Section extends AbstractSection
      * Nom des colonnes des clefs etrangeres de Section
      */
     const COL_MODELE_ID = 'modele_id';
+
+    /**
+     * Indique a Laravel de ne pas creer ni de gerer les tables 'created_at' et 'updated_at'.
+     */
+    public $timestamps = false;
 
     /* ====================================================================
      *                            PROPRIETES
@@ -43,6 +49,7 @@ class Section extends AbstractSection
     protected $guarded = ['id'];
 
     protected $casts = [
+        self::COL_CHOIX    => 'array',
         self::COL_CRITERES => 'array'
     ];
 
@@ -53,6 +60,7 @@ class Section extends AbstractSection
      */
     protected $attributes = [
         // Attributs propres au modele
+        self::COL_CHOIX     => Constantes::STRING_VIDE,
         self::COL_CRITERES  => Constantes::STRING_VIDE,
         self::COL_INTITULE  => Constantes::STRING_VIDE,
         self::COL_MODELE_ID => Constantes::ID_VIDE,
