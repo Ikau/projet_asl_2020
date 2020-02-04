@@ -82,14 +82,14 @@ class FicheRapport extends AbstractFiche
     {
         // Verification basique
         $note = 0.0;
-        if(null === $this->contenu)
+        if(null === $this->contenu || Constantes::STRING_VIDE === $this->contenu)
         {
             return $note;
         }
 
         // Recuperation du json
         $notation = json_decode($this->contenu);
-        if(null == $notation)
+        if(null === $notation)
         {
             return $note;
         }
