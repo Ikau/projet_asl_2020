@@ -25,7 +25,6 @@ class FicheRapportTest extends TestCase
 
             // Clefs etrangeres_
             FicheRapport::COL_MODELE_ID   => Constantes::ID_VIDE,
-            FicheRapport::COL_SYNTHESE_ID => Constantes::ID_VIDE,
             FicheRapport::COL_STAGE_ID    => Constantes::ID_VIDE,
         ];
 
@@ -46,17 +45,12 @@ class FicheRapportTest extends TestCase
         ];
 
         $stage         = factory(Stage::class)->create();
-        $ficheSynthese = factory(FicheSynthese::class)->make();
         $ficheRapport  = factory(FicheRapport::class)->make();
-
-        $ficheSynthese[FicheSynthese::COL_STAGE_ID] = $stage->id;
-        $ficheSynthese->save();
 
         $ficheRapport->fill([
             FicheRapport::COL_CONTENU     => json_encode($contenuModel),
             FicheRapport::COL_MODELE_ID   => $modele->id,
-            FicheRapport::COL_STAGE_ID    => $stage->id,
-            FicheRapport::COL_SYNTHESE_ID => $ficheSynthese->id
+            FicheRapport::COL_STAGE_ID    => $stage->id
         ]);
 
         $ficheRapport->save();

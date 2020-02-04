@@ -27,7 +27,6 @@ class FicheRapport extends AbstractFiche
      */
     const COL_MODELE_ID   = 'modele_id';
     const COL_STAGE_ID    = 'stage_id';
-    const COL_SYNTHESE_ID = 'synthese_id';
 
     /**
      * @var string Nom de la table associe au modele 'FicheRapport'
@@ -69,7 +68,6 @@ class FicheRapport extends AbstractFiche
 
         // Clefs etrangeres_
         self::COL_MODELE_ID   => Constantes::ID_VIDE,
-        self::COL_SYNTHESE_ID => Constantes::ID_VIDE,
         self::COL_STAGE_ID    => Constantes::ID_VIDE,
     ];
 
@@ -121,15 +119,6 @@ class FicheRapport extends AbstractFiche
     public function modele()
     {
         return $this->belongsTo(ModeleNotation::class, FicheRapport::COL_MODELE_ID);
-    }
-
-    /**
-     * Renvoie la fiche synthese liee a cette fiche rapport
-     * @var App\Modeles\FicheSynthese
-     */
-    public function synthese()
-    {
-        return $this->belongsTo('App\Modeles\FicheSynthese', FicheRapport::COL_SYNTHESE_ID);
     }
 
     /**

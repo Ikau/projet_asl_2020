@@ -11,11 +11,10 @@ class FicheFacade implements CreationFiches
 {
     public static function creerFiches(int $idStage)
     {
-        $idSynthese = self::creerSynthese($idStage);
-
-        self::creerRapport($idStage, $idSynthese);
+        self::creerRapport($idStage);
         self::creerEntreprise($idStage);
         self::creerSoutenance($idStage);
+        self::creerSynthese($idStage);
     }
 
     static function creerEntreprise(int $stageId)
@@ -23,7 +22,7 @@ class FicheFacade implements CreationFiches
         // TODO: Implement creerEntreprise() method.
     }
 
-    static function creerRapport(int $idStage, int $idSynthese)
+    static function creerRapport(int $idStage)
     {
         // Recuperation de la derniere version du modele
         $modele = ModeleNotation::where(ModeleNotation::COL_TYPE, '=', ModeleNotation::VAL_RAPPORT)
@@ -37,7 +36,6 @@ class FicheFacade implements CreationFiches
 
             $ficheRapport->fill([
                 FicheRapport::COL_MODELE_ID   => $modele->id,
-                FicheRapport::COL_SYNTHESE_ID => $idSynthese,
                 FicheRapport::COL_STAGE_ID    => $idStage
             ]);
 
@@ -50,14 +48,8 @@ class FicheFacade implements CreationFiches
         // TODO: Implement creerSoutenance() method.
     }
 
-    static function creerSynthese(int $stageId) : int
+    static function creerSynthese(int $stageId)
     {
-        $ficheSynthese = new FicheSynthese();
-
-        $ficheSynthese->fill([
-            FicheSynthese::COL_STAGE_ID => $stageId
-        ])->save();
-
-        return $ficheSynthese->id;
+        // TODO: Implement creerSoutenance() method.
     }
 }
