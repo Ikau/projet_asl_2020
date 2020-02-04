@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\CRUD;
 
+use App\Modeles\Fiches\FicheRapport;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Schema;
@@ -115,7 +116,7 @@ class StageControllerTest extends TestCase
             'Intitule null'       => [TRUE, Stage::COL_INTITULE, null],
             'Lieu null'           => [TRUE, Stage::COL_LIEU, null],
             'Resume null'         => [TRUE, Stage::COL_RESUME, null],
-            
+
             'Annee invalide'            => [TRUE, Stage::COL_ANNEE, 'invalide'],
             'Date debut apres date fin' => [TRUE, Stage::COL_DATE_DEBUT, '3000-01-01'],
             'Date fin avant date debut' => [TRUE, Stage::COL_DATE_FIN, '2000-01-01'],
@@ -140,23 +141,23 @@ class StageControllerTest extends TestCase
         $id;
         switch($idCase)
         {
-            case 0: 
-                $id = $stage->id; 
+            case 0:
+                $id = $stage->id;
             break;
 
-            case 1: 
-                $id = "$stage->id"; 
+            case 1:
+                $id = "$stage->id";
             break;
 
-            case 2: 
-                $id = -1; 
+            case 2:
+                $id = -1;
             break;
 
-            case 3: 
-                $id = null; 
+            case 3:
+                $id = null;
             break;
         }
-        
+
         $response = $this->followingRedirects()
         ->from(route('stages.tests'))
         ->post(route('stages.tests'), [
@@ -216,7 +217,7 @@ class StageControllerTest extends TestCase
             }
         }
     }
-    
+
     /**
      * @depends testValiderForm
      */
@@ -240,6 +241,7 @@ class StageControllerTest extends TestCase
             }
         }
 
+        // Integrite des donnees
         $stageTest = Stage::where($clauseWhere)->first();
         $this->assertNotNull($stageTest);
         foreach($this->getAttributsModele() as $a)
@@ -249,6 +251,12 @@ class StageControllerTest extends TestCase
                 $this->assertEquals($stage[$a], $stageTest[$a]);
             }
         }
+
+        // Verification relation avec les fiches
+
+        $ficheRapportTest = FicheRapport::where(FicheRapport::COL_STAGE_ID, '=', $stageTest->id)->first();
+        $this->assertNotNull($ficheRapportTest);
+        $this->assertFichesRapportEgales($ficheRapportTest, $stageTest->fiche_rapport);
     }
 
     /**
@@ -277,7 +285,7 @@ class StageControllerTest extends TestCase
     public function testEdit()
     {
         $stage = factory(Stage::class)->create();
-        
+
         $response = $this->from(route('stages.tests'))
         ->get(route('stages.edit', $stage->id))
         ->assertViewIs('admin.modeles.stage.form')
