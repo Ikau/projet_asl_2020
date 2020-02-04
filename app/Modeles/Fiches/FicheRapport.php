@@ -24,6 +24,7 @@ class FicheRapport extends AbstractFiche
     /*
      * Nom des colonnes des clefs etrangeres
      */
+    const COL_MODELE_ID   = 'modele_id';
     const COL_STAGE_ID    = 'stage_id';
     const COL_SYNTHESE_ID = 'synthese_id';
 
@@ -59,6 +60,7 @@ class FicheRapport extends AbstractFiche
         self::COL_CONTENU      => Constantes::STRING_VIDE,
 
         // Clefs etrangeres_
+        self::COL_MODELE_ID   => Constantes::ID_VIDE,
         self::COL_SYNTHESE_ID => Constantes::ID_VIDE,
         self::COL_STAGE_ID    => Constantes::ID_VIDE,
     ];

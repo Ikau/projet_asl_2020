@@ -18,6 +18,7 @@ class FicheRapportTest extends TestCase
             FicheRapport::COL_CONTENU      => Constantes::STRING_VIDE,
 
             // Clefs etrangeres_
+            FicheRapport::COL_MODELE_ID   => Constantes::ID_VIDE,
             FicheRapport::COL_SYNTHESE_ID => Constantes::ID_VIDE,
             FicheRapport::COL_STAGE_ID    => Constantes::ID_VIDE,
         ];
