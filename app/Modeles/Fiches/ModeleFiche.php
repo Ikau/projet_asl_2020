@@ -66,6 +66,35 @@ class ModeleFiche extends AbstractModeleFiche
     ];
 
     /* ====================================================================
+     *                           CONSTRUCTEUR
+     * ====================================================================
+     */
+    /**
+     * Constructeur de la classe ModeleFiche
+     *
+     * @param string $type Le type de modele a creer
+     * @param int $id L'ID de la fiche liee a ce modele
+     * @param int $version
+     */
+    public function ModeleFiche(string $type, int $id, int $version)
+    {
+        switch ($type)
+        {
+            case self::VAL_ENTREPRISE:
+                break;
+
+            case self::VAL_RAPPORT:
+                break;
+
+            case self::VAL_SOUTENANCE:
+                break;
+
+            case self::VAL_SYNTHESE:
+                break;
+        }
+    }
+
+    /* ====================================================================
      *                            RELATIONS
      * ====================================================================
      */
@@ -73,9 +102,9 @@ class ModeleFiche extends AbstractModeleFiche
      * Renvoie la fiche liee a cette section via une relation Many-to-One polymorphique
      * @return FicheEntreprise|FicheRapport|FicheSoutenance|FicheSynthese
      */
-    public function fiche()
+    public function fiches()
     {
-        return $this->morphTo();
+        // TODO : faire un switch et reconvertir le polymorphique en multi One-to-Many
     }
 
     /**
@@ -87,4 +116,11 @@ class ModeleFiche extends AbstractModeleFiche
         return $this->hasMany(Section::class, Section::COL_MODELE_ID);
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function fiche()
+    {
+        // TODO: Implement fiche() method.
+    }
 }
