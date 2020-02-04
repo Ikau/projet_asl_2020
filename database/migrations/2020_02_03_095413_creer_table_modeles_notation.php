@@ -21,9 +21,6 @@ class CreerTableModelesNotation extends Migration
             $table->string(ModeleNotation::COL_TYPE);
             $table->unsignedInteger(ModeleNotation::COL_VERSION);
 
-            // Relations polymorphique
-            $table->morphs(ModeleNotation::COL_POLY_MODELE);
-
             // On indique que la combinaison est unique
             $table->unique([ModeleNotation::COL_VERSION, ModeleNotation::COL_TYPE]);
         });

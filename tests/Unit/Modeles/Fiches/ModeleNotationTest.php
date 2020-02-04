@@ -15,8 +15,6 @@ class ModeleNotationTest extends TestCase
         $attributsTest = [
             ModeleNotation::COL_TYPE             => Constantes::STRING_VIDE,
             ModeleNotation::COL_VERSION          => Constantes::INT_VIDE,
-            ModeleNotation::COL_POLY_MODELE_ID   => Constantes::ID_VIDE,
-            ModeleNotation::COL_POLY_MODELE_TYPE => Constantes::STRING_VIDE,
         ];
 
         $this->verifieIntegriteConstructeurEloquent($attributsTest, $configFiche, ModeleNotation::NOM_TABLE);

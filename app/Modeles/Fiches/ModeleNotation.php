@@ -43,6 +43,11 @@ class ModeleNotation extends AbstractModeleNotation
     const COL_POLY_MODELE_ID   = 'fiche_id';
     const COL_POLY_MODELE_TYPE = 'fiche_type';
 
+    /**
+     * Indique a Laravel de ne pas creer ni de gerer les tables 'created_at' et 'updated_at'.
+     */
+    public $timestamps = false;
+
     /* ====================================================================
      *                            PROPRIETES
      * ====================================================================
@@ -61,8 +66,6 @@ class ModeleNotation extends AbstractModeleNotation
         // Attributs propres au modele
         self::COL_TYPE             => Constantes::STRING_VIDE,
         self::COL_VERSION          => Constantes::INT_VIDE,
-        self::COL_POLY_MODELE_ID   => Constantes::ID_VIDE,
-        self::COL_POLY_MODELE_TYPE => Constantes::STRING_VIDE,
     ];
 
     /* ====================================================================
@@ -99,28 +102,11 @@ class ModeleNotation extends AbstractModeleNotation
      * ====================================================================
      */
     /**
-     * Renvoie la fiche liee a cette section via une relation Many-to-One polymorphique
-     * @return FicheEntreprise|FicheRapport|FicheSoutenance|FicheSynthese
-     */
-    public function fiches()
-    {
-        // TODO : faire un switch et reconvertir le polymorphique en multi One-to-Many
-    }
-
-    /**
      * Renvoie la liste des sections (avec leur questions) composant le modele de la fiche
      * @return Section
      */
     public function sections()
     {
         return $this->hasMany(Section::class, Section::COL_MODELE_ID);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function fiche()
-    {
-        // TODO: Implement fiche() method.
     }
 }
