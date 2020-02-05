@@ -3,6 +3,7 @@
 namespace App\Modeles\Fiches;
 
 use App\Interfaces\Fiche;
+use App\Modeles\Stage;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Abstracts\Modeles\Fiches\AbstractFiche;
@@ -12,7 +13,7 @@ class FicheRapport extends AbstractFiche
 {
 
     /* ====================================================================
-     *                          BASE DE DONNEES
+     *            Œ              BASE DE DONNEES
      * ====================================================================
      */
 
@@ -127,6 +128,6 @@ class FicheRapport extends AbstractFiche
      */
     public function stage()
     {
-        return $this->belongsTo('App\Modeles\Stage', FicheRapport::COL_STAGE_ID);
+        return $this->belongsTo(Stage::class, FicheRapport::COL_STAGE_ID);
     }
 }
