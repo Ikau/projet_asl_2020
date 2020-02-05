@@ -6,6 +6,7 @@ use App\Modeles\Enseignant;
 use App\Modeles\Fiches\FicheRapport;
 use App\Modeles\Role;
 
+use App\Modeles\Stage;
 use App\User;
 
 use Illuminate\Database\Eloquent\Model;
@@ -75,7 +76,7 @@ abstract class TestCase extends BaseTestCase
      *
      * @return App\User
      */
-    function creerUserRoleEnseignant()
+    function creerUserRoleEnseignant() : User
     {
         // Creation d'un enseignant permis
         $enseignant = factory(Enseignant::class)->create();
@@ -89,6 +90,15 @@ abstract class TestCase extends BaseTestCase
         $user->save();
 
         return $user;
+    }
+
+    /**
+     * Ajoute une affectation valide l'utilisateur en argument
+     * @param User $user Compte utilisateur valide
+     */
+    function ajouteAffectation(User $user)
+    {
+        $stage = factory(Stage::class)->create();
     }
 
     /**
