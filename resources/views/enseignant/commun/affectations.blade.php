@@ -45,7 +45,7 @@
                 <td>{{ $stage->etudiant->promotion }}</td>
                 <td>{{ $stage->intitule }}</td>
                 <td> Entreprise </td>
-                <td> <a href="{{ route('fiches.rapports.show', [$stage->id, $stage->fiche_rapport->id]) }}">Rapport</a> </td>
+                <td> <a href="{{ route('fiches.rapports.show', $stage->id) }}">Rapport</a> </td>
                 <td> Soutenance </td>
                 <td> Synthese </td>
             </tr>
