@@ -13,7 +13,7 @@ $factory->define(FicheRapport::class, function (Faker $faker)
     return [
         // Attributs propres au modele
         FicheRapport::COL_APPRECIATION => $faker->text,
-        FicheRapport::COL_CONTENU      => json_encode([]),
+        FicheRapport::COL_CONTENU      => [],
 
         // Clefs etrangeres_
         FicheRapport::COL_MODELE_ID   => Constantes::ID_VIDE,
@@ -32,6 +32,7 @@ $factory->define(FicheSynthese::class, function (Faker $faker)
         FicheSynthese::COL_STAGE_ID     => Constantes::ID_VIDE,
     ];
 });
+
 $factory->define(Section::class, function (Faker $faker)
 {
     return [

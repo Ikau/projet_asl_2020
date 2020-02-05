@@ -77,6 +77,44 @@ class Section extends AbstractSection
      * ====================================================================
      */
     /**
+     * Renvoie le nombre de points obtenables dans la section
+     * @return float
+     */
+    public function getBareme() : float
+    {
+        // Recuperation des donnees
+        $criteres  = $this->criteres;
+        $maxPoints = $this->getMaxPointsParCriteres();
+
+        return $maxPoints * count($criteres);
+    }
+
+    /**
+     * Renvoie la note totale de la section
+     *
+     * L'array de notation devrait etre de la meme taille que l'array 'criteres'
+     * et contient l'index des choix effectues pour chaque critere :
+     * $notation === [index, ..., index]
+     *
+     * @param $notation array Array de notation conforme au format de la section
+     * @return float Le nombre total de points obtenues dans la section
+     */
+    public function getNoteSection(array $notation) : float
+    {
+        // Recuperation des donnees
+        $choix = $this->choix;
+
+        // Calcul
+        $noteSection = 0.0;
+        foreach($notation as $index)
+        {
+            $noteSection += $choix[$index][$this->INDEX_POINTS];
+        }
+
+        return $noteSection;
+    }
+
+    /**
      * Renvoie le nombre de points associe à l'index du critere en argument
      *
      * @param int $indexChoix L'index du choix des points
@@ -84,7 +122,10 @@ class Section extends AbstractSection
      */
     public function getPoints(int $indexChoix): float
     {
-        return $this->choix[$indexChoix][$this->INDEX_POINTS];
+        // Recuperation de l'array
+        $choix = $this->choix;
+
+        return $choix[$indexChoix][$this->INDEX_POINTS];
     }
 
     /* ====================================================================
@@ -97,5 +138,34 @@ class Section extends AbstractSection
     public function modeleNotation()
     {
         return $this->belongsTo(ModeleNotation::class, Section::COL);
+    }
+
+    /* ====================================================================
+     *                         FONCTIONS PRIVEES
+     * ====================================================================
+     */
+    /**
+     * Itere sur l'ensemble des points obtenables et renvoie la plus haute
+     * valeur attribuable
+     *
+     * @return float Nom de points maximal par criteres
+     */
+    private function getMaxPointsParCriteres() : float
+    {
+        // Recuperation des choix
+        $choix = $this->choix;
+
+        // Iteration pour trouver le max
+        $max = 0.0;
+        foreach($choix as $index => $array)
+        {
+            $valeurCourante = $array[$this->INDEX_POINTS];
+            if($valeurCourante > $max)
+            {
+                $max = $valeurCourante;
+            }
+        }
+
+        return $max;
     }
 }

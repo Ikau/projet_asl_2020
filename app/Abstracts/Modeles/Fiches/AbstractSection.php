@@ -7,6 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 
 abstract class AbstractSection extends Model
 {
+    /**
+     * Renvoie le nombre de points obtenables dans la section
+     * @return float
+     */
+    abstract public function getBareme() : float;
+
+    /**
+     * Renvoie la note totale de la section
+     * @param $notation array Array de notation conforme au format de la section
+     * @return float
+     */
+    abstract public function getNoteSection(array $notation) : float;
 
     /**
      * Renvoie la note totale de la section
