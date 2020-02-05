@@ -9,27 +9,40 @@ use App\Modeles\Fiches\ModeleNotation;
 
 class FicheFacade implements CreationFiches
 {
-    public static function creerFiches(int $idStage)
+
+    public static function creerFiches(int $idStage,
+                                       int $versionEntreprise = null,
+                                       int $versionRapport    = null,
+                                       int $versionSoutenance = null,
+                                       int $versionSynthese   = null)
     {
-        self::creerRapport($idStage);
-        self::creerEntreprise($idStage);
-        self::creerSoutenance($idStage);
-        self::creerSynthese($idStage);
+        self::creerEntreprise($idStage, $versionEntreprise);
+        self::creerRapport($idStage, $versionRapport);
+        self::creerSoutenance($idStage, $versionSoutenance);
+        self::creerSynthese($idStage, $versionSynthese);
     }
 
-    static function creerEntreprise(int $stageId)
+    static function creerEntreprise(int $stageId, int $version = null)
     {
         // TODO: Implement creerEntreprise() method.
     }
 
-    static function creerRapport(int $idStage)
+    static function creerRapport(int $idStage, int $version = null)
     {
-        // Recuperation de la derniere version du modele
-        $modele = ModeleNotation::where(ModeleNotation::COL_TYPE, '=', ModeleNotation::VAL_RAPPORT)
+        // Clause where
+        $clauseWhere = [[ModeleNotation::COL_TYPE, '=', ModeleNotation::VAL_RAPPORT]];
+        if(null !== $version)
+        {
+            $clauseWhere[] = [ModeleNotation::COL_VERSION, '=', $version];
+        }
+
+        // Recuperation du modele avec la derniere version ou celle souhaitee
+        $modele = ModeleNotation::where($clauseWhere)
             ->orderBy(ModeleNotation::COL_VERSION, 'desc')
             ->take(1)
             ->first();
 
+        // Creation de la fiche de rapport
         if( null !== $modele )
         {
             $ficheRapport = new FicheRapport();
@@ -43,12 +56,12 @@ class FicheFacade implements CreationFiches
         }
     }
 
-    static function creerSoutenance(int $stageId)
+    static function creerSoutenance(int $stageId, int $version = null)
     {
         // TODO: Implement creerSoutenance() method.
     }
 
-    static function creerSynthese(int $stageId)
+    static function creerSynthese(int $stageId, int $version = null)
     {
         // TODO: Implement creerSoutenance() method.
     }
