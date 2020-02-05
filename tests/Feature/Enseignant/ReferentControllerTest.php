@@ -3,17 +3,10 @@
 namespace Tests\Feature\CRUD;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
 
-use App\User;
-use App\Modeles\Contact;
-use App\Modeles\Enseignant;
-use App\Modeles\Role;
 use App\Http\Controllers\Enseignant\ReferentController;
-use App\Utils\Constantes;
-use Tests\Traits\TestAuthentification;
+use App\Traits\TestAuthentification;
 
 class ReferentControllerTest extends TestCase
 {
