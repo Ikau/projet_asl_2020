@@ -1,8 +1,6 @@
-<?php 
+<?php
 
-namespace App\Abstracts\Controllers;
-
-use Illuminate\Http\Request; 
+namespace App\Abstracts\Controllers\Fiches;
 
 use App\Http\Controllers\Controller;
 

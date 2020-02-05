@@ -46,4 +46,28 @@ class FicheRapportController extends AbstractFicheRapportController
     {
         // TODO: Implement tests() method.
     }
+
+    /* ====================================================================
+     *                             RESOURCES
+     * ====================================================================
+     */
+    protected function normaliseInputsOptionnels(Request $request)
+    {
+        // TODO: Implement normaliseInputsOptionnels() method.
+    }
+
+    protected function validerForm(Request $request)
+    {
+        // TODO: Implement validerForm() method.
+    }
+
+    protected function validerModele($id)
+    {
+        // TODO: Implement validerModele() method.
+    }
+
+    protected function getAttributsModele()
+    {
+        // TODO: Implement getAttributsModele() method.
+    }
 }
