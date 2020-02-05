@@ -11,6 +11,7 @@ use App\User;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Support\Facades\Schema;
 
 abstract class TestCase extends BaseTestCase
@@ -48,21 +49,6 @@ abstract class TestCase extends BaseTestCase
         // Integrite du nombre des attributs
         $nbAttributs = count(Schema::getColumnListing($nomTable));
         self::assertEquals($nbAttributs, $compteur);
-    }
-
-    /**
-     * Verifie que les deux fiches entrees en argument sont les meme (par rapport au contenu
-     *
-     * @param FicheRapport $ficheTemoin
-     * @param FicheRapport $ficheTest
-     */
-    function assertFichesRapportEgales(FicheRapport $ficheTemoin, FicheRapport $ficheTest)
-    {
-        $attributs = Schema::getColumnListing(FicheRapport::NOM_TABLE);
-        foreach($attributs as $attribut)
-        {
-            $this->assertEquals($ficheTemoin[$attribut], $ficheTest[$attribut]);
-        }
     }
 
     /* ====================================================================

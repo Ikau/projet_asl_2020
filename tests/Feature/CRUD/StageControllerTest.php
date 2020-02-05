@@ -3,8 +3,8 @@
 namespace Tests\Feature\CRUD;
 
 use App\Modeles\Fiches\FicheRapport;
+use App\Traits\TestFiches;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
 
@@ -15,7 +15,7 @@ use App\Utils\Constantes;
 class StageControllerTest extends TestCase
 {
     // Rollback les modifications de la BDD a la fin des tests
-    use RefreshDatabase;
+    use RefreshDatabase, TestFiches;
 
     /* ====================================================================
      *                           TESTS AUXILIAIRES
@@ -138,7 +138,7 @@ class StageControllerTest extends TestCase
     public function testValiderModele(int $idCase, int $statutAttendu)
     {
         $stage = factory(Stage::class)->create();
-        $id;
+        $id = null;
         switch($idCase)
         {
             case 0:
