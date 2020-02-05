@@ -15,10 +15,10 @@ abstract class AbstractFicheRapportController extends AbstractFichesController
      * en suivant les convention de nommage Laravel
      * ====================================================================
      */
-    abstract public function show($idProjet, $id);
-    abstract public function store($idProjet, $id);
-    abstract public function edit($idProjet, $id);
-    abstract public function update($idProjet, $id);
+    abstract public function show($idProjet);
+    abstract public function store($idProjet);
+    abstract public function edit($idProjet);
+    abstract public function update($idProjet);
     abstract public function tests($request);
 
 

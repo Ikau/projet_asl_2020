@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Traits;
+namespace App\Traits;
 
 use App\Modeles\Contact;
 use App\Modeles\Enseignant;
