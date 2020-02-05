@@ -44,6 +44,11 @@ class Section extends AbstractSection
      * ====================================================================
      */
     /**
+     * @var int Index pour obtenir le point dans un critere
+     */
+    private $INDEX_POINTS = 0;
+
+    /**
      * @var array[string] Liste des attributs a assigner manuellement.
      */
     protected $guarded = ['id'];
@@ -68,7 +73,7 @@ class Section extends AbstractSection
     ];
 
     /* ====================================================================
-     *                            RELATIONS
+     *                       FONCTIONS AUXILIAIRES
      * ====================================================================
      */
     /**
@@ -79,18 +84,13 @@ class Section extends AbstractSection
      */
     public function getPoints(int $indexChoix): float
     {
-        return $this->choix[$indexChoix][0];
+        return $this->choix[$indexChoix][$this->INDEX_POINTS];
     }
 
-    /**
-     * Renvoie la liste des criteres liees a cette section via une relation One-to-Many
-     * @return mixed Collection de Critere
+    /* ====================================================================
+     *                            RELATIONS
+     * ====================================================================
      */
-    public function criteres()
-    {
-        return $this->hasMany(Critere::class, Critere::COL_SECTION_ID);
-    }
-
     /**
      * Renvoie le modele de la fiche auquel est lie cette section
      */
