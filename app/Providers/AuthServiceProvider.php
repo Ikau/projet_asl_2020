@@ -7,17 +7,7 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Auth\Access\Response;
 
-use App\User;
-
 use App\Interfaces\Gates;
-
-use App\Modeles\Enseignant;
-use App\Modeles\Privilege;
-use App\Modeles\Role;
-
-use App\Http\Controllers\Enseignant\ReferentController;
-use App\Http\Controllers\Enseignant\ResponsableController;
-use IntitulesGates;
 
 class AuthServiceProvider extends ServiceProvider implements Gates
 {
