@@ -53,6 +53,10 @@ class Section extends AbstractSection
      */
     protected $guarded = ['id'];
 
+    /**
+     * Indique a Laravel quelles proprietes sont a caster vers des types utilisables
+     * @var array
+     */
     protected $casts = [
         self::COL_CHOIX    => 'array',
         self::COL_CRITERES => 'array'

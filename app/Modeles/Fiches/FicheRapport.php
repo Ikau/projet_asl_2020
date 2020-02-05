@@ -72,6 +72,14 @@ class FicheRapport extends AbstractFiche
         self::COL_STAGE_ID    => Constantes::ID_VIDE,
     ];
 
+    /**
+     * Indique a Laravel quelles proprietes sont a caster vers des types utilisables
+     * @var array
+     */
+    protected $casts = [
+        self::COL_CONTENU => 'array',
+    ];
+
     /* ====================================================================
      *                            OVERRIDES
      * ====================================================================
