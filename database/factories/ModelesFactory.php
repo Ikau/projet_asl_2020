@@ -2,12 +2,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Modeles\Fiches\FicheRapport;
-use App\Modeles\Fiches\FicheSynthese;
 use Faker\Generator as Faker;
-
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Str;
 
 use App\Modeles\Contact;
 use App\Modeles\Enseignant;
@@ -75,31 +70,6 @@ $factory->define(Entreprise::class, function (Faker $faker)
         Entreprise::COL_VILLE    => $faker->city,
         Entreprise::COL_REGION   => $faker->region,
         Entreprise::COL_PAYS     => $faker->country,
-    ];
-});
-
-$factory->define(FicheRapport::class, function (Faker $faker)
-{
-    return [
-        // Attributs propres au modele
-        FicheRapport::COL_APPRECIATION => $faker->text,
-        FicheRapport::COL_CONTENU      => json_encode([]),
-
-        // Clefs etrangeres_
-        FicheRapport::COL_MODELE_ID   => Constantes::ID_VIDE,
-        FicheRapport::COL_STAGE_ID    => Constantes::ID_VIDE,
-    ];
-});
-
-$factory->define(FicheSynthese::class, function (Faker $faker)
-{
-    return [
-        // Attributs propres au modele
-        FicheSynthese::COL_COEFFICIENTS => [2, 1, 1],
-        FicheSynthese::COL_MODIFIEUR    => $faker->randomElement([-1.0, -0.5, 0.0, 0.5, 1.0]),
-
-        // Clefs etrangeres
-        FicheSynthese::COL_STAGE_ID     => Constantes::ID_VIDE,
     ];
 });
 
