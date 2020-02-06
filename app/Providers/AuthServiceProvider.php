@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Modeles\Fiches\FicheRapport;
+use App\Policies\FicheRapportPolicy;
 use App\Utils\Constantes;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -18,6 +20,7 @@ class AuthServiceProvider extends ServiceProvider implements Gates
      */
     protected $policies = [
         // 'App\Model' => 'App\Policies\ModelPolicy',
+        FicheRapport::class => FicheRapportPolicy::class,
     ];
 
     /**
