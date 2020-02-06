@@ -2,10 +2,12 @@
 
 namespace App\Facade;
 
+use App\Abstracts\Modeles\Fiches\AbstractFiche;
 use App\Interfaces\CreationFiches;
 use App\Modeles\Fiches\FicheRapport;
 use App\Modeles\Fiches\FicheSynthese;
 use App\Modeles\Fiches\ModeleNotation;
+use App\Modeles\Fiches\Section;
 
 class FicheFacade implements CreationFiches
 {
@@ -47,7 +49,11 @@ class FicheFacade implements CreationFiches
         {
             $ficheRapport = new FicheRapport();
 
+            // Donnees par defaut vide
+            $donnees = [];
+
             $ficheRapport->fill([
+                FicheRapport::COL_CONTENU     => self::creerContenuVide($modele),
                 FicheRapport::COL_MODELE_ID   => $modele->id,
                 FicheRapport::COL_STAGE_ID    => $idStage
             ]);
@@ -64,5 +70,33 @@ class FicheFacade implements CreationFiches
     static function creerSynthese(int $stageId, int $version = null)
     {
         // TODO: Implement creerSoutenance() method.
+    }
+
+    /* ====================================================================
+     *                         FONCTIONS PRIVEES
+     * ====================================================================
+     */
+    /**
+     * Creer un contenu vide a partir d'un modele de notation
+     * @param ModeleNotation $modeleNotation
+     * @return array
+     */
+    private static function creerContenuVide(ModeleNotation $modeleNotation)
+    {
+        $contenuVide = [];
+        foreach($modeleNotation->sections as $section)
+        {
+            $sectionVide = [];
+            for($i=0; $i<count($section->criteres); $i++)
+            {
+                $sectionVide[$i] = [];
+                for($j=0; $j<count($section->choix); $j++)
+                {
+                    $sectionVide[$i][] = -1;
+                }
+            }
+            $contenuVide[] = $sectionVide;
+        }
+        return $contenuVide;
     }
 }
