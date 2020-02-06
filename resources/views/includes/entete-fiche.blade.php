@@ -1,33 +1,59 @@
 {{--
-    TEMPTEMPTEMPTEMPTEMPTEMPTEMP
+    Affiche les informations situees dans les entetes de fiche
 
     Variables a definir depuis le controller appelant :
-        'stage' => Stage Le stage lie a la fiche de rapport
+        'campus' => 'Bourges'|'Blois' Le campus ou se trouve la fiche
+        'numero' => 1|2|3|4           Le numero de la fiche
+        'stage'  => $stage            Le stage lie a la fiche de rapport
 --}}
-<div>
-    <!-- Logo, campus, numero fiche -->
-    <div>
-        <br/> <a>LOGO</a>
-        <br/> <a>Campus de {{ 'Bourges' }}</a>
-        <br/> <a>FICHE N° 2</a>
-    </div>
+<div class="row">
+    <div class="col">
+        <div class="container">
+            {{-- Logo, campus, numero fiche --}}
+            <div class="row">
+                <div class="col">
+                    <div>LOGO INSA</div>
+                    <div>
+                        <p>Campus de {{ $campus }}</p>
+                        <p>FICHE N° {{ $numero }}</p>
+                    </div>
+                </div>
 
-    <!-- Intitule + annee -->
-    <div>
-        <br/> <h1>EVALUATION DU RAPPORT DE STAGE</h1>
-        <br/> <h1> {{ $stage->annee }}e ANNEE 2019 - 2020</h1>
-    </div>
+                {{-- Intitule + annee --}}
+                <div class="col">
+                    <div>
+                        <h1>EVALUATION DU RAPPORT DE STAGE</h1>
+                    </div>
+                    <div>
+                        <h2> {{ $stage->annee_etudiant }}e ANNEE 2019 - 2020</h2>
+                    </div>
+                </div>
+            </div>
 
-    <!-- Stagiaire, Departement/Option, Enseignant Refereent -->
-    <div>
-        <br/> <a>Stagiaire : {{ $stage->etudiant->prenom }} {{ $stage->etudiant->nom }}</a>
-        <br/> <a>Département / Option : {{ $stage->etudiant->departement->intitule }} / {{ $stage->etudiant->option->intitule }}</a>
-        <br/> <a>Enseignant référent : {{ $stage->referent->prenom }} {{ $stage->referent->nom }}</a>
-    </div>
+            <div class="row">
+                {{-- Stagiaire, Departement/Option, Enseignant Refereent --}}
+                <div class="col">
+                    <div>
+                        Stagiaire : {{ $stage->etudiant->prenom }} {{ $stage->etudiant->nom }}
+                    </div>
+                    <div>
+                        Département / Option : {{ $stage->etudiant->departement->intitule }} / {{ $stage->etudiant->option->intitule }}
+                    </div>
+                    <div>
+                        Enseignant référent : {{ $stage->referent->prenom }} {{ $stage->referent->nom }}
+                    </div>
+                </div>
 
-    <!-- Entreprise, Tueur entreprise -->
-    <div>
-        <br/> <a>Entreprise : WIPWIP</a>
-        <br/> <a>Tuteur entreprise : WIPWIP</a>
+                {{-- Entreprise, Tueur entreprise --}}
+                <div class="col">
+                    <div>
+                        Entreprise : WIPWIP
+                    </div>
+                    <div>
+                        Tuteur entreprise : WIPWIP
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

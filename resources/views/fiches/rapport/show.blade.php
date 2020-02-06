@@ -12,7 +12,31 @@
 
 
 @section('contenu')
-    @include('includes.entete-fiche', [
-        'stage' => $stage
-    ])
+{{-- Entete de toutes les fiches --}}
+@include('includes.entete-fiche', [
+    'campus' => 'Bourges',
+    'numero' => 2,
+    'stage'  => $stage,
+])
+{{-- Contenu des sections --}}
+@include('includes.foreach.sections', [
+    'contenu'  => $fiche->contenu,
+    'sections' => $fiche->modele->sections
+])
+{{-- Appreciation globale --}}
+<div class="row">
+    <div class="col">
+        <p>Appréciation globale :</p>
+    </div>
+    <div class="col">
+        <p>{{$fiche->appreciation}}</p>
+    </div>
+</div>
+
+{{-- Note finale / 20 --}}
+<div class="row">
+    <div class="col">
+        <p>{{ $fiche->getNote() }} / 20</p>
+    </div>
+</div>
 @endsection
