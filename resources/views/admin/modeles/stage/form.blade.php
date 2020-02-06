@@ -1,4 +1,4 @@
-{{-- 
+{{--
     Formulaire de creation d'un stage / d'une affectation de stage
 
     Variables a definir depuis la vue appelante :
@@ -48,7 +48,7 @@
         'intitule' => 'Intitule du stage (*)',
         'valeur'   => $stage->intitule ?? old('intitule')
     ])
-    <br/> 
+    <br/>
 
     @include('includes.form.input.select.etudiants', [
         'attribut'  => 'etudiant_id',
@@ -80,24 +80,18 @@
     ])
     <br/>
 
-    {{-- WIP Choix de la date debut desactivee pour l'instant --}}
-    <label for="date_debut">Date de debut du stage (*)</label>
-    <select name="date_debut" id="date_debut">
-        <option value="{{ $stage->date_debut ?? $wip_debut ?? old('date_debut') }}" selected>{{ $stage->date_debut ?? $wip_debut ?? ''}}</option>
-    </select>
-    @error('date_debut')
-    <div class="alert alert-danger">{{ $message }}</div>
-    @enderror
+    @include('includes.form.input.date', [
+        'attribut' => 'date_debut',
+        'intitule' => 'Date de debut du stage (*)',
+        'valeur'   => $stage->date_debut ?? old('date_debut')
+    ])
     <br/>
 
-    {{-- WIP Choix de la date fin desactivee pour l'instant --}}
-    <label for="date_fin">Date de fin du stage (*)</label>
-    <select name="date_fin" id="date_fin">
-        <option value="{{ $stage->date_fin ?? $wip_fin ?? old('date_fin') }}" selected>{{ $stage->date_fin ?? $wip_fin ?? ''}}</option>
-    </select>
-    @error('date_fin')
-    <div class="alert alert-danger">{{ $message }}</div>
-    @enderror
+    @include('includes.form.input.date', [
+        'attribut' => 'date_fin',
+        'intitule' => 'Date de fin du stage (*)',
+        'valeur'   => $stage->date_fin ?? old('date_fin')
+    ])
     <br/>
 
     @include('includes.form.input.text', [
