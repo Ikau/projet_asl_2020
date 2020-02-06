@@ -49,7 +49,7 @@ class FicheRapportTest extends TestCase
         $stage         = factory(Stage::class)->create();
         $ficheRapport  = factory(FicheRapport::class)->create([
             FicheRapport::COL_STAGE_ID  => $stage->id,
-            FicheRapport::COL_CONTENU   => json_encode($contenuModel),
+            FicheRapport::COL_CONTENU   => $contenuModel,
             FicheRapport::COL_MODELE_ID => $modele->id
         ]);
 

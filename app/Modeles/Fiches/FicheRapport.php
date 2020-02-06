@@ -97,7 +97,7 @@ class FicheRapport extends AbstractFiche
         }
 
         // Recuperation du json
-        $notation = json_decode($this->contenu);
+        $notation = $this->contenu;
         if(null === $notation)
         {
             return $note;
@@ -110,7 +110,10 @@ class FicheRapport extends AbstractFiche
             $section = $sections->get($indexSection);
             foreach($criteres as $indexPoints)
             {
-                $note += $section->getPoints($indexPoints);
+                if(-1 !== $indexPoints)
+                {
+                    $note += $section->getPoints($indexPoints);
+                }
             }
         }
 

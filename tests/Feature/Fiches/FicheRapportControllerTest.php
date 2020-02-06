@@ -34,7 +34,7 @@ class FicheRapportControllerTest extends TestCase
      *                        Tests des routes
      * ------------------------------------------------------------------
      */
-    public function aaatestShow()
+    public function testShow()
     {
         // Creation d'un enseignant valide
         $userEnseignant = $this->creerUserRoleEnseignant();

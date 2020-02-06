@@ -78,7 +78,7 @@ class PeuplerTableModelesNotation extends Migration
         $section->fill([
             Section::COL_CHOIX     => $choix,
             Section::COL_INTITULE  => 'RÉDIGER DE MANIERE PROFESSIONNELLE',
-            Section::COL_ORDRE     => 1,
+            Section::COL_ORDRE     => 0,
             Section::COL_CRITERES  => $criteres,
             Section::COL_MODELE_ID => $idModele
         ])->save();
@@ -112,7 +112,7 @@ class PeuplerTableModelesNotation extends Migration
         $section->fill([
             Section::COL_CHOIX     => $choix,
             Section::COL_INTITULE  => 'RENDRE COMPTE DE LA MISSION',
-            Section::COL_ORDRE     => 2,
+            Section::COL_ORDRE     => 1,
             Section::COL_CRITERES  => $criteres,
             Section::COL_MODELE_ID => $idModele
         ])->save();

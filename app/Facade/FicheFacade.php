@@ -87,15 +87,11 @@ class FicheFacade implements CreationFiches
         foreach($modeleNotation->sections as $section)
         {
             $sectionVide = [];
-            for($i=0; $i<count($section->criteres); $i++)
+            for($i=0; $i<count($section->choix); $i++)
             {
-                $sectionVide[$i] = [];
-                for($j=0; $j<count($section->choix); $j++)
-                {
-                    $sectionVide[$i][] = -1;
-                }
+                $sectionVide[] = -1;
             }
-            $contenuVide[] = $sectionVide;
+            $contenuVide[$section->ordre] = $sectionVide;
         }
         return $contenuVide;
     }

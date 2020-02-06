@@ -81,6 +81,6 @@ class TestFacade implements CreationTests
             ],
         ];
 
-        return json_encode($contenu);
+        return $contenu;
     }
 }
