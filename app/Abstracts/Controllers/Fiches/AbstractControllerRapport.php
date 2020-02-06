@@ -2,6 +2,7 @@
 
 namespace App\Abstracts\Controllers\Fiches;
 
+use App\User;
 use Illuminate\Http\Request;
 
 use App\Abstracts\Controllers\Fiches\AbstractFichesController;
@@ -15,10 +16,10 @@ abstract class AbstractFicheRapportController extends AbstractFichesController
      * en suivant les convention de nommage Laravel
      * ====================================================================
      */
-    abstract public function show($idProjet);
-    abstract public function store($idProjet);
-    abstract public function edit($idProjet);
-    abstract public function update($idProjet);
+    abstract public function show(int $idStage);
+    abstract public function store($idStage);
+    abstract public function edit($idStage);
+    abstract public function update($idStage);
     abstract public function tests($request);
 
 
@@ -31,6 +32,5 @@ abstract class AbstractFicheRapportController extends AbstractFichesController
      */
     abstract protected function normaliseInputsOptionnels(Request $request);
     abstract protected function validerForm(Request $request);
-    abstract protected function validerModele($id);
     abstract protected function getAttributsModele();
 }

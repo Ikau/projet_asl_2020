@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Enseignant;
 
+use App\Modeles\Fiches\FicheRapport;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -41,13 +43,29 @@ class FicheRapportController extends AbstractFicheRapportController
      *                             RESOURCES
      * ====================================================================
      */
-    public function show($idProjet)
+    public function show(int $idStage)
     {
+        // Recuperation des donnees
+        $stage = Stage::find($idStage);
+        if(null === $stage)
+        {
+            abort('404');
+        }
 
+        $ficheRapport = $stage->fiche_rapport;
+        if(null === $ficheRapport)
+        {
+            abort('404');
+        }
 
-        return [
-            'titre' => self::VAL_TITRE_SHOW
-        ];
+        // Autorisation
+        $this->verifieAcces(Auth::user(), $ficheRapport);
+
+        return view('fiches.rapport.show', [
+            'titre' => self::VAL_TITRE_SHOW,
+            'fiche' => $ficheRapport,
+            'stage' => $stage
+        ]);
     }
 
     public function store($idProjet)
@@ -84,13 +102,22 @@ class FicheRapportController extends AbstractFicheRapportController
         // TODO: Implement validerForm() method.
     }
 
-    protected function validerModele($id)
-    {
-        // TODO: Implement validerModele() method.
-    }
-
     protected function getAttributsModele()
     {
         // TODO: Implement getAttributsModele() method.
+    }
+
+    /* ====================================================================
+     *                     FONCTION PRIVEES
+     * ====================================================================
+     */
+    private function verifieAcces(User $user, FicheRapport $ficheRapport)
+    {
+        Gate::authorize(Constantes::GATE_ROLE_ENSEIGNANT);
+
+        if( $user->cant('show', $ficheRapport) )
+        {
+            abort('404');
+        }
     }
 }
