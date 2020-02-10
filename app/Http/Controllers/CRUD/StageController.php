@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers\CRUD;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
-use App\Abstracts\AbstractControllerCRUD;
+use App\Abstracts\Controllers\AbstractControllerCRUD;
+
+use App\Http\Controllers\Enseignant\ResponsableController;
+
+use App\Facade\FicheFacade;
 use App\Modeles\Stage;
 use App\Modeles\Enseignant;
 use App\Modeles\Etudiant;
@@ -108,8 +112,16 @@ class StageController extends AbstractControllerCRUD
         // WIP : pour avoir des dates correctes pour tester le form
         $stageTemp = factory(Stage::class)->make();
 
+        // Si redirection depuis une zone de responsable
+        $titre = StageController::TITRE_CREATE;
+        if(null !== Auth::user()
+        && (Auth::user()->estResponsableOption() || Auth::user()->estResponsableDepartement()))
+        {
+            $titre = ResponsableController::TITRE_GET_FORM_AFFECTATION;
+        }
+
         return view('admin.modeles.stage.form', [
-            'titre'       => StageController::TITRE_CREATE,
+            'titre'       => $titre,
             'etudiants'   => $etudiants,
             'enseignants' => $enseignants,
             'wip_debut'   => $stageTemp->date_debut,
@@ -127,10 +139,20 @@ class StageController extends AbstractControllerCRUD
     {
         $this->validerForm($request);
 
+        // Creation du stage
         $stage = new Stage();
         $stage->fill($request->all());
         $stage->save();
 
+        // Creation des fiches
+        FicheFacade::creerFiches($stage->id);
+
+        // Redirection selon l'utilisateur
+        $user = Auth::user();
+        if(null !== $user && ($user->estResponsableOption() || $user->estResponsableDepartement()))
+        {
+            return redirect()->route('referents.index');
+        }
         return redirect()->route('stages.index');
     }
 
@@ -171,7 +193,7 @@ class StageController extends AbstractControllerCRUD
         $attributs   = $this->getAttributsModele();
         $enseignants = Enseignant::all();
         $etudiants   = Etudiant::all();
-        
+
         return view('admin.modeles.stage.form', [
             'titre'       => StageController::TITRE_EDIT,
             'stage'       => $stage,
@@ -179,7 +201,7 @@ class StageController extends AbstractControllerCRUD
             'etudiants'   => $etudiants,
             'enseignants' => $enseignants
         ]);
-    
+
     }
 
     /**
@@ -281,7 +303,7 @@ class StageController extends AbstractControllerCRUD
 
     /**
      * Fonction qui doit faire la logique de validation des inputs d'une requete entrante.
-     * 
+     *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
@@ -310,7 +332,7 @@ class StageController extends AbstractControllerCRUD
 
     /**
      * Fonction qui doit faire la logique de validation de l'id
-     * 
+     *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
@@ -325,15 +347,15 @@ class StageController extends AbstractControllerCRUD
         return Stage::find($id);
     }
 
-    
+
     /**
      * Renvoie l'output de la fonction Schema::getColumnListing(Modele::NOM_TABLE)
-     * 
+     *
      * @return void
      */
     protected function getAttributsModele()
     {
         return Schema::getColumnListing(Stage::NOM_TABLE);
     }
-    
+
 }

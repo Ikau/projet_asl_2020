@@ -4,13 +4,28 @@ namespace App\Modeles;
 
 use Illuminate\Database\Eloquent\Model;
 
-use App\Abstracts\AbstractDepartement;
+use App\Abstracts\Modeles\AbstractDepartement;
 use App\Utils\Constantes;
 use App\Modeles\Enseignant;
 use App\Modeles\Etudiant;
 
 class Departement extends AbstractDepartement
 {
+    /* ====================================================================
+     *                         VALEURS DU MODELE
+     * ====================================================================
+     */
+    const VAL_AUCUN = 'Aucun';
+    const VAL_MRI   = 'MRI';
+    const VAL_STI   = 'STI';
+
+
+
+    /* ====================================================================
+     *                            PROPRIETES
+     * ====================================================================
+     */
+
     /**
      * @var string Nom de la table associe au modele 'Departement'
      */

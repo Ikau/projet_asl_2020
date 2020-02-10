@@ -4,13 +4,34 @@ namespace App\Modeles;
 
 use Illuminate\Database\Eloquent\Model;
 
-use App\Abstracts\AbstractOption;
+use App\Abstracts\Modeles\AbstractOption;
 use App\Utils\Constantes;
 use App\Modeles\Enseignant;
 use App\Modeles\Etudiant;
 
 class Option extends AbstractOption
 {
+    /* ====================================================================
+     *                         VALEURS DU MODELE
+     * ====================================================================
+     */
+    const VAL_AUCUN    = 'Aucune';
+
+    const VAL_STI_2SU  = '2SU';
+    const VAL_STI_4AS  = '4AS';
+    const VAL_STI_ASL  = 'ASL';
+
+    const VAL_MRI_RAI  = 'RAI';
+    const VAL_MRI_RE   = 'RE';
+    const VAL_MRI_RSI  = 'RSI';
+    const VAL_MRI_SFEN = 'SFEN';
+    const VAL_MRI_STLR = 'STLR';
+
+
+    /* ====================================================================
+     *                            PROPRIETES
+     * ====================================================================
+     */
 
     /*
      * Nom des colonnes des clefs etrangeres

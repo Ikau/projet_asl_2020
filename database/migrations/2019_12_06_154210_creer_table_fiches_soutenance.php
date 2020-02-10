@@ -4,8 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-use App\Modeles\FicheSoutenance;
-use App\Modeles\FicheSynthese;
+use App\Modeles\Fiches\FicheSoutenance;
+use App\Modeles\Fiches\FicheSynthese;
 use App\Modeles\Soutenance;
 use App\Modeles\Stage;
 
@@ -20,7 +20,7 @@ class CreerTableFichesSoutenance extends Migration
     {
         Schema::create(FicheSoutenance::NOM_TABLE, function(Blueprint $table) {
             $table->bigIncrements('id');
-            
+
             $table->float('malus');
             $table->unsignedDecimal('note');
             $table->text('appreciation');

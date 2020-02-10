@@ -4,7 +4,7 @@ namespace App\Modeles;
 
 use Illuminate\Database\Eloquent\Model;
 
-use App\Abstracts\AbstractSoutenance;
+use App\Abstracts\Modeles\AbstractSoutenance;
 use App\Utils\Constantes;
 
 class Soutenance extends AbstractSoutenance

@@ -15,7 +15,7 @@ class EntrepriseTest extends TestCase
 {
     /**
      * Test du constructeur du modele
-     * 
+     *
      * @return void
      */
     public function testConstructeur()
@@ -32,20 +32,10 @@ class EntrepriseTest extends TestCase
             Entreprise::COL_VILLE    => Constantes::STRING_VIDE,
             Entreprise::COL_REGION   => Constantes::STRING_VIDE,
             Entreprise::COL_PAYS     => Constantes::STRING_VIDE,
-            
+
             // Clefs etrangeres
         ];
 
-        // Verification du constructeur
-        $nbCompte = 1; // On suppose l'ID existant
-        foreach($attributesTests as $attribut => $valeur)
-        {
-            $this->assertEquals($valeur, $entreprise[$attribut]);
-            $nbCompte++;
-        }
-
-        // Verification du nombre d'attributs
-        $nbAttributs = count(Schema::getColumnListing(Entreprise::NOM_TABLE));
-        $this->assertEquals($nbAttributs, $nbCompte);
+        $this->verifieIntegriteConstructeurEloquent($attributesTests, $entreprise, Entreprise::NOM_TABLE);
     }
 }

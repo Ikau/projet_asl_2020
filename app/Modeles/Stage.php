@@ -2,9 +2,10 @@
 
 namespace App\Modeles;
 
+use App\Modeles\Fiches\FicheRapport;
 use Illuminate\Database\Eloquent\Model;
 
-use App\Abstracts\AbstractStage;
+use App\Abstracts\Modeles\AbstractStage;
 use App\Utils\Constantes;
 
 class Stage extends AbstractStage
@@ -29,7 +30,7 @@ class Stage extends AbstractStage
 
 
     /*
-     * Nom des colonnes des clefs etrangeres de Stage 
+     * Nom des colonnes des clefs etrangeres de Stage
      */
     // Elements obligatoires a la creation
     const COL_ETUDIANT_ID   = 'etudiant_id';
@@ -40,22 +41,24 @@ class Stage extends AbstractStage
     //const COL_ENTREPRISE_ID = 'entreprise_id';
     //const COL_MDS_ID        = 'maitre_de_stage_id';
 
+    /* ====================================================================
+     *                   STRUCTURE DE LA TABLE DU MODELE
+     * ====================================================================
+     */
     /**
      * @var string Nom de la table associe au modele 'Stage'
      */
     const NOM_TABLE = 'stages';
 
+    // On indique a Laravel d'utiliser le nom que l'on a defini
+    protected $table = Stage::NOM_TABLE;
+
     /**
      * Indique a Laravel de ne pas creer ni de gerer les tables 'created_at' et 'updated_at'.
-     * 
+     *
      * @var bool Gestion des timestamps
      */
     public $timestamps = false;
-
-    /**
-     * @var string Nom de la table associee au model 'Stage'.
-     */
-    protected $table = Stage::NOM_TABLE;
 
     /**
      * @var array[string] Liste des attributs a assigner manuellement.
@@ -78,13 +81,18 @@ class Stage extends AbstractStage
         Stage::COL_LIEU               => Constantes::STRING_VIDE,
         Stage::COL_MOYEN_RECHERCHE    => Constantes::STRING_VIDE,
         Stage::COL_RESUME             => Constantes::STRING_VIDE,
-        
+
         // Clefs etrangeres
         Stage::COL_REFERENT_ID   => Constantes::ID_VIDE,
         Stage::COL_ETUDIANT_ID   => Constantes::ID_VIDE,
         //Stage::COL_ENTREPRISE_ID => Constantes::ID_VIDE,
         //Stage::COL_MDS_ID        => Constantes::ID_VIDE,
     ];
+
+    /* ====================================================================
+     *                          RELATIONS ELOQUENT
+     * ====================================================================
+     */
 
     /**
      * Renvoie l'entreprise associee au stage
@@ -119,9 +127,9 @@ class Stage extends AbstractStage
      */
     public function fiche_rapport()
     {
-        return $this->hasOne('App\Modeles\FicheRapport', FicheRapport::COL_STAGE_ID);
+        return $this->hasOne(FicheRapport::class, FicheRapport::COL_STAGE_ID);
     }
-    
+
     /**
      * Renvoie la fiche soutenance du stage
      * @var App\Modeles\FicheSoutenance
@@ -139,7 +147,7 @@ class Stage extends AbstractStage
     {
         return $this->hasOne('App\Modeles\FicheSynthese', FicheSynthese::COL_STAGE_ID);
     }
-    
+
     /**
      * Renvoie le contact ayant le role de maitre de stage
      * @var App\Modeles\Contact
@@ -150,7 +158,7 @@ class Stage extends AbstractStage
     }
 
     /**
-     * Renvoie l'enseignant referent associe au stage. 
+     * Renvoie l'enseignant referent associe au stage.
      * @var App\Modeles\Enseignant
      */
     public function referent()

@@ -59,7 +59,7 @@ class UserControllerTest extends TestCase
         $user[$clefModifiee] = $nouvelleValeur;
 
         // Creation d'un enseignant
-        $user->userable()->associate(factory(Enseignant::class)->create());
+        $user->identite()->associate(factory(Enseignant::class)->create());
 
         // Routage
         $routeSource = route('users.tests');
@@ -100,7 +100,7 @@ class UserControllerTest extends TestCase
         $user = factory(User::class)->make();
 
         // Creation d'un enseignant
-        $user->userable()->associate(factory(Enseignant::class)->create());
+        $user->identite()->associate(factory(Enseignant::class)->create());
         $user->save();
 
         $id;
@@ -333,7 +333,7 @@ class UserControllerTest extends TestCase
         // Creation utilisateur
         $user = factory(User::class)->make();
         $user[User::COL_EMAIL] = $enseignant->email;
-        $user->userable()->associate($enseignant);
+        $user->identite()->associate($enseignant);
         $user->save();
 
         return $user;

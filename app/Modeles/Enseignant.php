@@ -5,7 +5,7 @@ namespace App\Modeles;
 use Illuminate\Database\Eloquent\Model;
 
 use App\User;
-use App\Abstracts\AbstractEnseignant;
+use App\Abstracts\Modeles\AbstractEnseignant;
 use App\Interfaces\BaseDeDonnees;
 use App\Interfaces\CompteUser;
 use App\Utils\Constantes;

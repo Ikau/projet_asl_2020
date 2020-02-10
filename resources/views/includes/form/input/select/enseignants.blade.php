@@ -2,10 +2,10 @@
     Tag <select> affichant specifiquement la liste des enseignants
 
     Variables a definir depuis la vue appelante :
-        'attribut'    : Le nom de l'attribut de l'input dans le form
-        'enseignants' : Collection de App\Modeles\Enseignants
-        'intitule'    : L'intitule de l'input a afficher
-        'valeur'      : La valeur de l'input le cas echeant
+        'attribut'    => Le nom de l'attribut de l'input dans le form
+        'enseignants' => Collection de App\Modeles\Enseignants
+        'intitule'    => L'intitule de l'input a afficher
+        'valeur'      => La valeur de l'input le cas echeant
 --}}
 <label for="{{ $attribut }}">{{ $intitule }}</label>
 <select name="{{ $attribut }}" id="{{ $attribut }}">

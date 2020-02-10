@@ -48,7 +48,7 @@ Route::prefix('admin')->group(function() {
 });
 
 /*
- * Route resources CRUD pour les modeles 
+ * Route resources CRUD pour les modeles
  */
 Route::resource('contacts', 'CRUD\ContactController');
 Route::resource('enseignants', 'CRUD\EnseignantController');
@@ -60,8 +60,8 @@ Route::resource('soutenances', 'CRUD\SoutenanceController');
 Route::resource('users', 'CRUD\UserController');
 
 
-/* 
- * Route de test... 
+/*
+ * Route de test...
  * C'est sale mais je n'ai rien trouve de plus simple ni elegant
  */
 Route::prefix('tests')->group(function() {
@@ -77,4 +77,43 @@ Route::prefix('tests')->group(function() {
         Route::post('soutenances/', 'CRUD\SoutenanceController@tests')->name('soutenances.tests');
         Route::post('users/', 'CRUD\UserController@tests')->name('users.tests');
     });
+});
+
+
+/*
+ |--------------------------------------------------------------------------
+ |                        Routes partie 'Enseignant'
+ |--------------------------------------------------------------------------
+ */
+Route::prefix('enseignant')->group(function() {
+    Route::get('accueil/', 'Enseignant\ReferentController@index')->name('referents.index');
+    Route::get('affectations/', 'Enseignant\ReferentController@affectations')->name('referents.affectations');
+});
+
+
+/*
+ |--------------------------------------------------------------------------
+ |                        Routes partie 'Fiche'
+ |--------------------------------------------------------------------------
+ */
+Route::prefix('fiches')->group(function() {
+    // Entreprise
+
+    // Rapport
+    Route::get('{idStage}/rapport', 'Enseignant\FicheRapportController@show')->name('fiches.rapports.show');
+    Route::post('{idStage}/rapport', 'Fiches\FicheRapportController@store')->name('fiches.rapports.store');
+
+    // Soutenance
+
+    // Synthese
+});
+
+/*
+ |--------------------------------------------------------------------------
+ |                        Routes partie 'Responsable'
+ |--------------------------------------------------------------------------
+ */
+Route::prefix('responsable')->group(function() {
+    Route::get('affectations/', 'Enseignant\ResponsableController@getFormAffectation')->name('responsables.affectations.get');
+    Route::post('affectations/', 'Enseignant\ResponsableController@postFormAffectation')->name('responsable.affectations.store');
 });

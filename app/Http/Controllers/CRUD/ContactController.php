@@ -5,7 +5,7 @@ namespace App\Http\Controllers\CRUD;
 use Illuminate\Http\Request; 
 use Illuminate\Validation\Rule;
 
-use App\Abstracts\AbstractControllerCRUD;
+use App\Abstracts\Controllers\AbstractControllerCRUD;
 use App\Modeles\Contact;
 use App\Utils\Constantes;
 
