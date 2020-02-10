@@ -105,12 +105,8 @@ class StageController extends AbstractControllerCRUD
      */
     public function create()
     {
-        $attributs   = $this->getAttributsModele();
-        $enseignants = Enseignant::all();
-        $etudiants   = Etudiant::all();
-
-        // WIP : pour avoir des dates correctes pour tester le form
-        $stageTemp = factory(Stage::class)->make();
+        $enseignants = Enseignant::orderBy(Enseignant::COL_NOM, 'asc')->get();
+        $etudiants   = Etudiant::orderBy(Etudiant::COL_NOM, 'asc')->get();
 
         // Si redirection depuis une zone de responsable
         $titre = StageController::TITRE_CREATE;
@@ -123,9 +119,7 @@ class StageController extends AbstractControllerCRUD
         return view('admin.modeles.stage.form', [
             'titre'       => $titre,
             'etudiants'   => $etudiants,
-            'enseignants' => $enseignants,
-            'wip_debut'   => $stageTemp->date_debut,
-            'wip_fin'     => $stageTemp->date_fin,
+            'enseignants' => $enseignants
         ]);
     }
 
