@@ -21,7 +21,7 @@
     </div>
 
     <div>
-        <h1>Mes stages de stage</h1>
+        <h1>Mes affectations de stage</h1>
     </div>
 
     <div>
