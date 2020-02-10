@@ -1,11 +1,11 @@
-{{-- 
+{{--
     Page des stages d'un referent. Affiche toutes les stages que possede un enseignant.
 
     Variables a definir depuis la vue appelante :
         'titre'   : string                        Le titre de l'onglet
         'user'    : App\User                      Le compte de l'enseignant authentifie
         'entetes' : array(String)                 Array des entetes du tableau
-        'stages   : Collection(App\Modeles\Stage) Collection des stages affectes a l'enseignant
+        'stages'  : Collection(App\Modeles\Stage) Collection des stages affectes a l'enseignant
 --}}
 @extends('layouts.app')
 
@@ -27,8 +27,8 @@
     <div>
         <table>
             {{-- Structure du tableau
-                 Nom etudiant | Prenom etudiant | 
-                | Annee | Promotion | Departement | Sujet 
+                 Nom etudiant | Prenom etudiant |
+                | Annee | Promotion | Departement | Sujet
                 | Entreprise | Rapport | Soutenance | Synthese  --}}
             <tr>
                 @foreach($entetes as $entete)
@@ -45,12 +45,12 @@
                 <td>{{ $stage->etudiant->promotion }}</td>
                 <td>{{ $stage->intitule }}</td>
                 <td> Entreprise </td>
-                <td> Rapport </td>
+                <td> <a href="{{ route('fiches.rapports.show', $stage->id) }}">Rapport</a> </td>
                 <td> Soutenance </td>
                 <td> Synthese </td>
             </tr>
             @endforeach
         </table>
     </div>
-    
+
 @endsection

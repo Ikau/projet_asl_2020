@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Modeles;
+namespace App\Modeles\Fiches;
 
 use Illuminate\Database\Eloquent\Model;
 
-use App\Abstracts\Modeles\AbstractFiche;
+use App\Abstracts\Modeles\Fiches\AbstractFiche;
 use App\Utils\Constantes;
 
 class FicheSoutenance extends AbstractFiche
 {
     /*
-     * Nom des colonnes des clefs etrangeres 
+     * Nom des colonnes des clefs etrangeres
      */
     const COL_SOUTENANCE_ID = 'soutenance_id';
     const COL_STAGE_ID      = 'stage_id';
@@ -33,7 +33,7 @@ class FicheSoutenance extends AbstractFiche
 
     /**
      * Valeurs par defaut des colonnes du modele 'FicheSoutenance'
-     * 
+     *
      * @var array[string]mixed
      */
     protected $attributes = [
@@ -48,6 +48,23 @@ class FicheSoutenance extends AbstractFiche
         FicheSoutenance::COL_SYNTHESE_ID   => Constantes::ID_VIDE,
     ];
 
+    /* ====================================================================
+     *                            OVERRIDES
+     * ====================================================================
+     */
+    /**
+     * Renvoie la note finale de la fiche
+     * @return float
+     */
+    public function getNote(): float
+    {
+        // TODO: Implement getNote() method.
+    }
+
+    /* ====================================================================
+     *                            RELATIONS
+     * ====================================================================
+     */
     /**
      * Renvoie la soutenance associe a cette fiche de soutenance
      * @var App\Modeles\Soutenance

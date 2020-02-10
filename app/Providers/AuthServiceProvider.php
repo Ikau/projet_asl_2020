@@ -2,20 +2,14 @@
 
 namespace App\Providers;
 
+use App\Modeles\Fiches\FicheRapport;
+use App\Policies\FicheRapportPolicy;
+use App\Utils\Constantes;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Auth\Access\Response;
 
-use App\User;
-
 use App\Interfaces\Gates;
-
-use App\Modeles\Enseignant;
-use App\Modeles\Privilege;
-use App\Modeles\Role;
-
-use App\Http\Controllers\Enseignant\ReferentController;
-use App\Http\Controllers\Enseignant\ResponsableController;
 
 class AuthServiceProvider extends ServiceProvider implements Gates
 {
@@ -26,6 +20,7 @@ class AuthServiceProvider extends ServiceProvider implements Gates
      */
     protected $policies = [
         // 'App\Model' => 'App\Policies\ModelPolicy',
+        FicheRapport::class => FicheRapportPolicy::class,
     ];
 
     /**
@@ -43,13 +38,14 @@ class AuthServiceProvider extends ServiceProvider implements Gates
     }
 
     /**
-     * Enregistre toutes les regles 'Gates' relatifs au controle d'acces pour l'espace.
-     * 
+     * Enregistre toutes les regles 'Gates' relatives au controle d'acces des pages
+     * pour le role 'referent'
+     *
      * @return void
      */
     public function enregistrerGatesReferent()
     {
-        Gate::define(ReferentController::GATE_ROLE_ENSEIGNANT, function($user) {
+        Gate::define(Constantes::GATE_ROLE_ENSEIGNANT, function($user) {
             if( ! $user->estEnseignant() )
             {
                 return Response::deny('Seuls les enseignants peuvent acceder a cette partie du site.');
@@ -69,9 +65,15 @@ class AuthServiceProvider extends ServiceProvider implements Gates
         });
     }
 
+    /**
+     * Enregistre toutes les regles 'Gates' relatives au controle d'acces des pages
+     * pour le role 'responsable-option' ou 'responsable-departement'
+     *
+     * @return void
+     */
     public function enregistrerGatesResponsable()
     {
-        Gate::define(ResponsableController::GATE_ROLE_RESPONSABLE, function($user) {
+        Gate::define(Constantes::GATE_ROLE_RESPONSABLE, function($user) {
             if( ! $user->estEnseignant() )
             {
                 return Response::deny('Seuls les enseignants peuvent acceder a cette partie du site.');
@@ -83,7 +85,7 @@ class AuthServiceProvider extends ServiceProvider implements Gates
             {
                 return Response::allow();
             }
-            else 
+            else
             {
                 return Response::deny('Votre compte enseignant n\'est pas autorise a cette partie du site.');
             }

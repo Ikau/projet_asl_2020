@@ -1,17 +1,27 @@
 <?php
 
-namespace App\Modeles;
+namespace App\Modeles\Fiches;
 
 use Illuminate\Database\Eloquent\Model;
 
-use App\Abstracts\Modeles\AbstractFiche;
+use App\Abstracts\Modeles\Fiches\AbstractFiche;
 use App\Utils\Constantes;
 
 class FicheSynthese extends AbstractFiche
 {
 
+    /* ====================================================================
+     *                          BASE DE DONNEES
+     * ====================================================================
+     */
     /*
-     * Nom des colonnes des clefs etrangeres 
+     * Nom des colonnes dans la base de donnees
+     */
+    const COL_COEFFICIENTS = 'coefficients';
+    const COL_MODIFIEUR    = 'modifieur';
+
+    /*
+     * Nom des colonnes des clefs etrangeres
      */
     const COL_STAGE_ID = 'stage_id';
 
@@ -26,26 +36,59 @@ class FicheSynthese extends AbstractFiche
     protected $table = FicheSynthese::NOM_TABLE;
 
     /**
+     * @var array Valeurs de cast des attributs
+     */
+    protected $casts = [
+        self::COL_COEFFICIENTS => 'array'
+    ];
+
+    /* ====================================================================
+     *                            PROPRIETES
+     * ====================================================================
+     */
+    /**
+     * Indique a Laravel de ne pas creer ni de gerer les tables 'created_at' et 'updated_at'.
+     *
+     * @var bool Gestion des timestamps
+     */
+    public $timestamps = false;
+
+    /**
      * @var array[string] Liste des attributs a assigner manuellement.
      */
     protected $guarded = [];
 
     /**
      * Valeurs par defaut des colonnes du modele 'FicheSynthese'.
-     * 
+     *
      * @var array[string]float
      */
     protected $attributes = [
         // Attributs propres au modele
-        'total_points' => Constantes::FLOAT_VIDE,
-        'modifieur'    => Constantes::FLOAT_VIDE,
-        'note_brute'   => Constantes::FLOAT_VIDE,
-        'note_finale'  => Constantes::FLOAT_VIDE,
+        self::COL_COEFFICIENTS => Constantes::STRING_VIDE,
+        self::COL_MODIFIEUR    => Constantes::FLOAT_VIDE,
 
         // Clefs etrangeres
-        FicheSynthese::COL_STAGE_ID => Constantes::ID_VIDE,
+        self::COL_STAGE_ID => Constantes::ID_VIDE,
     ];
 
+    /* ====================================================================
+     *                            OVERRIDES
+     * ====================================================================
+     */
+    /**
+     * Renvoie la note finale de la fiche
+     * @return float
+     */
+    public function getNote(): float
+    {
+        // TODO: Implement getNote() method.
+    }
+
+    /* ====================================================================
+     *                            RELATIONS
+     * ====================================================================
+     */
     /**
      * Renvoie le stage associe a cette fiche synthese
      * @var App\Modeles\Stage
@@ -80,5 +123,5 @@ class FicheSynthese extends AbstractFiche
     public function fiche_soutenance()
     {
         return $this->hasOne('App\Modeles\FicheSoutenance', FicheSoutenance::COL_SYNTHESE_ID);
-    } 
+    }
 }
