@@ -9,15 +9,15 @@
 @foreach($contenu as $indexSection => $arrayIndex)
 <div class="row">
     <div class="col">
-        <table class="container">
+        <table class="table">
             <thead>{{-- Intitule + Entetes des choix --}}
                 <tr class="row">
-                    <th class="col-7 text-center border-bottom border-right">
+                    <th class="col-7 text-center align-middle border-bottom border-right">
                         <p>{{ $indexSection + 1 }} - {{ $sections[$indexSection]->intitule }}</p>
                     </th>
 
                     @foreach($sections[$indexSection]->choix as $choix)
-                    <th class="col border text-center">
+                    <th class="col border text-center bg-info">
                         <p class="font-weight-light">{{ $choix[1] }}{{-- Intitule --}}</p>
                         <p class="font-weight-light">{{ $choix[0] }} point{{ $choix[0] >= 2 ? 's':'' }}{{-- Nombre de points --}}</p>
                     </th>
