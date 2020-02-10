@@ -13,7 +13,7 @@
             <thead>{{-- Intitule + Entetes des choix --}}
                 <tr class="row">
                     <th class="col-7 text-center border-bottom border-right">
-                        <p>{{ $indexSection }} - {{ $sections[$indexSection]->intitule }}</p>
+                        <p>{{ $indexSection + 1 }} - {{ $sections[$indexSection]->intitule }}</p>
                     </th>
 
                     @foreach($sections[$indexSection]->choix as $choix)
