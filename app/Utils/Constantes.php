@@ -4,7 +4,7 @@ namespace App\Utils;
 
 /**
  * Classe contenant toutes les constantes utilisées par le projet.
- * 
+ *
  * Pour l'instant, les constantes sont écrites en dur.
  * Il faudra implémenter une fonction qui charge les constantes depuis un fichier externe.
  * Le fichier externe devra être humainement visible (.txt, .csv, .cfg, .yaml...).
@@ -21,6 +21,19 @@ class Constantes
     const STRING_VIDE = '';
     const DATE_VIDE   = '2000-01-01';
     const HEURE_VIDE  = '00:00:00';
+
+    /*
+     * Valeurs des gates pour l'utilisation des differents regles
+     * Pour rappel : les gates sont enregistres dans App\Provider\AuthServiceProvider
+     */
+    const GATE_ROLE_RESPONSABLE = 'role-responsable';
+    const GATE_ROLE_ENSEIGNANT  = 'role-enseignant';
+
+    /*
+     * Valeurs des classes sans modele cree par l'Eloquent Factory (utiliser ->raw() )
+     */
+    const FACTORY_CHOIX_SECTION     = 'ChoixSection';
+    const FACTORY_CRITERES_SECTION  = 'CritereSection';
 
     /**
      * @var array[string]int Contient les index minimaux des constantes

@@ -1,5 +1,6 @@
 <?php
 
+use App\Facade\FicheFacade;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -34,7 +35,7 @@ class InsererAffectations extends Migration
 
     /**
      * Cree des affectations de stage pour l'enseignant Bob Dupont
-     * 
+     *
      * @return void
      */
     private function insertAffectationsBobDupont()
@@ -45,11 +46,15 @@ class InsererAffectations extends Migration
         $nbStages = 10;
         for($i=0; $i<$nbStages; $i++)
         {
-            $etudiant                      = factory(Etudiant::class)->create();
-            $stage                         = factory(Stage::class)->make();
-            $stage[Stage::COL_ETUDIANT_ID] = $etudiant->id;
-            $stage[Stage::COL_REFERENT_ID] = $bobDupont->id;
-            $stage->save();
+            // Creation du stage
+            $etudiant  = factory(Etudiant::class)->create();
+            $stage     = factory(Stage::class)->create([
+                Stage::COL_REFERENT_ID => $bobDupont->id,
+                Stage::COL_ETUDIANT_ID => $etudiant->id
+            ]);
+
+            // Creation des fiches
+            FicheFacade::creerFiches($stage->id);
         }
     }
 }

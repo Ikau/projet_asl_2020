@@ -1,10 +1,8 @@
 <?php
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-use Faker\Generator as Faker;
 
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Str;
+use Faker\Generator as Faker;
 
 use App\Modeles\Contact;
 use App\Modeles\Enseignant;
@@ -72,7 +70,7 @@ $factory->define(Entreprise::class, function (Faker $faker)
         Entreprise::COL_VILLE    => $faker->city,
         Entreprise::COL_REGION   => $faker->region,
         Entreprise::COL_PAYS     => $faker->country,
-    ];  
+    ];
 });
 
 $factory->define(Privilege::class, function (Faker $faker)
@@ -84,8 +82,8 @@ $factory->define(Privilege::class, function (Faker $faker)
 
 $factory->define(Stage::class, function (Faker $faker)
 {
-    $idsEnseignant = DB::table(Enseignant::NOM_TABLE)->pluck('id');
-    $idsEtudiant   = DB::table(Etudiant::NOM_TABLE)->pluck('id');
+    $idEnseignant = factory(Enseignant::class)->create()->id;
+    $idEtudiant   = factory(Etudiant::class)->create()->id;
 
     return [
         Stage::COL_ANNEE              => $faker->randomElement([4, 5]),
@@ -102,10 +100,10 @@ $factory->define(Stage::class, function (Faker $faker)
         Stage::COL_LIEU               => $faker->city,
         Stage::COL_MOYEN_RECHERCHE    => $faker->domainName,
         Stage::COL_RESUME             => $faker->text,
-        
+
         // Clefs etrangeres
-        Stage::COL_REFERENT_ID   => $faker->randomElement($idsEnseignant),
-        Stage::COL_ETUDIANT_ID   => $faker->unique()->randomElement($idsEtudiant),
+        Stage::COL_REFERENT_ID   => $idEnseignant,
+        Stage::COL_ETUDIANT_ID   => $idEtudiant
     ];
 });
 

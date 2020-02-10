@@ -1,9 +1,7 @@
 <?php
 
+use App\Modeles\Fiches\FicheRapport;
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
-
 use App\Modeles\Etudiant;
 use App\Modeles\Stage;
 
@@ -20,7 +18,8 @@ class PeuplerTableStages extends Migration
         $nbEtudiant = DB::table(Etudiant::NOM_TABLE)->count();
         for($i=0; $i<$nbEtudiant; $i++)
         {
-            factory(Stage::class)->create();
+            // Creation du stage
+            $stage = factory(Stage::class)->create();
         }
     }
 
@@ -31,6 +30,13 @@ class PeuplerTableStages extends Migration
      */
     public function down()
     {
+        DB::table(FicheRapport::NOM_TABLE)->delete();
         DB::table(Stage::NOM_TABLE)->delete();
     }
+
+    /* ====================================================================
+     *                        FONCTION AUXILIAIRES
+     * ====================================================================
+     */
+
 }
