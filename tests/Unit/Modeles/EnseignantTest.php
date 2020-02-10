@@ -17,7 +17,7 @@ class EnseignantTest extends TestCase
 {
     /**
      * Test du constructeur du modele
-     * 
+     *
      * @return void
      */
     public function testConstructeur()
@@ -28,21 +28,11 @@ class EnseignantTest extends TestCase
             Enseignant::COL_NOM                        => Constantes::STRING_VIDE,
             Enseignant::COL_PRENOM                     => Constantes::STRING_VIDE,
             Enseignant::COL_EMAIL                      => Constantes::STRING_VIDE,
-            
+
             Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID => Constantes::ID_VIDE,
             Enseignant::COL_RESPONSABLE_OPTION_ID      => Constantes::ID_VIDE
         ];
 
-        // Verification du constructeur
-        $nbCompte = 1; // On suppose l'ID existant
-        foreach($attributsTests as $attribut => $valeur)
-        {
-            $this->assertEquals($valeur, $enseignant[$attribut]);
-            $nbCompte++;
-        }
-
-        // Verification du nombre d'attributs
-        $nbAttributs = count(Schema::getColumnListing(Enseignant::NOM_TABLE));
-        $this->assertEquals($nbAttributs, $nbCompte);
+        $this->verifieIntegriteConstructeurEloquent($attributsTests, $enseignant, Enseignant::NOM_TABLE);
     }
 }

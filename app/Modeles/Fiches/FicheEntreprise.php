@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Modeles;
+namespace App\Modeles\Fiches;
 
 use Illuminate\Database\Eloquent\Model;
 
-use App\Abstracts\Modeles\AbstractFiche;
+use App\Abstracts\Modeles\Fiches\AbstractFiche;
 use App\Utils\Constantes;
 
 class FicheEntreprise extends AbstractFiche
 {
     /*
-     * Nom des colonnes des clefs etrangeres 
+     * Nom des colonnes des clefs etrangeres
      */
     const COL_CONTACT_INSA_ID = 'contact_insa_id';
     const COL_SYNTHESE_ID     = 'synthese_id';
@@ -20,7 +20,7 @@ class FicheEntreprise extends AbstractFiche
      * @var string Nom de la table associe au modele 'FicheEntreprise'
      */
     const NOM_TABLE = 'fiches_entreprise';
-    
+
     /**
      * @var string Nom de la table associee au modele 'FicheEntreprise'.
      */
@@ -33,7 +33,7 @@ class FicheEntreprise extends AbstractFiche
 
     /**
      * Valeurs par defaut des colonnes du modele 'FicheEntreprise'.
-     * 
+     *
      * @var array[string]mixed
      */
     protected $attributes = [
@@ -52,6 +52,23 @@ class FicheEntreprise extends AbstractFiche
         FicheEntreprise::COL_SYNTHESE_ID     => Constantes::ID_VIDE,
     ];
 
+    /* ====================================================================
+     *                            OVERRIDES
+     * ====================================================================
+     */
+    /**
+     * Renvoie la note finale de la fiche
+     * @return float
+     */
+    public function getNote(): float
+    {
+        // TODO: Implement getNote() method.
+    }
+
+    /* ====================================================================
+     *                            RELATIONS
+     * ====================================================================
+     */
 
     /**
      * Renvoie le contact INSA qui s'occupe des fiches entreprises.

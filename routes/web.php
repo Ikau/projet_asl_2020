@@ -100,8 +100,8 @@ Route::prefix('fiches')->group(function() {
     // Entreprise
 
     // Rapport
-    Route::get('{idProjet}/rapport/{id}', 'Fiches\FicheRapportController@show')->name('fiches.rapports.show');
-    Route::post('{idProjet}/rapport/{id}', 'Fiches\FicheRapportController@store')->name('fiches.rapports.store');
+    Route::get('{idStage}/rapport', 'Enseignant\FicheRapportController@show')->name('fiches.rapports.show');
+    Route::post('{idStage}/rapport', 'Fiches\FicheRapportController@store')->name('fiches.rapports.store');
 
     // Soutenance
 

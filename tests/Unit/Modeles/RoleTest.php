@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Tests\Unit\Modeles;
 
@@ -15,21 +15,12 @@ class RoleTest extends TestCase
      */
     public function testConstructeur()
     {
-        $role              = new Role;
-        $compteurAttributs = 1; // On suppose l'ID existant
-        $attributs         = [
+        $role = new Role;
+
+        $attributs = [
             Role::COL_INTITULE => Constantes::STRING_VIDE
         ];
 
-        // Integrite du constructeur
-        foreach($attributs as $clef => $valeur)
-        {
-            $this->assertEquals($valeur, $role[$clef]);
-            $compteurAttributs++;
-        }
-
-        // Integrite des attributs
-        $nbAttributs = count(Schema::getColumnListing(Role::NOM_TABLE));
-        $this->assertEquals($nbAttributs, $compteurAttributs);
+        $this->verifieIntegriteConstructeurEloquent($attributs, $role, Role::NOM_TABLE);
     }
 }
