@@ -22,6 +22,7 @@ class FicheRapportTest extends TestCase
             // Attributs propres au modele
             FicheRapport::COL_APPRECIATION => Constantes::STRING_VIDE,
             FicheRapport::COL_CONTENU      => Constantes::STRING_VIDE,
+            FicheRapport::COL_STATUT       => FicheRapport::VAL_STATUT_NOUVELLE,
 
             // Clefs etrangeres_
             FicheRapport::COL_MODELE_ID   => Constantes::ID_VIDE,
@@ -50,7 +51,8 @@ class FicheRapportTest extends TestCase
         $ficheRapport  = factory(FicheRapport::class)->create([
             FicheRapport::COL_STAGE_ID  => $stage->id,
             FicheRapport::COL_CONTENU   => $contenuModel,
-            FicheRapport::COL_MODELE_ID => $modele->id
+            FicheRapport::COL_MODELE_ID => $modele->id,
+            FicheRapport::COL_STATUT    => FicheRapport::VAL_STATUT_COMPLETE
         ]);
 
         $this->assertEquals(20.0, $ficheRapport->getNote());

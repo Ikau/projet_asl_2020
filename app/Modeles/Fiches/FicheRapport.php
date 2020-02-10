@@ -22,6 +22,7 @@ class FicheRapport extends AbstractFiche
      */
     const COL_APPRECIATION = 'appreciation';
     const COL_CONTENU      = 'contenu';
+    const COL_STATUT       = 'statut';
 
     /*
      * Nom des colonnes des clefs etrangeres
@@ -66,6 +67,7 @@ class FicheRapport extends AbstractFiche
         // Attributs propres au modele
         self::COL_APPRECIATION => Constantes::STRING_VIDE,
         self::COL_CONTENU      => Constantes::STRING_VIDE,
+        self::COL_STATUT       => self::VAL_STATUT_NOUVELLE,
 
         // Clefs etrangeres_
         self::COL_MODELE_ID   => Constantes::ID_VIDE,

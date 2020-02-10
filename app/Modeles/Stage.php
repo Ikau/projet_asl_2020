@@ -10,6 +10,10 @@ use App\Utils\Constantes;
 
 class Stage extends AbstractStage
 {
+    /* ====================================================================
+     *                          BASE DE DONNEES
+     * ====================================================================
+     */
     /*
      * Nom des colonnes dans la base de donnees
      */

@@ -14,6 +14,7 @@ $factory->define(FicheRapport::class, function (Faker $faker)
         // Attributs propres au modele
         FicheRapport::COL_APPRECIATION => $faker->text,
         FicheRapport::COL_CONTENU      => [],
+        FicheRapport::COL_STATUT       => FicheRapport::VAL_STATUT_NOUVELLE,
 
         // Clefs etrangeres_
         FicheRapport::COL_MODELE_ID   => Constantes::ID_VIDE,

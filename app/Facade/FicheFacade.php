@@ -55,7 +55,8 @@ class FicheFacade implements CreationFiches
             $ficheRapport->fill([
                 FicheRapport::COL_CONTENU     => self::creerContenuVide($modele),
                 FicheRapport::COL_MODELE_ID   => $modele->id,
-                FicheRapport::COL_STAGE_ID    => $idStage
+                FicheRapport::COL_STAGE_ID    => $idStage,
+                FicheRapport::COL_STATUT      => FicheRapport::VAL_STATUT_NOUVELLE
             ]);
 
             $ficheRapport->save();

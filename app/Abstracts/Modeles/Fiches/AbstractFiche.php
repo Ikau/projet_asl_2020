@@ -7,18 +7,20 @@ use Psy\Util\Json;
 
 abstract class AbstractFiche extends Model
 {
-    /**
-     * Renvoie le contenu de la fiche sous forme d'un array associatie
-     *
-     * La structure de l'array devrait etre sous le format :
-     * array(
-     *    index_section => array_criteres
-     * )
-     *
-     * @return Array
-     */
-    //abstract public function getContenuArray() : Array;
 
+    /* ====================================================================
+     *                         VALEURS DU MODELE
+     * ====================================================================
+     */
+    public const VAL_STATUT_NOUVELLE = 0;
+    public const VAL_STATUT_EN_COURS = 1;
+    public const VAL_STATUT_COMPLETE = 2;
+
+
+    /* ====================================================================
+     *                            FONCTIONS
+     * ====================================================================
+     */
     /**
      * Renvoie la note finale de la fiche
      * @return float
