@@ -6,7 +6,7 @@
         'contenu'    => array(indexSection => [indexChoix]) Le contenu de
         'sections'   => Collection(Section)                 Les sections sur lesquelles iterer
 --}}
-@foreach($contenu as $indexSection => $donnees)
+@foreach($contenu as $indexSection => $arrayIndex)
 <div class="row">
     <div class="col">
         <table class="container">
@@ -27,7 +27,7 @@
             <tbody>{{-- Iteration sur tous les criteres d'une section --}}
                 @include('includes.criteres', [
                     'criteres' => $sections[$indexSection]->criteres,
-                    'donnees'  => $donnees,
+                    'donnees'  => $arrayIndex,
                     'nbChoix'  => count($sections[$indexSection]->choix)
                 ])
             </tbody>
