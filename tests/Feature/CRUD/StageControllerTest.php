@@ -229,7 +229,8 @@ class StageControllerTest extends TestCase
         $response = $this->followingRedirects()
         ->from(route('stages.create'))
         ->post(route('stages.store'), $stage->toArray())
-        ->assertViewIs('admin.modeles.stage.index');
+        ->assertViewIs('admin.modeles.stage.index')
+        ->assertSee('Stage ajoute !');
 
         // Verification de l'insertion
         $clauseWhere = [];

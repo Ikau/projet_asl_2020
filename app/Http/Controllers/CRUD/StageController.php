@@ -145,9 +145,9 @@ class StageController extends AbstractControllerCRUD
         $user = Auth::user();
         if(null !== $user && ($user->estResponsableOption() || $user->estResponsableDepartement()))
         {
-            return redirect()->route('referents.index');
+            return redirect()->route('referents.index')->with('success', 'Stage ajoute !');
         }
-        return redirect()->route('stages.index');
+        return redirect()->route('stages.index')->with('success', 'Stage ajoute !');
     }
 
     /**

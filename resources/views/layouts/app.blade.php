@@ -28,6 +28,12 @@
         @show
 
         <div class="container mt-3">
+            @if( session('success') )
+                <div class="alert alert-success text-success" role="alert">
+                    {{ session('success') }}
+                </div>
+            @endif
+
             @yield('contenu')
         </div>
     </body>
