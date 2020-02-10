@@ -49,9 +49,6 @@ class FicheFacade implements CreationFiches
         {
             $ficheRapport = new FicheRapport();
 
-            // Donnees par defaut vide
-            $donnees = [];
-
             $ficheRapport->fill([
                 FicheRapport::COL_CONTENU     => self::creerContenuVide($modele),
                 FicheRapport::COL_MODELE_ID   => $modele->id,
