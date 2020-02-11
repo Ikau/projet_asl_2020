@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Enseignant;
+namespace App\Http\Controllers\Fiches;
 
 use App\Modeles\Fiches\FicheRapport;
 use App\User;
@@ -28,6 +28,7 @@ class FicheRapportController extends AbstractFicheRapportController
      * Valeurs attendues du tag <titles> pour les pages
      */
     const VAL_TITRE_SHOW = 'Enseignant - Rapport';
+    const VAL_TITRE_EDIT = 'Enseignant - Rapport';
 
     /**
      * Indique a Lavel que toutes les fonctions de callback demandent un utilisateur
@@ -43,6 +44,11 @@ class FicheRapportController extends AbstractFicheRapportController
      *                             RESOURCES
      * ====================================================================
      */
+    public function tests(Request $request)
+    {
+        // TODO: Implement tests() method.
+    }
+
     public function show(int $idStage)
     {
         // Recuperation des donnees
@@ -68,24 +74,35 @@ class FicheRapportController extends AbstractFicheRapportController
         ]);
     }
 
-    public function store($idProjet)
+    public function edit(int $idStage)
     {
-        // TODO: Implement show() method.
+        // Recuperation des donnees
+        $stage = Stage::find($idStage);
+        if(null === $stage)
+        {
+            abort('404');
+        }
+
+        $ficheRapport = $stage->fiche_rapport;
+        if(null === $ficheRapport)
+        {
+            abort('404');
+        }
+
+        // Autorisation
+        $this->verifieAcces(Auth::user(), $ficheRapport);
+
+        return view('fiches.rapport.form', [
+            'titre'    => self::VAL_TITRE_EDIT,
+            'campus'   => 'Bourges',
+            'stage'    => $stage,
+            'sections' => $ficheRapport->modele->sections
+        ]);
     }
 
-    public function edit($idProjet)
-    {
-        // TODO: Implement edit() method.
-    }
-
-    public function update($idProjet)
+    public function update(Request $request, int $idStage)
     {
         // TODO: Implement update() method.
-    }
-
-    public function tests($request)
-    {
-        // TODO: Implement tests() method.
     }
 
     /* ====================================================================
