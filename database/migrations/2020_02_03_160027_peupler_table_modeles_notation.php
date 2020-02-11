@@ -61,7 +61,7 @@ class PeuplerTableModelesNotation extends Migration
         $criteres = [
             "Présenter le rapport de façon conforme (respect des consignes de présentation, mise en page, utilisé des annexes)",
 
-            "S'exprimer de manière correcte en français (orthographe, syntaxe, fluidité de l'expression écrite",
+            "S'exprimer de manière correcte en français (orthographe, syntaxe, fluidité de l'expression écrite)",
 
             "Présenter le rapport de façon didactique et illustrer la réflexion par des figures lisibles et légendées"
         ];
@@ -91,13 +91,13 @@ class PeuplerTableModelesNotation extends Migration
 
         // Creation des criteres
         $criteres = [
-            "Pertinence (préblématique bien cernée",
+            "Pertinence (préblématique bien cernée)",
 
-            "Exhaustivité (le contexte, les objectifs, la démarche et les résultats du stage",
+            "Exhaustivité (le contexte, les objectifs, la démarche et les résultats du stage)",
 
-            "Exactitude (précision du vocabulaire scientifique et technique",
+            "Exactitude (précision du vocabulaire scientifique et technique)",
 
-            "Structure (le rapport suit une progression cohérente"
+            "Structure (le rapport suit une progression cohérente)"
         ];
 
         // Creation des choix communs
