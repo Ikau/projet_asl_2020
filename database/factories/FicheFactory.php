@@ -4,12 +4,19 @@
 
 use App\Modeles\Fiches\FicheRapport;
 use App\Modeles\Fiches\FicheSynthese;
+use App\Modeles\Fiches\ModeleNotation;
 use App\Modeles\Fiches\Section;
+use App\Modeles\Stage;
 use App\Utils\Constantes;
 use Faker\Generator as Faker;
 
 $factory->define(FicheRapport::class, function (Faker $faker)
 {
+    // Recuperation d'un modele existant
+    $modele = ModeleNotation::orderBy(ModeleNotation::COL_VERSION, 'desc')
+        ->get()
+        ->first();
+
     return [
         // Attributs propres au modele
         FicheRapport::COL_APPRECIATION => $faker->text,
@@ -17,8 +24,8 @@ $factory->define(FicheRapport::class, function (Faker $faker)
         FicheRapport::COL_STATUT       => FicheRapport::VAL_STATUT_NOUVELLE,
 
         // Clefs etrangeres_
-        FicheRapport::COL_MODELE_ID   => Constantes::ID_VIDE,
-        FicheRapport::COL_STAGE_ID    => Constantes::ID_VIDE,
+        FicheRapport::COL_MODELE_ID   => $modele->id,
+        FicheRapport::COL_STAGE_ID    => factory(Stage::class)->create()->id,
     ];
 });
 
