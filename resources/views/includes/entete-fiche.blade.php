@@ -6,9 +6,9 @@
         'numero' => 1|2|3|4           Le numero de la fiche
         'stage'  => $stage            Le stage lie a la fiche de rapport
 --}}
-<div class="row">
+<div class="row border">
     {{-- Logo, campus, numero fiche --}}
-    <div class="col text-center border p-3">
+    <div class="col text-center p-3">
         <div class="m-3">
             <img src="{{asset('images/insa-cvl.png')}}"/>
         </div>
@@ -18,7 +18,7 @@
         </div>
     </div>
     {{-- Intitule + annee --}}
-    <div class="col text-center border p-3">
+    <div class="col text-center p-3">
         <div>
             <h1>EVALUATION</h1>
             <h1>RAPPORT DE STAGE</h1>
@@ -28,15 +28,15 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row border">
     {{-- Stagiaire, Departement/Option, Enseignant Refereent --}}
-    <div class="col text-center border p-3">
+    <div class="col text-center p-3">
         <div>Stagiaire : {{ $stage->etudiant->prenom }} {{ $stage->etudiant->nom }}</div>
         <div>Département / Option : {{ $stage->etudiant->departement->intitule }} / {{ $stage->etudiant->option->intitule }}</div>
         <div>Enseignant référent : {{ $stage->referent->prenom }} {{ $stage->referent->nom }}</div>
     </div>
     {{-- Entreprise, Tueur entreprise --}}
-    <div class="col text-center border p-3">
+    <div class="col text-center p-3">
         <div>
             Entreprise : WIPWIP
         </div>
