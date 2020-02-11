@@ -2,6 +2,7 @@
 
 namespace App\Modeles\Fiches;
 
+use App\Traits\NotationFiches;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Abstracts\Modeles\Fiches\AbstractFiche;
@@ -14,6 +15,8 @@ class FicheSynthese extends AbstractFiche
      *                          BASE DE DONNEES
      * ====================================================================
      */
+    use NotationFiches;
+
     /*
      * Nom des colonnes dans la base de donnees
      */

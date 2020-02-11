@@ -3,10 +3,17 @@
 namespace App\Traits;
 
 use App\Modeles\Fiches\FicheRapport;
+use App\Modeles\Fiches\ModeleNotation;
 use App\Modeles\Stage;
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * Trait utilitaire contenant du code souvent reutilise lors des tests.
+ *
+ * Trait TestFiches
+ * @package App\Traits
+ */
 trait TestFiches
 {
     /**
@@ -57,5 +64,18 @@ trait TestFiches
     function assertCriteresIntegres(TestResponse $reponse, $criteres)
     {
 
+    }
+
+    /* ====================================================================
+     *                        GETTERS UTILITAIRES
+     * ====================================================================
+     */
+
+    function getPlusRecentModeleRapport() : ModeleNotation
+    {
+        return ModeleNotation::where(ModeleNotation::COL_TYPE, '=', ModeleNotation::VAL_RAPPORT)
+            ->orderBy(ModeleNotation::COL_VERSION, 'desc')
+            ->limit(1)
+            ->first();
     }
 }

@@ -26,5 +26,11 @@ abstract class AbstractFiche extends Model
      * @return float
      */
     abstract public function getNote() : float;
+
+    /**
+     * Renvoie l'etat de la fiche
+     * @return int
+     */
+    abstract public function getStatut() : int;
 }
 
