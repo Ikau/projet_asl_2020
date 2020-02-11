@@ -31,5 +31,6 @@ abstract class AbstractFicheRapportController extends AbstractFichesController
      */
     abstract protected function normaliseInputsOptionnels(Request $request);
     abstract protected function validerForm(Request $request);
+    abstract protected function validerModele(int $idStage);
     abstract protected function getAttributsModele();
 }

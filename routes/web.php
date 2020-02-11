@@ -76,6 +76,8 @@ Route::prefix('tests')->group(function() {
         Route::post('stages/', 'CRUD\StageController@tests')->name('stages.tests');
         Route::post('soutenances/', 'CRUD\SoutenanceController@tests')->name('soutenances.tests');
         Route::post('users/', 'CRUD\UserController@tests')->name('users.tests');
+
+        Route::post('fiches/rapport', 'Fiches\FicheRapportController@tests')->name('fiches.rapport.tests');
     });
 });
 
@@ -100,9 +102,9 @@ Route::prefix('fiches')->group(function() {
     // Entreprise
 
     // Rapport
-    Route::get('{idStage}/rapport/', 'Fiches\FicheRapportController@show')->name('fiches.rapport.show');
-    Route::get('{idStage}/rapport/edit', 'Fiches\FicheRapportController@edit')->name('fiches.rapport.edit');
-    Route::post('{idStage}/rapport', 'Fiches\FicheRapportController@update')->name('fiches.rapport.update');
+    Route::get('rapport/{id}', 'Fiches\FicheRapportController@show')->name('fiches.rapport.show');
+    Route::get('rapport/{id}/edit', 'Fiches\FicheRapportController@edit')->name('fiches.rapport.edit');
+    Route::post('rapport/{id}', 'Fiches\FicheRapportController@update')->name('fiches.rapport.update');
 
     // Soutenance
 
