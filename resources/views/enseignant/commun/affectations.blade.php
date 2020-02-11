@@ -51,7 +51,7 @@
                     <td> <a class="{{ $stage->fiche_rapport->statut === 0
                                      ? 'text-danger' :  ($stage->fiche_rapport->statut === 1
                                      ? 'text-info' : 'text-success')
-                          }}" href="{{ route('fiches.rapports.show', $stage->id) }}">Rapport</a> </td>
+                          }}" href="{{ route('fiches.rapport.show', $stage->id) }}">Rapport</a> </td>
                     <td> Soutenance </td>
                     <td> Synthese </td>
                 </tr>

@@ -12,7 +12,7 @@
         <table class="table">
             <thead>{{-- Intitule + Entetes des choix --}}
                 <tr class="row">
-                    <th class="col-7 text-center align-middle border-bottom border-right">
+                    <th class="col-7 border text-center">
                         <p>{{ $indexSection + 1 }} - {{ $sections[$indexSection]->intitule }}</p>
                     </th>
 

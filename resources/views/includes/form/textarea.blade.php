@@ -1,4 +1,4 @@
-{{-- 
+{{--
     Tag <textarea> pour les formulaires
 
     Variables a definir depuis la vue appelante :
@@ -8,7 +8,7 @@
 --}}
 <label for="{{ $attribut }}">{{ $intitule }}</label>
 <br/>
-<textarea id="{{ $attribut }}" name="{{ $attribut }}">{{ $valeur }}</textarea>
+<textarea class="form-control" id="{{ $attribut }}" name="{{ $attribut }}">{{ $valeur }}</textarea>
 @error($attribut)
 <div class="alert alert-danger">{{ $message }}</div>
 @enderror
