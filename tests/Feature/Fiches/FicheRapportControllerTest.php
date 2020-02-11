@@ -3,7 +3,7 @@
 namespace Tests\Unit\Modeles\Fiches;
 
 use App\Facade\TestFacade;
-use App\Http\Controllers\Enseignant\FicheRapportController;
+use App\Http\Controllers\Fiches\FicheRapportController;
 use App\Traits\TestFiches;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Traits\TestAuthentification;
@@ -45,7 +45,7 @@ class FicheRapportControllerTest extends TestCase
         // Test routage
         $response =  $this->actingAs($userEnseignant)
             ->from('/')
-            ->get(route('fiches.rapports.show', $stage->id))
+            ->get(route('fiches.rapport.show', $stage->id))
             ->assertOk()
             ->assertViewIs('fiches.rapport.show')
             ->assertSee(FicheRapportController::VAL_TITRE_SHOW);
@@ -53,9 +53,47 @@ class FicheRapportControllerTest extends TestCase
         // Integrite de l'entete
         $this->assertVoitEnteteFiches($response, $stage);
 
-        // Integrite du contenu
-
+        // Integrite des sections
+        $this->assertSectionsEtCriteresIntegres($response, $stage->fiche_rapport->modele->sections);
     }
+
+    public function testEdit()
+    {
+        // Creation d'un enseignant valide
+        $userEnseignant = $this->creerUserRoleEnseignant();
+
+        // Creation d'une affectation valide
+        $stage = TestFacade::creerStagePourEnseignant($userEnseignant);
+
+        // Routage
+        $response = $this->actingAs($userEnseignant)
+            ->from('/')
+            ->get(route('fiches.rapport.edit', $stage->id))
+            ->assertOk()
+            ->assertViewIs('fiches.rapport.form')
+            ->assertSee(FicheRapportController::VAL_TITRE_EDIT);
+
+        // Integrite de l'entete
+        $this->assertVoitEnteteFiches($response, $stage);
+
+        // Integrite des sections
+        $this->assertSectionsEtCriteresIntegres($response, $stage->fiche_rapport->modele->sections);
+    }
+
+    /*
+    public function testStore()
+    {
+        // Creation d'un enseignant valide
+        $userEnseignant = $this->creerUserRoleEnseignant();
+
+        // Creation d'une affectation valide
+        $stage = TestFacade::creerStagePourEnseignant($userEnseignant);
+
+        // Test routage
+        $response = $this->actingAs($userEnseignant)
+            ->from(route('fiches'))
+    }
+    */
 
     /* ------------------------------------------------------------------
      *                  AUXILIAIRES : fonctions privees

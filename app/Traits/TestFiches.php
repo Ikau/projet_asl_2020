@@ -56,14 +56,23 @@ trait TestFiches
         // TODO
     }
 
-    function assertSectionsIntegres(TestResponse $reponse, $sections)
+    /**
+     * Permet de verifier que les sections et les choix soient bien presents dans la page
+     *
+     * @param TestResponse $reponse Resultat d'un test de reponse vers la page de la fiche souhaitee
+     * @param $sections
+     */
+    function assertSectionsEtCriteresIntegres(TestResponse $reponse, $sections)
     {
-
-    }
-
-    function assertCriteresIntegres(TestResponse $reponse, $criteres)
-    {
-
+        foreach($sections as $section)
+        {
+            $reponse->assertSee(e($section->intitule));
+            for($i=0; $i<count($section->criteres); $i++)
+            {
+                $reponse->assertSee(e($section->getIntitule($i)))
+                    ->assertSee(e($section->getPoints($i)));
+            }
+        }
     }
 
     /* ====================================================================
