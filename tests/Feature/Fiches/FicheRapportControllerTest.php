@@ -251,9 +251,11 @@ class FicheRapportControllerTest extends TestCase
 
         // Routage
         $response = $this->actingAs($userEnseignant)
+            ->followingRedirects()
             ->from(route('fiches.rapport.edit', $ficheRapport->id))
             ->patch(route('fiches.rapport.update', $ficheRapport->id), $ficheRapport->toArray())
-            ->assertRedirect(route('fiches.rapport.show', $ficheRapport->id));
+            ->assertViewIs('fiches.rapport.show')
+            ->assertSee(FicheRapportController::VAL_ALERT_UPDATE_SUCCES);
 
         // Integrite de la mise a jour
         $ficheRapportTest = FicheRapport::find($ficheRapport->id);

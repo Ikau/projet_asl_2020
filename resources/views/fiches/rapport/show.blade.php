@@ -12,7 +12,7 @@
 
 
 @section('contenu')
-<div class="container py-5">
+<div class="container">
     {{-- Entete de toutes les fiches --}}
     @include('includes.entete-fiche', [
         'campus' => 'Bourges',

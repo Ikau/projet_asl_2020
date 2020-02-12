@@ -32,6 +32,11 @@ class FicheRapportController extends AbstractFicheRapportController
      */
     const VAL_TITRE_SHOW = 'Enseignant - Rapport';
     const VAL_TITRE_EDIT = 'Enseignant - Rapport';
+    /*
+     * Valeurs attendues d'un message contenu dans un bloc 'alert'
+     */
+    const VAL_ALERT_UPDATE_SUCCES = 'Le rapport a bien ete modifie !';
+
 
     /**
      * Indique a Lavel que toutes les fonctions de callback demandent un utilisateur
@@ -171,12 +176,24 @@ class FicheRapportController extends AbstractFicheRapportController
         $ficheRapport->statut = $ficheRapport->getStatut();
         $ficheRapport->save();
 
-        return redirect()->route('fiches.rapport.show', $ficheRapport->id);
+        return redirect()
+            ->route('fiches.rapport.show', $ficheRapport->id)
+            ->with('success', self::VAL_ALERT_UPDATE_SUCCES);
     }
 
     /* ====================================================================
      *                     FONCTION AUXILIAIRES
      * ====================================================================
+     */
+    /**
+     * Fonction auxiliaire qui a pour tache de normaliser les inputs utilisateurs
+     *
+     * Notamment :
+     *  - l'appreciation devient un string nul s'il est manquant ou incorrect
+     *  - l'input des choix est normalise comme des choix "non mise a jour" sur valeurs incorrectes
+     *    Pour rappel : un choix "non mise a jour" correspond a un index -1
+     *
+     * @param Request $request
      */
     protected function normaliseInputsOptionnels(Request $request)
     {
@@ -204,23 +221,30 @@ class FicheRapportController extends AbstractFicheRapportController
             $sections       = $modele->sections()->orderBy(Section::COL_ORDRE, 'asc')->get();
             $arrayNormalise = [];
 
+            // On itere sur le nombre de sections
             for($i=0; $i<count($sections); $i++)
             {
+                // Rappel : -1 === chiffre magique pour inquer une non mise a jour
                 $sectionVide = array_fill(0, count($sections[$i]->criteres), -1);
+
+                // Si l'index n'a pas d'entree on considere entierement nouvelle
                 if( ! array_key_exists($i, $contenu) )
                 {
                     $arrayNormalise[] = $sectionVide;
                     continue;
                 }
 
+                // On itere sur le contenu qui est de structure array(indexSection => arrayChoix)
                 for($j=0; $j<count($contenu[$i]); $j++)
                 {
+                    // On itere sur les choix selectionnes
                     $nbChoix = count($sections[$i]->choix);
-                    if($j > $nbChoix)
+                    if($j > $nbChoix) // Malformation du choix
                     {
                         continue;
                     }
 
+                    // Si le choix est coherent on l'enregistre
                     $choixCourant = (int)($contenu[$i][$j]);
                     if(0 <= $choixCourant && $choixCourant < $nbChoix)
                     {
@@ -261,6 +285,15 @@ class FicheRapportController extends AbstractFicheRapportController
     /* ====================================================================
      *                     FONCTION PRIVEES
      * ====================================================================
+     */
+    /**
+     * Verifie si l'utilisateur courant a le droit d'acceder a la fiche de rapport
+     *
+     * Voir les Gates et les Policies appropriees
+     *
+     * @param User $user
+     * @param FicheRapport $ficheRapport
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     private function verifieAcces(User $user, FicheRapport $ficheRapport)
     {
