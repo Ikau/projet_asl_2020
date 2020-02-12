@@ -11,7 +11,10 @@ use App\Modeles\Fiches\Section;
 
 class FicheFacade implements CreationFiches
 {
-
+    /* ====================================================================
+     *                 FONCTIONS DE CREATION DES FICHES
+     * ====================================================================
+     */
     public static function creerFiches(int $idStage,
                                        int $versionEntreprise = null,
                                        int $versionRapport    = null,
@@ -71,7 +74,7 @@ class FicheFacade implements CreationFiches
     }
 
     /* ====================================================================
-     *                         FONCTIONS PRIVEES
+     *                        FONCTIONS UTILITAIRE
      * ====================================================================
      */
     /**
@@ -79,7 +82,7 @@ class FicheFacade implements CreationFiches
      * @param ModeleNotation $modeleNotation
      * @return array
      */
-    private static function creerContenuVide(ModeleNotation $modeleNotation)
+    public static function creerContenuVide(ModeleNotation $modeleNotation)
     {
         $contenuVide = [];
         foreach($modeleNotation->sections as $section)

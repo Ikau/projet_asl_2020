@@ -74,6 +74,7 @@ class TestFacade implements CreationTests
             ],
             1 => [$faker->randomElement([0, 1, 2, 3]),
                 $faker->randomElement([0, 1, 2, 3]),
+                $faker->randomElement([0, 1, 2, 3]),
                 $faker->randomElement([0, 1, 2, 3])
             ],
             2 => [$faker->randomElement([0, 1, 2, 3]),
