@@ -14,9 +14,6 @@
 
 @section('contenu')
 <div class="container">
-    <div class="row">
-        <a class="btn btn-primary" href="{{ route('referents.affectations') }}">Retour à mes affectations</a>
-    </div>
 
     @include('includes.entete-fiche', [
         'campus' => $campus,
@@ -57,14 +54,17 @@
                 <h1>Note du rapport de stage</h1>
             </div>
             <div class="col-2 border border-primary text-right">
-                <h1>... / 20</h1>
+                <h1><span id="spanNote"></span> / 20</h1>
             </div>
         </div>
 
-        {{-- Bouton d'enregistrement --}}
         <div class="row">
             <div class="col text-right">
-                <button class="btn btn-success" type="submit">Enregistrer les modifications</button>
+                {{-- Bouton de retour --}}
+                <a class="btn btn-lg btn-danger" href="{{ route('fiches.rapport.show', $stage->fiche_rapport->id) }}">Quitter sans modifier</a>
+
+                {{-- Bouton d'enregistrement --}}
+                <button class="btn btn-lg btn-success" type="submit">Enregistrer les modifications</button>
             </div>
         </div>
 
