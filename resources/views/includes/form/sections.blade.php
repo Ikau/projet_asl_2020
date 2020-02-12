@@ -14,18 +14,22 @@
                 <tr class="row">
                     <th class="col-7 border text-center">
                         <p>{{ $i + 1 }} - {{ $sections[$i]->intitule }}</p>
-                        <p><span id="s{{$i}}points">...</span> / {{$sections[$i]->getBareme()}}</p>
+                        <p>
+                            <span id="spanNoteS{{ $i }}">{{ $sections[$i]->getNoteSection($contenu[$i]) }}</span> / {{ $sections[$i]->getBareme() }}
+                        </p>
                     </th>
 
-                    @foreach($sections[$i]->choix as $choix)
+                    @for($j=0; $j<count($sections[$i]->choix); $j++)
                         <th class="col border text-center bg-info">
-                            <p class="font-weight-light">{{ $choix[1] }}{{-- Intitule --}}</p>
-                            <p class="font-weight-light">{{ $choix[0] }} point{{ $choix[0] >= 2 ? 's':'' }}{{-- Nombre de points --}}</p>
+                            <p class="font-weight-light">{{ $sections[$i]->choix[$j][1] }}{{-- Intitule --}}</p>
+                            <p class="font-weight-light">
+                                <span id="spanS{{$i}}C{{$j}}">{{ $sections[$i]->choix[$j][0] }}</span> point{{ $sections[$i]->choix[$j][0] >= 2 ? 's':'' }}{{-- Nombre de points --}}
+                            </p>
                         </th>
-                    @endforeach
+                    @endfor
                 </tr>
                 </thead>
-                <tbody>{{-- Iteration sur tous les criteres d'une section --}}
+                <tbody id="section{{$i}}">{{-- Iteration sur tous les criteres d'une section --}}
                 @include('includes.form.criteres', [
                     'contenu'      => $contenu,
                     'criteres'     => $sections[$i]->criteres,

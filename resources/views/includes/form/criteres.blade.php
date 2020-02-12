@@ -21,7 +21,7 @@
         @for($j=0; $j<$nbChoix; $j++)
             <td class="col p-0">
                 <label class="btn btn-block h-100 border" for="s{{$indexSection}}c{{$i}}rb{{$j}}">
-                    <input id="s{{$indexSection}}c{{$i}}rb{{$j}}" {{$contenu[$indexSection][$i] === $j ? 'checked="checked"' : ''}} type="radio" name="contenu[{{$indexSection}}][{{$i}}]" value="{{$j}}">
+                    <input id="s{{$indexSection}}c{{$i}}rb{{$j}}" onchange="majNoteSection({{$indexSection}})" {{$contenu[$indexSection][$i] === $j ? 'checked="checked"' : ''}} type="radio" name="contenu[{{$indexSection}}][{{$i}}]" value="{{$j}}">
                 </label>
             </td>
         @endfor

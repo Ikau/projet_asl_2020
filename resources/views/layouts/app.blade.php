@@ -1,6 +1,7 @@
 <html>
     <head>
         <title>@yield('titre')</title>
+        @yield('inclusionHead')
         <link rel="stylesheet" href="/css/app.css">
         <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/style.css') }}"/>
     </head>

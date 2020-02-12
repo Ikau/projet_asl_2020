@@ -12,6 +12,10 @@
 
 @section('titre', $titre)
 
+@section('inclusionHead')
+    <script type="text/javascript" src="{{ asset('js/fiches/edit-rapport-modele-v1.js') }}"></script>
+@endsection
+
 @section('contenu')
 <div class="container">
 
@@ -31,11 +35,13 @@
             'valeur'   => $stage->fiche_rapport->modele->id ?? old(\App\Modeles\Fiches\FicheRapport::COL_MODELE_ID)
         ])
 
-        {{-- Inclusion de toutes les sections --}}
-        @include('includes.form.sections', [
-            'contenu'  => $stage->fiche_rapport->contenu,
-            'sections' => $sections,
-        ])
+        <div id="container-sections">
+            {{-- Inclusion de toutes les sections --}}
+            @include('includes.form.sections', [
+                'contenu'  => $stage->fiche_rapport->contenu,
+                'sections' => $sections,
+            ])
+        </div>
 
         {{-- TextArea pour l'appreciation --}}
         <div class="row">
@@ -54,7 +60,7 @@
                 <h1>Note du rapport de stage</h1>
             </div>
             <div class="col-2 border border-primary text-right">
-                <h1><span id="spanNote"></span> / 20</h1>
+                <h1><span id="spanNote">{{ $stage->fiche_rapport->getNote() }}</span> / 20</h1>
             </div>
         </div>
 
