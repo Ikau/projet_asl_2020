@@ -115,7 +115,10 @@ class Section extends AbstractSection
         $noteSection = 0.0;
         foreach($notation as $index)
         {
-            $noteSection += $choix[$index][self::VAL_INDEX_CRITERE_POINTS];
+            if(-1 !== $index)
+            {
+                $noteSection += $choix[$index][self::VAL_INDEX_CRITERE_POINTS];
+            }
         }
 
         return $noteSection;
