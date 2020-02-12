@@ -24,8 +24,15 @@
         'stage'  => $stage
     ])
 
-    <form class="my-4" method="POST" action="{{ route('fiches.rapport.update', $stage->id) }}">
+    <form class="my-4" method="POST" action="{{ route('fiches.rapport.update', $stage->fiche_rapport->id) }}">
+        @method('PATCH')
         @csrf
+
+        {{-- Quelques informations cacheess --}}
+        @include('includes.form.input.hidden', [
+            'attribut' => 'modele_id',
+            'valeur'   => $stage->fiche_rapport->modele->id
+        ])
 
         {{-- Inclusion de toutes les sections --}}
         @include('includes.form.sections', [

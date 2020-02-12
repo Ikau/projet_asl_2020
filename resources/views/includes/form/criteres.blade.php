@@ -13,9 +13,14 @@
         @for($j=0; $j<$nbChoix; $j++)
             <td class="col p-0">
                 <label class="btn btn-block h-100 border" for="s{{$indexSection}}c{{$i}}rb{{$j}}">
-                    <input id="s{{$indexSection}}c{{$i}}rb{{$j}}" type="radio" name="choix[{{$indexSection}}][{{$i}}]" value="{{$j}}">
+                    <input id="s{{$indexSection}}c{{$i}}rb{{$j}}" type="radio" name="contenu[{{$indexSection}}][{{$i}}]" value="{{$j}}">
                 </label>
             </td>
         @endfor
+        <td hidden class="col p-0">
+            <label class="btn btn-block h-100 border" for="s{{$indexSection}}c{{$i}}rb{{$j}}">
+                <input id="s{{$indexSection}}c{{$i}}rb{{$j}}" type="radio" name="contenu[{{$indexSection}}][{{$i}}]" checked="checked" value="-1">
+            </label>
+        </td>
     </tr>
 @endfor
