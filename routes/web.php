@@ -104,7 +104,7 @@ Route::prefix('fiches')->group(function() {
     // Rapport
     Route::get('rapport/{id}', 'Fiches\FicheRapportController@show')->name('fiches.rapport.show');
     Route::get('rapport/{id}/edit', 'Fiches\FicheRapportController@edit')->name('fiches.rapport.edit');
-    Route::post('rapport/{id}', 'Fiches\FicheRapportController@update')->name('fiches.rapport.update');
+    Route::patch('rapport/{id}', 'Fiches\FicheRapportController@update')->name('fiches.rapport.update');
 
     // Soutenance
 

@@ -8,6 +8,7 @@ use App\Modeles\Fiches\FicheRapport;
 use App\Traits\TestFiches;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Traits\TestAuthentification;
+use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
 
 
@@ -98,9 +99,7 @@ class FicheRapportControllerTest extends TestCase
             // Sucess
             'Appreciation valide' => [FALSE, FicheRapport::COL_APPRECIATION, 'valide'],
             'Contenu valide'      => [FALSE, FicheRapport::COL_CONTENU, [[0, 1, 2], [0, 1, 2, 3], [0, 1]]],
-            'Stage valide'        => [FALSE, 'valide', 'dansFactory'],
             'Modele valide'       => [FALSE, 'valide', 'dansFactory'],
-
 
             'Appreciation null' => [FALSE, FicheRapport::COL_APPRECIATION, null],
             'Contenu null'      => [FALSE, FicheRapport::COL_CONTENU, null],
@@ -109,10 +108,8 @@ class FicheRapportControllerTest extends TestCase
             'Contenu invalide'      => [FALSE, FicheRapport::COL_CONTENU, -1],
 
             // Echecs
-            'Stage null'  => [TRUE, FicheRapport::COL_STAGE_ID, null],
             'Modele null' => [TRUE, FicheRapport::COL_MODELE_ID, null],
 
-            'Stage invalide'  => [TRUE, FicheRapport::COL_STAGE_ID, -1],
             'Modele invalide' => [TRUE, FicheRapport::COL_MODELE_ID, -1],
         ];
     }
@@ -170,6 +167,9 @@ class FicheRapportControllerTest extends TestCase
      *                        Tests des routes
      * ------------------------------------------------------------------
      */
+    /**
+     * @depends testValiderForm
+     */
     public function testShow()
     {
         // Creation d'un enseignant valide
@@ -193,6 +193,9 @@ class FicheRapportControllerTest extends TestCase
         $this->assertSectionsEtCriteresIntegres($response, $stage->fiche_rapport->modele->sections);
     }
 
+    /**
+     * @depends testValiderForm
+     */
     public function testEdit()
     {
         // Creation d'un enseignant valide
@@ -216,27 +219,59 @@ class FicheRapportControllerTest extends TestCase
         $this->assertSectionsEtCriteresIntegres($response, $stage->fiche_rapport->modele->sections);
     }
 
-    /*
-    public function testStore()
+    /**
+     * @depends testValiderForm
+     * @dataProvider updateProvider
+     */
+    public function testUpdate(string $clefModifiee, $valeurAttendue, $nouvelleValeur)
     {
         // Creation d'un enseignant valide
         $userEnseignant = $this->creerUserRoleEnseignant();
 
-        // Creation d'une affectation valide
-        $stage = TestFacade::creerStagePourEnseignant($userEnseignant);
+        // Creation d'une fiche de stage
+        $stage                       = TestFacade::creerStagePourEnseignant($userEnseignant);
+        $ficheRapport                = $stage->fiche_rapport;
 
-        // Test routage
+
+        // Si le cas est 'Contenu malforme'
+        if($valeurAttendue === [] &&  $nouvelleValeur === [[24, 32, 0], [0, 2, 1], []])
+        {
+            $valeurAttendue = $ficheRapport->contenu;
+            $valeurAttendue[0][2] = 0;
+            $valeurAttendue[1][0] = 0;
+            $valeurAttendue[1][1] = 2;
+            $valeurAttendue[1][2] = 1;
+        }
+        // Sinon si le cas est un array
+        else if($valeurAttendue === [])
+        {
+            $valeurAttendue = $ficheRapport->contenu;
+        }
+        $ficheRapport[$clefModifiee] = $nouvelleValeur;
+
+        // Routage
         $response = $this->actingAs($userEnseignant)
-            ->from(route('fiches'))
+            ->from(route('fiches.rapport.edit', $ficheRapport->id))
+            ->patch(route('fiches.rapport.update', $ficheRapport->id), $ficheRapport->toArray())
+            ->assertRedirect(route('fiches.rapport.show', $ficheRapport->id));
+
+        // Integrite de la mise a jour
+        $ficheRapportTest = FicheRapport::find($ficheRapport->id);
+        $this->assertNotNull($ficheRapportTest);
+
+        $this->assertEquals($valeurAttendue, $ficheRapportTest[$clefModifiee]);
     }
-    */
 
-    /* ------------------------------------------------------------------
-     *                  AUXILIAIRES : fonctions privees
-     * ------------------------------------------------------------------
-     */
-    private function assertContenuFicheOk()
+    public function updateProvider()
     {
+        return [
+            'Appreciation valide'   => [FicheRapport::COL_APPRECIATION, 'valide', 'valide'],
+            'Appreciation null'     => [FicheRapport::COL_APPRECIATION, '', null],
+            'Appreciation invalide' => [FicheRapport::COL_APPRECIATION, '', -1],
 
+            'Contenu null'     => [FicheRapport::COL_CONTENU, [], null],
+            'Contenu invalide' => [FicheRapport::COL_CONTENU, [], -1],
+            'Contenu malforme' => [FicheRapport::COL_CONTENU, [], [[24, 32, 0], [0, 2, 1], []]]
+        ];
     }
 }

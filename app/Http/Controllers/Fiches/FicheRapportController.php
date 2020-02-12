@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Fiches;
 
+use App\Facade\FicheFacade;
 use App\Modeles\Fiches\FicheRapport;
 use App\Modeles\Fiches\ModeleNotation;
+use App\Modeles\Fiches\Section;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -81,7 +83,7 @@ class FicheRapportController extends AbstractFicheRapportController
 
     public function show(int $id)
     {
-        // Recuperation des donnees
+        // Verification du modele
         $ficheRapport = $this->validerModele($id);
         if(null === $ficheRapport)
         {
@@ -120,7 +122,56 @@ class FicheRapportController extends AbstractFicheRapportController
 
     public function update(Request $request, int $id)
     {
-        // TODO: Implement update() method.
+        // Verificaiton du modele
+        $ficheRapport = $this->validerModele($id);
+        if(null === $ficheRapport)
+        {
+            abort('404');
+        }
+
+        // Autorisation
+        $this->verifieAcces(Auth::user(), $ficheRapport);
+
+        // Validation du form
+        $this->validerForm($request);
+
+        // Mise a jour des choix si besoin
+        $nouveauContenu = $ficheRapport->contenu;
+        $sections       = $ficheRapport->modele->sections;
+        if($request->has(FicheRapport::COL_CONTENU))
+        {
+            $inputs = $request[FicheRapport::COL_CONTENU];
+            for($i=0; $i<count($sections); $i++)
+            {
+                // Si l'index n'existe pas on saute
+                if( ! array_key_exists($i, $inputs))
+                {
+                    continue;
+                }
+
+                // On va mettre a jour les choix
+                $section = $sections[$i];
+                for($j=0; $j<count($section->criteres); $j++)
+                {
+                    // On met a jour seulement si c'est une valeur correcte
+                    $choixCourant = (int)($inputs[$i][$j]);
+                    if(0 <= $choixCourant && $choixCourant < count($section->choix))
+                    {
+                        $nouveauContenu[$i][$j] = $choixCourant;
+                    }
+                }
+            }
+        }
+
+        // Mise a jour des elements restants
+        $ficheRapport->fill([
+            FicheRapport::COL_CONTENU      => $nouveauContenu,
+            FicheRapport::COL_APPRECIATION => $request[FicheRapport::COL_APPRECIATION]
+        ]);
+        $ficheRapport->statut = $ficheRapport->getStatut();
+        $ficheRapport->save();
+
+        return redirect()->route('fiches.rapport.show', $ficheRapport->id);
     }
 
     /* ====================================================================
@@ -138,21 +189,54 @@ class FicheRapportController extends AbstractFicheRapportController
             $request[FicheRapport::COL_APPRECIATION] = "";
         }
 
-        // Contenu
+        // Contenu manquant
         $contenu = $request[FicheRapport::COL_CONTENU];
         if($request->missing(FicheRapport::COL_CONTENU)
         || null === $contenu
         || ! is_array($contenu))
         {
-            $request[FicheRapport::COL_CONTENU] = [];
+            $modele = ModeleNotation::find($request->modele_id);
+            $request[FicheRapport::COL_CONTENU] = FicheFacade::creerContenuVide($modele);
+        }
+        else // Normalisation du contenu
+        {
+            $modele         = ModeleNotation::find($request->modele_id);
+            $sections       = $modele->sections()->orderBy(Section::COL_ORDRE, 'asc')->get();
+            $arrayNormalise = [];
+
+            for($i=0; $i<count($sections); $i++)
+            {
+                $sectionVide = array_fill(0, count($sections[$i]->criteres), -1);
+                if( ! array_key_exists($i, $contenu) )
+                {
+                    $arrayNormalise[] = $sectionVide;
+                    continue;
+                }
+
+                for($j=0; $j<count($contenu[$i]); $j++)
+                {
+                    $nbChoix = count($sections[$i]->choix);
+                    if($j > $nbChoix)
+                    {
+                        continue;
+                    }
+
+                    $choixCourant = (int)($contenu[$i][$j]);
+                    if(0 <= $choixCourant && $choixCourant < $nbChoix)
+                    {
+                        $sectionVide[$j] = $choixCourant;
+                    }
+                }
+                $arrayNormalise[] = $sectionVide;
+            }
+            $request[FicheRapport::COL_CONTENU] = $arrayNormalise;
         }
     }
 
     protected function validerForm(Request $request)
     {
         $request->validate([
-            FicheRapport::COL_MODELE_ID => ['required', 'exists:'.ModeleNotation::NOM_TABLE.',id'],
-            FicheRapport::COL_STAGE_ID  => ['required', 'exists:'.Stage::NOM_TABLE.',id']
+            FicheRapport::COL_MODELE_ID => ['required', 'exists:'.ModeleNotation::NOM_TABLE.',id']
         ]);
 
         $this->normaliseInputsOptionnels($request);
