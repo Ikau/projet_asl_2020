@@ -3,7 +3,8 @@
     /!\ On suppose que les sections sont ordonnees par ordre croissant sur 'ordre'
 
     Variables a definir depuis le controller appelant :
-        'sections'   => Collection(Section) Les sections sur lesquelles iterer
+        'contenu'  => array(array...)     Le contenu de la fiche de notation
+        'sections' => Collection(Section) Les sections sur lesquelles iterer
 --}}
 @for($i=0; $i<count($sections); $i++)
     <div class="row">
@@ -26,9 +27,10 @@
                 </thead>
                 <tbody>{{-- Iteration sur tous les criteres d'une section --}}
                 @include('includes.form.criteres', [
-                    'criteres'      => $sections[$i]->criteres,
+                    'contenu'      => $contenu,
+                    'criteres'     => $sections[$i]->criteres,
                     'indexSection' => $i,
-                    'nbChoix'       => count($sections[$i]->choix)
+                    'nbChoix'      => count($sections[$i]->choix)
                 ])
                 </tbody>
             </table>

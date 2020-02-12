@@ -113,10 +113,10 @@ class FicheRapportController extends AbstractFicheRapportController
         $this->verifieAcces(Auth::user(), $ficheRapport);
 
         return view('fiches.rapport.form', [
-            'titre'    => self::VAL_TITRE_EDIT,
-            'campus'   => 'Bourges',
-            'stage'    => $ficheRapport->stage,
-            'sections' => $ficheRapport->modele->sections
+            'titre'       => self::VAL_TITRE_EDIT,
+            'campus'      => 'Bourges',
+            'stage'       => $ficheRapport->stage,
+            'sections'    => $ficheRapport->modele->sections
         ]);
     }
 

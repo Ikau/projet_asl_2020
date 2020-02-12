@@ -30,12 +30,10 @@
 
     {{-- Appreciation globale --}}
     <div class="row">
-        <div class="col">
-            <h4>Appréciation globale :</h4>
-        </div>
-        <div class="col">
-            <p>{{$fiche->appreciation}}</p>
-        </div>
+        <h4>Appréciation globale :</h4>
+    </div>
+    <div class="row">
+        <p>{{$fiche->appreciation}}</p>
     </div>
 
     {{-- Note finale / 20 --}}

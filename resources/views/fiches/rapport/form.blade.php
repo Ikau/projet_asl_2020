@@ -2,12 +2,12 @@
     Formulaire de creation d'un stage / d'une affectation de stage
 
     Variables a definir depuis la vue appelante :
-        'campus'   => 'Bourges'|'Blois'   Le campus ou se trouve la fiche
-        'stage'    => $stage              Le stage lie a la fiche de rapport
-        'titre'    => string              Le titre de l'onglet
-        'sections' => Collection(Section) Ensemble des sections de la fiche
+        'campus'      => 'Bourges'|'Blois'   Le campus ou se trouve la fiche
+        'stage'       => $stage              Le stage lie a la fiche de rapport
+        'titre'       => string              Le titre de l'onglet
+        'sections'    => Collection(Section) Ensemble des sections de la fiche
+        'classeFiche' => FicheRapport::class La classe FicheRapport
 --}}
-
 @extends('layouts.app')
 
 @section('titre', $titre)
@@ -30,22 +30,23 @@
 
         {{-- Quelques informations cacheess --}}
         @include('includes.form.input.hidden', [
-            'attribut' => 'modele_id',
-            'valeur'   => $stage->fiche_rapport->modele->id
+            'attribut' => \App\Modeles\Fiches\FicheRapport::COL_MODELE_ID,
+            'valeur'   => $stage->fiche_rapport->modele->id ?? old(\App\Modeles\Fiches\FicheRapport::COL_MODELE_ID)
         ])
 
         {{-- Inclusion de toutes les sections --}}
         @include('includes.form.sections', [
-            'sections' => $sections
+            'contenu'  => $stage->fiche_rapport->contenu,
+            'sections' => $sections,
         ])
 
         {{-- TextArea pour l'appreciation --}}
         <div class="row">
             <div class="col">
                 @include('includes.form.textarea', [
-                    'attribut' => 'appreciation',
+                    'attribut' => \App\Modeles\Fiches\FicheRapport::COL_APPRECIATION,
                     'intitule' => 'Appréciation globale :',
-                    'valeur'   => ""
+                    'valeur'   => $stage->fiche_rapport->appreciation ?? old(\App\Modeles\Fiches\FicheRapport::COL_APPRECIATION)
                 ])
             </div>
         </div>
