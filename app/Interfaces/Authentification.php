@@ -18,6 +18,11 @@ interface Authentification
     /**
      * @return bool Renvoie TRUE si l'utilisateur est un enseignant, FALSE sinon.
      */
+    public function estAdministrateur() : bool;
+
+    /**
+     * @return bool Renvoie TRUE si l'utilisateur est un enseignant, FALSE sinon.
+     */
     public function estEnseignant() : bool;
 
     /**

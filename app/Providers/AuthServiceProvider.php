@@ -33,6 +33,7 @@ class AuthServiceProvider extends ServiceProvider implements Gates
         $this->registerPolicies();
 
         // Gates personnalises
+        $this->enregistrerGatesAdminitrateur();
         $this->enregistrerGatesReferent();
         $this->enregistrerGatesResponsable();
         $this->enregistrerGatesScolarite();
@@ -43,9 +44,22 @@ class AuthServiceProvider extends ServiceProvider implements Gates
      * ------------------------------------------------------------------
      */
 
+    /**
+     * Enregistre toutes les regles 'Gates' relatives au controle d'acces des pages
+     * pour le role 'administrateur'
+     *
+     * @return void
+     */
     public function enregistrerGatesAdminitrateur()
     {
-        // TODO: Implement enregistrerGatesAdminitrateur() method.
+        Gate::define(Constantes::GATE_ROLE_ADMINISTRATEUR, function($user) {
+            if( ! $user->estAdministrateur() )
+            {
+                return Response::deny("Seuls les administrateurs peuvent accéder à cette partie du site.");
+            }
+
+            return Response::allow();
+        });
     }
 
     /**
@@ -59,7 +73,7 @@ class AuthServiceProvider extends ServiceProvider implements Gates
         Gate::define(Constantes::GATE_ROLE_ENSEIGNANT, function($user) {
             if( ! $user->estEnseignant() )
             {
-                return Response::deny('Seuls les enseignants peuvent acceder a cette partie du site.');
+                return Response::deny('Seuls les enseignants peuvent accéder a cette partie du site.');
             }
 
             return Response::allow();
@@ -77,7 +91,7 @@ class AuthServiceProvider extends ServiceProvider implements Gates
         Gate::define(Constantes::GATE_ROLE_RESPONSABLE, function($user) {
             if( ! $user->estEnseignant() )
             {
-                return Response::deny('Seuls les enseignants peuvent acceder a cette partie du site.');
+                return Response::deny('Seuls les enseignants peuvent accéder a cette partie du site.');
             }
 
             // Verification si role responsable+ autorise
@@ -88,7 +102,7 @@ class AuthServiceProvider extends ServiceProvider implements Gates
             }
             else
             {
-                return Response::deny('Votre compte enseignant n\'est pas autorise a cette partie du site.');
+                return Response::deny("Seuls les responsables d'option ou de département peuvent accéder à cette partie du site.");
             }
         });
     }

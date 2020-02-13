@@ -255,6 +255,15 @@ class User extends Authenticatable implements Utilisateur, Authentification,  Mu
     /**
      * @return bool Renvoie TRUE si l'utilisateur est un enseignant, FALSE sinon.
      */
+    public function estAdministrateur() : bool
+    {
+        $roleAdministrateur = Role::where(Role::COL_INTITULE, '=', Role::VAL_ADMIN)->first();
+        return $this->roles->contains($roleAdministrateur);
+    }
+
+    /**
+     * @return bool Renvoie TRUE si l'utilisateur est un enseignant, FALSE sinon.
+     */
     public function estEnseignant() : bool
     {
         $roleEnseignant = Role::where(Role::COL_INTITULE, '=', Role::VAL_ENSEIGNANT)->first();
@@ -279,6 +288,9 @@ class User extends Authenticatable implements Utilisateur, Authentification,  Mu
         return $this->roles->contains($roleResponsableDepartement);
     }
 
+    /**
+     * @return bool Renvoie TRUE si l'utilisateur possede le role 'scolarite' et est membre de l'INSA
+     */
     public function estScolariteINSA(): bool
     {
        $roleScolarite = Role::where(Role::COL_INTITULE, '=', Role::VAL_SCOLARITE)->first();
