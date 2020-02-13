@@ -35,7 +35,7 @@
                     <div class="card-body">
                         @foreach(Auth::user()->notifications()->limit(5)->get() as $notification)
                             <div class="card-header border h4">
-                                <span class="badge badge-secondary">{{ $notification->created_at->format('d-m-yy') }}</span>
+                                <span class="badge badge-secondary">{{ $notification->created_at->format('d-m-y') }}</span>
                                 <span class="badge badge-info text-white">{{ \App\Facade\NotificationFacade::getTypeEvenement($notification) }}</span>
                                 <span>{{ \App\Facade\NotificationFacade::getTitre($notification) }}</span>
                             </div>
