@@ -80,8 +80,9 @@
             @endif
 
             <div class="content">
-                <div class="title m-b-md">
-                    Laravel
+                <div class="m-b-md">
+                    <h1>Projet d'option ASL 2020</h1>
+                    <h3>"Numérisation de la notation des stages"</h3>
                 </div>
 
                 <div class="links">
