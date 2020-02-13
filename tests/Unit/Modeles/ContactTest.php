@@ -24,8 +24,8 @@ class ContactTest extends TestCase
         $attributsTests = [
             Contact::COL_NOM       => Constantes::STRING_VIDE,
             Contact::COL_PRENOM    => Constantes::STRING_VIDE,
-            Contact::COL_CIVILITE  => Constantes::CIVILITE['vide'],
-            Contact::COL_TYPE      => Constantes::TYPE_CONTACT['vide'],
+            Contact::COL_CIVILITE  => Contact::VAL_CIVILITE_VIDE,
+            Contact::COL_TYPE      => Contact::VAL_TYPE_VIDE,
             Contact::COL_EMAIL     => Constantes::STRING_VIDE,
             Contact::COL_TELEPHONE => Constantes::STRING_VIDE,
             Contact::COL_ADRESSE   => Constantes::STRING_VIDE

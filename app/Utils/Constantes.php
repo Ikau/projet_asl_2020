@@ -86,23 +86,6 @@ class Constantes
     ];
 
     /**
-     * @var array[string]string Master suivie par l'etudiant
-     */
-    const MASTER = [
-        'vide'    => '',
-        'aucun'   => 'aucun',
-        'master1' => 'master1'
-    ];
-
-    /**
-     * @var array[string]string Nationnalite de l'etudiant
-     */
-    const NATIONALITE = [
-        'vide'      => '',
-        'francaise' => 'française'
-    ];
-
-    /**
      * @var array[string]string Indique le type de contact
      */
     const TYPE_CONTACT = [

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\CRUD;
 
-use Illuminate\Http\Request; 
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 use App\Abstracts\Controllers\AbstractControllerCRUD;
@@ -24,7 +24,7 @@ class ContactController extends AbstractControllerCRUD
      */
     const CSS_ERREUR = 'alert alert-danger';
 
-    public function index() 
+    public function index()
     {
         $contacts = Contact::all();
 
@@ -34,7 +34,7 @@ class ContactController extends AbstractControllerCRUD
         ]);
     }
 
-    public function create() 
+    public function create()
     {
         return view('admin.modeles.contact.form', [
             'titre'    => ContactController::TITRE_CREATE,
@@ -43,7 +43,7 @@ class ContactController extends AbstractControllerCRUD
         ]);
     }
 
-    public function store(Request $request) 
+    public function store(Request $request)
     {
         $this->validerForm($request);
 
@@ -54,7 +54,7 @@ class ContactController extends AbstractControllerCRUD
         return redirect()->route('contacts.index');
     }
 
-    public function show($id) 
+    public function show($id)
     {
         $contact = $this->validerModele($id);
         if(null === $contact) abort('404');
@@ -65,7 +65,7 @@ class ContactController extends AbstractControllerCRUD
         ]);
     }
 
-    public function edit($id) 
+    public function edit($id)
     {
         $contact = Contact::find($id);
         if(null === $contact) abort('404');
@@ -79,7 +79,7 @@ class ContactController extends AbstractControllerCRUD
         ]);
     }
 
-    public function update(Request $request, $id) 
+    public function update(Request $request, $id)
     {
         $this->validerForm($request);
         $contact = $this->validerModele($id);
@@ -91,7 +91,7 @@ class ContactController extends AbstractControllerCRUD
         return redirect()->route('contacts.index');
     }
 
-    public function destroy($id) 
+    public function destroy($id)
     {
         $contact = $this->validerModele($id);
         if(null === $contact) abort('404');
@@ -109,7 +109,7 @@ class ContactController extends AbstractControllerCRUD
 
                 if(! in_array($request[Contact::COL_CIVILITE], Constantes::CIVILITE)
                 || ! is_string($request[Contact::COL_TELEPHONE])
-                || ! is_string($request[Contact::COL_ADRESSE])) 
+                || ! is_string($request[Contact::COL_ADRESSE]))
                 {
                     abort('404');
                 }
@@ -141,9 +141,9 @@ class ContactController extends AbstractControllerCRUD
         || null === $civilite
         || ! in_array($civilite, Constantes::CIVILITE))
         {
-            $request[Contact::COL_CIVILITE] = Constantes::CIVILITE['vide'];
+            $request[Contact::COL_CIVILITE] = Contact::VAL_CIVILITE_VIDE;
         }
-        
+
         // Telephone
         $telephone = $request[Contact::COL_TELEPHONE];
         if($request->missing(Contact::COL_CIVILITE)
@@ -152,7 +152,7 @@ class ContactController extends AbstractControllerCRUD
         {
             $request[Contact::COL_TELEPHONE] = Constantes::STRING_VIDE;
         }
-        
+
         // Adresse
         $adresse = $request[Contact::COL_ADRESSE];
         if($request->missing(Contact::COL_ADRESSE)
@@ -173,7 +173,7 @@ class ContactController extends AbstractControllerCRUD
             Contact::COL_NOM       => ['required', 'string'],
             Contact::COL_PRENOM    => ['required', 'string'],
             Contact::COL_TYPE      => ['required',
-                'integer', 
+                'integer',
                 Rule::in(Constantes::TYPE_CONTACT)
             ],
             Contact::COL_EMAIL      => ['required', 'email'],

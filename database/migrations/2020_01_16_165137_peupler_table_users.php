@@ -77,8 +77,8 @@ class PeuplerTableUsers extends Migration
         $contactAdmin->fill([
             Contact::COL_NOM       => 'admin',
             Contact::COL_PRENOM    => 'admin',
-            Contact::COL_CIVILITE  => Constantes::CIVILITE['vide'],
-            Contact::COL_TYPE      => Constantes::TYPE_CONTACT['insa'],
+            Contact::COL_CIVILITE  => Contact::VAL_CIVILITE_VIDE,
+            Contact::COL_TYPE      => Contact::VAL_TYPE_INSA,
             Contact::COL_EMAIL     => 'admin@exemple.fr',
             Contact::COL_TELEPHONE => '',
             Contact::COL_ADRESSE   => '',
