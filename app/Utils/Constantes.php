@@ -19,16 +19,17 @@ class Constantes
     const FLOAT_VIDE  = 0.0;
     const INT_VIDE    = 0;
     const STRING_VIDE = '';
-    const DATE_VIDE   = '2000-01-01';
+    const DATE_VIDE   = '2000-01-01'; // Format y-m-d
     const HEURE_VIDE  = '00:00:00';
 
     /*
      * Valeurs des gates pour l'utilisation des differents regles
      * Pour rappel : les gates sont enregistres dans App\Provider\AuthServiceProvider
      */
-    const GATE_ROLE_RESPONSABLE = 'role-responsable';
-    const GATE_ROLE_ENSEIGNANT  = 'role-enseignant';
-    const GATE_ROLE_SCOLARITE   = 'role-scolarite';
+    const GATE_ROLE_ADMINISTRATEUR = 'role-administrateur';
+    const GATE_ROLE_RESPONSABLE    = 'role-responsable';
+    const GATE_ROLE_ENSEIGNANT     = 'role-enseignant';
+    const GATE_ROLE_SCOLARITE      = 'role-scolarite';
 
     /*
      * Valeurs des classes sans modele cree par l'Eloquent Factory (utiliser ->raw() )

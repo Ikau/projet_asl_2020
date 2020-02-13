@@ -43,6 +43,11 @@ class AuthServiceProvider extends ServiceProvider implements Gates
      * ------------------------------------------------------------------
      */
 
+    public function enregistrerGatesAdminitrateur()
+    {
+        // TODO: Implement enregistrerGatesAdminitrateur() method.
+    }
+
     /**
      * Enregistre toutes les regles 'Gates' relatives au controle d'acces des pages
      * pour le role 'referent'
