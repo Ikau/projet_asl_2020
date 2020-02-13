@@ -19,7 +19,9 @@
                     <h3>🏗️ Liens utiles 🚧</h3>
                 </div>
                 <div class="card-body">
+                    <a class="btn btn-lg btn-primary" href="{{ route('admin.index') }}">Espace administrateur</a>
                     <a class="btn btn-lg btn-primary" href="{{ route('referents.index') }}">Espace enseignant</a>
+                    <a class="btn btn-lg btn-primary" href="{{ route('scolarite.index') }}">Espace scolarite</a>
                 </div>
             </div>
         </div>

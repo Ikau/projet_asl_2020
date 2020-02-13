@@ -20,7 +20,7 @@
                 @endif
 
                 <div class="card-header text-white bg-secondary">
-                    <h3>Liens utiles</h3>
+                    <h3>Accès rapides</h3>
                 </div>
                 <div class="card-body">
                     <a class="btn btn-lg btn-success" href="{{ route('referents.affectations') }}">🎓 Mes affectations</a>
