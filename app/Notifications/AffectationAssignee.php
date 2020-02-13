@@ -2,6 +2,8 @@
 
 namespace App\Notifications;
 
+use App\Interfaces\InformationsNotification;
+use App\Utils\Constantes;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -12,7 +14,14 @@ class AffectationAssignee extends Notification
     use Queueable;
 
     /* ====================================================================
-     *                            Constructeurs
+     *                            PROPRIETES
+     * ====================================================================
+     */
+    const VAL_DATA_ID_STAGE = 'id_stage';
+    private $idStage;
+
+    /* ====================================================================
+     *                           CONSTRUCTEUR
      * ====================================================================
      */
     /**
@@ -22,12 +31,12 @@ class AffectationAssignee extends Notification
      */
     public function __construct(int $idStage)
     {
-        //
+        $this->idStage = $idStage;
     }
 
 
     /* ====================================================================
-     *                            FONCTIONS
+     *                            OVERRIDES
      * ====================================================================
      */
     /**
@@ -38,23 +47,8 @@ class AffectationAssignee extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['database'];
     }
-
-    /**
-     * Get the mail representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
-     */
-    public function toMail($notifiable)
-    {
-        return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
-    }
-
 
     /* ====================================================================
      *                            UTILITAIRES
@@ -69,7 +63,7 @@ class AffectationAssignee extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
+            self::VAL_DATA_ID_STAGE => $this->idStage
         ];
     }
 }

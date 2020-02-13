@@ -2,6 +2,8 @@
 
 use App\Facade\FicheFacade;
 use App\Modeles\Fiches\FicheRapport;
+use App\Notifications\AffectationAssignee;
+use App\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -46,7 +48,11 @@ class InsererAffectations extends Migration
         $faker = Faker::create();
 
         // Recuperation de l'enseignant Bob Dupont
-        $bobDupont = Enseignant::where(Enseignant::COL_EMAIL, '=', 'dupont.bob@exemple.fr')->first();
+        $bobDupont     = Enseignant::where(Enseignant::COL_EMAIL, '=', 'dupont.bob@exemple.fr')->first();
+        $userBobDupont = User::where([
+            [User::COL_POLY_MODELE_ID  , '=', $bobDupont->id],
+            [User::COL_POLY_MODELE_TYPE, '=', Enseignant::class]
+        ])->first();
 
         // Nous allons inserer 5 stages temoins + 1 stage complet + 1 stage en cours
         $nbStages = 5;
@@ -58,6 +64,9 @@ class InsererAffectations extends Migration
                 Stage::COL_REFERENT_ID => $bobDupont->id,
                 Stage::COL_ETUDIANT_ID => $etudiant->id
             ]);
+
+            // Envoie des notifications de creation
+            $userBobDupont->notify(new AffectationAssignee($stage->id));
 
             // Creation des fiches
             FicheFacade::creerFiches($stage->id);
@@ -80,6 +89,7 @@ class InsererAffectations extends Migration
         $fiche->statut = FicheRapport::VAL_STATUT_COMPLETE;
         $fiche->save();
         $stage->save();
+        $userBobDupont->notify(new AffectationAssignee($stage->id));
 
         // Stage en cours
         $etudiant = factory(Etudiant::class)->create();
@@ -98,5 +108,6 @@ class InsererAffectations extends Migration
         $fiche->statut = FicheRapport::VAL_STATUT_EN_COURS;
         $fiche->save();
         $stage->save();
+        $userBobDupont->notify(new AffectationAssignee($stage->id));
     }
 }

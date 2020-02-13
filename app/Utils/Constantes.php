@@ -35,6 +35,11 @@ class Constantes
     const FACTORY_CHOIX_SECTION     = 'ChoixSection';
     const FACTORY_CRITERES_SECTION  = 'CritereSection';
 
+    /*
+     * Valeurs de string pour tout ce qui est lie a une appellation
+     */
+    const VAL_INTITULE_NOUVELLE_AFFECTATION = 'Affectation de stage';
+
     /**
      * @var array[string]int Contient les index minimaux des constantes
      */
