@@ -211,7 +211,7 @@ class StageControllerTest extends TestCase
 
         foreach($this->getAttributsModele() as $a)
         {
-            if('id' !== $a)
+            if('id' !== $a && Stage::COL_AFFECTATION_VALIDEE !== $a)
             {
                 $response->assertSee($a);
             }
