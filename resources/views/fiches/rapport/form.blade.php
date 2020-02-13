@@ -67,10 +67,10 @@
         <div class="row">
             <div class="col text-right">
                 {{-- Bouton de retour --}}
-                <a class="btn btn-lg btn-danger" href="{{ route('fiches.rapport.show', $stage->fiche_rapport->id) }}">Quitter sans modifier</a>
+                <a class="btn btn-lg btn-danger" href="{{ route('fiches.rapport.show', $stage->fiche_rapport->id) }}"><i class="fas fa-times"></i> Quitter sans modifier</a>
 
                 {{-- Bouton d'enregistrement --}}
-                <button class="btn btn-lg btn-success" type="submit">Enregistrer les modifications</button>
+                <button class="btn btn-lg btn-success" type="submit"><i class="fas fa-check"></i> Enregistrer les modifications</button>
             </div>
         </div>
 
