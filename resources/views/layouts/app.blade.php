@@ -2,6 +2,7 @@
     <head>
         <title>@yield('titre')</title>
         @yield('inclusionHead')
+        <script src="https://kit.fontawesome.com/645d400b85.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="/css/app.css">
         <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/style.css') }}"/>
     </head>
