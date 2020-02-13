@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Enseignant;
 
+use App\Interfaces\InformationsNotification;
+use App\Notifications\AffectationAssignee;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
@@ -85,7 +87,6 @@ class ReferentController extends AbstractReferentController
 
         return view('enseignant.commun.affectations', [
             'titre'   => ReferentController::TITRE_AFFECTATIONS,
-            'classe'  => Stage::class,
             'user'    => $enseignant,
             'entetes' => $entetes,
             'stages'  => $stages

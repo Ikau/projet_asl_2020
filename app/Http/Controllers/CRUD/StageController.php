@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\CRUD;
 
+use App\Notifications\AffectationAssignee;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Auth;
@@ -28,6 +30,9 @@ class StageController extends AbstractControllerCRUD
     const TITRE_SHOW   = 'Details du stage';
     const TITRE_EDIT   = 'Editer un stage';
 
+    /**
+     * Valeur attendue du tag <title> pour les pages
+     */
 
     /* ====================================================================
      *                             RESOURCES
@@ -140,6 +145,20 @@ class StageController extends AbstractControllerCRUD
 
         // Creation des fiches
         FicheFacade::creerFiches($stage->id);
+
+        // On envoie la notification au referent s'il a ete affecte
+        if($stage->referent()->exists())
+        {
+            $userEnseignant = User::where([
+                [User::COL_POLY_MODELE_TYPE, '=', Enseignant::class],
+                [User::COL_POLY_MODELE_ID, '=', $stage->referent->id]
+            ])->first();
+
+            if(null !== $userEnseignant)
+            {
+                $userEnseignant->notify(new AffectationAssignee($stage->id));
+            }
+        }
 
         // Redirection selon l'utilisateur
         $user = Auth::user();
