@@ -92,6 +92,15 @@ Route::prefix('enseignant')->group(function() {
     Route::get('affectations/', 'Enseignant\ReferentController@affectations')->name('referents.affectations');
 });
 
+/*
+ |--------------------------------------------------------------------------
+ |                        Routes partie 'Scolarite'
+ |--------------------------------------------------------------------------
+ */
+Route::prefix('scolarite')->group(function() {
+    Route::get('accueil/', 'Scolarite\ScolariteController@index')->name('scolarite.index');
+    Route::get('affectations/', 'Scolarite\ScolariteController@affectations')->name('scolarite.affectations');
+});
 
 /*
  |--------------------------------------------------------------------------
