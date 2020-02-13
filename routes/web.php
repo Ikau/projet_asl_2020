@@ -94,6 +94,17 @@ Route::prefix('enseignant')->group(function() {
 
 /*
  |--------------------------------------------------------------------------
+ |                        Routes partie 'Responsable'
+ |--------------------------------------------------------------------------
+ */
+Route::prefix('responsable')->group(function() {
+    Route::get('affectations/', 'Enseignant\ResponsableController@getIndexAffectation')->name('responsables.affectations.index');
+    Route::get('affectations/form', 'Enseignant\ResponsableController@getCreateAffectation')->name('responsables.affectations.create');
+});
+
+
+/*
+ |--------------------------------------------------------------------------
  |                        Routes partie 'Scolarite'
  |--------------------------------------------------------------------------
  */
@@ -118,14 +129,4 @@ Route::prefix('fiches')->group(function() {
     // Soutenance
 
     // Synthese
-});
-
-/*
- |--------------------------------------------------------------------------
- |                        Routes partie 'Responsable'
- |--------------------------------------------------------------------------
- */
-Route::prefix('responsable')->group(function() {
-    Route::get('affectations/', 'Enseignant\ResponsableController@getFormAffectation')->name('responsables.affectations.get');
-    Route::post('affectations/', 'Enseignant\ResponsableController@postFormAffectation')->name('responsable.affectations.store');
 });
