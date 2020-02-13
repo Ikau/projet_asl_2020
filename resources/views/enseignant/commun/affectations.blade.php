@@ -28,10 +28,11 @@
         <table class="table table-hover">
             <thead class="thead-light">
                 {{-- Structure du tableau
-                     Nom etudiant | Prenom etudiant |
+                     Icones | Nom etudiant | Prenom etudiant |
                     | Annee | Promotion | Departement | Sujet
                     | Entreprise | Rapport | Soutenance | Synthese  --}}
                 <tr>
+                    <th></th>
                     @foreach($entetes as $entete)
                     <th>{{$entete}}</th>
                     @endforeach
@@ -41,6 +42,7 @@
             <tbody>
                 @foreach($stages as $stage)
                 <tr>
+                    <td><a class="btn btn-lg bg-info text-white">Détails</a></td>
                     <td>{{ $stage->etudiant->nom }}</td>
                     <td>{{ $stage->etudiant->prenom }}</td>
                     <td>{{ $stage->annee_etudiant }}A</td>

@@ -9,7 +9,7 @@
     <body>
         @section('sidebar')
             <nav class="navbar navbar-expand-md navbar-dark bg-primary">
-                <div class="justify-content-end">
+                <div class="navbar-collapse justify-content-end">
                     <div class="navbar-nav">
                     @auth
                     <a class="nav-item nav-link btn btn-lg text-white" href="{{ url('/home') }}">Accueil</a>
