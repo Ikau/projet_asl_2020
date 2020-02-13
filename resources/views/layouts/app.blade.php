@@ -28,7 +28,7 @@
             </nav>
         @show
 
-        <div class="container mt-3">
+        <div class="mx-5 mt-3">
             @if( session('success') )
                 <div class="alert alert-success text-success" role="alert">
                     {{ session('success') }}

@@ -64,6 +64,7 @@ class ReferentController extends AbstractReferentController
 
         // Definitions des donnees a manipuer
         $entetes = [
+            '', // Vide pour une zone d'icone ou autre
             'Nom stagiaire',
             'Prenom stagiaire',
             'Annee',

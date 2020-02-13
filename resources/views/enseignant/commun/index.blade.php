@@ -26,7 +26,8 @@
                     <a class="btn btn-lg btn-success" href="{{ route('referents.affectations') }}">🎓 Mes affectations</a>
 
                     @if( Auth::user()->estResponsableOption() || Auth::user()->estResponsableDepartement() )
-                        <a class="btn btn-lg btn-primary" href="{{ route('responsables.affectations.get') }}">➕ Proposer une affectation</a>
+                        <a class="btn btn-lg text-white" style="background-color: #6e6254" href="{{ route('responsables.affectations.index', Auth::user()->identite->id) }}">🗂️ Liste des affectations</a>
+                        <a class="btn btn-lg btn-primary" href="{{ route('responsables.affectations.create') }}">➕ Proposer une affectation</a>
                     @endif
                 </div>
 
