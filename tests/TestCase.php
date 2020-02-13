@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use App\Modeles\Contact;
 use App\Modeles\Enseignant;
 use App\Modeles\Fiches\FicheRapport;
 use App\Modeles\Role;
@@ -73,6 +74,30 @@ abstract class TestCase extends BaseTestCase
         // Ajout du role 'referent'
         $roleEnseignant = Role::where(Role::COL_INTITULE, '=', Role::VAL_ENSEIGNANT)->first();
         $user->roles()->attach($roleEnseignant);
+        $user->save();
+
+        return $user;
+    }
+
+    /**
+     * Fonction auxiliaire permettant de creer un compte user avec le role 'scolarite'
+     * Le compte user est lie a un compte contact valide cree aleatoirement
+     *
+     * @return User
+     */
+    function creerUserScolarite() : User
+    {
+        // Creation d'un contact insa aleatoire
+        $contact = factory(Contact::class)->create();
+        $contact[Contact::COL_TYPE] = Contact::VAL_TYPE_INSA;
+        $contact->save();
+
+        // Creation du compte user associe
+        $user = User::fromContact($contact->id, 'azerty');
+
+        // Ajout du role 'scolarite'
+        $roleScolarite = Role::where(Role::COL_INTITULE, '=', Role::VAL_SCOLARITE)->first();
+        $user->roles()->attach($roleScolarite);
         $user->save();
 
         return $user;
