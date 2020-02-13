@@ -28,6 +28,7 @@ class Constantes
      */
     const GATE_ROLE_RESPONSABLE = 'role-responsable';
     const GATE_ROLE_ENSEIGNANT  = 'role-enseignant';
+    const GATE_ROLE_SCOLARITE   = 'role-scolarite';
 
     /*
      * Valeurs des classes sans modele cree par l'Eloquent Factory (utiliser ->raw() )

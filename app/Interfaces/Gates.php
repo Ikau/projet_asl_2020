@@ -29,4 +29,12 @@ interface Gates
      * @return void
      */
     public function enregistrerGatesResponsable();
+
+    /**
+     * Enregistre toutes les regles 'Gates' relatives au controle d'acces des pages
+     * pour le role 'scolarite'
+     *
+     * @return void
+     */
+    public function enregistrerGatesScolarite();
 }

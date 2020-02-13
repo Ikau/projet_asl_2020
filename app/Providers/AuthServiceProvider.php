@@ -35,7 +35,13 @@ class AuthServiceProvider extends ServiceProvider implements Gates
         // Gates personnalises
         $this->enregistrerGatesReferent();
         $this->enregistrerGatesResponsable();
+        $this->enregistrerGatesScolarite();
     }
+
+    /* ------------------------------------------------------------------
+     *                       Overrides interface Gate
+     * ------------------------------------------------------------------
+     */
 
     /**
      * Enregistre toutes les regles 'Gates' relatives au controle d'acces des pages
@@ -51,17 +57,7 @@ class AuthServiceProvider extends ServiceProvider implements Gates
                 return Response::deny('Seuls les enseignants peuvent acceder a cette partie du site.');
             }
 
-            // Verification si role enseignant+ autorise
-            if($user->estEnseignant()
-            || $user->estResponsableOption()
-            || $user->estResponsableDepartement())
-            {
-                return Response::allow();
-            }
-            else
-            {
-                return Response::deny('Votre compte enseignant n\'est pas autorise a cette partie du site.');
-            }
+            return Response::allow();
         });
     }
 
@@ -89,6 +85,24 @@ class AuthServiceProvider extends ServiceProvider implements Gates
             {
                 return Response::deny('Votre compte enseignant n\'est pas autorise a cette partie du site.');
             }
+        });
+    }
+
+    /**
+     * Enregistre toutes les regles 'Gates' relatives au controle d'acces des pages
+     * pour le role 'scolarite'
+     *
+     * @return void
+     */
+    public function enregistrerGatesScolarite()
+    {
+        Gate::define(Constantes::GATE_ROLE_SCOLARITE, function($user) {
+            if( ! $user->estScolariteINSA() )
+            {
+                return Response::deny("Seuls la scolarite de l'INSA peut accéder à cette partie du site.");
+            }
+
+            return Response::allow();
         });
     }
 }
