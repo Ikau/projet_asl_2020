@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Abstracts\Controllers\Enseignant;
 
@@ -9,5 +9,10 @@ abstract class AbstractResponsableController extends Controller
     /**
      * Renvoie la page avec le formulaire de creation d'une affectation
      */
-    abstract public function getFormAffectation();
+    abstract public function getCreateAffectation();
+
+    /**
+     * Renvoie la page listant toutes les affectations que le responsable peut modifier
+     */
+    abstract public function getIndexAffectation();
 }
