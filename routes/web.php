@@ -100,6 +100,8 @@ Route::prefix('enseignant')->group(function() {
 Route::prefix('responsable')->group(function() {
     Route::get('affectations/', 'Enseignant\ResponsableController@getIndexAffectation')->name('responsables.affectations.index');
     Route::get('affectations/form', 'Enseignant\ResponsableController@getCreateAffectation')->name('responsables.affectations.create');
+
+    Route::post('affectations/{idStage}/valider', 'Enseignant\ResponsableController@postValiderAffectation')->name('responsables.affectations.valider');
 });
 
 

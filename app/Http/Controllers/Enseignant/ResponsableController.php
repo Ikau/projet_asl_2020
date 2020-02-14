@@ -99,4 +99,42 @@ class ResponsableController extends AbstractResponsableController
             'stages'  => $stages
         ]);
     }
+
+    /**
+     * Valide une affectation si les conditions sont correctes
+     */
+    public function postValiderAffectation(int $idStage)
+    {
+        Gate::authorize(Constantes::GATE_ROLE_RESPONSABLE);
+
+        $stage = Stage::find($idStage);
+        if(null === $stage)
+        {
+            return redirect()->route('responsables.affectations.index')
+                ->with('error', 'Impossible de recuperer le stage a valider');
+        }
+
+        $responsable = Auth::user()->identite;
+
+        // On devrait mettre une policy
+        if($responsable->departement_id !== 0
+            && $stage->etudiant->departement->id  === $responsable->departement_id)
+        {
+            $stage[Stage::COL_AFFECTATION_VALIDEE] = true;
+        }
+        else if($responsable->option_id !== 0
+            && $stage->etudiant->option->id === $responsable->option_id)
+        {
+            $stage[Stage::COL_AFFECTATION_VALIDEE] = true;
+        }
+        else
+        {
+            return redirect()->route('stages.show', $idStage)
+                ->with('error', "Vous ne pouvez modifier que les stages de votre departement / option");
+        }
+
+        $stage->save();
+        return redirect()->route('stages.show', $idStage)
+            ->with('success', 'Affectation validée !');
+    }
 }

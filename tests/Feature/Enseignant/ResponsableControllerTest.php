@@ -27,7 +27,8 @@ class ResponsableControllerTest extends TestCase
         // [string $route]
         return [
             'Liste affectations'      => ['responsables.affectations.index'],
-            'Form stage/affectations' => ['responsables.affectations.create']
+            'Form stage/affectations' => ['responsables.affectations.create'],
+            'Valider affectations'    => ['responsables.affectations.valider']
         ];
     }
 
@@ -54,5 +55,14 @@ class ResponsableControllerTest extends TestCase
         // Redondate car deja verifiee dans StageControllerTest
     }
 
+    public function testGetIndexAffectation()
+    {
+
+    }
+
+    public function testPostValiderAffectation()
+    {
+
+    }
 
 }
