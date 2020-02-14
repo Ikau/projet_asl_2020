@@ -47,13 +47,23 @@
                     <td>{{ $stage->etudiant->promotion }}</td>
                     <td>{{ $stage->etudiant->option->intitule }}</td>
                     <td>
-                        @if($stage->affectation_validee)
+                        @if($stage->affectation_validee === 1)
                             <span style="text-decoration-color: #1f6fb2">À valider</span>
+                            <span class="text-primary">À valider</span>
                         @else
-                            <span style="text-decoration-color: #1d643b">Validée</span>
+                            @else
+                                <span style="text-decoration-color: #1d643b">Validée</span>
+                                <span class="text-success">Validée</span>
+                            @endif
+                    </td>
+                    <td>
+                        @if($stage->convention_envoyee === 1 && $stage->convention_envoyee === 1)
+                            <span class="text-primary">En attente</span>
+                        @else
+                            <span class="text-success">Validée</span>
+                        @endif
                         @endif
                     </td>
-                    <td> ETAT DU STAGE WIP</td>
                     <td>{{ $stage->referent->prenom }} {{ $stage->referent->nom }}</td>
                     <td> WIP </td>
                     <td>{{ $stage->lieu }}</td>

@@ -29,6 +29,11 @@
         @show
 
         <div class="mx-5 mt-3">
+            @if( session('error') )
+                <div class="alert alert-danger text-danger" role="alert">
+                    {{ session('error') }}
+                </div>
+            @endif
             @if( session('success') )
                 <div class="alert alert-success text-success" role="alert">
                     {{ session('success') }}
