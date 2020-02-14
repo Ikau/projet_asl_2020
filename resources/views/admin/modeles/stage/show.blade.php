@@ -6,34 +6,19 @@ Variables a definir depuis la vue appelante :
 'etudiant' : Etudiant  L'etudiant lie a ce stage
 --}}
 @extends('layouts.app')
-@extends('layouts.app')
-
 
 @section('titre', $titre)
-@section('titre', $titre)
 
-
-
-
-@section('contenu')
 @section('contenu')
     <div>
         <div class="container">
-            Information sur un stage
-        </div>
 
-
-        @foreach($stage->toArray() as $key => $value)
             <div class="card-header text-white bg-success border">
-                <div>
-                    <h1>{{ $etudiant->prenom }} {{ $etudiant->nom }}</h1>
-                    {{ $key }} : {{ $value }}
-                </div>
+                <h2 style="text-decoration: underline">Informations sur un stage</h2>
+                <h3>{{ $etudiant->prenom }} {{ $etudiant->nom }}</h3>
             </div>
 
-        @endforeach
-        <div class="card-body border">
-            <div>
+            <div class="card-body border">
                 @foreach($stage->toArray() as $key => $value)
                     <div class="row">
                         <span><strong>{{ $key }}</strong> : {{ $value }}</span>
@@ -53,5 +38,4 @@ Variables a definir depuis la vue appelante :
             </div>
         </div>
     </div>
-@endsection
 @endsection
