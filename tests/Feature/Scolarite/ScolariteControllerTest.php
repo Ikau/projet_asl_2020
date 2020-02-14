@@ -91,37 +91,6 @@ class ScolariteControllerTest extends TestCase
      */
     public function testAffectations()
     {
-        // Creation d'un enseignant valide
-        $user = $this->creerUserRoleEnseignant();
-
-        // Routage OK
-        $response = $this->actingAs($user)
-            ->from('/')
-            ->get(route('referents.affectations'))
-            ->assertOk()
-            ->assertViewIs('enseignant.commun.affectations')
-            ->assertSee(ReferentController::TITRE_AFFECTATIONS);
-
-        // Integrite des colonnes
-        $entetes = [
-            'Nom stagiaire',
-            'Prenom stagiaire',
-            'Annee',
-            'Promotion',
-            'Departement',
-            'Sujet',
-            'Entreprise',
-            'Rapport',
-            'Soutenance',
-            'Synthese'
-        ];
-
-        foreach($entetes as $entete)
-        {
-            $response->assertSee($entete);
-        }
-
-        // Integrite des donnees
-
+        
     }
 }
