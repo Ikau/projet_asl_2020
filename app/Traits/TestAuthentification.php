@@ -18,11 +18,11 @@ trait TestAuthentification
      *
      * @dataProvider controleAccesProvider
      */
-    public function testNonAuth(string $uriRoute)
+    public function testNonAuth(string $uriRoute, array $args)
     {
         $this->assertGuest()
             ->from('/')
-            ->get(route($uriRoute))
+            ->get(route($uriRoute, $args))
             ->assertRedirect(route('login'));
     }
 
@@ -31,7 +31,7 @@ trait TestAuthentification
      *
      * @dataProvider controleAccesProvider
      */
-    public function testNonTypeEnseignant(string $uriRoute)
+    public function testNonTypeEnseignant(string $uriRoute, array $args)
     {
         // Creation d'un utilisateur aleatoire
         $contact = factory(Contact::class)->create();
@@ -42,7 +42,7 @@ trait TestAuthentification
         // Routage echec
         $this->actingAs($user)
             ->from('/')
-            ->get(route($uriRoute))
+            ->get(route($uriRoute, $args))
             ->assertStatus(403);
     }
 
@@ -51,7 +51,7 @@ trait TestAuthentification
      *
      * @dataProvider controleAccesProvider
      */
-    public function testNonRoleEnseignant(string $uriRoute)
+    public function testNonRoleEnseignant(string $uriRoute, array $args)
     {
         // Creation d'un enseignant aleatoire
         $enseignant = factory(Enseignant::class)->create();
@@ -62,7 +62,7 @@ trait TestAuthentification
         // Route echec
         $this->actingAs($user)
             ->from('/')
-            ->get(route($uriRoute))
+            ->get(route($uriRoute, $args))
             ->assertStatus(403);
     }
 }

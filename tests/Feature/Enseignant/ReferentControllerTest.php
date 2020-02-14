@@ -24,8 +24,8 @@ class ReferentControllerTest extends TestCase
     {
         // [string $route]
         return [
-            'Index'            => ['referents.index'],
-            'Mes affectations' => ['referents.affectations'],
+            'Index'            => ['referents.index', []],
+            'Mes affectations' => ['referents.affectations', []],
         ];
     }
 
