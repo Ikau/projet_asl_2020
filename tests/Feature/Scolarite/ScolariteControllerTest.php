@@ -91,6 +91,6 @@ class ScolariteControllerTest extends TestCase
      */
     public function testAffectations()
     {
-        
+
     }
 }

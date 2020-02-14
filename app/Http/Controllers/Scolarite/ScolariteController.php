@@ -36,6 +36,10 @@ class ScolariteController extends AbstractScolariteController
     public function index()
     {
         Gate::authorize(Constantes::GATE_ROLE_SCOLARITE);
+
+        return view('scolarite.index', [
+            'titre' => self::VAL_TITRE_INDEX
+        ]);
     }
 
     /**
