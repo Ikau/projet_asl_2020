@@ -273,9 +273,12 @@ class StageControllerTest extends TestCase
         ->assertSee(StageController::TITRE_SHOW);
 
         foreach($this->getAttributsModele() as $attribut)
-        {
-            // Fonction e() pour les cas avec apostrophes echapes (')
+        {            if('id' !== $attribut)
             $response->assertSee(e($stage[$attribut]));
+            {
+                // Fonction e() pour les cas avec apostrophes echapes (')
+                $response->assertSee(e($stage[$attribut]));
+            }
         }
     }
 

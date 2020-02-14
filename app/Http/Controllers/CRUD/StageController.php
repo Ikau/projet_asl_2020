@@ -184,8 +184,9 @@ class StageController extends AbstractControllerCRUD
         }
 
         return view('admin.modeles.stage.show', [
-            'titre' => StageController::TITRE_SHOW,
-            'stage' => $stage
+            'titre'    => StageController::TITRE_SHOW,
+            'stage'    => $stage,
+            'etudiant' => Etudiant::find($stage->etudiant_id)
         ]);
     }
 
