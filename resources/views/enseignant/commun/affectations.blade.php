@@ -41,7 +41,7 @@
             <tbody>
                 @foreach($stages as $stage)
                 <tr>
-                    <td><a class="btn btn-lg bg-info text-white">Détails</a></td>
+                    <td><a class="btn btn-lg bg-info text-white" href="{{ route('stages.show', $stage->id) }}">Détails</a></td>
                     <td>{{ $stage->etudiant->nom }}</td>
                     <td>{{ $stage->etudiant->prenom }}</td>
                     <td>{{ $stage->annee_etudiant }}A</td>
