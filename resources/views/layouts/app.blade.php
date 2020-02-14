@@ -21,7 +21,6 @@
 
                     @guest
                         <a class="nav-item nav-link btn btn-lg text-white" href="{{ route('login') }}">Login</a>
-                        <a class="nav-item nav-link btn btn-lg text-white" href="{{ route('register') }}">Register</a>
                     @endguest
                     </div>
                 </div>

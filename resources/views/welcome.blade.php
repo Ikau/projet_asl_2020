@@ -72,22 +72,18 @@
                         <a href="{{ url('/home') }}">Home</a>
                     @else
                         <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
                     @endauth
                 </div>
             @endif
 
             <div class="content">
                 <div class="m-b-md">
-                    <h1>Projet d'option ASL 2020</h1>
-                    <h3>"Numérisation de la notation des stages"</h3>
+                    <h1 class="display-1">Projet d'option ASL 2020</h1>
+                    <h3 class="display-5">"Numérisation de la notation des stages"</h3>
                 </div>
 
                 <div class="links">
-                    <a class="btn btn-lg btn-primary text-white" href="/home">Accueil</a>
+                    <a class="btn btn-lg btn-primary text-white" href="/home">🚀 Accueil</a>
                 </div>
             </div>
         </div>

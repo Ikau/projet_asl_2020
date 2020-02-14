@@ -4,9 +4,12 @@ namespace App\Policies;
 
 use App\Modeles\Fiches\FicheRapport;
 use App\User;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class FicheRapportPolicy
 {
+    use HandlesAuthorization;
+
     /**
      * @param User $user
      * @param FicheRapport $ficheRapport
