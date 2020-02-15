@@ -39,7 +39,7 @@ class StagePolicyTest extends TestCase
             $stage->etudiant->departement->id = $idDivision;
             $user->identite[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID]   = $idDivision;
         }
-        
+
         $stage->etudiant->save();
         $enseignant->save();
         $user->save();
