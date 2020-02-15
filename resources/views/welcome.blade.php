@@ -83,7 +83,7 @@
                 </div>
 
                 <div class="links">
-                    <a class="btn btn-lg btn-primary text-white" href="/home">🚀 Accueil</a>
+                    <a class="btn btn-lg btn-primary text-white" href="/home"><span  class="display-4">🚀 Accueil</span></a>
                 </div>
             </div>
         </div>
