@@ -25,7 +25,7 @@ class PeuplerTableUsers extends Migration
     {
         // Insertions de test
         $this->insertAdmin();
-        $this->insertEnseignantBobDupont();
+        $this->insertEnseignantBernardTichaud();
         $this->insertCharlesAtan();
         $this->insertScolariteAnnieVerserre();
 
@@ -97,29 +97,29 @@ class PeuplerTableUsers extends Migration
     /**
      * Cree un enseignant lambda (responsable de rien) et lui associe un compte user
      *
-     * L'enseignant peut etre utilise via la paire 'dupont.bob@exemple.fr / azerty'
+     * L'enseignant peut etre utilise via la paire 'bernard.tichaud@exemple.fr / azerty'
      * Le role 'referent' lui est attribue mais aucun privileges pour l'instant
-     * Des privileges seront ajoutes au fur et a mesure du developpement
+     * Des privileges pourraient être ajoutes au fur et a mesure du developpement
      */
-    private function insertEnseignantBobDupont()
+    private function insertEnseignantBernardTichaud()
     {
         // Creation de l'enseignant Bob DUPONT
-        $bobDupont = new Enseignant;
-        $bobDupont->fill([
-            Enseignant::COL_NOM                        => 'Dupont',
-            Enseignant::COL_PRENOM                     => 'Bob',
-            Enseignant::COL_EMAIL                      => 'dupont.bob@exemple.fr',
-            Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID => Departement::where(Departement::COL_INTITULE, '=', 'Aucun')->first()->id,
-            Enseignant::COL_RESPONSABLE_OPTION_ID      => Option::where(Option::COL_INTITULE, '=', 'Aucune')->first()->id,
+        $bernardTichaud = new Enseignant;
+        $bernardTichaud->fill([
+            Enseignant::COL_NOM                        => 'Tichaud',
+            Enseignant::COL_PRENOM                     => 'Bernard',
+            Enseignant::COL_EMAIL                      => 'bernard.tichaud@exemple.fr',
+            Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID => Departement::where(Departement::COL_INTITULE, '=', Departement::VAL_AUCUN)->first()->id,
+            Enseignant::COL_RESPONSABLE_OPTION_ID      => Option::where(Option::COL_INTITULE, '=', Option::VAL_AUCUN)->first()->id,
         ])->save();
 
-        // Creation du compte de Bob DUPONT
-        $userDupont = User::fromEnseignant($bobDupont->id, 'azerty');
+        // Creation du compte de Bernard TICHAUD
+        $userTichaud = User::fromEnseignant($bernardTichaud->id, 'azerty');
 
         // Ajout des roles et des privileges au compte
         $roleEnseignant = Role::where(Role::COL_INTITULE, '=', Role::VAL_ENSEIGNANT)->first();
-        $userDupont->roles()->attach($roleEnseignant);
-        $userDupont->save();
+        $userTichaud->roles()->attach($roleEnseignant);
+        $userTichaud->save();
     }
 
     /**

@@ -24,7 +24,7 @@ class InsererAffectations extends Migration
     public function up()
     {
         // Stages precis
-        $this->insertAffectationsBobDupont();
+        $this->insertAffectationsBernardTichaud();
     }
 
     /**
@@ -42,15 +42,15 @@ class InsererAffectations extends Migration
      *
      * @return void
      */
-    private function insertAffectationsBobDupont()
+    private function insertAffectationsBernardTichaud()
     {
         // Init du faker
         $faker = Faker::create();
 
         // Recuperation de l'enseignant Bob Dupont
-        $bobDupont     = Enseignant::where(Enseignant::COL_EMAIL, '=', 'dupont.bob@exemple.fr')->first();
-        $userBobDupont = User::where([
-            [User::COL_POLY_MODELE_ID  , '=', $bobDupont->id],
+        $bernardTichaud = Enseignant::where(Enseignant::COL_EMAIL, '=', 'bernard.tichaud@exemple.fr')->first();
+        $userTichaud    = User::where([
+            [User::COL_POLY_MODELE_ID  , '=', $bernardTichaud->id],
             [User::COL_POLY_MODELE_TYPE, '=', Enseignant::class]
         ])->first();
 
@@ -61,12 +61,12 @@ class InsererAffectations extends Migration
             // Creation du stage
             $etudiant  = factory(Etudiant::class)->create();
             $stage     = factory(Stage::class)->create([
-                Stage::COL_REFERENT_ID => $bobDupont->id,
+                Stage::COL_REFERENT_ID => $bernardTichaud->id,
                 Stage::COL_ETUDIANT_ID => $etudiant->id
             ]);
 
             // Envoie des notifications de creation
-            $userBobDupont->notify(new AffectationAssignee($stage->id));
+            $userTichaud->notify(new AffectationAssignee($stage->id));
 
             // Creation des fiches
             FicheFacade::creerFiches($stage->id);
@@ -75,7 +75,7 @@ class InsererAffectations extends Migration
         // Stage complet
         $etudiant = factory(Etudiant::class)->create();
         $stage    = factory(Stage::class)->create([
-            Stage::COL_REFERENT_ID => $bobDupont->id,
+            Stage::COL_REFERENT_ID => $bernardTichaud->id,
             Stage::COL_ETUDIANT_ID => $etudiant->id,
         ]);
         FicheFacade::creerFiches($stage->id);
@@ -89,12 +89,12 @@ class InsererAffectations extends Migration
         $fiche->statut = FicheRapport::VAL_STATUT_COMPLETE;
         $fiche->save();
         $stage->save();
-        $userBobDupont->notify(new AffectationAssignee($stage->id));
+        $userTichaud->notify(new AffectationAssignee($stage->id));
 
         // Stage en cours
         $etudiant = factory(Etudiant::class)->create();
         $stage    = factory(Stage::class)->create([
-            Stage::COL_REFERENT_ID => $bobDupont->id,
+            Stage::COL_REFERENT_ID => $bernardTichaud->id,
             Stage::COL_ETUDIANT_ID => $etudiant->id
         ]);
         FicheFacade::creerFiches($stage->id);
@@ -108,6 +108,6 @@ class InsererAffectations extends Migration
         $fiche->statut = FicheRapport::VAL_STATUT_EN_COURS;
         $fiche->save();
         $stage->save();
-        $userBobDupont->notify(new AffectationAssignee($stage->id));
+        $userTichaud->notify(new AffectationAssignee($stage->id));
     }
 }
