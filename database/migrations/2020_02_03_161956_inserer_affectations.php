@@ -61,8 +61,9 @@ class InsererAffectations extends Migration
             // Creation du stage
             $etudiant  = factory(Etudiant::class)->create();
             $stage     = factory(Stage::class)->create([
-                Stage::COL_REFERENT_ID => $bernardTichaud->id,
-                Stage::COL_ETUDIANT_ID => $etudiant->id
+                Stage::COL_REFERENT_ID         => $bernardTichaud->id,
+                Stage::COL_ETUDIANT_ID         => $etudiant->id,
+                Stage::COL_AFFECTATION_VALIDEE => TRUE
             ]);
 
             // Envoie des notifications de creation
@@ -75,8 +76,9 @@ class InsererAffectations extends Migration
         // Stage complet
         $etudiant = factory(Etudiant::class)->create();
         $stage    = factory(Stage::class)->create([
-            Stage::COL_REFERENT_ID => $bernardTichaud->id,
-            Stage::COL_ETUDIANT_ID => $etudiant->id,
+            Stage::COL_REFERENT_ID         => $bernardTichaud->id,
+            Stage::COL_ETUDIANT_ID         => $etudiant->id,
+            Stage::COL_AFFECTATION_VALIDEE => TRUE
         ]);
         FicheFacade::creerFiches($stage->id);
 
@@ -94,8 +96,9 @@ class InsererAffectations extends Migration
         // Stage en cours
         $etudiant = factory(Etudiant::class)->create();
         $stage    = factory(Stage::class)->create([
-            Stage::COL_REFERENT_ID => $bernardTichaud->id,
-            Stage::COL_ETUDIANT_ID => $etudiant->id
+            Stage::COL_REFERENT_ID         => $bernardTichaud->id,
+            Stage::COL_ETUDIANT_ID         => $etudiant->id,
+            Stage::COL_AFFECTATION_VALIDEE => TRUE
         ]);
         FicheFacade::creerFiches($stage->id);
 

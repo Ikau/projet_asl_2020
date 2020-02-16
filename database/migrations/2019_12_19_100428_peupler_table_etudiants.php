@@ -15,7 +15,7 @@ class PeuplerTableEtudiants extends Migration
      */
     public function up()
     {
-        $nbEtudiant = 15;
+        $nbEtudiant = 10;
         for($i=0; $i<$nbEtudiant; $i++)
         {
             factory(Etudiant::class)->create();

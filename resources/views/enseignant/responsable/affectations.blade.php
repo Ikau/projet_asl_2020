@@ -48,13 +48,10 @@
                     <td>{{ $stage->etudiant->option->intitule }}</td>
                     <td>
                         @if($stage->affectation_validee === 1)
-                            <span style="text-decoration-color: #1f6fb2">À valider</span>
-                            <span class="text-primary">À valider</span>
+                            <span class="text-success">Validée</span>
                         @else
-                            @else
-                                <span style="text-decoration-color: #1d643b">Validée</span>
-                                <span class="text-success">Validée</span>
-                            @endif
+                            <span class="text-danger">À valider</span>
+                        @endif
                     </td>
                     <td>
                         @if($stage->convention_envoyee === 1 && $stage->convention_envoyee === 1)
@@ -62,10 +59,9 @@
                         @else
                             <span class="text-success">Validée</span>
                         @endif
-                        @endif
                     </td>
                     <td>{{ $stage->referent->prenom }} {{ $stage->referent->nom }}</td>
-                    <td> WIP </td>
+                    <td> {{ \Faker\Factory::create()->company }} </td>
                     <td>{{ $stage->lieu }}</td>
                 </tr>
             @endforeach

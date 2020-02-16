@@ -13,7 +13,7 @@
         <div class="col">
             <div class="card">
                 <div class="card-header bg-primary text-white">
-                    <p>Bienvenue {{ Auth::user()->identite->prenom }} {{ Auth::user()->identite->nom }}</p>
+                    <h1>Bienvenue {{ Auth::user()->identite->prenom }} {{ Auth::user()->identite->nom }}</h1>
                 </div>
                 <div class="card-header text-white bg-secondary">
                     <h3>🏗️ Liens utiles 🚧</h3>

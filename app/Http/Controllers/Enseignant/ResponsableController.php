@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Enseignant;
 use App\Modeles\Departement;
 use App\Modeles\Enseignant;
 use App\Modeles\Option;
+use App\Notifications\AffectationAssignee;
+use App\User;
 use App\Utils\Constantes;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -59,19 +61,22 @@ class ResponsableController extends AbstractResponsableController
         // Recuperation du responsable courant
         $responsable = Auth::user()->identite;
 
+        // Recuperation des id nuls
+        $idDepartementNul = Departement::where(Departement::COL_INTITULE, '=', Departement::VAL_AUCUN)->first()->id;
+        $idOptionNul      = Option::where(Option::COL_INTITULE, '=', Option::VAL_AUCUN)->first()->id;
+
         // Recuperation des stages geres par le responsable
         $stages = [];
         foreach(Stage::all() as $stage)
         {
             // Si l'enseignant est responsable du departement
-            if(Departement::VAL_AUCUN !== $responsable[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID]
+            if($idDepartementNul !== $responsable[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID]
             && $stage->etudiant->departement->id === $responsable[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID])
             {
                 $stages[] = $stage;
             }
-
             // Si l'enseignant est responsable de l'option
-            if(Option::VAL_AUCUN !== $responsable[Enseignant::COL_RESPONSABLE_OPTION_ID]
+            else if($idOptionNul !== $responsable[Enseignant::COL_RESPONSABLE_OPTION_ID]
                 && $stage->etudiant->option->id === $responsable[Enseignant::COL_RESPONSABLE_OPTION_ID])
             {
                 $stages[] = $stage;
@@ -114,26 +119,31 @@ class ResponsableController extends AbstractResponsableController
                 ->with('error', 'Impossible de recuperer le stage a valider');
         }
 
-        $responsable = Auth::user()->identite;
-
-        // On devrait mettre une policy
-        if($responsable->departement_id !== 0
-            && $stage->etudiant->departement->id  === $responsable->departement_id)
-        {
-            $stage[Stage::COL_AFFECTATION_VALIDEE] = true;
-        }
-        else if($responsable->option_id !== 0
-            && $stage->etudiant->option->id === $responsable->option_id)
-        {
-            $stage[Stage::COL_AFFECTATION_VALIDEE] = true;
-        }
-        else
+        // Verification du droit
+        if(Auth::user()->cant('valider', $stage))
         {
             return redirect()->route('stages.show', $idStage)
                 ->with('error', "Vous ne pouvez modifier que les stages de votre departement / option");
         }
 
+        // Verification qu'il y ait bien un referent
+        if($stage[Stage::COL_REFERENT_ID] === -1)
+        {
+            return redirect()->route('stages.show', $stage->id)
+                ->with('error', "Il n'y a aucun referent assigné à ce stage !");
+        }
+
+        // Le stage a ete validee
+        $stage[Stage::COL_AFFECTATION_VALIDEE] = TRUE;
         $stage->save();
+
+        // On envoie la notification au referent
+        $userEnseignant = User::where([
+            [User::COL_POLY_MODELE_TYPE, '=', Enseignant::class],
+            [User::COL_POLY_MODELE_ID, '=', $stage->referent->id]
+        ])->first();
+        $userEnseignant->notify(new AffectationAssignee($stage->id));
+
         return redirect()->route('stages.show', $idStage)
             ->with('success', 'Affectation validée !');
     }

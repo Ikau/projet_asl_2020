@@ -13,7 +13,9 @@
             <thead>{{-- Intitule + Entetes des choix --}}
                 <tr class="row">
                     <th class="col-7 border text-center">
-                        <p>{{ $indexSection + 1 }} - {{ $sections[$indexSection]->intitule }}</p>
+                        <h3>{{ $indexSection + 1 }} - {{ $sections[$indexSection]->intitule }}</h3>
+
+                        <h4>{{ $sections[$indexSection]->getNoteSection($contenu[$indexSection]) }} / {{ $sections[$indexSection]->getBareme() }}</h4>
                     </th>
 
                     @foreach($sections[$indexSection]->choix as $choix)

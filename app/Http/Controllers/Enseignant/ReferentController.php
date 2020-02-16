@@ -82,8 +82,10 @@ class ReferentController extends AbstractReferentController
 
         // Recuperation des stages + classement par NOM de l'eutidnat
         $stages = Stage::with('etudiant')
-        ->where(Stage::COL_REFERENT_ID, '=', $enseignant->id)
-        ->get()
+        ->where([
+            [Stage::COL_REFERENT_ID, '=', $enseignant->id],
+            [Stage::COL_AFFECTATION_VALIDEE, '=', 1]
+        ])->get()
         ->sortBy('etudiant.nom');
 
         return view('enseignant.commun.affectations', [

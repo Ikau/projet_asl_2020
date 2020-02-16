@@ -146,20 +146,6 @@ class StageController extends AbstractControllerCRUD
         // Creation des fiches
         FicheFacade::creerFiches($stage->id);
 
-        // On envoie la notification au referent s'il a ete affecte
-        if($stage->referent()->exists())
-        {
-            $userEnseignant = User::where([
-                [User::COL_POLY_MODELE_TYPE, '=', Enseignant::class],
-                [User::COL_POLY_MODELE_ID, '=', $stage->referent->id]
-            ])->first();
-
-            if(null !== $userEnseignant)
-            {
-                $userEnseignant->notify(new AffectationAssignee($stage->id));
-            }
-        }
-
         // Redirection selon l'utilisateur
         $user = Auth::user();
         if(null !== $user && ($user->estResponsableOption() || $user->estResponsableDepartement()))

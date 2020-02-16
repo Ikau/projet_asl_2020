@@ -13,10 +13,10 @@
                 <thead>{{-- Intitule + Entetes des choix --}}
                 <tr class="row">
                     <th class="col-7 border text-center">
-                        <p>{{ $i + 1 }} - {{ $sections[$i]->intitule }}</p>
-                        <p>
+                        <h3>{{ $i + 1 }} - {{ $sections[$i]->intitule }}</h3>
+                        <h4>
                             <span id="spanNoteS{{ $i }}">{{ $sections[$i]->getNoteSection($contenu[$i]) }}</span> / {{ $sections[$i]->getBareme() }}
-                        </p>
+                        </h4>
                     </th>
 
                     @for($j=0; $j<count($sections[$i]->choix); $j++)

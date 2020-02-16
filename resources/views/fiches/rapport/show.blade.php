@@ -47,7 +47,7 @@
     </div>
 
     {{-- Bouton pour modifier --}}
-    <div class="row">
+    <div class="row mb-3">
         <div class="col text-right">
             <a class="btn btn-lg btn-success" href="{{route('fiches.rapport.edit', $fiche->id)}}">📝 Modifier la fiche</a>
         </div>

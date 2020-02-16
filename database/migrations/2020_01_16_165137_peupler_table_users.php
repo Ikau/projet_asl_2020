@@ -23,25 +23,18 @@ class PeuplerTableUsers extends Migration
      */
     public function up()
     {
+        // Creation des comptes pour chaque enseignant
+        $enseignants = Enseignant::all();
+        foreach($enseignants as $enseignant)
+        {
+            User::fromEnseignant($enseignant->id, 'azerty');
+        }
+
         // Insertions de test
         $this->insertAdmin();
         $this->insertEnseignantBernardTichaud();
         $this->insertCharlesAtan();
         $this->insertScolariteAnnieVerserre();
-
-        // Creation de comptes aleatoires
-        $nbUsers = 20;
-        for($i=0; $i<$nbUsers; $i++)
-        {
-            // Creation d'un enseignant aleatoire
-            $enseignant = factory(Enseignant::class)->create();
-
-            // Creation du compte user associe
-            $user = factory(User::class)->make();
-            $user[User::COL_EMAIL] = $enseignant[Enseignant::COL_EMAIL];
-            $user->identite()->associate($enseignant);
-            $user->save();
-        }
 
     }
 

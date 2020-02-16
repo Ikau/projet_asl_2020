@@ -17,7 +17,7 @@ class PeuplerTableContacts extends Migration
     public function up()
     {
         // Ajout de contacts aleatoires
-        $nbContact = 20;
+        $nbContact = 5;
         for($i=0; $i<$nbContact; $i++)
         {
             factory(Contact::class)->create();

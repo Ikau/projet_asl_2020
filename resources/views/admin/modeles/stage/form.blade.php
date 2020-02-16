@@ -25,9 +25,9 @@
 <div>
     @if(null !== Auth::user()
     && (Auth::user()->estResponsableOption() || Auth::user()->estResponsableDepartement()))
-    <a class="btn btn-primary" href="{{ route('referents.index') }}">Retour</a>
+    <a class="btn btn-danger" href="{{ route('referents.index') }}">Retour</a>
     @else
-    <a class="btn btn-primary" href="{{ route('stages.index') }}">Retour</a>
+    <a class="btn btn-danger" href="{{ route('stages.index') }}">Retour</a>
     @endif
 </div>
 <div>
@@ -135,11 +135,7 @@
     ])
     <br/>
 
-    @if ( isset($stage) )
-    <button type="submit"> Modifier le stage</button>
-    @else
-    <button type="submit"> Créer le stage</button>
-    @endif
+    <button class="btn btn-primary" type="submit">{{ isset($stage) ? 'Modifier le stage' : 'Créer le stage' }}</button>
 </form>
 
 @endsection

@@ -48,13 +48,18 @@
                     <td>{{ $stage->etudiant->departement->intitule }}</td>
                     <td>{{ $stage->etudiant->promotion }}</td>
                     <td>{{ $stage->intitule }}</td>
-                    <td> Entreprise </td>
-                    <td> <a class="{{ $stage->fiche_rapport->statut === 0
-                                     ? 'text-danger' :  ($stage->fiche_rapport->statut === 1
-                                     ? 'text-info' : 'text-success')
-                          }}" href="{{ route('fiches.rapport.show', $stage->fiche_rapport->id) }}">Rapport</a> </td>
-                    <td> Soutenance </td>
-                    <td> Synthese </td>
+                    <td> Vide </td>
+                    <td>
+                        @if($stage->fiche_rapport->statut === 0)
+                            <a class="text-danger font-weight-bold font-weight-light" href="{{ route('fiches.rapport.show', $stage->fiche_rapport->id) }}"><u>Vide</u></a>
+                        @elseif($stage->fiche_rapport->statut === 1)
+                            <a class="text-info font-weight-bold font-weight-light" href="{{ route('fiches.rapport.show', $stage->fiche_rapport->id) }}"><u>En cours</u></a>
+                        @else
+                            <a class="text-success font-weight-bold font-weight-light" href="{{ route('fiches.rapport.show', $stage->fiche_rapport->id) }}"><u>Remplie</u></a>
+                        @endif
+                    </td>
+                    <td> Vide </td>
+                    <td> Vide </td>
                 </tr>
                 @endforeach
             </tbody>

@@ -79,11 +79,11 @@
             <div class="content">
                 <div class="m-b-md">
                     <h1 class="display-1">Projet d'option ASL 2020</h1>
-                    <h3 class="display-5">"Numérisation de la notation des stages"</h3>
+                    <h2 class="display-5">"Numérisation de la notation des stages"</h2>
                 </div>
 
                 <div class="links">
-                    <a class="btn btn-lg btn-primary text-white" href="/home"><span  class="display-4">🚀 Accueil</span></a>
+                    <a class="btn btn-primary text-white" href="/home"><span  class="display-4">🚀 Accueil</span></a>
                 </div>
             </div>
         </div>
