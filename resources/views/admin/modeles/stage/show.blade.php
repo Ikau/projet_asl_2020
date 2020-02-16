@@ -29,7 +29,7 @@ Variables a definir depuis la vue appelante :
             <div class="card-footer border">
                 @if($stage->affectation_validee === 1)
                     <button class="btn btn-lg btn-success" style="cursor: default" disabled><i class="fas fa-check"></i> Affectation validée</button>
-                @elseif(Auth::user()->can('valider', $stage))
+                @elseif(Auth::user() !== null && Auth::user()->can('valider', $stage))
                     <form method="POST" action="{{ route('responsables.affectations.valider', $stage->id) }}">
                         @csrf
                         <button class="btn btn-lag bg-primary text-white" type="submit">Valider l'affectation</button>

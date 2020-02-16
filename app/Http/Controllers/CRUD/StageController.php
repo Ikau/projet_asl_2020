@@ -297,7 +297,7 @@ class StageController extends AbstractControllerCRUD
         if($request->missing(Stage::COL_REFERENT_ID)
         || null === $referent)
         {
-            $request[Stage::COL_REFERENT_ID] = Enseignant::getModeleDefaut()->id;
+            $request[Stage::COL_REFERENT_ID] = -1;
         }
     }
 

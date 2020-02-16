@@ -27,8 +27,7 @@ class ResponsableControllerTest extends TestCase
         // [string $route]
         return [
             'Liste affectations'      => ['responsables.affectations.index', []],
-            'Form stage/affectations' => ['responsables.affectations.create', []],
-            'Valider affectations'    => ['responsables.affectations.valider', ['idStage' => 1]]
+            'Form stage/affectations' => ['responsables.affectations.create', []]
         ];
     }
 

@@ -36,6 +36,14 @@ class PeuplerTableUsers extends Migration
         $this->insertCharlesAtan();
         $this->insertScolariteAnnieVerserre();
 
+        $moi = factory(Contact::class)->create();
+        $moi->fill([
+            Contact::COL_EMAIL  => 'truong.luu@insa-cvl.fr',
+            Contact::COL_NOM    => 'Luu',
+            Contact::COL_PRENOM => 'Thanh'
+        ])->save();
+        User::fromContact($moi->id, 'azerty');
+
     }
 
     /**
