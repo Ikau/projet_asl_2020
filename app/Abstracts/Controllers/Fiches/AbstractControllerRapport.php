@@ -13,14 +13,13 @@ abstract class AbstractFicheRapportController extends AbstractFichesController
     /* ====================================================================
      *                             RESOURCES
      * Les fonctions listees ici sont a implementer pour le controller
-     * en suivant les convention de nommage Laravel
+     * en suivant les conventions de nommage Laravel
      * ====================================================================
      */
+    abstract public function tests(Request $request);
     abstract public function show(int $idStage);
-    abstract public function store($idStage);
-    abstract public function edit($idStage);
-    abstract public function update($idStage);
-    abstract public function tests($request);
+    abstract public function edit(int $idStage);
+    abstract public function update(Request $request, int $idStage);
 
 
     /* ====================================================================
@@ -32,5 +31,6 @@ abstract class AbstractFicheRapportController extends AbstractFichesController
      */
     abstract protected function normaliseInputsOptionnels(Request $request);
     abstract protected function validerForm(Request $request);
+    abstract protected function validerModele(int $idStage);
     abstract protected function getAttributsModele();
 }

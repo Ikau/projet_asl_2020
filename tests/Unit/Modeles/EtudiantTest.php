@@ -29,7 +29,7 @@ class EtudiantTest extends TestCase
             Etudiant::COL_NOM           => Constantes::STRING_VIDE,
             Etudiant::COL_PRENOM        => Constantes::STRING_VIDE,
             Etudiant::COL_EMAIL         => Constantes::STRING_VIDE,
-            //Etudiant::COL_CIVILITE      => Constantes::CIVILITE['vide'],
+            //Etudiant::COL_CIVILITE      => Contact::VAL_CIVILITE_VIDE,
             //Etudiant::COL_INSCRIPTION   => Constantes::DATE_VIDE,
             //Etudiant::COL_NATIONALITE   => Constantes::NATIONALITE['vide'],
             //Etudiant::COL_FORMATION     => Constantes::FORMATION['vide'],

@@ -2,6 +2,7 @@
 
 namespace App\Modeles\Fiches;
 
+use App\Traits\NotationFiches;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Abstracts\Modeles\Fiches\AbstractFiche;
@@ -9,6 +10,8 @@ use App\Utils\Constantes;
 
 class FicheEntreprise extends AbstractFiche
 {
+    use NotationFiches;
+
     /*
      * Nom des colonnes des clefs etrangeres
      */

@@ -24,6 +24,7 @@ class CreerTableFichesRapport extends Migration
             // Definition du schema de la table
             $table->text(FicheRapport::COL_APPRECIATION);
             $table->text(FicheRapport::COL_CONTENU);
+            $table->unsignedSmallInteger(FicheRapport::COL_STATUT);
 
             // Clefs etrangeres
             $table->unsignedBigInteger(FicheRapport::COL_MODELE_ID);

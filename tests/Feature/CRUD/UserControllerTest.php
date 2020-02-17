@@ -58,22 +58,26 @@ class UserControllerTest extends TestCase
         $user['test']        = 'validerForm';
         $user[$clefModifiee] = $nouvelleValeur;
 
-        // Creation d'un enseignant
-        $user->identite()->associate(factory(Enseignant::class)->create());
-
         // Routage
         $routeSource = route('users.tests');
-        $response = $this->from($routeSource)
-        ->post(route('users.tests'), $user->toArray());
+        $response = $this->from($routeSource);
 
         if($possedeErreur)
         {
-            $response->assertSessionHasErrors($clefModifiee)
+            $response->post(route('users.tests'), $user->toArray())
+            ->assertSessionHasErrors($clefModifiee)
             ->assertRedirect($routeSource);
         }
-        else 
+        else
         {
-            $response->assertSessionDoesntHaveErrors()
+            // Creation d'un enseignant
+            $enseignant = factory(Enseignant::class)->create();
+            $enseignant->email = $nouvelleValeur;
+            $enseignant->save();
+            $user->identite()->associate($enseignant);
+
+            $response->post(route('users.tests'), $user->toArray())
+            ->assertSessionDoesntHaveErrors()
             ->assertRedirect('/');
         }
     }
@@ -106,23 +110,23 @@ class UserControllerTest extends TestCase
         $id;
         switch($idCase)
         {
-            case 0: 
-                $id = $user->id; 
+            case 0:
+                $id = $user->id;
             break;
 
-            case 1: 
-                $id = "$user->id"; 
+            case 1:
+                $id = "$user->id";
             break;
 
-            case 2: 
-                $id = -1; 
+            case 2:
+                $id = -1;
             break;
 
-            case 3: 
-                $id = null; 
+            case 3:
+                $id = null;
             break;
         }
-        
+
         $response = $this->followingRedirects()
         ->from(route('users.tests'))
         ->post(route('users.tests'), [
@@ -178,7 +182,7 @@ class UserControllerTest extends TestCase
         // Form
         $response->assertSee("name=\"email\"");
     }
-    
+
     /**
      * @depends testValiderForm
      */
@@ -257,7 +261,7 @@ class UserControllerTest extends TestCase
     {
         // Creation d'un nouvel utilisateur
         $user = $this->creerUtilisateurAleatoire();
-        
+
         // Creation d'un noucel email
         $nouvelEmail = factory(Enseignant::class)->create()->email;
 
@@ -279,8 +283,9 @@ class UserControllerTest extends TestCase
         ->assertRedirect(route('users.tests'));
 
         // Verification echec Id
+        $enseignant = factory(Enseignant::class)->create();
         $this->from(route('users.tests'))
-        ->patch(route('users.update', -1), [User::COL_EMAIL => 'aucun@null.com'])
+        ->patch(route('users.update', -1), [User::COL_EMAIL => $enseignant->email])
         ->assertStatus(404);
     }
 

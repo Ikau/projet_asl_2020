@@ -3,10 +3,17 @@
 namespace App\Traits;
 
 use App\Modeles\Fiches\FicheRapport;
+use App\Modeles\Fiches\ModeleNotation;
 use App\Modeles\Stage;
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * Trait utilitaire contenant du code souvent reutilise lors des tests.
+ *
+ * Trait TestFiches
+ * @package App\Traits
+ */
 trait TestFiches
 {
     /**
@@ -49,13 +56,35 @@ trait TestFiches
         // TODO
     }
 
-    function assertSectionsIntegres(TestResponse $reponse, $sections)
+    /**
+     * Permet de verifier que les sections et les choix soient bien presents dans la page
+     *
+     * @param TestResponse $reponse Resultat d'un test de reponse vers la page de la fiche souhaitee
+     * @param $sections
+     */
+    function assertSectionsEtCriteresIntegres(TestResponse $reponse, $sections)
     {
-
+        foreach($sections as $section)
+        {
+            $reponse->assertSee(e($section->intitule));
+            for($i=0; $i<count($section->criteres); $i++)
+            {
+                $reponse->assertSee(e($section->getIntitule($i)))
+                    ->assertSee(e($section->getPoints($i)));
+            }
+        }
     }
 
-    function assertCriteresIntegres(TestResponse $reponse, $criteres)
-    {
+    /* ====================================================================
+     *                        GETTERS UTILITAIRES
+     * ====================================================================
+     */
 
+    function getPlusRecentModeleRapport() : ModeleNotation
+    {
+        return ModeleNotation::where(ModeleNotation::COL_TYPE, '=', ModeleNotation::VAL_RAPPORT)
+            ->orderBy(ModeleNotation::COL_VERSION, 'desc')
+            ->limit(1)
+            ->first();
     }
 }

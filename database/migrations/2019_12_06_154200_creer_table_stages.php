@@ -23,6 +23,7 @@ class CreerTableStages extends Migration
         Schema::create(Stage::NOM_TABLE, function(Blueprint $table) {
             $table->bigIncrements('id');
 
+            $table->boolean(Stage::COL_AFFECTATION_VALIDEE);
             $table->unsignedSmallInteger(Stage::COL_ANNEE);
             $table->boolean(Stage::COL_CONVENTION_ENVOYEE);
             $table->boolean(Stage::COL_CONVENTION_SIGNEE);

@@ -19,21 +19,28 @@ class Constantes
     const FLOAT_VIDE  = 0.0;
     const INT_VIDE    = 0;
     const STRING_VIDE = '';
-    const DATE_VIDE   = '2000-01-01';
+    const DATE_VIDE   = '2000-01-01'; // Format y-m-d
     const HEURE_VIDE  = '00:00:00';
 
     /*
      * Valeurs des gates pour l'utilisation des differents regles
      * Pour rappel : les gates sont enregistres dans App\Provider\AuthServiceProvider
      */
-    const GATE_ROLE_RESPONSABLE = 'role-responsable';
-    const GATE_ROLE_ENSEIGNANT  = 'role-enseignant';
+    const GATE_ROLE_ADMINISTRATEUR = 'role-administrateur';
+    const GATE_ROLE_RESPONSABLE    = 'role-responsable';
+    const GATE_ROLE_ENSEIGNANT     = 'role-enseignant';
+    const GATE_ROLE_SCOLARITE      = 'role-scolarite';
 
     /*
      * Valeurs des classes sans modele cree par l'Eloquent Factory (utiliser ->raw() )
      */
     const FACTORY_CHOIX_SECTION     = 'ChoixSection';
     const FACTORY_CRITERES_SECTION  = 'CritereSection';
+
+    /*
+     * Valeurs de string pour tout ce qui est lie a une appellation
+     */
+    const VAL_INTITULE_NOUVELLE_AFFECTATION = 'Affectation de stage';
 
     /**
      * @var array[string]int Contient les index minimaux des constantes
@@ -78,23 +85,6 @@ class Constantes
         'vide' => '',
         'STI'  => 'STI',
         'MRI'  => 'MRI'
-    ];
-
-    /**
-     * @var array[string]string Master suivie par l'etudiant
-     */
-    const MASTER = [
-        'vide'    => '',
-        'aucun'   => 'aucun',
-        'master1' => 'master1'
-    ];
-
-    /**
-     * @var array[string]string Nationnalite de l'etudiant
-     */
-    const NATIONALITE = [
-        'vide'      => '',
-        'francaise' => 'française'
     ];
 
     /**

@@ -16,7 +16,7 @@ class PeuplerTableSoutenances extends Migration
      */
     public function up()
     {
-        $nbSoutenance = 20;
+        $nbSoutenance = 10;
         for($i=0; $i<$nbSoutenance; $i++)
         {
             factory(Soutenance::class)->create();

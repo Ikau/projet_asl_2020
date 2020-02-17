@@ -1,33 +1,44 @@
 <html>
     <head>
         <title>@yield('titre')</title>
+        @yield('inclusionHead')
+        <script src="https://kit.fontawesome.com/645d400b85.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="/css/app.css">
         <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/style.css') }}"/>
     </head>
     <body>
         @section('sidebar')
-            <nav class="navbar navbar-dark bg-primary">
-                @if (Route::has('login'))
-                    <div class="top-right links">
-                        @auth
-                            <a class="text-white" href="{{ url('/home') }}">Home</a>
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <button type="submit">Logout</button>
-                            </form>
-                        @else
-                            <a class="text-white" href="{{ route('login') }}">Login</a>
+            <nav class="navbar navbar-expand-md navbar-dark bg-primary">
+                <div class="navbar-collapse justify-content-end">
+                    <div class="navbar-nav">
+                    @auth
+                    <a class="nav-item nav-link btn btn-lg text-white" href="{{ url('/home') }}">Accueil</a>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button class="btn btn-lg nav-item nav-link text-white" type="submit">Se déconnecter</button>
+                    </form>
+                    @endauth
 
-                            @if (Route::has('register'))
-                                <a class="text-white" href="{{ route('register') }}">Register</a>
-                            @endif
-                        @endauth
+                    @guest
+                        <a class="nav-item nav-link btn btn-lg text-white" href="{{ route('login') }}">Login</a>
+                    @endguest
                     </div>
-                @endif
+                </div>
             </nav>
         @show
 
-        <div class="container mt-3">
+        <div class="mx-5 mt-3">
+            @if( session('error') )
+                <div class="alert alert-danger text-danger" role="alert">
+                    {{ session('error') }}
+                </div>
+            @endif
+            @if( session('success') )
+                <div class="alert alert-success text-success" role="alert">
+                    {{ session('success') }}
+                </div>
+            @endif
+
             @yield('contenu')
         </div>
     </body>

@@ -31,7 +31,7 @@ class UserController extends AbstractControllerCRUD
      *                             RESOURCES
      * ====================================================================
      */
-    
+
 
     /**
      * Route de tests pour les fonctions auxiliaires.
@@ -94,7 +94,7 @@ class UserController extends AbstractControllerCRUD
     public function create()
     {
         $enseignants   = Enseignant::all()->sortBy(Enseignant::COL_NOM);
-        $contacts_insa = Contact::where(Contact::COL_TYPE, '=', Constantes::TYPE_CONTACT['insa'])
+        $contacts_insa = Contact::where(Contact::COL_TYPE, '=', Contact::VAL_TYPE_INSA)
         ->orderBy(Contact::COL_NOM)
         ->get();
 
@@ -103,7 +103,7 @@ class UserController extends AbstractControllerCRUD
             'classe'        => User::class,
             'contacts_insa' => $contacts_insa,
             'enseignants'   => $enseignants,
-            'type'          => Constantes::TYPE_CONTACT['insa']
+            'type'          => Contact::VAL_TYPE_INSA
         ]);
     }
 
@@ -118,7 +118,7 @@ class UserController extends AbstractControllerCRUD
         $this->validerForm($request);
 
         $user = new User;
-        
+
         // Recuperation de l'identite
         $email    = $request->input(User::COL_EMAIL);
         $identite = $this->getIdentite($email);
@@ -137,7 +137,7 @@ class UserController extends AbstractControllerCRUD
         $user->save();
 
         return redirect()->route('users.index');
-        
+
     }
 
     /**
@@ -176,7 +176,7 @@ class UserController extends AbstractControllerCRUD
         }
 
         $enseignants   = Enseignant::all()->sortBy(Enseignant::COL_NOM);
-        $contacts_insa = Contact::where(Contact::COL_TYPE, '=', Constantes::TYPE_CONTACT['insa'])
+        $contacts_insa = Contact::where(Contact::COL_TYPE, '=', Contact::VAL_TYPE_INSA)
         ->orderBy(Contact::COL_NOM)
         ->get();
 
@@ -185,7 +185,7 @@ class UserController extends AbstractControllerCRUD
             'classe'        => User::class,
             'contacts_insa' => $contacts_insa,
             'enseignants'   => $enseignants,
-            'type'          => Constantes::TYPE_CONTACT['insa'],
+            'type'          => Contact::VAL_TYPE_INSA,
             'user'          => $user
         ]);
     }
@@ -205,11 +205,11 @@ class UserController extends AbstractControllerCRUD
         {
             abort('404');
         }
-        
+
         // Recuperation de l'existant
         $email    = $request->input(User::COL_EMAIL);
         $identite = $this->getIdentite($email);
-        
+
         // MaJ de la liaison
         $user->identite()->dissociate();
         $user->identite()->associate($identite);
@@ -217,7 +217,7 @@ class UserController extends AbstractControllerCRUD
         // MaJ de l'email + confirmation nouvel email
         $user[User::COL_EMAIL] = $identite->email;
         $user[User::COL_EMAIL_VERIFIE_LE] = null;
-        
+
         /* TODO
          * Renvoyer un nouvel email pour la confirmation de l'email
          */
@@ -263,7 +263,7 @@ class UserController extends AbstractControllerCRUD
 
     /**
      * Fonction qui doit faire la logique de validation des inputs d'une requete entrante.
-     * 
+     *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
@@ -279,7 +279,7 @@ class UserController extends AbstractControllerCRUD
                 function($attribute, $value, $fail) {
                     if(null === Enseignant::where(Enseignant::COL_EMAIL, '=', $value)->first()
                     && null === Contact::where([
-                            [Contact::COL_TYPE, '=', Constantes::TYPE_CONTACT['insa']],
+                            [Contact::COL_TYPE, '=', Contact::VAL_TYPE_INSA],
                             [Contact::COL_EMAIL, '=', $value]
                         ])->first()
                     )
@@ -295,7 +295,7 @@ class UserController extends AbstractControllerCRUD
 
     /**
      * Fonction qui doit faire la logique de validation de l'id
-     * 
+     *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
@@ -312,7 +312,7 @@ class UserController extends AbstractControllerCRUD
 
     /**
      * Renvoie l'output de la fonction Schema::getColumnListing(Modele::NOM_TABLE)
-     * 
+     *
      * @return void
      */
     protected function getAttributsModele()
@@ -334,7 +334,7 @@ class UserController extends AbstractControllerCRUD
 
         // On recherche chez les contacts
         $identite = Contact::where([
-            [Contact::COL_TYPE, '=', Constantes::TYPE_CONTACT['insa']],
+            [Contact::COL_TYPE, '=', Contact::VAL_TYPE_INSA],
             [Contact::COL_EMAIL, '=', $email]
         ])->first();
 

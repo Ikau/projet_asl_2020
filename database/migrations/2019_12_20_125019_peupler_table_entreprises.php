@@ -16,7 +16,7 @@ class PeuplerTableEntreprises extends Migration
      */
     public function up()
     {
-        $nbEntreprise = 20;
+        $nbEntreprise = 10;
         for($i=0; $i<$nbEntreprise; $i++)
         {
             factory(Entreprise::class)->create();

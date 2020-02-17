@@ -7,11 +7,20 @@ use Illuminate\Database\Eloquent\Model;
 
 abstract class AbstractSection extends Model
 {
+
+
     /**
      * Renvoie le nombre de points obtenables dans la section
      * @return float
      */
     abstract public function getBareme() : float;
+
+    /**
+     * Renvoie l'intitule du choix a l'index indiquee
+     * @param int $indexChoix L'index du choix dont on cherche l'intitule
+     * @return string
+     */
+    abstract public function getIntitule(int $indexChoix) : string;
 
     /**
      * Renvoie la note totale de la section

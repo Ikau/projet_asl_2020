@@ -18,18 +18,7 @@ class PeuplerTableEnseignants extends Migration
      */
     public function up()
     {
-        $idAucunDepartement = Departement::where(Departement::COL_INTITULE, 'Aucun')->first()->id;
-        $idAucuneOption     = Option::where(Option::COL_INTITULE, 'Aucune')->first()->id;
-        // Enseignant vide
-        DB::table(Enseignant::NOM_TABLE)->insert([
-            'nom'            => '',
-            'prenom'         => 'Aucun',
-            'email'          => 'aucun@null.com',
-            'option_id'      => $idAucuneOption,
-            'departement_id' => $idAucunDepartement
-        ]);
-
-        $nbEnseignant = 10;
+        $nbEnseignant = 5;
         for($i=0; $i<$nbEnseignant; $i++)
         {
             factory(Enseignant::class)->create();

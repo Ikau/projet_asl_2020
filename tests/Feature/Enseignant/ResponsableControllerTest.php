@@ -26,8 +26,8 @@ class ResponsableControllerTest extends TestCase
     {
         // [string $route]
         return [
-            'Index'            => ['referents.index'],
-            'Mes affectations' => ['referents.affectations'],
+            'Liste affectations'      => ['responsables.affectations.index', []],
+            'Form stage/affectations' => ['responsables.affectations.create', []]
         ];
     }
 
@@ -45,7 +45,7 @@ class ResponsableControllerTest extends TestCase
         $response = $this->actingAs($user)
         ->followingRedirects()
         ->from('/')
-        ->get(route('responsables.affectations.get'))
+        ->get(route('responsables.affectations.create'))
         ->assertOk()
         ->assertViewIs('admin.modeles.stage.form')
         ->assertSee(ResponsableController::TITRE_GET_FORM_AFFECTATION);
@@ -54,5 +54,14 @@ class ResponsableControllerTest extends TestCase
         // Redondate car deja verifiee dans StageControllerTest
     }
 
+    public function testGetIndexAffectation()
+    {
+
+    }
+
+    public function testPostValiderAffectation()
+    {
+
+    }
 
 }

@@ -7,7 +7,6 @@
         'enseignants' => Collection de App\Modeles\Enseignant
         'etudiant'    => En cas d'edit : l'etudiant concerne
         'etudiants'   => Collection de App\Modeles\Etudiant
-        'classeStage' => Stage  Stage::class
 --}}
 
 @extends('layouts.app')
@@ -18,21 +17,21 @@
 @section('contenu')
 <div>
     @if ( isset($stage) )
-    Formulaire d'édition d'une affectation de stage
+        <h1>Formulaire d'édition d'une affectation de stage</h1>
     @else
-    Formulaire de creation d'une affectation de stage
+        <h1>Formulaire de creation d'une affectation de stage</h1>
     @endif
 </div>
 <div>
     @if(null !== Auth::user()
     && (Auth::user()->estResponsableOption() || Auth::user()->estResponsableDepartement()))
-    <a href="{{ route('referents.index') }}">Retour</a>
+    <a class="btn btn-danger" href="{{ route('referents.index') }}">Retour</a>
     @else
-    <a href="{{ route('stages.index') }}">Retour</a>
+    <a class="btn btn-danger" href="{{ route('stages.index') }}">Retour</a>
     @endif
 </div>
 <div>
-    (*) : Champs obligatoires
+    <a>(*) : Champs obligatoires</a>
 </div>
 
 @if ( isset($stage) )
@@ -136,11 +135,7 @@
     ])
     <br/>
 
-    @if ( isset($stage) )
-    <button type="submit"> Modifier le stage</button>
-    @else
-    <button type="submit"> Créer le stage</button>
-    @endif
+    <button class="btn btn-primary" type="submit">{{ isset($stage) ? 'Modifier le stage' : 'Créer le stage' }}</button>
 </form>
 
 @endsection

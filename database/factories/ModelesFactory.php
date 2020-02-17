@@ -2,6 +2,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
+use App\User;
 use Faker\Generator as Faker;
 
 use App\Modeles\Contact;
@@ -82,8 +83,12 @@ $factory->define(Privilege::class, function (Faker $faker)
 
 $factory->define(Stage::class, function (Faker $faker)
 {
-    $idEnseignant = factory(Enseignant::class)->create()->id;
-    $idEtudiant   = factory(Etudiant::class)->create()->id;
+    // Creation des entites auxiliaires
+    $idEtudiant   = factory(Etudiant::class)->create();
+
+    $enseignant = factory(Enseignant::class)->create();
+    User::fromEnseignant($enseignant->id, 'azerty');
+
 
     return [
         Stage::COL_ANNEE              => $faker->randomElement([4, 5]),
@@ -102,7 +107,7 @@ $factory->define(Stage::class, function (Faker $faker)
         Stage::COL_RESUME             => $faker->text,
 
         // Clefs etrangeres
-        Stage::COL_REFERENT_ID   => $idEnseignant,
+        Stage::COL_REFERENT_ID   => $enseignant->id,
         Stage::COL_ETUDIANT_ID   => $idEtudiant
     ];
 });

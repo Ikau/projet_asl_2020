@@ -21,35 +21,48 @@
     </div>
 
     <div>
-        <h1>Mes stages de stage</h1>
+        <h1>Mes affectations de stage</h1>
     </div>
 
     <div>
-        <table>
-            {{-- Structure du tableau
-                 Nom etudiant | Prenom etudiant |
-                | Annee | Promotion | Departement | Sujet
-                | Entreprise | Rapport | Soutenance | Synthese  --}}
-            <tr>
-                @foreach($entetes as $entete)
-                <th>{{$entete}}</th>
-                @endforeach
-            </tr>
+        <table class="table table-hover">
+            <thead class="thead-light">
+                {{-- Structure du tableau
+                    Liens | Nom etudiant | Prenom etudiant |
+                    | Annee | Promotion | Departement | Sujet
+                    | Entreprise | Rapport | Soutenance | Synthese  --}}
+                <tr>
+                    @foreach($entetes as $entete)
+                    <th>{{$entete}}</th>
+                    @endforeach
+                </tr>
+            </thead>
 
-            @foreach($stages as $stage)
-            <tr>
-                <td>{{ $stage->etudiant->nom }}</td>
-                <td>{{ $stage->etudiant->prenom }}</td>
-                <td>{{ $stage->annee_etudiant }}A</td>
-                <td>{{ $stage->etudiant->departement->intitule }}</td>
-                <td>{{ $stage->etudiant->promotion }}</td>
-                <td>{{ $stage->intitule }}</td>
-                <td> Entreprise </td>
-                <td> <a href="{{ route('fiches.rapports.show', $stage->id) }}">Rapport</a> </td>
-                <td> Soutenance </td>
-                <td> Synthese </td>
-            </tr>
-            @endforeach
+            <tbody>
+                @foreach($stages as $stage)
+                <tr>
+                    <td><a class="btn btn-lg bg-info text-white" href="{{ route('stages.show', $stage->id) }}">Détails</a></td>
+                    <td>{{ $stage->etudiant->nom }}</td>
+                    <td>{{ $stage->etudiant->prenom }}</td>
+                    <td>{{ $stage->annee_etudiant }}A</td>
+                    <td>{{ $stage->etudiant->departement->intitule }}</td>
+                    <td>{{ $stage->etudiant->promotion }}</td>
+                    <td>{{ $stage->intitule }}</td>
+                    <td> Vide </td>
+                    <td>
+                        @if($stage->fiche_rapport->statut === 0)
+                            <a class="text-danger font-weight-bold font-weight-light" href="{{ route('fiches.rapport.show', $stage->fiche_rapport->id) }}"><u>Vide</u></a>
+                        @elseif($stage->fiche_rapport->statut === 1)
+                            <a class="text-info font-weight-bold font-weight-light" href="{{ route('fiches.rapport.show', $stage->fiche_rapport->id) }}"><u>En cours</u></a>
+                        @else
+                            <a class="text-success font-weight-bold font-weight-light" href="{{ route('fiches.rapport.show', $stage->fiche_rapport->id) }}"><u>Remplie</u></a>
+                        @endif
+                    </td>
+                    <td> Vide </td>
+                    <td> Vide </td>
+                </tr>
+                @endforeach
+            </tbody>
         </table>
     </div>
 

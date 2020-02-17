@@ -1,3 +1,6 @@
+TEMPTEMPTEMP
+Bug pour les versions MySQL vieille ou MariaDB
+
 # **projet_asl_2020**
 
 Bienvenue sur le dépôt GitHub du projet de l'**INSA Centre-Val de Loire** "**Notation des stages**" utilisant le framework `Laravel 6.x` !

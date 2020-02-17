@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Abstracts\Modeles\Fiches\AbstractFiche;
 use App\Utils\Constantes;
+use App\Traits\NotationFiches;
 
 class FicheRapport extends AbstractFiche
 {
+    use NotationFiches;
 
     /* ====================================================================
      *                          BASE DE DONNEES
@@ -22,6 +24,7 @@ class FicheRapport extends AbstractFiche
      */
     const COL_APPRECIATION = 'appreciation';
     const COL_CONTENU      = 'contenu';
+    const COL_STATUT       = 'statut';
 
     /*
      * Nom des colonnes des clefs etrangeres
@@ -66,6 +69,7 @@ class FicheRapport extends AbstractFiche
         // Attributs propres au modele
         self::COL_APPRECIATION => Constantes::STRING_VIDE,
         self::COL_CONTENU      => Constantes::STRING_VIDE,
+        self::COL_STATUT       => self::VAL_STATUT_NOUVELLE,
 
         // Clefs etrangeres_
         self::COL_MODELE_ID   => Constantes::ID_VIDE,
@@ -84,41 +88,13 @@ class FicheRapport extends AbstractFiche
      *                            OVERRIDES
      * ====================================================================
      */
-    /**
-     * @return float La note finale de la fiche
+
+    /*
+     * Implementees dans le trait 'NotationFiches'
      */
-    public function getNote() : float
-    {
-        // Verification basique
-        $note = 0.0;
-        if(null === $this->contenu || Constantes::STRING_VIDE === $this->contenu)
-        {
-            return $note;
-        }
+    //abstract public function getNote() : float;
+    //abstract public function getStatut() : int;
 
-        // Recuperation du json
-        $notation = $this->contenu;
-        if(null === $notation)
-        {
-            return $note;
-        }
-
-        // Calcule de la note
-        $sections = $this->modele->sections()->orderBy(Section::COL_ORDRE)->get();
-        foreach($notation as $indexSection => $criteres)
-        {
-            $section = $sections->get($indexSection);
-            foreach($criteres as $indexPoints)
-            {
-                if(-1 !== $indexPoints)
-                {
-                    $note += $section->getPoints($indexPoints);
-                }
-            }
-        }
-
-        return $note;
-    }
 
     /* ====================================================================
      *                            RELATIONS

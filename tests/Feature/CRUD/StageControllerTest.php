@@ -211,7 +211,7 @@ class StageControllerTest extends TestCase
 
         foreach($this->getAttributsModele() as $a)
         {
-            if('id' !== $a)
+            if('id' !== $a && Stage::COL_AFFECTATION_VALIDEE !== $a)
             {
                 $response->assertSee($a);
             }
@@ -229,7 +229,8 @@ class StageControllerTest extends TestCase
         $response = $this->followingRedirects()
         ->from(route('stages.create'))
         ->post(route('stages.store'), $stage->toArray())
-        ->assertViewIs('admin.modeles.stage.index');
+        ->assertViewIs('admin.modeles.stage.index')
+        ->assertSee('Stage ajoute !');
 
         // Verification de l'insertion
         $clauseWhere = [];
@@ -273,8 +274,11 @@ class StageControllerTest extends TestCase
 
         foreach($this->getAttributsModele() as $attribut)
         {
-            // Fonction e() pour les cas avec apostrophes echapes (')
-            $response->assertSee(e($stage[$attribut]));
+            if('id' !== $attribut)
+            {
+                // Fonction e() pour les cas avec apostrophes echapes (')
+                $response->assertSee(e($stage[$attribut]));
+            }
         }
     }
 

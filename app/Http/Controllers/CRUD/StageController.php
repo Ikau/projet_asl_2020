@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\CRUD;
 
+use App\Notifications\AffectationAssignee;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Auth;
@@ -28,6 +30,9 @@ class StageController extends AbstractControllerCRUD
     const TITRE_SHOW   = 'Details du stage';
     const TITRE_EDIT   = 'Editer un stage';
 
+    /**
+     * Valeur attendue du tag <title> pour les pages
+     */
 
     /* ====================================================================
      *                             RESOURCES
@@ -105,12 +110,8 @@ class StageController extends AbstractControllerCRUD
      */
     public function create()
     {
-        $attributs   = $this->getAttributsModele();
-        $enseignants = Enseignant::all();
-        $etudiants   = Etudiant::all();
-
-        // WIP : pour avoir des dates correctes pour tester le form
-        $stageTemp = factory(Stage::class)->make();
+        $enseignants = Enseignant::orderBy(Enseignant::COL_NOM, 'asc')->get();
+        $etudiants   = Etudiant::orderBy(Etudiant::COL_NOM, 'asc')->get();
 
         // Si redirection depuis une zone de responsable
         $titre = StageController::TITRE_CREATE;
@@ -123,9 +124,7 @@ class StageController extends AbstractControllerCRUD
         return view('admin.modeles.stage.form', [
             'titre'       => $titre,
             'etudiants'   => $etudiants,
-            'enseignants' => $enseignants,
-            'wip_debut'   => $stageTemp->date_debut,
-            'wip_fin'     => $stageTemp->date_fin,
+            'enseignants' => $enseignants
         ]);
     }
 
@@ -151,9 +150,9 @@ class StageController extends AbstractControllerCRUD
         $user = Auth::user();
         if(null !== $user && ($user->estResponsableOption() || $user->estResponsableDepartement()))
         {
-            return redirect()->route('referents.index');
+            return redirect()->route('referents.index')->with('success', 'Stage ajoute !');
         }
-        return redirect()->route('stages.index');
+        return redirect()->route('stages.index')->with('success', 'Stage ajoute !');
     }
 
     /**
@@ -171,8 +170,9 @@ class StageController extends AbstractControllerCRUD
         }
 
         return view('admin.modeles.stage.show', [
-            'titre' => StageController::TITRE_SHOW,
-            'stage' => $stage
+            'titre'    => StageController::TITRE_SHOW,
+            'stage'    => $stage,
+            'etudiant' => Etudiant::find($stage->etudiant_id)
         ]);
     }
 
@@ -297,7 +297,7 @@ class StageController extends AbstractControllerCRUD
         if($request->missing(Stage::COL_REFERENT_ID)
         || null === $referent)
         {
-            $request[Stage::COL_REFERENT_ID] = Enseignant::getModeleDefaut()->id;
+            $request[Stage::COL_REFERENT_ID] = -1;
         }
     }
 

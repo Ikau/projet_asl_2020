@@ -8,6 +8,14 @@ use App\Utils\Constantes;
 class Section extends AbstractSection
 {
     /* ====================================================================
+     *                          VALEURS DU MODELE
+     * ====================================================================
+     */
+    const VAL_INDEX_CRITERE_POINTS   = 0;
+    const VAL_INDEX_CRITERE_INTITULE = 1;
+
+
+    /* ====================================================================
      *                          BASE DE DONNEES
      * ====================================================================
      */
@@ -43,11 +51,6 @@ class Section extends AbstractSection
      *                            PROPRIETES
      * ====================================================================
      */
-    /**
-     * @var int Index pour obtenir le point dans un critere
-     */
-    private $INDEX_POINTS = 0;
-
     /**
      * @var array[string] Liste des attributs a assigner manuellement.
      */
@@ -112,10 +115,26 @@ class Section extends AbstractSection
         $noteSection = 0.0;
         foreach($notation as $index)
         {
-            $noteSection += $choix[$index][$this->INDEX_POINTS];
+            if(-1 !== $index)
+            {
+                $noteSection += $choix[$index][self::VAL_INDEX_CRITERE_POINTS];
+            }
         }
 
         return $noteSection;
+    }
+
+    /**
+     * Renvoie l'intitule du choix a l'index indiquee
+     * @param int $indexChoix L'index du choix dont on cherche l'intitule
+     * @return string
+     */
+    public function getIntitule(int $indexChoix) : string
+    {
+        // Recuperation de l'array
+        $choix = $this->choix;
+
+        return $choix[$indexChoix][self::VAL_INDEX_CRITERE_INTITULE];
     }
 
     /**
@@ -129,7 +148,7 @@ class Section extends AbstractSection
         // Recuperation de l'array
         $choix = $this->choix;
 
-        return $choix[$indexChoix][$this->INDEX_POINTS];
+        return $choix[$indexChoix][self::VAL_INDEX_CRITERE_POINTS];
     }
 
     /* ====================================================================
@@ -163,7 +182,7 @@ class Section extends AbstractSection
         $max = 0.0;
         foreach($choix as $index => $array)
         {
-            $valeurCourante = $array[$this->INDEX_POINTS];
+            $valeurCourante = $array[self::VAL_INDEX_CRITERE_POINTS];
             if($valeurCourante > $max)
             {
                 $max = $valeurCourante;

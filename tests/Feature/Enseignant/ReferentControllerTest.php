@@ -24,8 +24,8 @@ class ReferentControllerTest extends TestCase
     {
         // [string $route]
         return [
-            'Index'            => ['referents.index'],
-            'Mes affectations' => ['referents.affectations'],
+            'Index'            => ['referents.index', []],
+            'Mes affectations' => ['referents.affectations', []],
         ];
     }
 
@@ -52,7 +52,8 @@ class ReferentControllerTest extends TestCase
 
         // Controle d'acces des actions
         ->assertSee(route('referents.affectations'))
-        ->assertDontSee(route('responsables.affectations.get'));
+        ->assertDontSee(route('responsables.affectations.create'))
+        ->assertDontSee(route('responsables.affectations.index'));
     }
 
     /**

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Enseignant;
 
+use App\Interfaces\InformationsNotification;
+use App\Notifications\AffectationAssignee;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
@@ -62,6 +64,7 @@ class ReferentController extends AbstractReferentController
 
         // Definitions des donnees a manipuer
         $entetes = [
+            '', // Vide pour une zone d'icone ou autre
             'Nom stagiaire',
             'Prenom stagiaire',
             'Annee',
@@ -79,13 +82,14 @@ class ReferentController extends AbstractReferentController
 
         // Recuperation des stages + classement par NOM de l'eutidnat
         $stages = Stage::with('etudiant')
-        ->where(Stage::COL_REFERENT_ID, '=', $enseignant->id)
-        ->get()
+        ->where([
+            [Stage::COL_REFERENT_ID, '=', $enseignant->id],
+            [Stage::COL_AFFECTATION_VALIDEE, '=', 1]
+        ])->get()
         ->sortBy('etudiant.nom');
 
         return view('enseignant.commun.affectations', [
             'titre'   => ReferentController::TITRE_AFFECTATIONS,
-            'classe'  => Stage::class,
             'user'    => $enseignant,
             'entetes' => $entetes,
             'stages'  => $stages

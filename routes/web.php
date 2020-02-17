@@ -76,6 +76,8 @@ Route::prefix('tests')->group(function() {
         Route::post('stages/', 'CRUD\StageController@tests')->name('stages.tests');
         Route::post('soutenances/', 'CRUD\SoutenanceController@tests')->name('soutenances.tests');
         Route::post('users/', 'CRUD\UserController@tests')->name('users.tests');
+
+        Route::post('fiches/rapport', 'Fiches\FicheRapportController@tests')->name('fiches.rapport.tests');
     });
 });
 
@@ -90,6 +92,28 @@ Route::prefix('enseignant')->group(function() {
     Route::get('affectations/', 'Enseignant\ReferentController@affectations')->name('referents.affectations');
 });
 
+/*
+ |--------------------------------------------------------------------------
+ |                        Routes partie 'Responsable'
+ |--------------------------------------------------------------------------
+ */
+Route::prefix('responsable')->group(function() {
+    Route::get('affectations/', 'Enseignant\ResponsableController@getIndexAffectation')->name('responsables.affectations.index');
+    Route::get('affectations/form', 'Enseignant\ResponsableController@getCreateAffectation')->name('responsables.affectations.create');
+
+    Route::post('affectations/{idStage}/valider', 'Enseignant\ResponsableController@postValiderAffectation')->name('responsables.affectations.valider');
+});
+
+
+/*
+ |--------------------------------------------------------------------------
+ |                        Routes partie 'Scolarite'
+ |--------------------------------------------------------------------------
+ */
+Route::prefix('scolarite')->group(function() {
+    Route::get('accueil/', 'Scolarite\ScolariteController@index')->name('scolarite.index');
+    Route::get('affectations/', 'Scolarite\ScolariteController@affectations')->name('scolarite.affectations');
+});
 
 /*
  |--------------------------------------------------------------------------
@@ -100,20 +124,11 @@ Route::prefix('fiches')->group(function() {
     // Entreprise
 
     // Rapport
-    Route::get('{idStage}/rapport', 'Enseignant\FicheRapportController@show')->name('fiches.rapports.show');
-    Route::post('{idStage}/rapport', 'Fiches\FicheRapportController@store')->name('fiches.rapports.store');
+    Route::get('rapport/{id}', 'Fiches\FicheRapportController@show')->name('fiches.rapport.show');
+    Route::get('rapport/{id}/edit', 'Fiches\FicheRapportController@edit')->name('fiches.rapport.edit');
+    Route::patch('rapport/{id}', 'Fiches\FicheRapportController@update')->name('fiches.rapport.update');
 
     // Soutenance
 
     // Synthese
-});
-
-/*
- |--------------------------------------------------------------------------
- |                        Routes partie 'Responsable'
- |--------------------------------------------------------------------------
- */
-Route::prefix('responsable')->group(function() {
-    Route::get('affectations/', 'Enseignant\ResponsableController@getFormAffectation')->name('responsables.affectations.get');
-    Route::post('affectations/', 'Enseignant\ResponsableController@postFormAffectation')->name('responsable.affectations.store');
 });

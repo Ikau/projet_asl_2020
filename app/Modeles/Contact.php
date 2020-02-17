@@ -11,6 +11,29 @@ use App\Utils\Constantes;
 
 class Contact extends AbstractContact implements CompteUser
 {
+    /* ====================================================================
+     *                        VALEURS DU MODELE
+     * ====================================================================
+     */
+    /*
+     * Valeurs possibles pour le champ 'civilite'
+     */
+    const VAL_CIVILITE_VIDE     = 0;
+    const VAL_CIVILITE_MADAME   = 1;
+    const VAL_CIVILITE_MONSIEUR = 2;
+
+    /*
+     * Valeurs possibles pour le champ 'type'
+     */
+    const VAL_TYPE_VIDE            = 0;
+    const VAL_TYPE_INSA            = 1;
+    const VAL_TYPE_ENTREPRISE      = 2;
+    const VAL_TYPE_MAITRE_DE_STAGE = 3;
+
+    /* ====================================================================
+     *                          BASE DE DONNEES
+     * ====================================================================
+     */
     /*
      * Nom des colonnes dans la base de donnees
      */
@@ -29,7 +52,7 @@ class Contact extends AbstractContact implements CompteUser
 
     /**
      * Indique a Laravel de ne pas creer ni de gerer les tables 'created_at' et 'updated_at'
-     * 
+     *
      * @var bool Gestion des timestamps
      */
     public $timestamps = false;
@@ -48,17 +71,17 @@ class Contact extends AbstractContact implements CompteUser
 
     /**
      * Valeurs par defaut des colonnes du modele 'Contact'
-     * 
+     *
      * @var array[string]mixed
      */
     protected $attributes = [
         Contact::COL_NOM       => Constantes::STRING_VIDE,
         Contact::COL_PRENOM    => Constantes::STRING_VIDE,
-        Contact::COL_CIVILITE  => Constantes::CIVILITE['vide'],
-        Contact::COL_TYPE      => Constantes::TYPE_CONTACT['vide'],
+        Contact::COL_CIVILITE  => self::VAL_CIVILITE_VIDE,
+        Contact::COL_TYPE      => self::VAL_TYPE_VIDE,
         Contact::COL_EMAIL     => Constantes::STRING_VIDE,
         Contact::COL_TELEPHONE => Constantes::STRING_VIDE,
-        Contact::COL_ADRESSE   => Constantes::STRING_VIDE        
+        Contact::COL_ADRESSE   => Constantes::STRING_VIDE
     ];
 
     /**
@@ -95,12 +118,12 @@ class Contact extends AbstractContact implements CompteUser
      */
     /**
      * Renvoie le compte user associe au contact le cas echeant
-     * 
+     *
      * @return Null|App\User
      */
     public function user()
     {
         return $this->morphOne('App\User', User::COL_POLY_MODELE);
     }
-    
+
 }

@@ -11,7 +11,10 @@ use App\Modeles\Fiches\Section;
 
 class FicheFacade implements CreationFiches
 {
-
+    /* ====================================================================
+     *                 FONCTIONS DE CREATION DES FICHES
+     * ====================================================================
+     */
     public static function creerFiches(int $idStage,
                                        int $versionEntreprise = null,
                                        int $versionRapport    = null,
@@ -49,13 +52,11 @@ class FicheFacade implements CreationFiches
         {
             $ficheRapport = new FicheRapport();
 
-            // Donnees par defaut vide
-            $donnees = [];
-
             $ficheRapport->fill([
                 FicheRapport::COL_CONTENU     => self::creerContenuVide($modele),
                 FicheRapport::COL_MODELE_ID   => $modele->id,
-                FicheRapport::COL_STAGE_ID    => $idStage
+                FicheRapport::COL_STAGE_ID    => $idStage,
+                FicheRapport::COL_STATUT      => FicheRapport::VAL_STATUT_NOUVELLE
             ]);
 
             $ficheRapport->save();
@@ -73,7 +74,7 @@ class FicheFacade implements CreationFiches
     }
 
     /* ====================================================================
-     *                         FONCTIONS PRIVEES
+     *                        FONCTIONS UTILITAIRE
      * ====================================================================
      */
     /**
@@ -81,13 +82,13 @@ class FicheFacade implements CreationFiches
      * @param ModeleNotation $modeleNotation
      * @return array
      */
-    private static function creerContenuVide(ModeleNotation $modeleNotation)
+    public static function creerContenuVide(ModeleNotation $modeleNotation)
     {
         $contenuVide = [];
         foreach($modeleNotation->sections as $section)
         {
             $sectionVide = [];
-            for($i=0; $i<count($section->choix); $i++)
+            for($i=0; $i<count($section->criteres); $i++)
             {
                 $sectionVide[] = -1;
             }

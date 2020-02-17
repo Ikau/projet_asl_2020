@@ -1,4 +1,4 @@
-{{-- 
+{{--
     Tag <select> affichant specifiquement une liste des etudiants
 
     Variables a definir depuis la vue appelante :
@@ -10,7 +10,7 @@
 <label for="{{ $attribut }}">{{ $intitule }}</label>
 <select name="{{ $attribut }}" id="{{ $attribut }}">
     @foreach($etudiants as $e)
-    <option value="{{ $e->id }}" {{ $valeur === $e->id ? 'selected':'' }}>{{ $e->nom }} {{ $e->prenom }}</option>
+    <option value="{{ $e->id }}" {{ $valeur === $e->id ? 'selected':'' }}>({{ $e->departement->intitule }}) {{ $e->nom }} {{ $e->prenom }}</option>
     @endforeach
 </select>
 @error($attribut)

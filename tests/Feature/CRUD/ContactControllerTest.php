@@ -23,7 +23,7 @@ class ContactControllerTest extends TestCase
 
     /**
      * Test de la fonction 'normaliseInputsOptionnels'
-     * 
+     *
      * @dataProvider normaliseInputsOptionnelsProvider
      */
     public function testNormaliseOptionnels(string $clefModifiee, $nouvelleValeur)
@@ -53,10 +53,10 @@ class ContactControllerTest extends TestCase
             'Civilite non numerique' => [Contact::COL_CIVILITE, '']
         ];
     }
-    
+
     /**
      * Test de la fonction de validation POST, PUT et PATCH d'un contact
-     * 
+     *
      * @depends testNormaliseOptionnels
      * @dataProvider validerFormProvider
      */
@@ -89,7 +89,7 @@ class ContactControllerTest extends TestCase
             // Succes
             'Nom valide'    => [FALSE, Contact::COL_NOM, 'nom'],
             'Prenom valide' => [FALSE, Contact::COL_PRENOM, 'prenom'],
-            'Type valide'   => [FALSE, Contact::COL_TYPE, Constantes::TYPE_CONTACT['vide']],
+            'Type valide'   => [FALSE, Contact::COL_TYPE, Contact::VAL_TYPE_VIDE],
             'Mail valide'   => [FALSE, Contact::COL_EMAIL, 'valide@example.com'],
 
             'Civilite null'  => [FALSE, Contact::COL_CIVILITE, null],
@@ -116,7 +116,7 @@ class ContactControllerTest extends TestCase
 
     /**
      * Test de la methode 'validerModele'
-     * 
+     *
      * @dataProvider validerModeleProvider
      */
     public function testValiderModele(int $idCas, int $statutAttendu)
@@ -193,7 +193,7 @@ class ContactControllerTest extends TestCase
 
         foreach($this->getAttributsModele() as $attribut)
         {
-            if($attribut !== 'id') 
+            if($attribut !== 'id')
             {
                 $response->assertSee("name=\"$attribut\"");
             }
@@ -202,7 +202,7 @@ class ContactControllerTest extends TestCase
 
     /**
      * Test de la requete POST de sauvegarde d'un formulaire
-     * 
+     *
      * @depends testValiderForm
      * @return void
      */
@@ -223,7 +223,7 @@ class ContactControllerTest extends TestCase
                 $arrayWhere[] = [$attribut, '=', $contactSource[$attribut]];
             }
         }
-        
+
         $contactTest = Contact::where($arrayWhere)->first();
         $this->assertNotNull($contactTest);
         foreach($this->getAttributsModele() as $a)
@@ -236,7 +236,7 @@ class ContactControllerTest extends TestCase
     }
 
     /**
-     * 
+     *
      * @depends testValiderModele
      * @return void
      */
@@ -255,7 +255,7 @@ class ContactControllerTest extends TestCase
     }
 
     /**
-     * 
+     *
      * @depends testValiderForm
      * @depends testValiderModele
      * @return void
@@ -284,7 +284,7 @@ class ContactControllerTest extends TestCase
     {
         $contactSource = factory(Contact::class)->create();
         $contactSource[$clefModifiee] = $nouvelleValeur;
-        
+
         // Mise a jour et redirection OK
         $response = $this->from(route('contacts.edit', $contactSource->id))
         ->patch(route('contacts.update', $contactSource->id), $contactSource->toArray())
@@ -313,13 +313,13 @@ class ContactControllerTest extends TestCase
             // Succes
             'Nom valide'       => [Contact::COL_NOM, 'nom', null],
             'Prenom valide'    => [Contact::COL_PRENOM, 'prenom', null],
-            'Civilite valide'  => [Contact::COL_CIVILITE, Constantes::CIVILITE['vide'], null],
-            'Type valide'      => [Contact::COL_TYPE, Constantes::TYPE_CONTACT['vide'], null],
+            'Civilite valide'  => [Contact::COL_CIVILITE, Contact::VAL_CIVILITE_VIDE, null],
+            'Type valide'      => [Contact::COL_TYPE, Contact::VAL_TYPE_VIDE, null],
             'Mail valide'      => [Contact::COL_EMAIL, 'nouveau@example.com', null],
             'Telephone valide' => [Contact::COL_TELEPHONE, 'telephone', null],
             'Adresse valide'   => [Contact::COL_ADRESSE, 'adresse', null],
 
-            'Civilite null'    => [Contact::COL_CIVILITE, null, Constantes::CIVILITE['vide']],
+            'Civilite null'    => [Contact::COL_CIVILITE, null, Contact::VAL_CIVILITE_VIDE],
             'Telephone null'   => [Contact::COL_TELEPHONE, null, Constantes::STRING_VIDE],
             'Adresse null'     => [Contact::COL_ADRESSE, null, Constantes::STRING_VIDE],
         ];
@@ -343,7 +343,7 @@ class ContactControllerTest extends TestCase
         $this->assertNull($contact);
     }
 
-    
+
     /* ====================================================================
      *                       FONCTIONS UTILITAIRES
      * ====================================================================

@@ -23,26 +23,27 @@ class PeuplerTableUsers extends Migration
      */
     public function up()
     {
+        // Creation des comptes pour chaque enseignant
+        $enseignants = Enseignant::all();
+        foreach($enseignants as $enseignant)
+        {
+            User::fromEnseignant($enseignant->id, 'azerty');
+        }
+
         // Insertions de test
         $this->insertAdmin();
-        $this->insertEnseignantBobDupont();
+        $this->insertEnseignantBernardTichaud();
         $this->insertCharlesAtan();
-        $this->insertScolariteAliceToire();
+        $this->insertScolariteAnnieVerserre();
 
-        // Creation de comptes aleatoires
-        $nbUsers = 20;
-        for($i=0; $i<$nbUsers; $i++)
-        {
-            // Creation d'un enseignant aleatoire
-            $enseignant = factory(Enseignant::class)->create();
+        $moi = factory(Contact::class)->create();
+        $moi->fill([
+            Contact::COL_EMAIL  => 'truong.luu@insa-cvl.fr',
+            Contact::COL_NOM    => 'Luu',
+            Contact::COL_PRENOM => 'Thanh'
+        ])->save();
+        User::fromContact($moi->id, 'azerty');
 
-            // Creation du compte user associe
-            $user = factory(User::class)->make();
-            $user[User::COL_EMAIL] = $enseignant[Enseignant::COL_EMAIL];
-            $user->identite()->associate($enseignant);
-            $user->save();
-        }
-        
     }
 
     /**
@@ -61,13 +62,13 @@ class PeuplerTableUsers extends Migration
      */
 
     /**
-     * Cree un contact de type 'Admin' et cree un compte associe a ce contact 
-     * 
+     * Cree un contact de type 'Admin' et cree un compte associe a ce contact
+     *
      * Ce compte peut etre utilise via la paire de login 'admin@exemple.fr / azerty'
      * La fonction lui associe le role 'admin'
      * Pour l'instant, aucun privilege n'est donne a ce compte car le besoin de fragmenter
      * le role de l'admin ne s'est pas encore fait ressentir
-     * 
+     *
      * @return void
      */
     private function insertAdmin()
@@ -77,8 +78,8 @@ class PeuplerTableUsers extends Migration
         $contactAdmin->fill([
             Contact::COL_NOM       => 'admin',
             Contact::COL_PRENOM    => 'admin',
-            Contact::COL_CIVILITE  => Constantes::CIVILITE['vide'],
-            Contact::COL_TYPE      => Constantes::TYPE_CONTACT['insa'],
+            Contact::COL_CIVILITE  => Contact::VAL_CIVILITE_VIDE,
+            Contact::COL_TYPE      => Contact::VAL_TYPE_INSA,
             Contact::COL_EMAIL     => 'admin@exemple.fr',
             Contact::COL_TELEPHONE => '',
             Contact::COL_ADRESSE   => '',
@@ -96,32 +97,35 @@ class PeuplerTableUsers extends Migration
 
     /**
      * Cree un enseignant lambda (responsable de rien) et lui associe un compte user
-     * 
-     * L'enseignant peut etre utilise via la paire 'dupont.bob@exemple.fr / azerty'
+     *
+     * L'enseignant peut etre utilise via la paire 'bernard.tichaud@exemple.fr / azerty'
      * Le role 'referent' lui est attribue mais aucun privileges pour l'instant
-     * Des privileges seront ajoutes au fur et a mesure du developpement
+     * Des privileges pourraient être ajoutes au fur et a mesure du developpement
      */
-    private function insertEnseignantBobDupont()
+    private function insertEnseignantBernardTichaud()
     {
         // Creation de l'enseignant Bob DUPONT
-        $bobDupont = new Enseignant;
-        $bobDupont->fill([
-            Enseignant::COL_NOM                        => 'Dupont',
-            Enseignant::COL_PRENOM                     => 'Bob',
-            Enseignant::COL_EMAIL                      => 'dupont.bob@exemple.fr',
-            Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID => Departement::where(Departement::COL_INTITULE, '=', 'Aucun')->first()->id,
-            Enseignant::COL_RESPONSABLE_OPTION_ID      => Option::where(Option::COL_INTITULE, '=', 'Aucune')->first()->id,
+        $bernardTichaud = new Enseignant;
+        $bernardTichaud->fill([
+            Enseignant::COL_NOM                        => 'Tichaud',
+            Enseignant::COL_PRENOM                     => 'Bernard',
+            Enseignant::COL_EMAIL                      => 'bernard.tichaud@exemple.fr',
+            Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID => Departement::where(Departement::COL_INTITULE, '=', Departement::VAL_AUCUN)->first()->id,
+            Enseignant::COL_RESPONSABLE_OPTION_ID      => Option::where(Option::COL_INTITULE, '=', Option::VAL_AUCUN)->first()->id,
         ])->save();
 
-        // Creation du compte de Bob DUPONT
-        $userDupont = User::fromEnseignant($bobDupont->id, 'azerty');
+        // Creation du compte de Bernard TICHAUD
+        $userTichaud = User::fromEnseignant($bernardTichaud->id, 'azerty');
 
         // Ajout des roles et des privileges au compte
         $roleEnseignant = Role::where(Role::COL_INTITULE, '=', Role::VAL_ENSEIGNANT)->first();
-        $userDupont->roles()->attach($roleEnseignant);
-        $userDupont->save();
+        $userTichaud->roles()->attach($roleEnseignant);
+        $userTichaud->save();
     }
 
+    /**
+     * Creer un enseignant responsable de departement MRI
+     */
     private function insertCharlesAtan()
     {
         // Creation de l'enseignant Charels Atan, responsable de departement
@@ -147,34 +151,32 @@ class PeuplerTableUsers extends Migration
 
     /**
      * Cree un personnel de l'INSA responsable des stages et lui associe un compte user
-     * 
-     * Le compte est celui d'Alice TOIRE, accessible via la paire 'toire.alice@exemple.fr / azerty'
+     *
+     * Le compte est celui d'Annie Verserre, accessible via la paire 'verserre.annie@exemple.fr / azerty'
      * Elle est chargee de gerer les stages (planification et soutenances)
      * On lui associe le role 'scolarite' mais aucun privilege pour l'instant
-     * 
+     *
      * Les privileges seront ajoutes au fur et a mesure du developpement
-     * 
+     *
      */
-    private function insertScolariteAliceToire()
+    private function insertScolariteAnnieVerserre()
     {
-        // Creation du contact Alice DUBOIS
-        $aliceToire = new Contact;
-        $aliceToire->fill([
-            Contact::COL_NOM       => 'Toire',
-            Contact::COL_PRENOM    => 'Alice',
-            Contact::COL_CIVILITE  => Constantes::CIVILITE['Madame'],
-            Contact::COL_TYPE      => Constantes::TYPE_CONTACT['insa'],
-            Contact::COL_EMAIL     => 'toire.alice@exemple.fr',
-            Contact::COL_TELEPHONE => '0123456789',
-            Contact::COL_ADRESSE   => 'INSA CVL, Bourges'
+        // Creation du contact Annie Verserre
+        $annieVerserre = factory(Contact::class)->make();
+        $annieVerserre->fill([
+            Contact::COL_NOM       => 'Verserre',
+            Contact::COL_PRENOM    => 'Annie',
+            Contact::COL_CIVILITE  => Contact::VAL_CIVILITE_MONSIEUR,
+            Contact::COL_TYPE      => Contact::VAL_TYPE_INSA,
+            Contact::COL_EMAIL     => 'annie.verserre@exemple.fr'
         ])->save();
 
-        // Creation du compte d'Alice DUBOIS
-        $userToire = User::fromContact($aliceToire->id, 'azerty');
+        // Creation du compte d'Annie Verserre
+        $userAnnieVerserre = User::fromContact($annieVerserre->id, 'azerty');
 
         // Ajout des roles et des privileges au compte
         $roleScolarite = Role::where(Role::COL_INTITULE, '=', Role::VAL_SCOLARITE)->first();
-        $userToire->roles()->attach($roleScolarite);
-        $userToire->save();
+        $userAnnieVerserre->roles()->attach($roleScolarite);
+        $userAnnieVerserre->save();
     }
 }

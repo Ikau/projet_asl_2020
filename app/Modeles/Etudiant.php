@@ -39,11 +39,11 @@ class Etudiant extends AbstractEtudiant
 
     /**
      * Indique a Laravel de ne pas creer ni de gerer les tables 'created_at' et 'updated_at'
-     * 
+     *
      * @var bool Gestion des timestamps
      */
     public $timestamps = false;
-    
+
     /**
      * @var string Nom de la table associee au modele 'Etudiant'
      */
@@ -57,15 +57,15 @@ class Etudiant extends AbstractEtudiant
 
     /**
      * Valeurs par defaut des colonnes du modele 'Etudiant'
-     * 
+     *
      * @var array[string]mixed
      */
     protected $attributes = [
-        //Etudiant::COL_MATRICULE     => Constantes::STRING_VIDE, 
+        //Etudiant::COL_MATRICULE     => Constantes::STRING_VIDE,
         Etudiant::COL_NOM           => Constantes::STRING_VIDE,
         Etudiant::COL_PRENOM        => Constantes::STRING_VIDE,
         Etudiant::COL_EMAIL         => Constantes::STRING_VIDE,
-        //Etudiant::COL_CIVILITE      => Constantes::CIVILITE['vide'],
+        //Etudiant::COL_CIVILITE      => Contact::VAL_CIVILITE_VIDE,
         //Etudiant::COL_INSCRIPTION   => Constantes::DATE_VIDE,
         //Etudiant::COL_NATIONALITE   => Constantes::NATIONALITE['vide'],
         //Etudiant::COL_FORMATION     => Constantes::FORMATION['vide'],
@@ -74,7 +74,7 @@ class Etudiant extends AbstractEtudiant
         Etudiant::COL_ANNEE         => Constantes::INT_VIDE,
         Etudiant::COL_MOBILITE      => FALSE,
         Etudiant::COL_PROMOTION     => Constantes::STRING_VIDE,
-        
+
         Etudiant::COL_DEPARTEMENT_ID => Constantes::ID_VIDE,
         Etudiant::COL_OPTION_ID      => Constantes::ID_VIDE
     ];
