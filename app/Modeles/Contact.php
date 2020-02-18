@@ -100,6 +100,11 @@ class Contact extends AbstractContact implements CompteUser, ArrayValeurs
         self::COL_ADRESSE   => Constantes::STRING_VIDE
     ];
 
+    /* ====================================================================
+     *                             RELATIONS
+     * ====================================================================
+     */
+
     /**
      * Renvoie la liste des soutenances ou le contact est la scolarite INSA
      * @var array(App\Modeles\FicheEntreprise)

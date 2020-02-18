@@ -23,8 +23,9 @@ class User extends Authenticatable implements Utilisateur, Authentification, Mus
 {
     use Notifiable;
 
+
     /* ====================================================================
-     *                   STRUCTURE DE LA TABLE DU MODELE
+     *                          BASE DE DONNEES
      * ====================================================================
      */
 
@@ -64,6 +65,10 @@ class User extends Authenticatable implements Utilisateur, Authentification, Mus
      */
     const COL_PIVOT = 'user_id';
 
+    /* ====================================================================
+     *                          PROPRIETES
+     * ====================================================================
+     */
     /**
      * Indique a Laravel de ne pas creer ni de gerer les tables 'created_at' et 'updated_at'.
      *
@@ -77,8 +82,8 @@ class User extends Authenticatable implements Utilisateur, Authentification, Mus
      * @var array
      */
     protected $fillable = [
-        User::COL_EMAIL,
-        User::COL_HASH_PASSWORD,
+        self::COL_EMAIL,
+        self::COL_HASH_PASSWORD,
     ];
 
     /**
@@ -87,8 +92,8 @@ class User extends Authenticatable implements Utilisateur, Authentification, Mus
      * @var array
      */
     protected $hidden = [
-        User::COL_REMEMBER_TOKEN,
-        User::COL_HASH_PASSWORD
+        self::COL_REMEMBER_TOKEN,
+        self::COL_HASH_PASSWORD
     ];
 
     /**
@@ -97,7 +102,7 @@ class User extends Authenticatable implements Utilisateur, Authentification, Mus
      * @var array
      */
     protected $casts = [
-        User::COL_EMAIL_VERIFIE_LE => 'datetime',
+        self::COL_EMAIL_VERIFIE_LE => 'datetime',
     ];
 
     /**
