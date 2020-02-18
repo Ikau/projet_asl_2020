@@ -16,9 +16,9 @@ use App\Modeles\Privilege;
 use App\Modeles\Role;
 
 /**
- * La classe User presente est la classe 'User' livre par defaut par le framework Laravel
+ * La classe User presentée est la classe 'User' livre par defaut par le framework Laravel
  *
- * Le choix a ete fait d'utiliser ce modele Eloquent parce que beaucoup de modules reutilise cette classe
+ * Le choix a ete fait d'utiliser ce modele Eloquent parce que beaucoup de modules reutilisent cette classe
  * Pour eviter de se prendre la tete en enregistrant une nouvelle classe, on utilise donc ce modele par defaut
  *
  * Bien sur, le fait d'utiliser cette classe risque de faire apparaitre des problemes en cas de mise a niveau de Laravel
