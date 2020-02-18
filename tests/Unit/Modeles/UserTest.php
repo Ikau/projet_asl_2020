@@ -26,6 +26,8 @@ class UserTest extends TestCase
     }
 
     /**
+     * Test des fonctions d'authentification dans un cas de reussite
+     *
      * @dataProvider estProvider
      */
     public function testEst(string $intituleRole)
@@ -64,6 +66,8 @@ class UserTest extends TestCase
     }
 
     /**
+     * Test des fonctions d'authentification dans un cas d'echec
+     *
      * @dataProvider estProvider
      */
     public function testEchecEst(string $intituleRole)

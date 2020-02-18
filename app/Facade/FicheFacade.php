@@ -5,12 +5,24 @@ namespace App\Facade;
 use App\Interfaces\CreationFiches;
 use App\Modeles\Fiches\FicheRapport;
 use App\Modeles\Fiches\ModeleNotation;
+use App\Utils\Constantes;
 
 class FicheFacade implements CreationFiches
 {
     /* ====================================================================
      *                 FONCTIONS DE CREATION DES FICHES
      * ====================================================================
+     */
+    /**
+     * Cree de nouvelles fiches vides avec la versions demandee le cas echant pour le stage donne
+     *
+     * Si aucune version n'est demandee, recupere la derniere version en date
+     *
+     * @param int $idStage
+     * @param int|null $versionEntreprise
+     * @param int|null $versionRapport
+     * @param int|null $versionSoutenance
+     * @param int|null $versionSynthese
      */
     public static function creerFiches(int $idStage,
                                        int $versionEntreprise = null,
@@ -24,11 +36,23 @@ class FicheFacade implements CreationFiches
         self::creerSynthese($idStage, $versionSynthese);
     }
 
+    /**
+     * Cree une nouevelle fiche de notation entreprise avec la version demandee pour le stage donne
+     *
+     * @param int $stageId
+     * @param int|null $version
+     */
     static function creerEntreprise(int $stageId, int $version = null)
     {
         // TODO: Implement creerEntreprise() method.
     }
 
+    /**
+     * Cree une nouvelle fiche de notation de rapport avec la version demandee pour le stage donne
+     *
+     * @param int $idStage
+     * @param int|null $version
+     */
     static function creerRapport(int $idStage, int $version = null)
     {
         // Clause where
@@ -60,6 +84,12 @@ class FicheFacade implements CreationFiches
         }
     }
 
+    /**
+     * Cree une nouvelle fiche de notation de soutenance avec la version demandee pour le stage donne
+     *
+     * @param int $stageId
+     * @param int|null $version
+     */
     static function creerSoutenance(int $stageId, int $version = null)
     {
         // TODO: Implement creerSoutenance() method.
@@ -76,6 +106,7 @@ class FicheFacade implements CreationFiches
      */
     /**
      * Creer un contenu vide a partir d'un modele de notation
+     *
      * @param ModeleNotation $modeleNotation
      * @return array
      */
@@ -87,7 +118,7 @@ class FicheFacade implements CreationFiches
             $sectionVide = [];
             for($i=0; $i<count($section->criteres); $i++)
             {
-                $sectionVide[] = -1;
+                $sectionVide[] = Constantes::INDEX_CHOIX_VIDE;
             }
             $contenuVide[$section->ordre] = $sectionVide;
         }

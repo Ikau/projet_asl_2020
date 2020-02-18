@@ -60,9 +60,6 @@ class TestFacade implements CreationTests
         return $modele->id;
     }
 
-    /**
-     * @return false|string JSON du contenu d'une fiche de notation de rapport
-     */
     private static function genereContenuModeleRaport()
     {
         $faker   = Faker::create();
