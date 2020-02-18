@@ -17,9 +17,9 @@ class StagePolicyTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * @dataProvider validerProvider
+     * @dataProvider validerAffectationProvider
      */
-    public function testValiderAllow(bool $estOption, $idDivision)
+    public function testValiderAffectationAllow(bool $estOption, $idDivision)
     {
         // Creation d'un stage
         $stage = factory(Stage::class)->create();
@@ -41,18 +41,19 @@ class StagePolicyTest extends TestCase
             $user->identite[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID]   = $idDivision;
         }
 
+        // Sauvegarde des changements
         $stage->etudiant->save();
         $enseignant->save();
         $user->save();
 
-        $this->assertTrue($user->can('valider', $stage));
-        $this->assertFalse($user->cant('valider', $stage));
+        $this->assertTrue($user->can('validerAffectation', $stage));
+        $this->assertFalse($user->cant('validerAffectation', $stage));
     }
 
     /**
-     * @dataProvider validerProvider
+     * @dataProvider validerAffectationProvider
      */
-    public function testValiderDeny(bool $estOption, $idDivision)
+    public function testValiderAffectationDeny(bool $estOption, $idDivision)
     {
         // Creation d'un stage
         $stage = factory(Stage::class)->create();
@@ -69,11 +70,11 @@ class StagePolicyTest extends TestCase
 
         $user = UserFacade::creerDepuisEnseignant($enseignant->id, 'azerty');
 
-        $this->assertTrue($user->cant('valider', $stage));
-        $this->assertFalse($user->can('valider', $stage));
+        $this->assertTrue($user->cant('validerAffectation', $stage));
+        $this->assertFalse($user->can('validerAffectation', $stage));
     }
 
-    public function validerProvider()
+    public function validerAffectationProvider()
     {
         // Pour l'utilisation de la BDD
         $this->refreshApplication();
@@ -95,7 +96,7 @@ class StagePolicyTest extends TestCase
             $divisions[$departement->intitule] = [FALSE, $departement->id];
         }
 
-        // [bool $estOption, $iddivision
+        // [bool $estOption, $iddivision]
         return $divisions;
     }
 }

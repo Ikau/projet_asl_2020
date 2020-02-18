@@ -117,7 +117,7 @@ class ResponsableController extends AbstractResponsableController
         }
 
         // Verification du droit
-        if(Auth::user()->cant('valider', $stage))
+        if(Auth::user()->cant('validerAffectation', $stage))
         {
             return redirect()->route('stages.show', $idStage)
                 ->with('error', "Vous ne pouvez modifier que les stages de votre departement / option");
