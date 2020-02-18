@@ -18,12 +18,14 @@ use Illuminate\Support\Facades\Hash;
 |
 */
 
-$factory->define(User::class, function (Faker $faker) {
-
+$factory->define(User::class, function (Faker $faker)
+{
     return [
         User::COL_EMAIL            => $faker->unique()->safeEmail,
         User::COL_EMAIL_VERIFIE_LE => now(),
         User::COL_HASH_PASSWORD    => Hash::make($faker->word), // password
         User::COL_REMEMBER_TOKEN   => Str::random(10),
+        User::COL_POLY_MODELE_TYPE => $faker->randomElement([\App\Modeles\Contact::class, \App\Modeles\Enseignant::class]),
+        User::COL_POLY_MODELE_ID   => $faker->randomDigitNotNull
     ];
 });
