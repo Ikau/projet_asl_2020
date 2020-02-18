@@ -19,6 +19,7 @@ class FicheRapportPolicyTest extends TestCase
 
         // On donne le droit a l'utilisateur
         $fiche->stage->referent = $enseignant;
+        $fiche->save();
 
         // Assertion
         $this->assertTrue($user->can('show', $fiche));
