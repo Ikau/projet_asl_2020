@@ -67,16 +67,21 @@ class Contact extends AbstractContact implements CompteUser, ArrayValeurs
     const NOM_TABLE = 'contacts';
 
     /**
+     * @var string Nom de la table associee au modele 'Contact'
+     */
+    protected $table = self::NOM_TABLE;
+
+
+    /* ====================================================================
+     *                          PROPRIETES
+     * ====================================================================
+     */
+    /**
      * Indique a Laravel de ne pas creer ni de gerer les tables 'created_at' et 'updated_at'
      *
      * @var bool Gestion des timestamps
      */
     public $timestamps = false;
-
-    /**
-     * @var string Nom de la table associee au modele 'Contact'
-     */
-    protected $table = self::NOM_TABLE;
 
     /**
      * @var array[string] Liste des attributs a assigner manuellement

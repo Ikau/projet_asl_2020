@@ -6,6 +6,7 @@ use App\Interfaces\Authentification;
 use App\Interfaces\Utilisateur;
 use App\Modeles\Privilege;
 use App\Modeles\Role;
+use App\Utils\Constantes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -28,7 +29,6 @@ class User extends Authenticatable implements Utilisateur, Authentification, Mus
      *                          BASE DE DONNEES
      * ====================================================================
      */
-
     /**
      * @var string Nom de la table associee au model 'User'.
      */
@@ -75,6 +75,20 @@ class User extends Authenticatable implements Utilisateur, Authentification, Mus
      * @var bool Gestion des timestamps
      */
     public $timestamps = false;
+
+    /**
+     * Valeurs par defaut des colonnes du modele 'User'
+     *
+     * @var array[string]mixed
+     */
+    protected $attributes = [
+        self::COL_EMAIL               => null,
+        self::COL_EMAIL_VERIFIE_LE    => null,
+        self::COL_HASH_PASSWORD       => null,
+        self::COL_REMEMBER_TOKEN      => null,
+        self::COL_POLY_MODELE_ID      => null,
+        self::COL_POLY_MODELE_TYPE    => null,
+    ];
 
     /**
      * The attributes that are mass assignable.

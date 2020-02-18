@@ -8,6 +8,23 @@ use Tests\TestCase;
 
 class UserTest extends TestCase
 {
+    public function testConstructeur()
+    {
+        $user = new User();
+
+        $attributsTest = [
+            User::COL_EMAIL               => null,
+            User::COL_EMAIL_VERIFIE_LE    => null,
+            User::COL_HASH_PASSWORD       => null,
+            User::COL_REMEMBER_TOKEN      => null,
+            User::COL_POLY_MODELE_ID      => null,
+            User::COL_POLY_MODELE_TYPE    => null,
+        ];
+
+        // Verification du modele
+        $this->verifieIntegriteConstructeurEloquent($attributsTest, $user, User::NOM_TABLE);
+    }
+
     /**
      * @dataProvider estProvider
      */
