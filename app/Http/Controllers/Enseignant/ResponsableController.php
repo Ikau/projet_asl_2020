@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Enseignant;
 use App\Abstracts\Controllers\Enseignant\AbstractResponsableController;
+use App\Http\Middleware\VerifieEstResponsable;
 use App\Modeles\Departement;
 use App\Modeles\Enseignant;
 use App\Modeles\Option;
@@ -32,6 +33,7 @@ class ResponsableController extends AbstractResponsableController
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware(VerifieEstResponsable::class);
     }
 
     /* ====================================================================
@@ -43,8 +45,6 @@ class ResponsableController extends AbstractResponsableController
      */
     public function getCreateAffectation()
     {
-        Gate::authorize(Constantes::GATE_ROLE_RESPONSABLE);
-
         return redirect()->route('stages.create');
     }
 
@@ -53,8 +53,6 @@ class ResponsableController extends AbstractResponsableController
      */
     public function getIndexAffectation()
     {
-        Gate::authorize(Constantes::GATE_ROLE_RESPONSABLE);
-
         // Recuperation du responsable courant
         $responsable = Auth::user()->identite;
 
@@ -107,8 +105,6 @@ class ResponsableController extends AbstractResponsableController
      */
     public function postValiderAffectation(int $idStage)
     {
-        Gate::authorize(Constantes::GATE_ROLE_RESPONSABLE);
-
         $stage = Stage::find($idStage);
         if(null === $stage)
         {

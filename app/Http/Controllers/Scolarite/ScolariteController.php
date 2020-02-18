@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Scolarite;
 
 use App\Abstracts\Controllers\Scolarite\AbstractScolariteController;
+use App\Http\Middleware\VerifieEstScolarite;
 use App\Utils\Constantes;
 use Illuminate\Support\Facades\Gate;
 
@@ -24,6 +25,7 @@ class ScolariteController extends AbstractScolariteController
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware(VerifieEstScolarite::class);
     }
 
     /* ------------------------------------------------------------------
@@ -35,8 +37,6 @@ class ScolariteController extends AbstractScolariteController
      */
     public function index()
     {
-        Gate::authorize(Constantes::GATE_ROLE_SCOLARITE);
-
         return view('scolarite.index', [
             'titre' => self::VAL_TITRE_INDEX
         ]);
@@ -47,6 +47,5 @@ class ScolariteController extends AbstractScolariteController
      */
     public function affectations()
     {
-        Gate::authorize(Constantes::GATE_ROLE_SCOLARITE);
     }
 }

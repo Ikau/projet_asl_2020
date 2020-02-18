@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Abstracts\Controllers\AbstractAdminController;
+use App\Http\Middleware\VerifieEstAdministrateur;
 use App\Utils\Constantes;
 use Illuminate\Support\Facades\Gate;
 
@@ -20,6 +21,7 @@ class AdminController extends AbstractAdminController
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware(VerifieEstAdministrateur::class);
     }
 
     /**
@@ -29,8 +31,6 @@ class AdminController extends AbstractAdminController
      */
     public function index()
     {
-        Gate::authorize(Constantes::GATE_ROLE_ADMINISTRATEUR);
-
         return view('admin.index', [
             'titre' => 'Zone administrateur'
         ]);
