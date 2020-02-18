@@ -6,6 +6,7 @@ use App\Interfaces\User\ConstructeurUser;
 use App\Modeles\Contact;
 use App\Modeles\Enseignant;
 use App\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 
 class UserFacade implements ConstructeurUser
@@ -22,7 +23,7 @@ class UserFacade implements ConstructeurUser
      *
      * @return Null|User Le compte user cree ou existant sinon null en cas d'erreur
      */
-    public static function creerDepuisContact(int $id, string $motDePasse) : User
+    public static function creerDepuisContact(int $id, string $motDePasse) : ?User
     {
         // Verification arg
         $contact = Contact::find($id);
@@ -33,26 +34,7 @@ class UserFacade implements ConstructeurUser
             return null;
         }
 
-        // Verification unicite du lien
-        $user = User::where([
-            [User::COL_POLY_MODELE_TYPE, '=', Contact::class],
-            [User::COL_POLY_MODELE_ID, '=', $id]
-        ])->first();
-        if( ! null === $user)
-        {
-            return $user;
-        }
-
-        // Creation du compte user
-        $user = new User;
-        $user->fill([
-            User::COL_EMAIL         => $contact[Contact::COL_EMAIL],
-            User::COL_HASH_PASSWORD => Hash::make($motDePasse)
-        ]);
-        $user->identite()->associate($contact);
-        $user->save();
-
-        return $user;
+        return self::creerUser($contact, $motDePasse);
     }
 
     /**
@@ -62,7 +44,7 @@ class UserFacade implements ConstructeurUser
      *
      * @return Null|User Le compte user cree ou existant sinon null en cas d'erreur
      */
-    public static function creerDepuisEnseignant(int $id, string $motDePasse) : User
+    public static function creerDepuisEnseignant(int $id, string $motDePasse) : ?User
     {
         // Verification args
         $enseignant = Enseignant::find($id);
@@ -73,10 +55,19 @@ class UserFacade implements ConstructeurUser
             return null;
         }
 
+        return self::creerUser($enseignant, $motDePasse);
+    }
+
+    /* ====================================================================
+     *                         FONCTIONS PRIVEES
+     * ====================================================================
+     */
+    private static function creerUser(Model $modele, string $motDePasse) : User
+    {
         // Verification unicite du lien
         $user = User::where([
             [User::COL_POLY_MODELE_TYPE, '=', Enseignant::class],
-            [User::COL_POLY_MODELE_ID, '=', $id]
+            [User::COL_POLY_MODELE_ID, '=', $modele->id]
         ])->first();
         if( ! null === $user)
         {
@@ -86,10 +77,10 @@ class UserFacade implements ConstructeurUser
         // Creation de l'utilisateur
         $user = new User;
         $user->fill([
-            User::COL_EMAIL         => $enseignant[Enseignant::COL_EMAIL],
+            User::COL_EMAIL         => $modele->email,
             User::COL_HASH_PASSWORD => Hash::make($motDePasse)
         ]);
-        $user->identite()->associate($enseignant);
+        $user->identite()->associate($modele);
         $user->save();
 
         return $user;

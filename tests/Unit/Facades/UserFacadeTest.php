@@ -4,16 +4,16 @@ namespace Tests\Unit\Modeles;
 
 use App\Facade\UserFacade;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 use App\User;
 use App\Modeles\Contact;
 use App\Modeles\Enseignant;
-use App\Utils\Constantes;
 
-class UserTest extends TestCase
+use Faker\Factory as Faker;
+
+class UserFacadeTest extends TestCase
 {
     // Rollback les modifications de la BDD a la fin des tests
     use RefreshDatabase;
@@ -23,7 +23,7 @@ class UserTest extends TestCase
      * ====================================================================
      */
 
-    public function testFromContact()
+    public function testCreerDepuisContact()
     {
         // Definition
         $contact    = factory(Contact::class)->create();
@@ -44,7 +44,7 @@ class UserTest extends TestCase
         Hash::check($motDePasse, $userTest[User::COL_HASH_PASSWORD]);
     }
 
-    public function testFromEnseignant()
+    public function testCreerDepuisEnseignant()
     {
         // Definition
         $enseignant = factory(Enseignant::class)->create();
@@ -65,4 +65,31 @@ class UserTest extends TestCase
         Hash::check($motDePasse, $userTest[User::COL_HASH_PASSWORD]);
     }
 
+    /**
+     * @dataProvider echecCreerUserProvider
+     */
+    public function testEchecCreerUser($id, bool $idNull, string $motDePasse)
+    {
+        if($idNull)
+        {
+            $this->expectException('TypeError');
+        }
+
+        $user = UserFacade::creerDepuisContact($id, $motDePasse);
+        $this->assertNull($user);
+
+        $user = UserFacade::creerDepuisEnseignant($id, $motDePasse);
+        $this->assertNull($user);
+    }
+
+    public function echecCreerUserProvider()
+    {
+        $faker = Faker::create();
+
+        // [$id, bool $idNull, string $motDePasse]
+        return [
+            'Id null'     => [null, TRUE, $faker->word],
+            'Id invalide' => [-1, FALSE, $faker->word]
+        ];
+    }
 }

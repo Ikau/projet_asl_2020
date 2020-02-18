@@ -35,7 +35,7 @@ class User extends Authenticatable implements Utilisateur, Authentification, Mus
     const NOM_TABLE = 'users';
 
     //On indique a Laravel le nom de la table dans la BDD
-    protected $table = User::NOM_TABLE;
+    protected $table = self::NOM_TABLE;
 
     /*
      * Nom des colonnes dans la base de donnees

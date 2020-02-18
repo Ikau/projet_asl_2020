@@ -15,7 +15,7 @@ interface ConstructeurUser
      *
      * @return Null|User Le compte user cree sinon null en cas d'erreur
      */
-    static function creerDepuisContact(int $id, string $motDePasse) : User;
+    static function creerDepuisContact(int $id, string $motDePasse) : ?User;
 
     /**
      * Cree un compte user associe au modele Enseignant entre en argument
@@ -24,5 +24,5 @@ interface ConstructeurUser
      *
      * @return Null|User Le compte user cree sinon null en cas d'erreur
      */
-    static function creerDepuisEnseignant(int $id, string $motDePasse) : User;
+    static function creerDepuisEnseignant(int $id, string $motDePasse) : ?User;
 }
