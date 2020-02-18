@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use App\Facade\UserFacade;
 use App\Modeles\Contact;
 use App\Modeles\Enseignant;
 use App\Modeles\Fiches\FicheRapport;
@@ -69,7 +70,7 @@ abstract class TestCase extends BaseTestCase
         $enseignant = factory(Enseignant::class)->create();
 
         // Creation de l'utilisteur associe
-        $user = User::fromEnseignant($enseignant->id, 'azerty');
+        $user = UserFacade::creerDepuisEnseignant($enseignant->id, 'azerty');
 
         // Ajout du role 'referent'
         $roleEnseignant = Role::where(Role::COL_INTITULE, '=', Role::VAL_ENSEIGNANT)->first();
@@ -93,7 +94,7 @@ abstract class TestCase extends BaseTestCase
         $contact->save();
 
         // Creation du compte user associe
-        $user = User::fromContact($contact->id, 'azerty');
+        $user = UserFacade::creerDepuisContact($contact->id, 'azerty');
 
         // Ajout du role 'scolarite'
         $roleScolarite = Role::where(Role::COL_INTITULE, '=', Role::VAL_SCOLARITE)->first();

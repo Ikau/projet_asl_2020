@@ -10,57 +10,8 @@ use App\Modeles\Role;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 
-class UserFacade implements Authentification, ConstructeurUser
+class UserFacade implements ConstructeurUser
 {
-    /* ====================================================================
-     *                     INTERFACE 'AUTHENTIFICATION'
-     * ====================================================================
-     */
-    /**
-     * @return bool Renvoie TRUE si l'utilisateur est un enseignant, FALSE sinon.
-     */
-    public function estAdministrateur() : bool
-    {
-        $roleAdministrateur = Role::where(Role::COL_INTITULE, '=', Role::VAL_ADMIN)->first();
-        return $this->roles->contains($roleAdministrateur);
-    }
-
-    /**
-     * @return bool Renvoie TRUE si l'utilisateur est un enseignant, FALSE sinon.
-     */
-    public function estEnseignant() : bool
-    {
-        $roleEnseignant = Role::where(Role::COL_INTITULE, '=', Role::VAL_ENSEIGNANT)->first();
-        return $this->roles->contains($roleEnseignant);
-    }
-
-    /**
-     * @return bool Renvoie TRUE si l'utilisateur possede le role 'responsable_option', FALSE sinon.
-     */
-    public function estResponsableOption() : bool
-    {
-        $roleResponsableOption = Role::where(Role::COL_INTITULE, '=', Role::VAL_RESP_OPTION)->first();
-        return $this->roles->contains($roleResponsableOption);
-    }
-
-    /**
-     * @return bool Renvoie TRUE si l'utilisateur possede le role 'responsable_departement', FALSE sinon.
-     */
-    public function estResponsableDepartement() : bool
-    {
-        $roleResponsableDepartement = Role::where(Role::COL_INTITULE, '=', Role::VAL_RESP_DEPARTEMENT)->first();
-        return $this->roles->contains($roleResponsableDepartement);
-    }
-
-    /**
-     * @return bool Renvoie TRUE si l'utilisateur possede le role 'scolarite' et est membre de l'INSA
-     */
-    public function estScolariteINSA(): bool
-    {
-        $roleScolarite = Role::where(Role::COL_INTITULE, '=', Role::VAL_SCOLARITE)->first();
-        return $this->roles->contains($roleScolarite);
-    }
-
     /* ====================================================================
      *                    INTERFACE 'CONSTRUCTEUR_USER'
      * ====================================================================

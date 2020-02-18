@@ -2,6 +2,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
+use App\Facade\UserFacade;
 use App\User;
 use Faker\Generator as Faker;
 
@@ -87,7 +88,7 @@ $factory->define(Stage::class, function (Faker $faker)
     $idEtudiant   = factory(Etudiant::class)->create();
 
     $enseignant = factory(Enseignant::class)->create();
-    User::fromEnseignant($enseignant->id, 'azerty');
+    UserFacade::creerDepuisEnseignant($enseignant->id, 'azerty');
 
 
     return [

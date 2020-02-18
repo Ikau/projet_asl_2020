@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Policies;
 
+use App\Facade\UserFacade;
 use App\Modeles\Departement;
 use App\Modeles\Enseignant;
 use App\Modeles\Etudiant;
@@ -25,7 +26,7 @@ class StagePolicyTest extends TestCase
 
         // Creation d'un user enseignant lambda
         $enseignant = factory(Enseignant::class)->create();
-        $user       = User::fromEnseignant($enseignant->id, 'azerty');
+        $user       = UserFacade::creerDepuisEnseignant($enseignant->id, 'azerty');
 
         // On les attache au stage
         if($estOption)
@@ -66,7 +67,7 @@ class StagePolicyTest extends TestCase
         $enseignant[Enseignant::COL_RESPONSABLE_OPTION_ID]      = $idDepartementNul;
         $enseignant->save();
 
-        $user = User::fromEnseignant($enseignant->id, 'azerty');
+        $user = UserFacade::creerDepuisEnseignant($enseignant->id, 'azerty');
 
         $this->assertTrue($user->cant('valider', $stage));
         $this->assertFalse($user->can('valider', $stage));

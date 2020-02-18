@@ -1,7 +1,8 @@
-<?php 
+<?php
 
 namespace Tests\Unit\Modeles;
 
+use App\Facade\UserFacade;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Hash;
@@ -27,7 +28,7 @@ class UserTest extends TestCase
         // Definition
         $contact    = factory(Contact::class)->create();
         $motDePasse = 'azerty';
-        $user       = User::fromContact($contact->id, $motDePasse);
+        $user       = UserFacade::creerDepuisContact($contact->id, $motDePasse);
         $this->assertNotNull($user);
 
         // Verification existence
@@ -48,7 +49,7 @@ class UserTest extends TestCase
         // Definition
         $enseignant = factory(Enseignant::class)->create();
         $motDePasse = 'azerty';
-        $user       = User::fromEnseignant($enseignant->id, $motDePasse);
+        $user       = UserFacade::creerDepuisEnseignant($enseignant->id, $motDePasse);
         $this->assertNotNull($user);
 
         // Verification existence
