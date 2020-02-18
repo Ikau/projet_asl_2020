@@ -16,7 +16,7 @@ class PeuplerTablePrivileges extends Migration
      */
     public function up()
     {
-        foreach(Privilege::getIntitules() as $intitule)
+        foreach(Privilege::getValeurs() as $intitule)
         {
             $privilege = new Privilege;
             $privilege[Privilege::COL_INTITULE] = $intitule;

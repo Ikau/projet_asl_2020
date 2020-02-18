@@ -199,16 +199,6 @@ class User extends Authenticatable implements Utilisateur, Authentification,  Mu
     }
 
     /**
-     * Renvoie le type de l'utilisateur.
-     *
-     * @return App\UserType Renvoie une reference vers l'objet UserType auquel est rattache l'utilisateur
-     */
-    public function type()
-    {
-        return $this->belongsTo('App\UserType', User::COL_TYPE_ID);
-    }
-
-    /**
      * Renvoie les privileges de l'utilisateur.
      *
      * @return array[App\Modeles\Privileges] Array de tous les privileges de l'utilisateur.

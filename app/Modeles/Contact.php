@@ -2,14 +2,16 @@
 
 namespace App\Modeles;
 
+use App\Interfaces\ArrayValeurs;
 use Illuminate\Database\Eloquent\Model;
 
 use App\User;
 use App\Abstracts\Modeles\AbstractContact;
 use App\Interfaces\CompteUser;
+use App\Modeles\Fiches\FicheEntreprise;
 use App\Utils\Constantes;
 
-class Contact extends AbstractContact implements CompteUser
+class Contact extends AbstractContact implements CompteUser, ArrayValeurs
 {
     /* ====================================================================
      *                        VALEURS DU MODELE
@@ -29,6 +31,22 @@ class Contact extends AbstractContact implements CompteUser
     const VAL_TYPE_INSA            = 1;
     const VAL_TYPE_ENTREPRISE      = 2;
     const VAL_TYPE_MAITRE_DE_STAGE = 3;
+
+    /**
+     * @inheritDoc
+     */
+    public static function getValeurs()
+    {
+        return [
+            self::VAL_CIVILITE_VIDE,
+            self::VAL_CIVILITE_MADAME,
+            self::VAL_CIVILITE_MONSIEUR,
+            self::VAL_TYPE_VIDE,
+            self::VAL_TYPE_INSA,
+            self::VAL_TYPE_ENTREPRISE,
+            self::VAL_TYPE_MAITRE_DE_STAGE,
+        ];
+    }
 
     /* ====================================================================
      *                          BASE DE DONNEES
@@ -60,7 +78,7 @@ class Contact extends AbstractContact implements CompteUser
     /**
      * @var string Nom de la table associee au modele 'Contact'
      */
-    protected $table = Contact::NOM_TABLE;
+    protected $table = self::NOM_TABLE;
 
     /**
      * @var array[string] Liste des attributs a assigner manuellement
@@ -75,40 +93,40 @@ class Contact extends AbstractContact implements CompteUser
      * @var array[string]mixed
      */
     protected $attributes = [
-        Contact::COL_NOM       => Constantes::STRING_VIDE,
-        Contact::COL_PRENOM    => Constantes::STRING_VIDE,
-        Contact::COL_CIVILITE  => self::VAL_CIVILITE_VIDE,
-        Contact::COL_TYPE      => self::VAL_TYPE_VIDE,
-        Contact::COL_EMAIL     => Constantes::STRING_VIDE,
-        Contact::COL_TELEPHONE => Constantes::STRING_VIDE,
-        Contact::COL_ADRESSE   => Constantes::STRING_VIDE
+        self::COL_NOM       => Constantes::STRING_VIDE,
+        self::COL_PRENOM    => Constantes::STRING_VIDE,
+        self::COL_CIVILITE  => self::VAL_CIVILITE_VIDE,
+        self::COL_TYPE      => self::VAL_TYPE_VIDE,
+        self::COL_EMAIL     => Constantes::STRING_VIDE,
+        self::COL_TELEPHONE => Constantes::STRING_VIDE,
+        self::COL_ADRESSE   => Constantes::STRING_VIDE
     ];
 
     /**
      * Renvoie la liste des soutenances ou le contact est la scolarite INSA
-     * @var array[App\Modeles\FicheEntreprise]
+     * @var array(App\Modeles\FicheEntreprise)
      */
     public function fiches_entreprise()
     {
-        return $this->hasMany('App\Modeles\FicheEntreprise', FicheEntreprise::COL_CONTACT_INSA_ID);
+        return $this->hasMany(FicheEntreprise::class, FicheEntreprise::COL_CONTACT_INSA_ID);
     }
 
     /**
      * Renvoie la liste des soutenances ou le contact est maitre de stage
-     * @var array[App\Modeles\Soutenance]
+     * @var array(App\Modeles\Soutenance)
      */
     public function soutenances_mds()
     {
-        return $this->hasMany('App\Modeles\Soutenance', Soutenance::COL_CONTACT_ENTREPRISE_ID);
+        return $this->hasMany(Soutenance::class, Soutenance::COL_CONTACT_ENTREPRISE_ID);
     }
 
     /**
      * Renvoie la liste des stages ou le contact est maitre de stage
-     * @var array[App\Modeles\Stage]
+     * @var array(App\Modeles\Stage)
      */
     public function stages_mds()
     {
-        return $this->hasMany('App\Modeles\Stage', Stage::COL_MDS_ID);
+        return $this->hasMany(Stage::class, Stage::COL_MDS_ID);
     }
 
 
@@ -119,11 +137,11 @@ class Contact extends AbstractContact implements CompteUser
     /**
      * Renvoie le compte user associe au contact le cas echeant
      *
-     * @return Null|App\User
+     * @return User|\Illuminate\Database\Eloquent\Relations\MorphOne|Null
      */
     public function user()
     {
-        return $this->morphOne('App\User', User::COL_POLY_MODELE);
+        return $this->morphOne(User::class, User::COL_POLY_MODELE);
     }
 
 }

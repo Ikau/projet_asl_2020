@@ -10,8 +10,14 @@ use App\Interfaces\BaseDeDonnees;
 use App\Interfaces\CompteUser;
 use App\Utils\Constantes;
 
-class Enseignant extends AbstractEnseignant implements BaseDeDonnees
+class Enseignant extends AbstractEnseignant implements CompteUser
 {
+
+    /* ====================================================================
+     *                        VALEURS DU MODELE
+     * ====================================================================
+     */
+
     /*
      * Nom des colonnes dans la base de donnees
      */
@@ -32,7 +38,7 @@ class Enseignant extends AbstractEnseignant implements BaseDeDonnees
 
     /**
      * Indique a Laravel de ne pas creer ni de gerer les tables 'created_at' et 'updated_at'
-     * 
+     *
      * @var bool Gestion des timestamps
      */
     public $timestamps = false;
@@ -46,43 +52,22 @@ class Enseignant extends AbstractEnseignant implements BaseDeDonnees
      * @var array[string] Liste des attributs a assigner manuellement
      */
     protected $guarded = [
-        'id', 
+        'id',
     ];
 
     /**
      * Valeurs par defaut des colonnes du modele 'Enseignant'
-     * 
+     *
      * @var array[string]string
      */
     protected $attributes = [
-        Enseignant::COL_NOM                        => Constantes::STRING_VIDE,
-        Enseignant::COL_PRENOM                     => Constantes::STRING_VIDE,
-        Enseignant::COL_EMAIL                      => Constantes::STRING_VIDE,
-        
-        Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID => Constantes::ID_VIDE,
-        Enseignant::COL_RESPONSABLE_OPTION_ID      => Constantes::ID_VIDE
+        self::COL_NOM                        => Constantes::STRING_VIDE,
+        self::COL_PRENOM                     => Constantes::STRING_VIDE,
+        self::COL_EMAIL                      => Constantes::STRING_VIDE,
+
+        self::COL_RESPONSABLE_DEPARTEMENT_ID => Constantes::ID_VIDE,
+        self::COL_RESPONSABLE_OPTION_ID      => Constantes::ID_VIDE
     ];
-
-    /* ====================================================================
-     *                      INTERFACE 'BaseDeDonnees'
-     * ====================================================================
-     */
-
-    /**
-     * Renvoie le modele enseignant par defaut (vide)
-     * 
-     * @return App\Modeles\Enseignant
-     */
-    public static function getModeleDefaut()
-    {
-        $clauseWhere = [
-            ['nom', '=', ''],
-            ['prenom', '=', 'Aucun'],
-            ['email', '=', 'aucun@null.com']
-        ];
-
-        return Enseignant::where($clauseWhere)->first();
-    }
 
     /* ====================================================================
      *                      INTERFACE 'CompteUser'
@@ -94,7 +79,7 @@ class Enseignant extends AbstractEnseignant implements BaseDeDonnees
      */
     public function user()
     {
-        return $this->morphOne('App\User', User::COL_POLY_MODELE);
+        return $this->morphOne(User::class, User::COL_POLY_MODELE);
     }
 
     /* ====================================================================
@@ -108,7 +93,7 @@ class Enseignant extends AbstractEnseignant implements BaseDeDonnees
      */
     public function responsable_option()
     {
-        return $this->belongsTo('App\Modeles\Option', Enseignant::COL_RESPONSABLE_OPTION_ID);
+        return $this->belongsTo(Option::class, Enseignant::COL_RESPONSABLE_OPTION_ID);
     }
 
     /**
@@ -117,7 +102,7 @@ class Enseignant extends AbstractEnseignant implements BaseDeDonnees
      */
     public function responsable_departement()
     {
-        return $this->belongsTo('App\Modeles\Departement', Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID);
+        return $this->belongsTo(Departement::class, Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID);
     }
 
     /**
@@ -126,7 +111,7 @@ class Enseignant extends AbstractEnseignant implements BaseDeDonnees
      */
     public function soutenances_candide()
     {
-        return $this->hasMany('App\Modeles\Soutenance', Soutenance::COL_CANDIDE_ID);
+        return $this->hasMany(Soutenance::class, Soutenance::COL_CANDIDE_ID);
     }
 
     /**
@@ -135,7 +120,7 @@ class Enseignant extends AbstractEnseignant implements BaseDeDonnees
      */
     public function soutenances_referent()
     {
-        return $this->hasMany('App\Modeles\Soutenance', Soutenance::COL_REFERENT_ID);
+        return $this->hasMany(Soutenance::class, Soutenance::COL_REFERENT_ID);
     }
 
     /**
@@ -144,7 +129,7 @@ class Enseignant extends AbstractEnseignant implements BaseDeDonnees
      */
     public function stages()
     {
-        return $this->hasMany('App\Modeles\Stage', Stage::COL_REFERENT_ID);
+        return $this->hasMany(Stage::class, Stage::COL_REFERENT_ID);
     }
 
 

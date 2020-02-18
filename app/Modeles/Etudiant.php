@@ -9,6 +9,10 @@ use App\Utils\Constantes;
 
 class Etudiant extends AbstractEtudiant
 {
+    /* ====================================================================
+     *                          BASE DE DONNEES
+     * ====================================================================
+     */
     /*
      * Nom des colonnes dans la base de donnees
      */
@@ -22,8 +26,8 @@ class Etudiant extends AbstractEtudiant
     //const COL_FORMATION   = 'formation';
     //const COL_MASTER = 'master';
     //const COL_DIPLOME  = 'diplome';
-    const COL_ANNEE    = 'annee';
-    const COL_MOBILITE = 'mobilite';
+    const COL_ANNEE     = 'annee';
+    const COL_MOBILITE  = 'mobilite';
     const COL_PROMOTION = 'promotion';
 
     /*
@@ -38,16 +42,16 @@ class Etudiant extends AbstractEtudiant
     const NOM_TABLE = 'etudiants';
 
     /**
+     * @var string Nom de la table associee au modele 'Etudiant'
+     */
+    protected $table = self::NOM_TABLE;
+
+    /**
      * Indique a Laravel de ne pas creer ni de gerer les tables 'created_at' et 'updated_at'
      *
      * @var bool Gestion des timestamps
      */
     public $timestamps = false;
-
-    /**
-     * @var string Nom de la table associee au modele 'Etudiant'
-     */
-    protected $table = Etudiant::NOM_TABLE;
 
     /**
      * #WIP
@@ -62,21 +66,21 @@ class Etudiant extends AbstractEtudiant
      */
     protected $attributes = [
         //Etudiant::COL_MATRICULE     => Constantes::STRING_VIDE,
-        Etudiant::COL_NOM           => Constantes::STRING_VIDE,
-        Etudiant::COL_PRENOM        => Constantes::STRING_VIDE,
-        Etudiant::COL_EMAIL         => Constantes::STRING_VIDE,
-        //Etudiant::COL_CIVILITE      => Contact::VAL_CIVILITE_VIDE,
-        //Etudiant::COL_INSCRIPTION   => Constantes::DATE_VIDE,
-        //Etudiant::COL_NATIONALITE   => Constantes::NATIONALITE['vide'],
-        //Etudiant::COL_FORMATION     => Constantes::FORMATION['vide'],
-        //Etudiant::COL_MASTER        => Constantes::MASTER['vide'],
-        //Etudiant::COL_DIPLOME       => Constantes::DIPLOME['vide'],
-        Etudiant::COL_ANNEE         => Constantes::INT_VIDE,
-        Etudiant::COL_MOBILITE      => FALSE,
-        Etudiant::COL_PROMOTION     => Constantes::STRING_VIDE,
+        self::COL_NOM           => Constantes::STRING_VIDE,
+        self::COL_PRENOM        => Constantes::STRING_VIDE,
+        self::COL_EMAIL         => Constantes::STRING_VIDE,
+        //self::COL_CIVILITE      => Contact::VAL_CIVILITE_VIDE,
+        //self::COL_INSCRIPTION   => Constantes::DATE_VIDE,
+        //self::COL_NATIONALITE   => Constantes::NATIONALITE['vide'],
+        //self::COL_FORMATION     => Constantes::FORMATION['vide'],
+        //self::COL_MASTER        => Constantes::MASTER['vide'],
+        //self::COL_DIPLOME       => Constantes::DIPLOME['vide'],
+        self::COL_ANNEE         => Constantes::INT_VIDE,
+        self::COL_MOBILITE      => FALSE,
+        self::COL_PROMOTION     => Constantes::STRING_VIDE,
 
-        Etudiant::COL_DEPARTEMENT_ID => Constantes::ID_VIDE,
-        Etudiant::COL_OPTION_ID      => Constantes::ID_VIDE
+        self::COL_DEPARTEMENT_ID => Constantes::ID_VIDE,
+        self::COL_OPTION_ID      => Constantes::ID_VIDE
     ];
 
     /**
@@ -85,7 +89,7 @@ class Etudiant extends AbstractEtudiant
      */
     public function departement()
     {
-        return $this->belongsTo('App\Modeles\Departement', Etudiant::COL_DEPARTEMENT_ID);
+        return $this->belongsTo(Departement::class, Etudiant::COL_DEPARTEMENT_ID);
     }
 
     /**
@@ -94,7 +98,7 @@ class Etudiant extends AbstractEtudiant
      */
     public function option()
     {
-        return $this->belongsTo('App\Modeles\Option', Etudiant::COL_OPTION_ID);
+        return $this->belongsTo(Option::class, Etudiant::COL_OPTION_ID);
     }
 
     /**
@@ -103,7 +107,7 @@ class Etudiant extends AbstractEtudiant
      */
     public function soutenances()
     {
-        return $this->hasMany('App\Modeles\Soutenance', Soutenance::COL_ETUDIANT_ID);
+        return $this->hasMany(Soutenance::class, Soutenance::COL_ETUDIANT_ID);
     }
 
     /**
@@ -112,6 +116,6 @@ class Etudiant extends AbstractEtudiant
      */
     public function stages()
     {
-        return $this->hasMany('App\Modeles\Stage', Stage::COL_ETUDIANT_ID);
+        return $this->hasMany(Stage::class, Stage::COL_ETUDIANT_ID);
     }
 }

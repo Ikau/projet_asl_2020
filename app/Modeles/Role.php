@@ -1,7 +1,8 @@
-<?php 
+<?php
 
 namespace App\Modeles;
 
+use App\Interfaces\ArrayValeurs;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Abstracts\Modeles\AbstractRole;
@@ -10,11 +11,10 @@ use App\Utils\Constantes;
 use App\User;
 use App\Modeles\Privilege;
 
-class Role extends AbstractRole
+class Role extends AbstractRole implements ArrayValeurs
 {
-
     /* ====================================================================
-     *                         VALEURS DISPONIBLES
+     *                        VALEURS DU MODELE
      * ====================================================================
      */
     const VAL_ADMIN            = 'admin';
@@ -25,22 +25,22 @@ class Role extends AbstractRole
 
     /**
      * Fonction auxiliaire permettant d'avoir une liste des intitules possibles
-     * 
+     *
      * @return array(string)
      */
-    public static function getIntitules()
+    public static function getValeurs()
     {
         return [
-            Role::VAL_ADMIN,
-            Role::VAL_ENSEIGNANT,
-            Role::VAL_RESP_DEPARTEMENT,
-            Role::VAL_RESP_OPTION,
-            Role::VAL_SCOLARITE
+            self::VAL_ADMIN,
+            self::VAL_ENSEIGNANT,
+            self::VAL_RESP_DEPARTEMENT,
+            self::VAL_RESP_OPTION,
+            self::VAL_SCOLARITE
         ];
     }
 
     /* ====================================================================
-     *                   STRUCTURE DE LA TABLE DU MODELE
+     *                          BASE DE DONNEES
      * ====================================================================
      */
     /**
@@ -48,16 +48,16 @@ class Role extends AbstractRole
      */
     const NOM_TABLE = 'roles';
 
-    // Indiquer a Laravel d'utiliser le nom de la table definie 
-    protected $table = Role::NOM_TABLE;
+    // Indiquer a Laravel d'utiliser le nom de la table definie
+    protected $table = self::NOM_TABLE;
 
     /*
-     * Nom des colonnes de la tables 
+     * Nom des colonnes de la tables
      */
     const COL_INTITULE = 'intitule';
 
     /*
-     * Nom de la table de jointure pour une relation Mane-to-Many 
+     * Nom de la table de jointure pour une relation Mane-to-Many
      * Convention de nommage Laravel utilisee : ordre_alphabethique_class
      */
     const NOM_TABLE_PIVOT_PRIVILEGE_ROLE = 'privilege_role';
@@ -71,7 +71,7 @@ class Role extends AbstractRole
 
     /**
      * Indique a Laravel de ne pas creer ni de gerer les tables 'created_at' et 'updated_at'
-     * 
+     *
      * @var bool Gestion des timestamps
      */
     public $timestamps = false;
@@ -82,12 +82,12 @@ class Role extends AbstractRole
     protected $guarded = [
         'id',
     ];
-    
+
     /**
      * Valeurs par defaut pour un constructeur vide
      */
     protected $attributes = [
-        Role::COL_INTITULE => Constantes::STRING_VIDE
+        self::COL_INTITULE => Constantes::STRING_VIDE
     ];
 
     /* ====================================================================
@@ -103,7 +103,7 @@ class Role extends AbstractRole
     public function users()
     {
         // Args : modele de la relation, nom table pivot, nom colonne privilege_id, nom colonne user_id
-        return $this->belongsToMany('App\User', Role::NOM_TABLE_PIVOT_ROLE_USER,
+        return $this->belongsToMany(User::class, Role::NOM_TABLE_PIVOT_ROLE_USER,
                                     Role::COL_PIVOT, User::COL_PIVOT);
     }
 
@@ -115,7 +115,7 @@ class Role extends AbstractRole
     public function privileges()
     {
         // Args : modele de la relation, nom table pivot, nom colonne privilege_id, nom colonne privilege_id
-        return $this->belongsToMany('App\Modeles\Privilege', Role::NOM_TABLE_PIVOT_PRIVILEGE_ROLE,
+        return $this->belongsToMany(Privilege::class, Role::NOM_TABLE_PIVOT_PRIVILEGE_ROLE,
                                     Role::COL_PIVOT, Privilege::COL_PIVOT);
     }
 }
