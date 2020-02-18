@@ -29,7 +29,7 @@ class EtudiantController extends AbstractControllerCRUD
 
     public function index()
     {
-        $attributs = $this->getAttributsModele();
+        $attributs = Schema::getColumnListing(Etudiant::NOM_TABLE);
         $etudiants = Etudiant::all();
 
         return view('admin.modeles.etudiant.index', [
@@ -41,7 +41,7 @@ class EtudiantController extends AbstractControllerCRUD
 
     public function create()
     {
-        $attributs    = $this->getAttributsModele();
+        $attributs    = Schema::getColumnListing(Etudiant::NOM_TABLE);
         $options      = Option::all();
         $departements = Departement::all();
 
@@ -211,14 +211,6 @@ class EtudiantController extends AbstractControllerCRUD
         }
 
         return Etudiant::find($id);
-    }
-
-    /**
-     * Renvoie tous les attributs du modele 'Etudiant'
-     */
-    protected function getAttributsModele()
-    {
-        return Schema::getColumnListing(Etudiant::NOM_TABLE);
     }
 
 }

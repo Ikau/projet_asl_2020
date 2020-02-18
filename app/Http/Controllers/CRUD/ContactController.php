@@ -203,9 +203,4 @@ class ContactController extends AbstractControllerCRUD
 
         return Contact::find($id);
     }
-
-    protected function getAttributsModele()
-    {
-        return Schema::getColumnListing(Contact::NOM_TABLE);
-    }
 }

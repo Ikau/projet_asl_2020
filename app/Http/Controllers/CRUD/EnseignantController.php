@@ -29,7 +29,7 @@ class EnseignantController extends AbstractControllerCRUD
 
     public function index()
     {
-        $attributs   = $this->getAttributsModele();
+        $attributs   = Schema::getColumnListing(Enseignant::NOM_TABLE);
         $enseignants = Enseignant::all();
 
         return view('admin.modeles.enseignant.index', [
@@ -218,13 +218,5 @@ class EnseignantController extends AbstractControllerCRUD
         }
 
         return Enseignant::find($id);
-    }
-
-    /**
-     * Renvoie tous les attributs du modele 'Enseignant'
-     */
-    protected function getAttributsModele()
-    {
-        return Schema::getColumnListing(Enseignant::NOM_TABLE);
     }
 }

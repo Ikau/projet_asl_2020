@@ -79,7 +79,7 @@ class StageController extends AbstractControllerCRUD
      */
     public function index()
     {
-        $attributs = $this->getAttributsModele();
+        $attributs = Schema::getColumnListing(Stage::NOM_TABLE);
 
         // Suppression de la colonne 'Resume'
         for($i=0; $i<count($attributs); $i++)
@@ -185,7 +185,7 @@ class StageController extends AbstractControllerCRUD
             abort('404');
         }
 
-        $attributs   = $this->getAttributsModele();
+        $attributs   = Schema::getColumnListing(Stage::NOM_TABLE);
         $enseignants = Enseignant::all();
         $etudiants   = Etudiant::all();
 
@@ -341,16 +341,4 @@ class StageController extends AbstractControllerCRUD
 
         return Stage::find($id);
     }
-
-
-    /**
-     * Renvoie l'output de la fonction Schema::getColumnListing(Modele::NOM_TABLE)
-     *
-     * @return void
-     */
-    protected function getAttributsModele()
-    {
-        return Schema::getColumnListing(Stage::NOM_TABLE);
-    }
-
 }

@@ -76,7 +76,7 @@ class UserController extends AbstractControllerCRUD
 
         return view('admin.modeles.user.index', [
             'titre'     => UserController::TITRE_INDEX,
-            'attributs' => $this->getAttributsModele(),
+            'attributs' => Schema::getColumnListing(User::NOM_TABLE),
             'users'     => $users
         ]);
     }
@@ -151,7 +151,7 @@ class UserController extends AbstractControllerCRUD
 
         return view('admin.modeles.user.show', [
             'titre'     => UserController::TITRE_SHOW,
-            'attributs' => $this->getAttributsModele(),
+            'attributs' => Schema::getColumnListing(User::NOM_TABLE),
             'user'      => $user
         ]);
     }
@@ -303,16 +303,6 @@ class UserController extends AbstractControllerCRUD
         }
 
         return User::find($id);
-    }
-
-    /**
-     * Renvoie l'output de la fonction Schema::getColumnListing(Modele::NOM_TABLE)
-     *
-     * @return void
-     */
-    protected function getAttributsModele()
-    {
-        return Schema::getColumnListing(User::NOM_TABLE);
     }
 
     /**

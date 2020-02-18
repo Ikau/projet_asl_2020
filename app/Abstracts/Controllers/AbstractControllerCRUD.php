@@ -106,12 +106,4 @@ abstract class AbstractControllerCRUD extends Controller
      * @return \Illuminate\Http\Response
      */
     abstract protected function validerModele($id);
-
-
-    /**
-     * Renvoie l'output de la fonction Schema::getColumnListing(Modele::NOM_TABLE)
-     *
-     * @return void
-     */
-    abstract protected function getAttributsModele();
 }

@@ -76,7 +76,7 @@ class SoutenanceController extends AbstractControllerCRUD
      */
     public function index()
     {
-        $attributs   = $this->getAttributsModele();
+        $attributs   = Schema::getColumnListing(Soutenance::NOM_TABLE);
         $soutenances = Soutenance::all();
 
         return view('admin.modeles.soutenance.index', [
@@ -93,7 +93,6 @@ class SoutenanceController extends AbstractControllerCRUD
      */
     public function create()
     {
-        $attributs    = $this->getAttributsModele();
         $enseignants  = Enseignant::all();
         $etudiants    = Etudiant::all();
         $departements = Departement::all();
@@ -323,16 +322,5 @@ class SoutenanceController extends AbstractControllerCRUD
         }
 
         return Soutenance::find($id);
-    }
-
-
-    /**
-     * Renvoie l'output de la fonction Schema::getColumnListing(Modele::NOM_TABLE)
-     *
-     * @return void
-     */
-    protected function getAttributsModele()
-    {
-        return Schema::getColumnListing(Soutenance::NOM_TABLE);
     }
 }

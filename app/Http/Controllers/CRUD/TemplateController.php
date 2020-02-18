@@ -168,15 +168,4 @@ class TemplateController extends AbstractControllerCRUD
     {
         abort('404');
     }
-
-
-    /**
-     * Renvoie l'output de la fonction Schema::getColumnListing(Modele::NOM_TABLE)
-     *
-     * @return void
-     */
-    protected function getAttributsModele()
-    {
-        //return Schema::getColumnListing(Entreprise::NOM_TABLE);
-    }
 }

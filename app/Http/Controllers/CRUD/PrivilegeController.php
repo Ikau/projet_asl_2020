@@ -71,7 +71,7 @@ class PrivilegeController extends AbstractControllerCRUD
     public function index()
     {
         $privileges = Privilege::all();
-        $attributs  = $this->getAttributsModele();
+        $attributs  = Schema::getColumnListing(Privilege::NOM_TABLE);
 
         return view('admin.modeles.privilege.index', [
             'titre'      => PrivilegeController::TITRE_INDEX,
@@ -87,7 +87,7 @@ class PrivilegeController extends AbstractControllerCRUD
      */
     public function create()
     {
-        $attributs = $this->getAttributsModele();
+        $attributs = Schema::getColumnListing(Privilege::NOM_TABLE);
 
         return view('admin.modeles.privilege.form', [
             'titre'     => PrivilegeController::TITRE_CREATE,
@@ -149,7 +149,7 @@ class PrivilegeController extends AbstractControllerCRUD
         return view('admin.modeles.privilege.form', [
             'titre' => PrivilegeController::TITRE_EDIT,
             'privilege' => $privilege,
-            'attributs' => $this->getAttributsModele()
+            'attributs' => Schema::getColumnListing(Privilege::NOM_TABLE)
         ]);
     }
 
@@ -249,16 +249,5 @@ class PrivilegeController extends AbstractControllerCRUD
             return null;
         }
         return Privilege::find($id);
-    }
-
-
-    /**
-     * Renvoie l'output de la fonction Schema::getColumnListing(Modele::NOM_TABLE)
-     *
-     * @return void
-     */
-    protected function getAttributsModele()
-    {
-        return Schema::getColumnListing(Privilege::NOM_TABLE);
     }
 }
