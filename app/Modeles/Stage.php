@@ -2,13 +2,11 @@
 
 namespace App\Modeles;
 
+use App\Abstracts\Modeles\AbstractStage;
 use App\Modeles\Fiches\FicheEntreprise;
 use App\Modeles\Fiches\FicheRapport;
 use App\Modeles\Fiches\FicheSoutenance;
 use App\Modeles\Fiches\FicheSynthese;
-use Illuminate\Database\Eloquent\Model;
-
-use App\Abstracts\Modeles\AbstractStage;
 use App\Utils\Constantes;
 
 class Stage extends AbstractStage

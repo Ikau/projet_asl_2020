@@ -2,13 +2,10 @@
 
 namespace App\Modeles\Fiches;
 
-use App\Interfaces\Fiche;
-use App\Modeles\Stage;
-use Illuminate\Database\Eloquent\Model;
-
 use App\Abstracts\Modeles\Fiches\AbstractFiche;
-use App\Utils\Constantes;
+use App\Modeles\Stage;
 use App\Traits\NotationFiches;
+use App\Utils\Constantes;
 
 class FicheRapport extends AbstractFiche
 {

@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers\Enseignant;
 
+use App\Abstracts\Controllers\Enseignant\AbstractReferentController;
 use App\Interfaces\InformationsNotification;
-use App\Notifications\AffectationAssignee;
+use App\Modeles\Stage;
+use App\Utils\Constantes;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-
-use App\Abstracts\Controllers\Enseignant\AbstractReferentController;
-
-use App\Modeles\Stage;
-
-use App\Utils\Constantes;
 
 class ReferentController extends AbstractReferentController
 {

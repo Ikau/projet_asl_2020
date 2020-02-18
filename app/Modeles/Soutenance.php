@@ -2,10 +2,8 @@
 
 namespace App\Modeles;
 
-use App\Modeles\Fiches\FicheSoutenance;
-use Illuminate\Database\Eloquent\Model;
-
 use App\Abstracts\Modeles\AbstractSoutenance;
+use App\Modeles\Fiches\FicheSoutenance;
 use App\Utils\Constantes;
 
 class Soutenance extends AbstractSoutenance

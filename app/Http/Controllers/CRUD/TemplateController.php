@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers\CRUD;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Validation\Rule;
-
 use App\Abstracts\Controllers\AbstractControllerCRUD;
+use Illuminate\Http\Request;
+
 //use App\Modeles\Template;
-use App\Utils\Constantes;
 
 class TemplateController extends AbstractControllerCRUD
 {
@@ -27,7 +23,7 @@ class TemplateController extends AbstractControllerCRUD
      *                             RESOURCES
      * ====================================================================
      */
-    
+
 
     /**
      * Route de tests pour les fonctions auxiliaires.
@@ -153,7 +149,7 @@ class TemplateController extends AbstractControllerCRUD
 
     /**
      * Fonction qui doit faire la logique de validation des inputs d'une requete entrante.
-     * 
+     *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
@@ -164,7 +160,7 @@ class TemplateController extends AbstractControllerCRUD
 
     /**
      * Fonction qui doit faire la logique de validation de l'id
-     * 
+     *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
@@ -173,10 +169,10 @@ class TemplateController extends AbstractControllerCRUD
         abort('404');
     }
 
-    
+
     /**
      * Renvoie l'output de la fonction Schema::getColumnListing(Modele::NOM_TABLE)
-     * 
+     *
      * @return void
      */
     protected function getAttributsModele()

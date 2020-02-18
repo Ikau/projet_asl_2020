@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers\CRUD;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Validation\Rule;
-
 use App\Abstracts\Controllers\AbstractControllerCRUD;
+use App\Modeles\Departement;
 use App\Modeles\Enseignant;
 use App\Modeles\Etudiant;
-use App\Modeles\Departement;
 use App\Modeles\Option;
 use App\Modeles\Soutenance;
 use App\Utils\Constantes;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Validation\Rule;
 
 class SoutenanceController extends AbstractControllerCRUD
 {
@@ -31,7 +29,7 @@ class SoutenanceController extends AbstractControllerCRUD
      *                             RESOURCES
      * ====================================================================
      */
-    
+
 
     /**
      * Route de tests pour les fonctions auxiliaires.
@@ -44,7 +42,7 @@ class SoutenanceController extends AbstractControllerCRUD
         {
             case 'normaliseInputsOptionnels':
                 $this->normaliseInputsOptionnels($request);
-                if( ! is_string($request[Soutenance::COL_COMMENTAIRE]) 
+                if( ! is_string($request[Soutenance::COL_COMMENTAIRE])
                 ||  ! is_string($request[Soutenance::COL_INVITES])
                 ||  ! is_bool($request[Soutenance::COL_CONFIDENTIELLE])
                 ||  ! is_numeric($request[Soutenance::COL_NB_REPAS]))
@@ -280,7 +278,7 @@ class SoutenanceController extends AbstractControllerCRUD
 
     /**
      * Fonction qui doit faire la logique de validation des inputs d'une requete entrante.
-     * 
+     *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
@@ -292,7 +290,7 @@ class SoutenanceController extends AbstractControllerCRUD
             Soutenance::COL_DATE            => ['required', 'date', 'after:'.date('Y-m-d', strtotime('now'))],
             Soutenance::COL_HEURE           => ['required', 'date_format:H:i:00'],
             Soutenance::COL_SALLE           => ['required', 'string'],
-            
+
             Soutenance::COL_CONFIDENTIELLE  => ['sometimes', 'nullable', Rule::in(['on', FALSE, TRUE, 0, 1])],
             Soutenance::COL_COMMENTAIRE     => ['sometimes', 'nullable', 'string'],
             Soutenance::COL_INVITES         => ['sometimes', 'nullable', 'string'],
@@ -312,7 +310,7 @@ class SoutenanceController extends AbstractControllerCRUD
 
     /**
      * Fonction qui doit faire la logique de validation de l'id
-     * 
+     *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
@@ -327,10 +325,10 @@ class SoutenanceController extends AbstractControllerCRUD
         return Soutenance::find($id);
     }
 
-    
+
     /**
      * Renvoie l'output de la fonction Schema::getColumnListing(Modele::NOM_TABLE)
-     * 
+     *
      * @return void
      */
     protected function getAttributsModele()

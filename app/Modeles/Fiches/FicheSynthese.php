@@ -2,10 +2,8 @@
 
 namespace App\Modeles\Fiches;
 
-use App\Traits\NotationFiches;
-use Illuminate\Database\Eloquent\Model;
-
 use App\Abstracts\Modeles\Fiches\AbstractFiche;
+use App\Traits\NotationFiches;
 use App\Utils\Constantes;
 
 class FicheSynthese extends AbstractFiche

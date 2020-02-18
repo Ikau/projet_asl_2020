@@ -2,14 +2,10 @@
 
 namespace App\Modeles;
 
-use App\Interfaces\ArrayValeurs;
-use Illuminate\Database\Eloquent\Model;
-
 use App\Abstracts\Modeles\AbstractRole;
-use App\Utils\Constantes;
-
+use App\Interfaces\ArrayValeurs;
 use App\User;
-use App\Modeles\Privilege;
+use App\Utils\Constantes;
 
 class Role extends AbstractRole implements ArrayValeurs
 {

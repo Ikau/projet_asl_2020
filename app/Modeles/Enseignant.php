@@ -2,12 +2,9 @@
 
 namespace App\Modeles;
 
-use Illuminate\Database\Eloquent\Model;
-
-use App\User;
 use App\Abstracts\Modeles\AbstractEnseignant;
-use App\Interfaces\BaseDeDonnees;
 use App\Interfaces\CompteUser;
+use App\User;
 use App\Utils\Constantes;
 
 class Enseignant extends AbstractEnseignant implements CompteUser

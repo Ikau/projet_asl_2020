@@ -2,8 +2,6 @@
 
 namespace App\Modeles;
 
-use Illuminate\Database\Eloquent\Model;
-
 use App\Abstracts\Modeles\AbstractEntreprise;
 use App\Utils\Constantes;
 

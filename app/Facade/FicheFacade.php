@@ -2,12 +2,9 @@
 
 namespace App\Facade;
 
-use App\Abstracts\Modeles\Fiches\AbstractFiche;
 use App\Interfaces\CreationFiches;
 use App\Modeles\Fiches\FicheRapport;
-use App\Modeles\Fiches\FicheSynthese;
 use App\Modeles\Fiches\ModeleNotation;
-use App\Modeles\Fiches\Section;
 
 class FicheFacade implements CreationFiches
 {

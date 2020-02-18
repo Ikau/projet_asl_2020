@@ -2,11 +2,9 @@
 
 namespace App\Facade;
 
-use App\Interfaces\Authentification;
 use App\Interfaces\User\ConstructeurUser;
 use App\Modeles\Contact;
 use App\Modeles\Enseignant;
-use App\Modeles\Role;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 

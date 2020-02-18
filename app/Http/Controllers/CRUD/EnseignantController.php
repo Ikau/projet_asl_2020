@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers\CRUD;
 
-use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Schema;
-
 use App\Abstracts\Controllers\AbstractControllerCRUD;
-use App\Modeles\Enseignant;
 use App\Modeles\Departement;
+use App\Modeles\Enseignant;
 use App\Modeles\Option;
-use App\Utils\Constantes;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Validation\Rule;
 
 class EnseignantController extends AbstractControllerCRUD
 {
@@ -110,7 +107,7 @@ class EnseignantController extends AbstractControllerCRUD
     public function destroy($id)
     {
         $enseignant = $this->validerModele($id);
-        if(null === $enseignant) 
+        if(null === $enseignant)
         {
             abort('404');
         }
@@ -194,7 +191,7 @@ class EnseignantController extends AbstractControllerCRUD
             Enseignant::COL_NOM    => ['required', 'string'],
             Enseignant::COL_PRENOM => ['required', 'string'],
             Enseignant::COL_EMAIL  => ['required', 'email'],
-            Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID => [ 
+            Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID => [
                 'nullable',
                 'integer',
                 Rule::in(Departement::all()->pluck('id'))
@@ -205,7 +202,7 @@ class EnseignantController extends AbstractControllerCRUD
                 Rule::in(Option::all()->pluck('id'))
             ]
         ]);
-        
+
         $this->normaliseInputsOptionnels($request);
     }
 

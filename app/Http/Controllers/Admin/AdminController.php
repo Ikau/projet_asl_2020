@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Utils\Constantes;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-
 use App\Abstracts\Controllers\AbstractAdminController;
+use App\Utils\Constantes;
 use Illuminate\Support\Facades\Gate;
 
 class AdminController extends AbstractAdminController

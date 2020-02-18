@@ -2,22 +2,17 @@
 
 namespace App\Http\Controllers\CRUD;
 
-use App\Notifications\AffectationAssignee;
-use App\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
-
 use App\Abstracts\Controllers\AbstractControllerCRUD;
-
-use App\Http\Controllers\Enseignant\ResponsableController;
-
 use App\Facade\FicheFacade;
-use App\Modeles\Stage;
+use App\Http\Controllers\Enseignant\ResponsableController;
 use App\Modeles\Enseignant;
 use App\Modeles\Etudiant;
+use App\Modeles\Stage;
 use App\Utils\Constantes;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Validation\Rule;
 
 class StageController extends AbstractControllerCRUD
 {

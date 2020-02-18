@@ -2,14 +2,13 @@
 
 namespace App\Facade;
 
-use Faker\Factory as Faker;
-
 use App\Interfaces\CreationTests;
 use App\Modeles\Etudiant;
 use App\Modeles\Fiches\FicheRapport;
 use App\Modeles\Fiches\ModeleNotation;
 use App\Modeles\Stage;
 use App\User;
+use Faker\Factory as Faker;
 
 class TestFacade implements CreationTests
 {

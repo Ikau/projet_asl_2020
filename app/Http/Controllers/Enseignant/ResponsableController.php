@@ -1,19 +1,16 @@
 <?php
 
 namespace App\Http\Controllers\Enseignant;
+use App\Abstracts\Controllers\Enseignant\AbstractResponsableController;
 use App\Modeles\Departement;
 use App\Modeles\Enseignant;
 use App\Modeles\Option;
+use App\Modeles\Stage;
 use App\Notifications\AffectationAssignee;
 use App\User;
 use App\Utils\Constantes;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-
-use App\Modeles\Etudiant;
-use App\Modeles\Stage;
-
-use App\Abstracts\Controllers\Enseignant\AbstractResponsableController;
 
 class ResponsableController extends AbstractResponsableController
 {

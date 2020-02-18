@@ -2,10 +2,6 @@
 
 namespace App\Interfaces;
 
-use App\User;
-use App\Modeles\Contact;
-use App\Modeles\Enseignant;
-
 /**
  * Le choix arbitraire d'utiliser le modele 'User' par defaut de Laravel
  * rend la comprehension du code moins evidente.

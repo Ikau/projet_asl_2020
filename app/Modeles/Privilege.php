@@ -2,14 +2,10 @@
 
 namespace App\Modeles;
 
-use App\Interfaces\ArrayValeurs;
-use Illuminate\Database\Eloquent\Model;
-
 use App\Abstracts\Modeles\AbstractPrivilege;
-use App\Utils\Constantes;
-
+use App\Interfaces\ArrayValeurs;
 use App\User;
-use App\Modeles\Role;
+use App\Utils\Constantes;
 
 class Privilege extends AbstractPrivilege implements ArrayValeurs
 {

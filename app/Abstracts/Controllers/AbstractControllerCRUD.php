@@ -1,10 +1,9 @@
-<?php 
+<?php
 
 namespace App\Abstracts\Controllers;
 
-use Illuminate\Http\Request; 
-
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 abstract class AbstractControllerCRUD extends Controller
 {
@@ -70,7 +69,7 @@ abstract class AbstractControllerCRUD extends Controller
 
     /**
      * Callback pour tous les tests (notammant PHPUnit) necessaire du controller
-     * 
+     *
      * Ce n'est pas elegant mais je n'ai pas trouve de meilleures facons
      *
      * @param  mixed $request
@@ -94,7 +93,7 @@ abstract class AbstractControllerCRUD extends Controller
 
     /**
      * Fonction qui doit faire la logique de validation des inputs d'une requete entrante.
-     * 
+     *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
@@ -102,16 +101,16 @@ abstract class AbstractControllerCRUD extends Controller
 
     /**
      * Fonction qui doit faire la logique de validation de l'id
-     * 
+     *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     abstract protected function validerModele($id);
 
-    
+
     /**
      * Renvoie l'output de la fonction Schema::getColumnListing(Modele::NOM_TABLE)
-     * 
+     *
      * @return void
      */
     abstract protected function getAttributsModele();

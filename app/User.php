@@ -2,18 +2,13 @@
 
 namespace App;
 
+use App\Interfaces\Authentification;
+use App\Interfaces\Utilisateur;
+use App\Modeles\Privilege;
+use App\Modeles\Role;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Hash;
-
-use App\Interfaces\Authentification;
-use App\Interfaces\Utilisateur;
-
-use App\Modeles\Contact;
-use App\Modeles\Enseignant;
-use App\Modeles\Privilege;
-use App\Modeles\Role;
 
 /**
  * La classe User presentée est la classe 'User' livre par defaut par le framework Laravel

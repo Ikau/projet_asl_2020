@@ -2,18 +2,13 @@
 
 namespace App\Http\Controllers\CRUD;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rule;
-
-use App\User;
-use App\Modeles\Enseignant;
-use App\Modeles\Contact;
 use App\Abstracts\Controllers\AbstractControllerCRUD;
-use App\Utils\Constantes;
+use App\Modeles\Contact;
+use App\Modeles\Enseignant;
+use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Schema;
 
 class UserController extends AbstractControllerCRUD
 {

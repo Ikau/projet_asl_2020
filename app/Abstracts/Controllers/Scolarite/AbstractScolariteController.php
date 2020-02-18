@@ -2,8 +2,6 @@
 
 namespace App\Abstracts\Controllers\Scolarite;
 
-use Illuminate\Http\Request;
-
 use App\Http\Controllers\Controller;
 
 abstract class AbstractScolariteController extends Controller

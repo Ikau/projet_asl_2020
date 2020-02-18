@@ -3,7 +3,6 @@
 namespace App\Abstracts\Modeles\Fiches;
 
 use Illuminate\Database\Eloquent\Model;
-use Psy\Util\Json;
 
 abstract class AbstractFiche extends Model
 {

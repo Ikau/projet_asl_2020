@@ -2,13 +2,9 @@
 
 namespace App\Modeles;
 
-use App\Interfaces\ArrayValeurs;
-use Illuminate\Database\Eloquent\Model;
-
 use App\Abstracts\Modeles\AbstractOption;
+use App\Interfaces\ArrayValeurs;
 use App\Utils\Constantes;
-use App\Modeles\Enseignant;
-use App\Modeles\Etudiant;
 
 class Option extends AbstractOption implements ArrayValeurs
 {

@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers\CRUD;
 
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Schema;
-
 use App\Abstracts\Controllers\AbstractControllerCRUD;
-use App\Modeles\Etudiant;
 use App\Modeles\Departement;
+use App\Modeles\Etudiant;
 use App\Modeles\Option;
-use App\Utils\Constantes;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Validation\Rule;
 
 class EtudiantController extends AbstractControllerCRUD
 {
@@ -73,7 +71,7 @@ class EtudiantController extends AbstractControllerCRUD
         {
             abort('404');
         }
-        
+
         return view('admin.modeles.etudiant.show', [
             'titre'    => EtudiantController::TITRE_SHOW,
             'etudiant' => $etudiant
@@ -107,7 +105,7 @@ class EtudiantController extends AbstractControllerCRUD
         {
             abort('404');
         }
-        
+
         $etudiant->update($request->all());
         $etudiant->save();
 
@@ -193,7 +191,7 @@ class EtudiantController extends AbstractControllerCRUD
             Etudiant::COL_DEPARTEMENT_ID => ['required', Rule::in($idsDepartement)],
             Etudiant::COL_OPTION_ID      => ['required', Rule::in($idsOption)],
             Etudiant::COL_PROMOTION      => ['required', 'string'],
-            
+
             // Ce n'est pas elegant mais je n'ai pas trouve mieux pour les boolean
             Etudiant::COL_MOBILITE => ['nullable', Rule::in(['on', FALSE, TRUE, 0, 1])],
         ]);

@@ -2,8 +2,6 @@
 
 namespace App\Modeles;
 
-use Illuminate\Database\Eloquent\Model;
-
 use App\Abstracts\Modeles\AbstractEtudiant;
 use App\Utils\Constantes;
 

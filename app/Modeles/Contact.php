@@ -2,13 +2,11 @@
 
 namespace App\Modeles;
 
-use App\Interfaces\ArrayValeurs;
-use Illuminate\Database\Eloquent\Model;
-
-use App\User;
 use App\Abstracts\Modeles\AbstractContact;
+use App\Interfaces\ArrayValeurs;
 use App\Interfaces\CompteUser;
 use App\Modeles\Fiches\FicheEntreprise;
+use App\User;
 use App\Utils\Constantes;
 
 class Contact extends AbstractContact implements CompteUser, ArrayValeurs
