@@ -15,12 +15,13 @@ class Constantes
     /*
      * Valeurs par defaut lorsque vide
      */
-    const ID_VIDE     = -1;
+    const INDEX_CHOIX_VIDE  = -1;
+    const DATE_VIDE   = '2000-01-01'; // Format y-m-d
     const FLOAT_VIDE  = 0.0;
+    const HEURE_VIDE  = '00:00:00';
+    const ID_VIDE     = -1;
     const INT_VIDE    = 0;
     const STRING_VIDE = '';
-    const DATE_VIDE   = '2000-01-01'; // Format y-m-d
-    const HEURE_VIDE  = '00:00:00';
 
     /*
      * Valeurs des gates pour l'utilisation des differents regles

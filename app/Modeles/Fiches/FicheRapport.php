@@ -38,7 +38,7 @@ class FicheRapport extends AbstractFiche
      * On indique explicitement a Laravel d'utiliser ce nom
      * @var string Nom de la table associee au modele 'FicheRapport'.
      */
-    protected $table = FicheRapport::NOM_TABLE;
+    protected $table = self::NOM_TABLE;
 
 
     /* ====================================================================
@@ -103,7 +103,7 @@ class FicheRapport extends AbstractFiche
      */
     public function modele()
     {
-        return $this->belongsTo(ModeleNotation::class, FicheRapport::COL_MODELE_ID);
+        return $this->belongsTo(ModeleNotation::class, self::COL_MODELE_ID);
     }
 
     /**
@@ -112,6 +112,6 @@ class FicheRapport extends AbstractFiche
      */
     public function stage()
     {
-        return $this->belongsTo(Stage::class, FicheRapport::COL_STAGE_ID);
+        return $this->belongsTo(Stage::class, self::COL_STAGE_ID);
     }
 }
