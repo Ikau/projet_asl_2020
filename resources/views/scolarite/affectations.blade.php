@@ -36,7 +36,7 @@
             <tbody>
             @foreach($stages[$departement] as $stage)
                 <tr>
-                    <td><a class="btn btn-lg btn-info text-white">Détails</a></td>
+                    <td><a class="btn btn-lg btn-info text-white" href="{{ route('stages.show', $stage->id) }}">Détails</a></td>
                     <td>{{ $stage->annee_etudiant }}</td>
                     <td><span class="text-uppercase">{{ $stage->etudiant->nom }}</span> {{ $stage->etudiant->prenom }}</td>
                     <td>{{ $stage->etudiant->promotion }}</td>
