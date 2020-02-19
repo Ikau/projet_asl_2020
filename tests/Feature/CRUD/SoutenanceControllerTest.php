@@ -13,9 +13,6 @@ use App\Utils\Constantes;
 
 class SoutenanceControllerTest extends TestCase
 {
-    // Rollback les modifications de la BDD a la fin des tests
-    use RefreshDatabase;
-
     /* ====================================================================
      *                           TESTS AUXILIAIRES
      * ====================================================================
@@ -77,7 +74,7 @@ class SoutenanceControllerTest extends TestCase
             $response->assertSessionHasErrors($clefModifiee)
             ->assertRedirect($routeSource);
         }
-        else 
+        else
         {
             $response->assertSessionDoesntHaveErrors()
             ->assertRedirect('/');
@@ -90,7 +87,7 @@ class SoutenanceControllerTest extends TestCase
         return [
             // Succes
             'Soutenance valide' => [FALSE, Soutenance::COL_ANNEE_ETUDIANT, 4],
-            
+
             'Commentaire null'     => [FALSE, Soutenance::COL_COMMENTAIRE, null],
             'Confidentielle null'  => [FALSE, Soutenance::COL_CONFIDENTIELLE, null],
             'Invite null'          => [FALSE, Soutenance::COL_INVITES, null],
@@ -128,7 +125,7 @@ class SoutenanceControllerTest extends TestCase
             'Departement inexistant' => [TRUE, Soutenance::COL_DEPARTEMENT_ID, -1],
             'Option inexistant'      => [TRUE, Soutenance::COL_OPTION_ID, -1],
             'Rerefent inexistant'    => [TRUE, Soutenance::COL_REFERENT_ID, -1],
-            
+
             'Invite negatif'          => [TRUE, Soutenance::COL_INVITES, -1],
             'Nombre de repas negatif' => [TRUE, Soutenance::COL_NB_REPAS, -1],
         ];
@@ -144,23 +141,23 @@ class SoutenanceControllerTest extends TestCase
         $id;
         switch($idCase)
         {
-            case 0: 
-                $id = $soutenance->id; 
+            case 0:
+                $id = $soutenance->id;
             break;
 
-            case 1: 
-                $id = "$soutenance->id"; 
+            case 1:
+                $id = "$soutenance->id";
             break;
 
-            case 2: 
-                $id = -1; 
+            case 2:
+                $id = -1;
             break;
 
-            case 3: 
-                $id = null; 
+            case 3:
+                $id = null;
             break;
         }
-        
+
         $response = $this->followingRedirects()
         ->from(route('soutenances.tests'))
         ->post(route('soutenances.tests'), [
@@ -219,7 +216,7 @@ class SoutenanceControllerTest extends TestCase
             }
         }
     }
-    
+
     /**
      * @depends testValiderForm
      */

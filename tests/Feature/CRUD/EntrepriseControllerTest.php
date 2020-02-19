@@ -13,9 +13,6 @@ use App\Utils\Constantes;
 
 class EntrepriseControllerTest extends TestCase
 {
-    // Rollback les modifications de la BDD a la fin des tests
-    use RefreshDatabase;
-
     /* ====================================================================
      *                           TESTS AUXILIAIRES
      * ====================================================================
@@ -34,7 +31,7 @@ class EntrepriseControllerTest extends TestCase
         ->post(route('entreprises.tests'), $entreprise->toArray())
         ->assertRedirect('/');
     }
-    
+
     public function normaliseInputsOptionnelsProvider()
     {
         // [string $clefModifiee, $nouvelleValeur]
@@ -159,7 +156,7 @@ class EntrepriseControllerTest extends TestCase
             }
         }
     }
-    
+
     /**
      * @depends testValiderForm
      */

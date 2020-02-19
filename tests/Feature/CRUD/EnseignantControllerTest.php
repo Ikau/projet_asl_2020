@@ -15,9 +15,6 @@ use App\Utils\Constantes;
 
 class EnseignantControllerTest extends TestCase
 {
-    // Rollback les modifications de la BDD a la fin des tests
-    use RefreshDatabase;
-
     /* ====================================================================
      *                           TESTS AUXILIAIRES
      * ====================================================================
@@ -203,7 +200,7 @@ class EnseignantControllerTest extends TestCase
             $response->assertSee("<option value=\"$option->id\">$option->intitule</option>");
         }
     }
-    
+
     /**
      * @depends testValiderForm
      * @depends testNormaliseOptionnels
@@ -225,7 +222,7 @@ class EnseignantControllerTest extends TestCase
                 $arrayWhere[] = [$attribut, '=', $enseignant[$attribut]];
             }
         }
-        
+
         // Recuperation de l'enseignant
         $enseignantTest = Enseignant::where($arrayWhere)->first();
         $this->assertNotNull($enseignantTest);
@@ -264,7 +261,7 @@ class EnseignantControllerTest extends TestCase
     public function testEdit()
     {
         $enseignant = factory(Enseignant::class)->create();
-        
+
         $response = $this->get(route('enseignants.edit', $enseignant->id))
         ->assertOk()
         ->assertViewIs('admin.modeles.enseignant.form')
@@ -285,7 +282,7 @@ class EnseignantControllerTest extends TestCase
     {
         $enseignantSource                = factory(Enseignant::class)->create();
         $enseignantSource[$clefModifiee] = $nouvelleValeur;
-        
+
         // Mise a jour et redirection OK
         $response = $this->from(route('enseignants.edit', $enseignantSource->id))
         ->patch(route('enseignants.update', $enseignantSource->id), $enseignantSource->toArray())
@@ -333,7 +330,7 @@ class EnseignantControllerTest extends TestCase
     public function testDestroy()
     {
         $enseignant = factory(Enseignant::class)->create();
-        
+
         $response = $this->from(route('enseignants.index'))
         ->delete(route('enseignants.destroy', $enseignant->id))
         ->assertRedirect(route('enseignants.index'));

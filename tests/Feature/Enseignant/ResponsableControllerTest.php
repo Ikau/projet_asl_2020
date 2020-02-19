@@ -11,8 +11,7 @@ use App\Traits\TestAuthentification;
 
 class ResponsableControllerTest extends TestCase
 {
-    // Rollback les modifications de la BDD a la fin des tests
-    use RefreshDatabase, TestAuthentification;
+    use TestAuthentification;
 
     /* ------------------------------------------------------------------
      *           AUXILIAIRES : tests de controle d'acces

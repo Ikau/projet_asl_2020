@@ -15,9 +15,6 @@ use App\Utils\Constantes;
 
 class PrivilegeControllerTest extends TestCase
 {
-    // Rollback les modifications de la BDD a la fin des tests
-    use RefreshDatabase;
-
     /* ====================================================================
      *                           TESTS AUXILIAIRES
      * ====================================================================
@@ -94,23 +91,23 @@ class PrivilegeControllerTest extends TestCase
         $id;
         switch($idCase)
         {
-            case 0: 
-                $id = $privilege->id; 
+            case 0:
+                $id = $privilege->id;
             break;
 
-            case 1: 
-                $id = "$privilege->id"; 
+            case 1:
+                $id = "$privilege->id";
             break;
 
-            case 2: 
-                $id = -1; 
+            case 2:
+                $id = -1;
             break;
 
-            case 3: 
-                $id = null; 
+            case 3:
+                $id = null;
             break;
         }
-        
+
         $response = $this->followingRedirects()
         ->from(route('privileges.tests'))
         ->post(route('privileges.tests'), [
@@ -173,7 +170,7 @@ class PrivilegeControllerTest extends TestCase
             }
         }
     }
-    
+
     /**
      * @depends testValiderForm
      */
@@ -226,7 +223,7 @@ class PrivilegeControllerTest extends TestCase
         // Verification de l'integrite des donnees
         foreach($this->getAttributsModele() as $attribut)
         {
-            $response->assertSee(e($privilege[$attribut]));   
+            $response->assertSee(e($privilege[$attribut]));
         }
 
         // Verification 404
@@ -315,7 +312,7 @@ class PrivilegeControllerTest extends TestCase
     {
         // Creation privilege aleatoire avec utilisateurs
         $privilege = factory(Privilege::class)->create();
-        
+
         for($i=0; $i<10; $i++)
         {
             // Creation d'un contact
@@ -343,7 +340,7 @@ class PrivilegeControllerTest extends TestCase
         {
             $this->assertFalse($user->privileges->contains($privilege->id));
         }
-        
+
         // Verification 404
         $this->from(route('privileges.tests'))
         ->delete(route('privileges.destroy', -1))
