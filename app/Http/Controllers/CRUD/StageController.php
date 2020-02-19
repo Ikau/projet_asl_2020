@@ -11,6 +11,7 @@ use App\Modeles\Stage;
 use App\Utils\Constantes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Validation\Rule;
 
@@ -131,6 +132,13 @@ class StageController extends AbstractControllerCRUD
      */
     public function store(Request $request)
     {
+        // Controle d'acces
+        $user = Auth::user();
+        if(null === $user)
+        {
+            abort('404');
+        }
+
         $this->validerForm($request);
 
         // Creation du stage
@@ -142,12 +150,11 @@ class StageController extends AbstractControllerCRUD
         FicheFacade::creerFiches($stage->id);
 
         // Redirection selon l'utilisateur
-        $user = Auth::user();
-        if(null !== $user && ($user->estResponsableOption() || $user->estResponsableDepartement()))
+        if($user->estAdministrateur())
         {
-            return redirect()->route('referents.index')->with('success', 'Stage ajoute !');
+            return redirect()->route('stages.index')->with('success', 'Stage ajoute !');
         }
-        return redirect()->route('stages.index')->with('success', 'Stage ajoute !');
+        return redirect()->route('referents.index')->with('success', 'Stage ajoute !');
     }
 
     /**
@@ -319,7 +326,7 @@ class StageController extends AbstractControllerCRUD
             Stage::COL_CONVENTION_ENVOYEE => ['sometimes', 'nullable', Rule::in(['on', FALSE, TRUE, 0, 1])],
             Stage::COL_CONVENTION_SIGNEE  => ['sometimes', 'nullable', Rule::in(['on', FALSE, TRUE, 0, 1])],
             Stage::COL_MOYEN_RECHERCHE    => ['sometimes', 'nullable', 'string'],
-            Stage::COL_REFERENT_ID        => ['sometimes', 'nullable', 'integer', 'min:0'],
+            Stage::COL_REFERENT_ID        => ['sometimes', 'nullable', 'integer', 'min:-1'],
         ]);
 
         $this->normaliseInputsOptionnels($request);
