@@ -1,8 +1,8 @@
-<?php 
+<?php
 
 namespace App\Interfaces;
 
-interface BaseDeDonnees
+interface ModeleParDefaut
 {
     /**
      * Recupere le modele 'par defaut' present dans la table du modele

@@ -4,10 +4,11 @@ namespace App\Modeles;
 
 use App\Abstracts\Modeles\AbstractEnseignant;
 use App\Interfaces\CompteUser;
+use App\Interfaces\ModeleParDefaut;
 use App\User;
 use App\Utils\Constantes;
 
-class Enseignant extends AbstractEnseignant implements CompteUser
+class Enseignant extends AbstractEnseignant implements CompteUser, ModeleParDefaut
 {
 
     /* ====================================================================
@@ -77,6 +78,28 @@ class Enseignant extends AbstractEnseignant implements CompteUser
     public function user()
     {
         return $this->morphOne(User::class, User::COL_POLY_MODELE);
+    }
+
+    /* ====================================================================
+     *                      INTERFACE 'ModeleParDefaut'
+     * ====================================================================
+     */
+
+    /**
+     * Renvoie l'enseignant vide pour les cas où on ne precise pas de referent
+     */
+    public static function getModeleDefaut()
+    {
+        $idDepartementVide = Departement::where(Departement::COL_INTITULE, '=', Departement::VAL_AUCUN)->first()->id;
+        $idOptionVide      = Option::where(Option::COL_INTITULE, '=', Option::VAL_AUCUN)->first()->id;
+
+        return Enseignant::where([
+            [Enseignant::COL_NOM, '=', '* Aucun'],
+            [Enseignant::COL_PRENOM, '=', ''],
+            [Enseignant::COL_EMAIL, '=', ''],
+            [Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, '=', $idDepartementVide],
+            [Enseignant::COL_RESPONSABLE_OPTION_ID, '=', $idOptionVide]
+        ])->first();
     }
 
     /* ====================================================================
