@@ -92,6 +92,32 @@ class ScolariteControllerTest extends TestCase
      */
     public function testAffectations()
     {
+        // Creation d'un utilisateur INSA valide
+        $user = $this->creerUserScolarite();
+
+        // Routage
+        $response = $this->actingAs($user)
+            ->from('/')
+            ->get(route('scolarite.affectations'))
+            ->assertOk()
+            ->assertViewIs('scolarite.affectations');
+
+        // Integrite de la page
+        $entetes = [
+            'Année',
+            'Stagiaire',
+            'Promotion',
+            'Referent',
+            'Entreprise',
+            'Rapport',
+            'Soutenance',
+            'Synthese'
+        ];
+
+        foreach($entetes as $entete)
+        {
+            $response->assertSee($entete);
+        }
 
     }
 }
