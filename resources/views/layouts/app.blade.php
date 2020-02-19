@@ -33,7 +33,7 @@
                             {{-- 'Accueil' et 'Se deconnecter' --}}
                             <li class="nav-item">
                                 @if(Auth::user()->estEnseignant())
-                                    <a class="btn btn-lg text-white" href="{{ route('referents.index.index') }}">Accueil</a>
+                                    <a class="btn btn-lg text-white" href="{{ route('referents.index') }}">Accueil</a>
                                 @elseif(Auth::user()->estScolariteINSA())
                                     <a class="btn btn-lg text-white" href="{{ route('scolarite.index') }}">Accueil</a>
                                 @endif
