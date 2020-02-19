@@ -13,7 +13,14 @@ class StagePolicy
 {
     use HandlesAuthorization;
 
-    public function valider(User $user, Stage $stage)
+    /**
+     * Indique si l'utilisateur courant a le droit de valider l'affectation de stage ou non
+     *
+     * @param User $user
+     * @param Stage $stage
+     * @return bool
+     */
+    public function validerAffectation(User $user, Stage $stage)
     {
         // Recuperation des ID nul
         $idOptionNul      = Option::where(Option::COL_INTITULE, '=', Option::VAL_AUCUN)->first()->id;

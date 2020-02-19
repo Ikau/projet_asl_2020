@@ -2,18 +2,13 @@
 
 namespace App\Http\Controllers\CRUD;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rule;
-
-use App\User;
-use App\Modeles\Enseignant;
-use App\Modeles\Contact;
 use App\Abstracts\Controllers\AbstractControllerCRUD;
-use App\Utils\Constantes;
+use App\Modeles\Contact;
+use App\Modeles\Enseignant;
+use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Schema;
 
 class UserController extends AbstractControllerCRUD
 {
@@ -81,7 +76,7 @@ class UserController extends AbstractControllerCRUD
 
         return view('admin.modeles.user.index', [
             'titre'     => UserController::TITRE_INDEX,
-            'attributs' => $this->getAttributsModele(),
+            'attributs' => Schema::getColumnListing(User::NOM_TABLE),
             'users'     => $users
         ]);
     }
@@ -156,7 +151,7 @@ class UserController extends AbstractControllerCRUD
 
         return view('admin.modeles.user.show', [
             'titre'     => UserController::TITRE_SHOW,
-            'attributs' => $this->getAttributsModele(),
+            'attributs' => Schema::getColumnListing(User::NOM_TABLE),
             'user'      => $user
         ]);
     }
@@ -308,16 +303,6 @@ class UserController extends AbstractControllerCRUD
         }
 
         return User::find($id);
-    }
-
-    /**
-     * Renvoie l'output de la fonction Schema::getColumnListing(Modele::NOM_TABLE)
-     *
-     * @return void
-     */
-    protected function getAttributsModele()
-    {
-        return Schema::getColumnListing(User::NOM_TABLE);
     }
 
     /**

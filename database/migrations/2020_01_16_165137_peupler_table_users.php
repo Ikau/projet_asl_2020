@@ -1,5 +1,6 @@
 <?php
 
+use App\Facade\UserFacade;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -27,7 +28,7 @@ class PeuplerTableUsers extends Migration
         $enseignants = Enseignant::all();
         foreach($enseignants as $enseignant)
         {
-            User::fromEnseignant($enseignant->id, 'azerty');
+            UserFacade::creerDepuisEnseignant($enseignant->id, 'azerty');
         }
 
         // Insertions de test
@@ -42,7 +43,7 @@ class PeuplerTableUsers extends Migration
             Contact::COL_NOM    => 'Luu',
             Contact::COL_PRENOM => 'Thanh'
         ])->save();
-        User::fromContact($moi->id, 'azerty');
+        UserFacade::creerDepuisContact($moi->id, 'azerty');
 
     }
 
@@ -87,7 +88,7 @@ class PeuplerTableUsers extends Migration
         $contactAdmin->save();
 
         // Creation d'un compte basique
-        $userAdmin = User::fromContact($contactAdmin->id, 'azerty');
+        $userAdmin = UserFacade::creerDepuisContact($contactAdmin->id, 'azerty');
 
         // Ajout des roles et privileges le cas echeant
         $roleAdmin = Role::where(Role::COL_INTITULE, '=', Role::VAL_ADMIN)->first();
@@ -115,7 +116,7 @@ class PeuplerTableUsers extends Migration
         ])->save();
 
         // Creation du compte de Bernard TICHAUD
-        $userTichaud = User::fromEnseignant($bernardTichaud->id, 'azerty');
+        $userTichaud = UserFacade::creerDepuisEnseignant($bernardTichaud->id, 'azerty');
 
         // Ajout des roles et des privileges au compte
         $roleEnseignant = Role::where(Role::COL_INTITULE, '=', Role::VAL_ENSEIGNANT)->first();
@@ -139,7 +140,7 @@ class PeuplerTableUsers extends Migration
         ])->save();
 
         // Creation du compte de Charles Atan
-        $userAtan = User::fromEnseignant($charlesAtan->id, 'azerty');
+        $userAtan = UserFacade::creerDepuisEnseignant($charlesAtan->id, 'azerty');
 
         // Ajout des roles et des privileges au compte
         $roleEnseignant             = Role::where(Role::COL_INTITULE, '=', Role::VAL_ENSEIGNANT)->first();
@@ -172,7 +173,7 @@ class PeuplerTableUsers extends Migration
         ])->save();
 
         // Creation du compte d'Annie Verserre
-        $userAnnieVerserre = User::fromContact($annieVerserre->id, 'azerty');
+        $userAnnieVerserre = UserFacade::creerDepuisContact($annieVerserre->id, 'azerty');
 
         // Ajout des roles et des privileges au compte
         $roleScolarite = Role::where(Role::COL_INTITULE, '=', Role::VAL_SCOLARITE)->first();

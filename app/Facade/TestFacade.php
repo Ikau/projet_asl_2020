@@ -2,14 +2,13 @@
 
 namespace App\Facade;
 
-use Faker\Factory as Faker;
-
 use App\Interfaces\CreationTests;
 use App\Modeles\Etudiant;
 use App\Modeles\Fiches\FicheRapport;
 use App\Modeles\Fiches\ModeleNotation;
 use App\Modeles\Stage;
 use App\User;
+use Faker\Factory as Faker;
 
 class TestFacade implements CreationTests
 {
@@ -61,9 +60,6 @@ class TestFacade implements CreationTests
         return $modele->id;
     }
 
-    /**
-     * @return false|string JSON du contenu d'une fiche de notation de rapport
-     */
     private static function genereContenuModeleRaport()
     {
         $faker   = Faker::create();

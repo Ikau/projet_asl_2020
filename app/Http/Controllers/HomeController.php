@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
-use App\User;
 
 class HomeController extends Controller
 {
@@ -26,20 +23,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // Verification du statut de l'utilisateur
-        $user = Auth::user();
+        $identite = Auth::user()->identite;
 
-        if(null === $user)
-        {
-            echo("null");
-        }
-        else // Authentifie
-        {
-            $identite = $user->identite;
-
-            return view('home', [
-                'identite' => $identite,
-            ]);
-        }
+        return view('home', [
+            'identite' => $identite,
+        ]);
     }
 }

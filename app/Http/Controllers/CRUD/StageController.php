@@ -2,22 +2,17 @@
 
 namespace App\Http\Controllers\CRUD;
 
-use App\Notifications\AffectationAssignee;
-use App\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
-
 use App\Abstracts\Controllers\AbstractControllerCRUD;
-
-use App\Http\Controllers\Enseignant\ResponsableController;
-
 use App\Facade\FicheFacade;
-use App\Modeles\Stage;
+use App\Http\Controllers\Enseignant\ResponsableController;
 use App\Modeles\Enseignant;
 use App\Modeles\Etudiant;
+use App\Modeles\Stage;
 use App\Utils\Constantes;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Validation\Rule;
 
 class StageController extends AbstractControllerCRUD
 {
@@ -84,7 +79,7 @@ class StageController extends AbstractControllerCRUD
      */
     public function index()
     {
-        $attributs = $this->getAttributsModele();
+        $attributs = Schema::getColumnListing(Stage::NOM_TABLE);
 
         // Suppression de la colonne 'Resume'
         for($i=0; $i<count($attributs); $i++)
@@ -190,7 +185,7 @@ class StageController extends AbstractControllerCRUD
             abort('404');
         }
 
-        $attributs   = $this->getAttributsModele();
+        $attributs   = Schema::getColumnListing(Stage::NOM_TABLE);
         $enseignants = Enseignant::all();
         $etudiants   = Etudiant::all();
 
@@ -346,16 +341,4 @@ class StageController extends AbstractControllerCRUD
 
         return Stage::find($id);
     }
-
-
-    /**
-     * Renvoie l'output de la fonction Schema::getColumnListing(Modele::NOM_TABLE)
-     *
-     * @return void
-     */
-    protected function getAttributsModele()
-    {
-        return Schema::getColumnListing(Stage::NOM_TABLE);
-    }
-
 }

@@ -2,16 +2,15 @@
 
 namespace App\Providers;
 
+use App\Interfaces\Gates;
 use App\Modeles\Fiches\FicheRapport;
 use App\Modeles\Stage;
 use App\Policies\FicheRapportPolicy;
 use App\Policies\StagePolicy;
 use App\Utils\Constantes;
+use Illuminate\Auth\Access\Response;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Auth\Access\Response;
-
-use App\Interfaces\Gates;
 
 class AuthServiceProvider extends ServiceProvider implements Gates
 {

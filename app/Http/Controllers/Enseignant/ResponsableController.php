@@ -1,19 +1,17 @@
 <?php
 
 namespace App\Http\Controllers\Enseignant;
+use App\Abstracts\Controllers\Enseignant\AbstractResponsableController;
+use App\Http\Middleware\VerifieEstResponsable;
 use App\Modeles\Departement;
 use App\Modeles\Enseignant;
 use App\Modeles\Option;
+use App\Modeles\Stage;
 use App\Notifications\AffectationAssignee;
 use App\User;
 use App\Utils\Constantes;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-
-use App\Modeles\Etudiant;
-use App\Modeles\Stage;
-
-use App\Abstracts\Controllers\Enseignant\AbstractResponsableController;
 
 class ResponsableController extends AbstractResponsableController
 {
@@ -35,6 +33,7 @@ class ResponsableController extends AbstractResponsableController
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware(VerifieEstResponsable::class);
     }
 
     /* ====================================================================
@@ -46,8 +45,6 @@ class ResponsableController extends AbstractResponsableController
      */
     public function getCreateAffectation()
     {
-        Gate::authorize(Constantes::GATE_ROLE_RESPONSABLE);
-
         return redirect()->route('stages.create');
     }
 
@@ -56,8 +53,6 @@ class ResponsableController extends AbstractResponsableController
      */
     public function getIndexAffectation()
     {
-        Gate::authorize(Constantes::GATE_ROLE_RESPONSABLE);
-
         // Recuperation du responsable courant
         $responsable = Auth::user()->identite;
 
@@ -110,8 +105,6 @@ class ResponsableController extends AbstractResponsableController
      */
     public function postValiderAffectation(int $idStage)
     {
-        Gate::authorize(Constantes::GATE_ROLE_RESPONSABLE);
-
         $stage = Stage::find($idStage);
         if(null === $stage)
         {
@@ -120,7 +113,7 @@ class ResponsableController extends AbstractResponsableController
         }
 
         // Verification du droit
-        if(Auth::user()->cant('valider', $stage))
+        if(Auth::user()->cant('validerAffectation', $stage))
         {
             return redirect()->route('stages.show', $idStage)
                 ->with('error', "Vous ne pouvez modifier que les stages de votre departement / option");

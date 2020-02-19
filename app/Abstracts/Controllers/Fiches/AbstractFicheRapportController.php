@@ -2,10 +2,7 @@
 
 namespace App\Abstracts\Controllers\Fiches;
 
-use App\User;
 use Illuminate\Http\Request;
-
-use App\Abstracts\Controllers\Fiches\AbstractFichesController;
 
 abstract class AbstractFicheRapportController extends AbstractFichesController
 {

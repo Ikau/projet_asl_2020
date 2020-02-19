@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers\Enseignant;
 
+use App\Abstracts\Controllers\Enseignant\AbstractReferentController;
+use App\Http\Middleware\VerifieEstEnseignant;
 use App\Interfaces\InformationsNotification;
-use App\Notifications\AffectationAssignee;
+use App\Modeles\Stage;
+use App\Utils\Constantes;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-
-use App\Abstracts\Controllers\Enseignant\AbstractReferentController;
-
-use App\Modeles\Stage;
-
-use App\Utils\Constantes;
 
 class ReferentController extends AbstractReferentController
 {
@@ -36,6 +33,7 @@ class ReferentController extends AbstractReferentController
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware(VerifieEstEnseignant::class);
     }
 
     /* ====================================================================
@@ -48,8 +46,6 @@ class ReferentController extends AbstractReferentController
      */
     public function index()
     {
-        Gate::authorize(Constantes::GATE_ROLE_ENSEIGNANT);
-
         return view('enseignant.commun.index', [
             'titre' => ReferentController::TITRE_INDEX
         ]);
@@ -60,8 +56,6 @@ class ReferentController extends AbstractReferentController
      */
     public function affectations()
     {
-        Gate::authorize(Constantes::GATE_ROLE_ENSEIGNANT);
-
         // Definitions des donnees a manipuer
         $entetes = [
             '', // Vide pour une zone d'icone ou autre

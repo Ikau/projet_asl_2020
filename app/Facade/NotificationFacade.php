@@ -7,7 +7,14 @@ use App\Notifications\AffectationAssignee;
 use App\Utils\Constantes;
 
 /**
- * Facade consistant a proposer un appel homogene
+ * Facade consistant a proposer un appel homogene pour afficher des donnees a propos des notifcations en BDD.
+ *
+ * Cette facon de fonctionner n'est clairement pas la plus optimale.
+ * D'apres la documentation de Laravel, il faudrait creer un nouveau type de canal de notification.
+ * A partir de ce canal de notification, il devrait etre possible d'affecter des notifications personnalisees.
+ *
+ * A l'etat actuel du projet, il ne restait pas assez de temps pour faire une implementation propre.
+ * Cette facade pourrait donc etre temporaire et supprimee par la suite lorsque l'environnement adequat sera cree.
  *
  * Class NotificationFacade
  * @package App\Facade

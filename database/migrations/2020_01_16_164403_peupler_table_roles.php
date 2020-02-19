@@ -17,7 +17,7 @@ class PeuplerTableRoles extends Migration
     public function up()
     {
         // Insertions de quelques roles standards
-        foreach(Role::getIntitules() as $intitules)
+        foreach(Role::getValeurs() as $intitules)
         {
             $role = new Role;
             $role[Role::COL_INTITULE] = $intitules;

@@ -2,13 +2,15 @@
 
 namespace App\Modeles;
 
-use Illuminate\Database\Eloquent\Model;
-
 use App\Abstracts\Modeles\AbstractEntreprise;
 use App\Utils\Constantes;
 
 class Entreprise extends AbstractEntreprise
 {
+    /* ====================================================================
+     *                          BASE DE DONNEES
+     * ====================================================================
+     */
     /*
      * Nom des colonnes dans la base de donnees
      */
@@ -17,7 +19,7 @@ class Entreprise extends AbstractEntreprise
     const COL_ADRESSE  = 'adresse';
     const COL_VILLE    = 'ville';
     const COL_PAYS     = 'pays';
-    
+
     // Attributs optionnels
     const COL_ADRESSE2 = 'adresse2';
     const COL_CP       = 'cp';
@@ -29,16 +31,17 @@ class Entreprise extends AbstractEntreprise
     const NOM_TABLE = 'entreprises';
 
     /**
+     * @var string Nom de la table associee au modele 'Entreprise'.
+     */
+    protected $table = self::NOM_TABLE;
+
+    /**
      * Indique a Laravel de ne pas creer ni de gerer les tables 'created_at' et 'updated_at'.
-     * 
+     *
      * @var bool Gestion des timestamps.
      */
     public $timestamps = false;
 
-    /**
-     * @var string Nom de la table associee au modele 'Entreprise'.
-     */
-    protected $table = Entreprise::NOM_TABLE;
 
     /**
      * @var array[string] Liste des attributs a assigner manuellement.
@@ -47,17 +50,17 @@ class Entreprise extends AbstractEntreprise
 
     /**
      * Valeurs par defaut des colonnes du modele 'Entreprise'.
-     * 
+     *
      * @var array[string]string
      */
     protected $attributes = [
-        Entreprise::COL_NOM      => Constantes::STRING_VIDE,
-        Entreprise::COL_ADRESSE  => Constantes::STRING_VIDE,
-        Entreprise::COL_ADRESSE2 => Constantes::STRING_VIDE,
-        Entreprise::COL_CP       => Constantes::STRING_VIDE,
-        Entreprise::COL_VILLE    => Constantes::STRING_VIDE,
-        Entreprise::COL_REGION   => Constantes::STRING_VIDE,
-        Entreprise::COL_PAYS     => Constantes::STRING_VIDE,
+        self::COL_NOM      => Constantes::STRING_VIDE,
+        self::COL_ADRESSE  => Constantes::STRING_VIDE,
+        self::COL_ADRESSE2 => Constantes::STRING_VIDE,
+        self::COL_CP       => Constantes::STRING_VIDE,
+        self::COL_VILLE    => Constantes::STRING_VIDE,
+        self::COL_REGION   => Constantes::STRING_VIDE,
+        self::COL_PAYS     => Constantes::STRING_VIDE,
     ];
 
     /**
@@ -66,6 +69,6 @@ class Entreprise extends AbstractEntreprise
      */
     public function stages()
     {
-        return $this->hasMany('App\Modeles\Stage', Stage::COL_ENTREPRISE_ID);
+        return $this->hasMany(Stage::class, Stage::COL_ENTREPRISE_ID);
     }
 }

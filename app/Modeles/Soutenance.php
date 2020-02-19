@@ -2,14 +2,16 @@
 
 namespace App\Modeles;
 
-use Illuminate\Database\Eloquent\Model;
-
 use App\Abstracts\Modeles\AbstractSoutenance;
+use App\Modeles\Fiches\FicheSoutenance;
 use App\Utils\Constantes;
 
 class Soutenance extends AbstractSoutenance
 {
-
+    /* ====================================================================
+     *                        VALEURS DU MODELE
+     * ====================================================================
+     */
     /*
      * Nom des colonnes dans la base de donnees
      */
@@ -22,9 +24,9 @@ class Soutenance extends AbstractSoutenance
     const COL_INVITES         = 'invites';
     const COL_NB_REPAS        = 'repas';
     const COL_SALLE           = 'salle';
-    
+
     /*
-     * Nom des colonnes des clefs etrangeres 
+     * Nom des colonnes des clefs etrangeres
      */
     const COL_CANDIDE_ID            = 'candide_id';
     //const COL_CONTACT_ENTREPRISE_ID = 'departement';
@@ -40,7 +42,7 @@ class Soutenance extends AbstractSoutenance
 
     /**
      * Indique a Laravel de ne pas creer ni de gerer les tables 'created_at' et 'updated_at'.
-     * 
+     *
      * @var bool Gestion des timestamps.
      */
     public $timestamps = false;
@@ -48,37 +50,37 @@ class Soutenance extends AbstractSoutenance
     /**
      * @var string Nom de la table associee au modele 'Soutenance'.
      */
-    protected $table = Soutenance::NOM_TABLE;
+    protected $table = self::NOM_TABLE;
 
     /**
      * @var array[string] Liste des attributs a assigner manuellement.
      */
-    protected $guarded = [];
-    
+    protected $guarded = ['id'];
+
     /**
      * Valeurs par defaut des colonnes du modele 'Soutenance'.
-     * 
+     *
      * @var array[string]mixed
      */
     protected $attributes = [
         // Attributs propres au modele
-        Soutenance::COL_ANNEE_ETUDIANT  => Constantes::INT_VIDE,
-        Soutenance::COL_CAMPUS          => Constantes::STRING_VIDE,
-        Soutenance::COL_COMMENTAIRE     => Constantes::STRING_VIDE,
-        Soutenance::COL_CONFIDENTIELLE  => TRUE,
-        Soutenance::COL_DATE            => Constantes::DATE_VIDE,
-        Soutenance::COL_HEURE           => Constantes::HEURE_VIDE,
-        Soutenance::COL_INVITES         => Constantes::STRING_VIDE,
-        Soutenance::COL_NB_REPAS        => Constantes::INT_VIDE,
-        Soutenance::COL_SALLE           => Constantes::STRING_VIDE,
+        self::COL_ANNEE_ETUDIANT  => Constantes::INT_VIDE,
+        self::COL_CAMPUS          => Constantes::STRING_VIDE,
+        self::COL_COMMENTAIRE     => Constantes::STRING_VIDE,
+        self::COL_CONFIDENTIELLE  => TRUE,
+        self::COL_DATE            => Constantes::DATE_VIDE,
+        self::COL_HEURE           => Constantes::HEURE_VIDE,
+        self::COL_INVITES         => Constantes::STRING_VIDE,
+        self::COL_NB_REPAS        => Constantes::INT_VIDE,
+        self::COL_SALLE           => Constantes::STRING_VIDE,
 
         // Clefs etrangeres
-        Soutenance::COL_CANDIDE_ID             => Constantes::ID_VIDE,
-        //Soutenance::COL_CONTACT_ENTREPRISE_ID  => Constantes::ID_VIDE,
-        Soutenance::COL_DEPARTEMENT_ID         => Constantes::ID_VIDE,
-        Soutenance::COL_ETUDIANT_ID            => Constantes::ID_VIDE,
-        Soutenance::COL_OPTION_ID              => Constantes::ID_VIDE,
-        Soutenance::COL_REFERENT_ID            => Constantes::ID_VIDE,
+        self::COL_CANDIDE_ID             => Constantes::ID_VIDE,
+        //self::COL_CONTACT_ENTREPRISE_ID  => Constantes::ID_VIDE,
+        self::COL_DEPARTEMENT_ID         => Constantes::ID_VIDE,
+        self::COL_ETUDIANT_ID            => Constantes::ID_VIDE,
+        self::COL_OPTION_ID              => Constantes::ID_VIDE,
+        self::COL_REFERENT_ID            => Constantes::ID_VIDE,
     ];
 
     /**
@@ -87,7 +89,7 @@ class Soutenance extends AbstractSoutenance
      */
     public function candide()
     {
-        return $this->belongsTo('App\Modeles\Enseignant', Soutenance::COL_CANDIDE_ID);
+        return $this->belongsTo(Enseignant::class, Soutenance::COL_CANDIDE_ID);
     }
 
     /**
@@ -96,7 +98,7 @@ class Soutenance extends AbstractSoutenance
      */
     public function contact_entreprise()
     {
-        return $this->belongsTo('App\Modeles\Contact', Soutenance::COL_CONTACT_ENTREPRISE_ID);
+        return $this->belongsTo(Contact::class, Soutenance::COL_CONTACT_ENTREPRISE_ID);
     }
 
     /**
@@ -105,7 +107,7 @@ class Soutenance extends AbstractSoutenance
      */
     public function etudiant()
     {
-        return $this->belongsTo('App\Modeles\Etudiant', Soutenance::COL_ETUDIANT_ID);
+        return $this->belongsTo(Etudiant::class, Soutenance::COL_ETUDIANT_ID);
     }
 
     /**
@@ -114,7 +116,7 @@ class Soutenance extends AbstractSoutenance
      */
     public function fiche()
     {
-        return $this->hasOne('App\Modeles\FicheSoutenance', FicheSoutenance::COL_SOUTENANCE_ID);
+        return $this->hasOne(FicheSoutenance::class, FicheSoutenance::COL_SOUTENANCE_ID);
     }
 
     /**
@@ -123,7 +125,7 @@ class Soutenance extends AbstractSoutenance
      */
     public function referent()
     {
-        return $this->belongsTo('App\Modeles\Enseignant', Soutenance::COL_REFERENT_ID);
+        return $this->belongsTo(Enseignant::class, Soutenance::COL_REFERENT_ID);
     }
 
     /**
@@ -132,7 +134,7 @@ class Soutenance extends AbstractSoutenance
      */
     public function stage()
     {
-        return $this->hasOne('App\Modeles\Stage', Stage::COL_SOUTENANCE_ID);
+        return $this->hasOne(Stage::class, Stage::COL_SOUTENANCE_ID);
     }
 
 }

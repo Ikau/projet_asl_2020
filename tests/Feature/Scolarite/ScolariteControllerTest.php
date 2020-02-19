@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Scolarite;
 
+use App\Facade\UserFacade;
 use App\Http\Controllers\Scolarite\ScolariteController;
 use App\Modeles\Contact;
 use App\User;
@@ -41,7 +42,7 @@ class ScolariteControllerTest extends TestCase
     {
         // Creation d'un utilisateur aleatoire n'ayant pas le role
         $contact = factory(Contact::class)->create();
-        $user    = User::fromContact($contact->id, 'azerty');
+        $user    = UserFacade::creerDepuisContact($contact->id, 'azerty');
 
         $this->actingAs($user)
             ->from('/')

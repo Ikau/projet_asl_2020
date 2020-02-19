@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers\CRUD;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Validation\Rule;
-
-use App\User;
 use App\Abstracts\Controllers\AbstractControllerCRUD;
 use App\Modeles\Privilege;
-use App\Utils\Constantes;
+use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 
 class PrivilegeController extends AbstractControllerCRUD
 {
@@ -28,7 +24,7 @@ class PrivilegeController extends AbstractControllerCRUD
      *                             RESOURCES
      * ====================================================================
      */
-    
+
 
     /**
      * Route de tests pour les fonctions auxiliaires.
@@ -75,7 +71,7 @@ class PrivilegeController extends AbstractControllerCRUD
     public function index()
     {
         $privileges = Privilege::all();
-        $attributs  = $this->getAttributsModele();
+        $attributs  = Schema::getColumnListing(Privilege::NOM_TABLE);
 
         return view('admin.modeles.privilege.index', [
             'titre'      => PrivilegeController::TITRE_INDEX,
@@ -91,7 +87,7 @@ class PrivilegeController extends AbstractControllerCRUD
      */
     public function create()
     {
-        $attributs = $this->getAttributsModele();
+        $attributs = Schema::getColumnListing(Privilege::NOM_TABLE);
 
         return view('admin.modeles.privilege.form', [
             'titre'     => PrivilegeController::TITRE_CREATE,
@@ -153,7 +149,7 @@ class PrivilegeController extends AbstractControllerCRUD
         return view('admin.modeles.privilege.form', [
             'titre' => PrivilegeController::TITRE_EDIT,
             'privilege' => $privilege,
-            'attributs' => $this->getAttributsModele()
+            'attributs' => Schema::getColumnListing(Privilege::NOM_TABLE)
         ]);
     }
 
@@ -226,7 +222,7 @@ class PrivilegeController extends AbstractControllerCRUD
 
     /**
      * Fonction qui doit faire la logique de validation des inputs d'une requete entrante.
-     * 
+     *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
@@ -241,7 +237,7 @@ class PrivilegeController extends AbstractControllerCRUD
 
     /**
      * Fonction qui doit faire la logique de validation de l'id
-     * 
+     *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
@@ -253,16 +249,5 @@ class PrivilegeController extends AbstractControllerCRUD
             return null;
         }
         return Privilege::find($id);
-    }
-
-    
-    /**
-     * Renvoie l'output de la fonction Schema::getColumnListing(Modele::NOM_TABLE)
-     * 
-     * @return void
-     */
-    protected function getAttributsModele()
-    {
-        return Schema::getColumnListing(Privilege::NOM_TABLE);
     }
 }

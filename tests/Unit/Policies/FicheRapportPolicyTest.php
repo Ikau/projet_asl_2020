@@ -1,5 +1,6 @@
 <?php
 
+use App\Facade\UserFacade;
 use App\Modeles\Enseignant;
 use App\Modeles\Fiches\FicheRapport;
 use App\User;
@@ -11,13 +12,14 @@ class FicheRapportPolicyTest extends TestCase
     {
         // Creation d'un enseignant ayant le droit
         $enseignant = factory(Enseignant::class)->create();
-        $user       = User::fromEnseignant($enseignant->id, 'azerty');
+        $user       = UserFacade::creerDepuisEnseignant($enseignant->id, 'azerty');
 
         // Creation de la fiche de rapport
         $fiche = factory(FicheRapport::class)->create();
 
         // On donne le droit a l'utilisateur
         $fiche->stage->referent = $enseignant;
+        $fiche->save();
 
         // Assertion
         $this->assertTrue($user->can('show', $fiche));
@@ -30,7 +32,7 @@ class FicheRapportPolicyTest extends TestCase
 
         // Creation d'un utilisateur quelconque
         $enseignant = factory(Enseignant::class)->create();
-        $user        = User::fromEnseignant($enseignant->id, 'azerty');
+        $user        = UserFacade::creerDepuisEnseignant($enseignant->id, 'azerty');
 
         // Assertion deny
         $this->assertFalse($user->can('show'), $fiche);

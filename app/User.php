@@ -2,44 +2,40 @@
 
 namespace App;
 
+use App\Interfaces\Authentification;
+use App\Interfaces\Utilisateur;
+use App\Modeles\Privilege;
+use App\Modeles\Role;
+use App\Utils\Constantes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Hash;
-
-use App\Interfaces\Authentification;
-use App\Interfaces\Utilisateur;
-
-use App\Modeles\Contact;
-use App\Modeles\Enseignant;
-use App\Modeles\Privilege;
-use App\Modeles\Role;
 
 /**
- * La classe User presente est la classe 'User' livre par defaut par le framework Laravel
+ * La classe User presentée est la classe 'User' livre par defaut par le framework Laravel
  *
- * Le choix a ete fait d'utiliser ce modele Eloquent parce que beaucoup de modules reutilise cette classe
+ * Le choix a ete fait d'utiliser ce modele Eloquent parce que beaucoup de modules reutilisent cette classe
  * Pour eviter de se prendre la tete en enregistrant une nouvelle classe, on utilise donc ce modele par defaut
  *
  * Bien sur, le fait d'utiliser cette classe risque de faire apparaitre des problemes en cas de mise a niveau de Laravel
  * C'est pour cette raison que l'on utilisera beaucoup d'interfaces pour lister les fonctions personnalisees a implementer
  */
-class User extends Authenticatable implements Utilisateur, Authentification,  MustVerifyEmail
+class User extends Authenticatable implements Utilisateur, Authentification, MustVerifyEmail
 {
     use Notifiable;
 
+
     /* ====================================================================
-     *                   STRUCTURE DE LA TABLE DU MODELE
+     *                          BASE DE DONNEES
      * ====================================================================
      */
-
     /**
      * @var string Nom de la table associee au model 'User'.
      */
     const NOM_TABLE = 'users';
 
     //On indique a Laravel le nom de la table dans la BDD
-    protected $table = User::NOM_TABLE;
+    protected $table = self::NOM_TABLE;
 
     /*
      * Nom des colonnes dans la base de donnees
@@ -69,6 +65,10 @@ class User extends Authenticatable implements Utilisateur, Authentification,  Mu
      */
     const COL_PIVOT = 'user_id';
 
+    /* ====================================================================
+     *                          PROPRIETES
+     * ====================================================================
+     */
     /**
      * Indique a Laravel de ne pas creer ni de gerer les tables 'created_at' et 'updated_at'.
      *
@@ -77,13 +77,27 @@ class User extends Authenticatable implements Utilisateur, Authentification,  Mu
     public $timestamps = false;
 
     /**
+     * Valeurs par defaut des colonnes du modele 'User'
+     *
+     * @var array[string]mixed
+     */
+    protected $attributes = [
+        self::COL_EMAIL               => null,
+        self::COL_EMAIL_VERIFIE_LE    => null,
+        self::COL_HASH_PASSWORD       => null,
+        self::COL_REMEMBER_TOKEN      => null,
+        self::COL_POLY_MODELE_ID      => null,
+        self::COL_POLY_MODELE_TYPE    => null,
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        User::COL_EMAIL,
-        User::COL_HASH_PASSWORD,
+        self::COL_EMAIL,
+        self::COL_HASH_PASSWORD,
     ];
 
     /**
@@ -92,8 +106,8 @@ class User extends Authenticatable implements Utilisateur, Authentification,  Mu
      * @var array
      */
     protected $hidden = [
-        User::COL_REMEMBER_TOKEN,
-        User::COL_HASH_PASSWORD
+        self::COL_REMEMBER_TOKEN,
+        self::COL_HASH_PASSWORD
     ];
 
     /**
@@ -102,7 +116,7 @@ class User extends Authenticatable implements Utilisateur, Authentification,  Mu
      * @var array
      */
     protected $casts = [
-        User::COL_EMAIL_VERIFIE_LE => 'datetime',
+        self::COL_EMAIL_VERIFIE_LE => 'datetime',
     ];
 
     /**
@@ -116,97 +130,6 @@ class User extends Authenticatable implements Utilisateur, Authentification,  Mu
      *                         INTERFACE 'UTILISATEUR'
      * ====================================================================
      */
-
-    /**
-     * Cree un compte user associe au modele Contact entre en argument
-     *
-     * @param int    $id         L'ID du contact auquel lier ce compte
-     * @param string $motDePasse Le mot de passe du compte user
-     *
-     * @return Null|User Le compte user cree ou existant sinon null en cas d'erreur
-     */
-    public static function fromContact(int $id, string $motDePasse) : User
-    {
-        // Verification arg
-        $contact = Contact::find($id);
-        if(null === $contact
-        || null === $motDePasse
-        || ''   === trim($motDePasse))
-        {
-            return null;
-        }
-
-        // Verification unicite du lien
-        $user = User::where([
-            [User::COL_POLY_MODELE_TYPE, '=', Contact::class],
-            [User::COL_POLY_MODELE_ID, '=', $id]
-        ])->first();
-        if( ! null === $user)
-        {
-            return $user;
-        }
-
-        // Creation du compte user
-        $user = new User;
-        $user->fill([
-            User::COL_EMAIL         => $contact[Contact::COL_EMAIL],
-            User::COL_HASH_PASSWORD => Hash::make($motDePasse)
-        ]);
-        $user->identite()->associate($contact);
-        $user->save();
-
-        return $user;
-    }
-
-    /**
-     * Cree un compte user associe au modele Enseignant entre en argument
-     *
-     * @param  int $id L'ID de l'enseignant auquel lier ce compte
-     *
-     * @return Null|User Le compte user cree ou existant sinon null en cas d'erreur
-     */
-    public static function fromEnseignant(int $id, string $motDePasse) : User
-    {
-        // Verification args
-        $enseignant = Enseignant::find($id);
-        if(null === $enseignant
-        || null === $motDePasse
-        || ''   === trim($motDePasse))
-        {
-            return null;
-        }
-
-        // Verification unicite du lien
-        $user = User::where([
-            [User::COL_POLY_MODELE_TYPE, '=', Enseignant::class],
-            [User::COL_POLY_MODELE_ID, '=', $id]
-        ])->first();
-        if( ! null === $user)
-        {
-            return $user;
-        }
-
-        // Creation de l'utilisateur
-        $user = new User;
-        $user->fill([
-            User::COL_EMAIL         => $enseignant[Enseignant::COL_EMAIL],
-            User::COL_HASH_PASSWORD => Hash::make($motDePasse)
-        ]);
-        $user->identite()->associate($enseignant);
-        $user->save();
-
-        return $user;
-    }
-
-    /**
-     * Renvoie le type de l'utilisateur.
-     *
-     * @return App\UserType Renvoie une reference vers l'objet UserType auquel est rattache l'utilisateur
-     */
-    public function type()
-    {
-        return $this->belongsTo('App\UserType', User::COL_TYPE_ID);
-    }
 
     /**
      * Renvoie les privileges de l'utilisateur.
@@ -247,6 +170,7 @@ class User extends Authenticatable implements Utilisateur, Authentification,  Mu
     {
         return $this->morphTo();
     }
+
 
     /* ====================================================================
      *                     INTERFACE 'AUTHENTIFICATION'
@@ -293,7 +217,7 @@ class User extends Authenticatable implements Utilisateur, Authentification,  Mu
      */
     public function estScolariteINSA(): bool
     {
-       $roleScolarite = Role::where(Role::COL_INTITULE, '=', Role::VAL_SCOLARITE)->first();
-       return $this->roles->contains($roleScolarite);
+        $roleScolarite = Role::where(Role::COL_INTITULE, '=', Role::VAL_SCOLARITE)->first();
+        return $this->roles->contains($roleScolarite);
     }
 }

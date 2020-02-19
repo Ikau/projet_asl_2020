@@ -2,10 +2,11 @@
 
 namespace App\Modeles;
 
-use App\Modeles\Fiches\FicheRapport;
-use Illuminate\Database\Eloquent\Model;
-
 use App\Abstracts\Modeles\AbstractStage;
+use App\Modeles\Fiches\FicheEntreprise;
+use App\Modeles\Fiches\FicheRapport;
+use App\Modeles\Fiches\FicheSoutenance;
+use App\Modeles\Fiches\FicheSynthese;
 use App\Utils\Constantes;
 
 class Stage extends AbstractStage
@@ -56,7 +57,7 @@ class Stage extends AbstractStage
     const NOM_TABLE = 'stages';
 
     // On indique a Laravel d'utiliser le nom que l'on a defini
-    protected $table = Stage::NOM_TABLE;
+    protected $table = self::NOM_TABLE;
 
     /**
      * Indique a Laravel de ne pas creer ni de gerer les tables 'created_at' et 'updated_at'.
@@ -75,24 +76,24 @@ class Stage extends AbstractStage
      */
     protected $attributes = [
         // Attributs propres au modele
-        Stage::COL_AFFECTATION_VALIDEE => FALSE,
-        Stage::COL_ANNEE               => Constantes::INT_VIDE,
-        Stage::COL_CONVENTION_ENVOYEE  => FALSE,
-        Stage::COL_CONVENTION_SIGNEE   => FALSE,
-        Stage::COL_DATE_DEBUT          => Constantes::DATE_VIDE,
-        Stage::COL_DATE_FIN            => Constantes::DATE_VIDE,
-        Stage::COL_DUREE_SEMAINES      => Constantes::INT_VIDE,
-        Stage::COL_GRATIFICATION       => Constantes::FLOAT_VIDE,
-        Stage::COL_INTITULE            => Constantes::STRING_VIDE,
-        Stage::COL_LIEU                => Constantes::STRING_VIDE,
-        Stage::COL_MOYEN_RECHERCHE     => Constantes::STRING_VIDE,
-        Stage::COL_RESUME              => Constantes::STRING_VIDE,
+        self::COL_AFFECTATION_VALIDEE => FALSE,
+        self::COL_ANNEE               => Constantes::INT_VIDE,
+        self::COL_CONVENTION_ENVOYEE  => FALSE,
+        self::COL_CONVENTION_SIGNEE   => FALSE,
+        self::COL_DATE_DEBUT          => Constantes::DATE_VIDE,
+        self::COL_DATE_FIN            => Constantes::DATE_VIDE,
+        self::COL_DUREE_SEMAINES      => Constantes::INT_VIDE,
+        self::COL_GRATIFICATION       => Constantes::FLOAT_VIDE,
+        self::COL_INTITULE            => Constantes::STRING_VIDE,
+        self::COL_LIEU                => Constantes::STRING_VIDE,
+        self::COL_MOYEN_RECHERCHE     => Constantes::STRING_VIDE,
+        self::COL_RESUME              => Constantes::STRING_VIDE,
 
         // Clefs etrangeres
-        Stage::COL_REFERENT_ID   => Constantes::ID_VIDE,
-        Stage::COL_ETUDIANT_ID   => Constantes::ID_VIDE,
-        //Stage::COL_ENTREPRISE_ID => Constantes::ID_VIDE,
-        //Stage::COL_MDS_ID        => Constantes::ID_VIDE,
+        self::COL_REFERENT_ID   => Constantes::ID_VIDE,
+        self::COL_ETUDIANT_ID   => Constantes::ID_VIDE,
+        //self::COL_ENTREPRISE_ID => Constantes::ID_VIDE,
+        //self::COL_MDS_ID        => Constantes::ID_VIDE,
     ];
 
     /* ====================================================================
@@ -106,7 +107,7 @@ class Stage extends AbstractStage
      */
     public function entreprise()
     {
-        return $this->belongsTo('App\Modeles\Entreprise', Stage::COL_ENTREPRISE_ID);
+        return $this->belongsTo(Entreprise::class, Stage::COL_ENTREPRISE_ID);
     }
 
     /**
@@ -115,7 +116,7 @@ class Stage extends AbstractStage
      */
     public function etudiant()
     {
-        return $this->belongsTo('App\Modeles\Etudiant', Stage::COL_ETUDIANT_ID);
+        return $this->belongsTo(Etudiant::class, Stage::COL_ETUDIANT_ID);
     }
 
     /**
@@ -124,7 +125,7 @@ class Stage extends AbstractStage
      */
     public function fiche_entreprise()
     {
-        return $this->hasOne('App\Modeles\FicheEntreprise', FicheEntreprise::COL_STAGE_ID);
+        return $this->hasOne(FicheEntreprise::class, FicheEntreprise::COL_STAGE_ID);
     }
 
     /**
@@ -142,7 +143,7 @@ class Stage extends AbstractStage
      */
     public function fiche_soutenance()
     {
-        return $this->hasOne('App\Modeles\FicheSoutenance', FicheSoutenance::COL_STAGE_ID);
+        return $this->hasOne(FicheSoutenance::class, FicheSoutenance::COL_STAGE_ID);
     }
 
     /**
@@ -151,7 +152,7 @@ class Stage extends AbstractStage
      */
     public function fiche_synthese()
     {
-        return $this->hasOne('App\Modeles\FicheSynthese', FicheSynthese::COL_STAGE_ID);
+        return $this->hasOne(FicheSynthese::class, FicheSynthese::COL_STAGE_ID);
     }
 
     /**

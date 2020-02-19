@@ -2,23 +2,16 @@
 
 namespace App\Http\Controllers\Fiches;
 
+use App\Abstracts\Controllers\Fiches\AbstractFicheRapportController;
 use App\Facade\FicheFacade;
 use App\Modeles\Fiches\FicheRapport;
 use App\Modeles\Fiches\ModeleNotation;
 use App\Modeles\Fiches\Section;
 use App\User;
+use App\Utils\Constantes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
-
-use App\Abstracts\Controllers\Fiches\AbstractFicheRapportController;
-
-use App\Modeles\Enseignant;
-use App\Modeles\Etudiant;
-use App\Modeles\Stage;
-
-use App\Utils\Constantes;
 
 class FicheRapportController extends AbstractFicheRapportController
 {

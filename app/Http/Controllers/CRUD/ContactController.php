@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\CRUD;
 
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-
 use App\Abstracts\Controllers\AbstractControllerCRUD;
 use App\Modeles\Contact;
 use App\Utils\Constantes;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ContactController extends AbstractControllerCRUD
 {
@@ -203,10 +202,5 @@ class ContactController extends AbstractControllerCRUD
         }
 
         return Contact::find($id);
-    }
-
-    protected function getAttributsModele()
-    {
-        return Schema::getColumnListing(Contact::NOM_TABLE);
     }
 }

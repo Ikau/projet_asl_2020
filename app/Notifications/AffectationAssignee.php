@@ -3,10 +3,7 @@
 namespace App\Notifications;
 
 use App\Interfaces\InformationsNotification;
-use App\Utils\Constantes;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
 class AffectationAssignee extends Notification

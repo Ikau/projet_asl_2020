@@ -2,20 +2,22 @@
 
 namespace App\Traits;
 
+use App\Utils\Constantes;
+
 trait NotationFiches
 {
 
     /**
      * @variable array contenu : Variable privee representant le contenu de la fiche
      *
+     * Rappel de la structure :
+     * $fiche->contenu === array([indexSection = > [indexChoix1, ..., indexChoixN])
+     *
      * Renvoie l'etat de la fiche
      * @return int
      */
     public function getStatut() : int
     {
-        $enCours  = false;
-        $complete = true;
-
         // Verification basique
         $notation = $this->contenu;
         if(null === $notation || [] === $notation)
@@ -24,19 +26,25 @@ trait NotationFiches
         }
 
         // Verification du statut
-        $sections = $this->modele->sections;
+        $enCours  = false;
+        $complete = true;
         foreach($notation as $indexSection => $criteres)
         {
             foreach($criteres as $indexChoix)
             {
-                if(-1 !== $indexChoix)
+                // Si un choix est bien present
+                if(Constantes::INDEX_CHOIX_VIDE !== $indexChoix)
                 {
                     $enCours = true;
                 }
-                if(-1 === $indexChoix)
+
+                // Si un choix n'a pas ete initialise
+                if(Constantes::INDEX_CHOIX_VIDE === $indexChoix)
                 {
                     $complete = false;
                 }
+
+                // On casse sort tout de suite si la fiche est en cours
                 if( $enCours && ! $complete)
                 {
                     return self::VAL_STATUT_EN_COURS;
@@ -71,13 +79,7 @@ trait NotationFiches
         foreach($notation as $indexSection => $criteres)
         {
             $section = $sections->get($indexSection);
-            foreach($criteres as $indexChoix)
-            {
-                if(-1 !== $indexChoix)
-                {
-                    $note += $section->getPoints($indexChoix);
-                }
-            }
+            $note    += $section->getNoteSection($criteres);
         }
 
         return $note;

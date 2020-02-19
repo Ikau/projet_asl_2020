@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers\CRUD;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Validation\Rule;
-
 use App\Abstracts\Controllers\AbstractControllerCRUD;
 use App\Modeles\Entreprise;
 use App\Utils\Constantes;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 
 class EntrepriseController extends AbstractControllerCRUD
 {
@@ -27,7 +24,7 @@ class EntrepriseController extends AbstractControllerCRUD
      *                             RESOURCES
      * ====================================================================
      */
-    
+
 
     /**
      * Route de tests pour les fonctions auxiliaires.
@@ -73,9 +70,9 @@ class EntrepriseController extends AbstractControllerCRUD
      */
     public function index()
     {
-        $attributs   = $this->getAttributsModele();
+        $attributs   = Schema::getColumnListing(Entreprise::NOM_TABLE);
         $entreprises = Entreprise::all();
-        
+
         return view('admin.modeles.entreprise.index', [
             'attributs'   => $attributs,
             'entreprises' => $entreprises,
@@ -90,8 +87,6 @@ class EntrepriseController extends AbstractControllerCRUD
      */
     public function create()
     {
-        $attributs = $this->getAttributsModele();
-
         return view('admin.modeles.entreprise.form', [
             'titre' => EntrepriseController::TITRE_CREATE
         ]);
@@ -148,7 +143,7 @@ class EntrepriseController extends AbstractControllerCRUD
             abort('404');
         }
 
-        $attributs = $this->getAttributsModele();
+        $attributs = Schema::getColumnListing(Entreprise::NOM_TABLE);
         return view('admin.modeles.entreprise.form', [
             'titre'      => EntrepriseController::TITRE_EDIT,
             'entreprise' => $entreprise,
@@ -219,7 +214,7 @@ class EntrepriseController extends AbstractControllerCRUD
 
     /**
      * Fonction qui doit faire la logique de validation des inputs d'une requete entrante.
-     * 
+     *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
@@ -242,7 +237,7 @@ class EntrepriseController extends AbstractControllerCRUD
 
     /**
      * Fonction qui doit faire la logique de validation de l'id
-     * 
+     *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
@@ -255,16 +250,5 @@ class EntrepriseController extends AbstractControllerCRUD
         }
 
         return Entreprise::find($id);
-    }
-
-    
-    /**
-     * Renvoie l'output de la fonction Schema::getColumnListing(Modele::NOM_TABLE)
-     * 
-     * @return void
-     */
-    protected function getAttributsModele()
-    {
-        return Schema::getColumnListing(Entreprise::NOM_TABLE);
     }
 }

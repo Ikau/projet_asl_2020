@@ -1,57 +1,51 @@
-<?php 
+<?php
 
 namespace App\Modeles;
 
-use Illuminate\Database\Eloquent\Model;
-
 use App\Abstracts\Modeles\AbstractPrivilege;
+use App\Interfaces\ArrayValeurs;
+use App\User;
 use App\Utils\Constantes;
 
-use App\User;
-use App\Modeles\Role;
-
-class Privilege extends AbstractPrivilege
+class Privilege extends AbstractPrivilege implements ArrayValeurs
 {
 
     /* ====================================================================
-     *                         VALEURS DISPONIBLES
+     *                        VALEURS DU MODELE
      * ====================================================================
      */
     const VAL_ENSEIGNANT = 'referent';
 
     /**
-     * Fonction auxiliaire permettant d'avoir une liste des intitules possibles
-     * 
-     * @return array(string)
+     * @inheritDoc
      */
-    public static function getIntitules()
+    public static function getValeurs()
     {
         return [
-            Privilege::VAL_ENSEIGNANT
+            self::VAL_ENSEIGNANT
         ];
     }
 
 
     /* ====================================================================
-     *                   STRUCTURE DE LA TABLE DU MODELE
+     *                          BASE DE DONNEES
      * ====================================================================
      */
+    /*
+     * Nom des colonnes de la tables
+     */
+    const COL_INTITULE = 'intitule';
 
     /**
      * @var string Nom de la table associe au modele 'Privilege'
      */
     const NOM_TABLE = 'privileges';
 
-    //Indiquer a Laravel d'utiliser le nom de la table definie 
-    protected $table = Privilege::NOM_TABLE;
+    //Indiquer a Laravel d'utiliser le nom de la table definie
+    protected $table = self::NOM_TABLE;
 
     /*
-     * Nom des colonnes de la tables 
-     */
-    const COL_INTITULE = 'intitule';
-
-    /*
-     * Nom de la table de jointure pour une relation Mane-to-Many 
+     * Nom de la table de jointure pour une relation Mane-to-Many
      * Convention de nommage Laravel utilisee : ordre_alphabethique_class
      */
     const NOM_TABLE_PIVOT_PRIVILEGE_USER = 'privilege_user';
@@ -65,7 +59,7 @@ class Privilege extends AbstractPrivilege
 
     /**
      * Indique a Laravel de ne pas creer ni de gerer les tables 'created_at' et 'updated_at'
-     * 
+     *
      * @var bool Gestion des timestamps
      */
     public $timestamps = false;
@@ -97,19 +91,19 @@ class Privilege extends AbstractPrivilege
     public function users()
     {
         // Args : modele de la relation, nom table pivot, nom colonne privilege_id, nom colonne user_id
-        return $this->belongsToMany('App\User', Privilege::NOM_TABLE_PIVOT_PRIVILEGE_USER,
+        return $this->belongsToMany(User::class, Privilege::NOM_TABLE_PIVOT_PRIVILEGE_USER,
                                     Privilege::COL_PIVOT, User::COL_PIVOT);
     }
 
     /**
      * Renvoie la liste des roles ayant le privilege associe
-     * 
+     *
      * @return App\Modeles\Role
      */
     public function roles()
     {
         // Args : modele de la relation, nom table pivot, nom colonne privilege_id, nom colonne user_id
-        return $this->belongsToMany('App\Modeles\Role', Privilege::NOM_TABLE_PIVOT_PRIVILEGE_ROLE,
+        return $this->belongsToMany(Role::class, Privilege::NOM_TABLE_PIVOT_PRIVILEGE_ROLE,
                                     Privilege::COL_PIVOT, Role::COL_PIVOT);
     }
 }
