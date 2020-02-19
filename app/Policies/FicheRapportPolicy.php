@@ -6,6 +6,15 @@ use App\Modeles\Fiches\FicheRapport;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
+/**
+ * Class FicheRapportPolicy
+ *
+ * Attention lorsque vous faites des policies : il PEUT y avoir interference entre ID contact et ID enseignant
+ * Comparez plutot les emails : nous avon une contraite physique (base de donnees) qui permet de relier un utilisateur
+ * a son identite !
+ *
+ * @package App\Policies
+ */
 class FicheRapportPolicy
 {
     use HandlesAuthorization;
@@ -19,9 +28,8 @@ class FicheRapportPolicy
      */
     public function show(User $user, FicheRapport $ficheRapport)
     {
-
         return (
-            ($user->identite->id === $ficheRapport->stage->referent->id)
+            ($user->email === $ficheRapport->stage->referent->email)
             || $user->estScolariteINSA()
         );
     }
@@ -35,6 +43,6 @@ class FicheRapportPolicy
      */
     public function edit(User $user, FicheRapport $ficheRapport)
     {
-        return $user->identite->id === $ficheRapport->stage->referent->id;
+        return $user->email === $ficheRapport->stage->referent->email;
     }
 }
