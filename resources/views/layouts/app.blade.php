@@ -8,58 +8,50 @@
     </head>
     <body>
         @section('sidebar')
-            {{--
-            <nav class="navbar navbar-expand-md navbar-dark bg-primary">
-                <div class="navbar-collapse justify-content-end">
-                    <div class="navbar-nav">
-                    @auth
-                    <a class="nav-item nav-link btn btn-lg text-white" href="{{ url('/home') }}">Accueil</a>
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button class="btn btn-lg nav-item nav-link text-white" type="submit">Se déconnecter</button>
-                    </form>
-                    @endauth
+            <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #734b75">
+                <a class="navbar-brand">
+                    INSA Centre-Val de Loire
+                    <span class="border-left border-white m-1 p-2">
+                        @auth
+                            {{ Auth::user()->identite->prenom }} {{ Auth::user()->identite->nom }}
+                        @endauth
+                    </span>
+                </a>
 
-                    @guest
-                        <a class="nav-item nav-link btn btn-lg text-white" href="{{ route('login') }}">Login</a>
-                    @endguest
-                    </div>
-                </div>
-            </nav>
-            --}}
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <a class="navbar-brand" href="#">INSA</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                {{-- Bouton pour collapse les elements (hamburger) --}}
+                <button class="navbar-toggler border border-white" type="button" data-toggle="collapse" data-target="#contenuToggle" aria-controls="contenuToggle" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Dropdown
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                        </li>
+                {{-- Tout ce qui est ici sera collapsed si besoin --}}
+                <div class="collapse navbar-collapse flex-row  justify-content-end" id="contenuToggle">
+                    {{-- Notre partie pour les actions de l'utilisateur --}}
+                    <ul class="nav nav-pills nav-fill">
+
+                        {{-- div actions specifiques --}}
+                         @auth
+                            {{-- 'Accueil' et 'Se deconnecter' --}}
+                            <li class="nav-item">
+                                @if(Auth::user()->estEnseignant())
+                                    <a class="btn btn-lg text-white" href="{{ route('referents.index.index') }}">Accueil</a>
+                                @elseif(Auth::user()->estScolariteINSA())
+                                    <a class="btn btn-lg text-white" href="{{ route('scolarite.index') }}">Accueil</a>
+                                @endif
+                            </li>
+                            <li class="nav-item">
+                                <form class="form-inline my-2 my-lg-0" method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button class="btn btn-lg nav-link text-white" type="submit">Se déconnecter</button>
+                                </form>
+                            </li>
+                         @endauth
+
+                        @guest
+                                <li class="nav-item">
+                                    <a class="nav-link btn btn-lg text-white " href="{{ route('login') }}">Login</a>
+                                </li>
+                        @endguest
                     </ul>
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                    </form>
                 </div>
             </nav>
         @show
