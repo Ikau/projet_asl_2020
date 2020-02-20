@@ -36,8 +36,8 @@ class CreerTableStages extends Migration
             $table->string(Stage::COL_MOYEN_RECHERCHE);
             $table->text(Stage::COL_RESUME);
 
-            $table->unsignedBigInteger(Stage::COL_REFERENT_ID);
             $table->unsignedBigInteger(Stage::COL_ETUDIANT_ID);
+            $table->unsignedBigInteger(Stage::COL_REFERENT_ID)->nullable();
             //$table->unsignedBigInteger(Stage::COL_ENTREPRISE_ID);
             //$table->unsignedBigInteger(Stage::COL_MDS_ID);
 
