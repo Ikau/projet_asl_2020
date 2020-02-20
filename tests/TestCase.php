@@ -111,7 +111,7 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
-     * Ajoute le role 'responsable_option' a l'utilisateur entre en argument
+     * Ajoute le role 'responsable_departement' a l'utilisateur entre en argument
      */
     function ajouteRoleResponsableDepartement(User $user)
     {
@@ -120,6 +120,19 @@ abstract class TestCase extends BaseTestCase
 
         // Ajout du role a l'utilisateur
         $user->roles()->attach($roleResponsableDepartement);
+        $user->save();
+    }
+
+    /**
+     * Ajoute le role 'responsable_option' a l'utilisateur entre en argument
+     */
+    function ajouteRoleResponsableOption(User $user)
+    {
+        // Recuperation du role 'responsable_departement'
+        $roleResponsableOption = Role::where(Role::COL_INTITULE, '=', Role::VAL_RESP_OPTION)->first();
+
+        // Ajout du role a l'utilisateur
+        $user->roles()->attach($roleResponsableOption);
         $user->save();
     }
 }
