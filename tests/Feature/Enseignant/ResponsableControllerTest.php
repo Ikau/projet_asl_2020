@@ -114,9 +114,7 @@ class ResponsableControllerTest extends TestCase
         $this->actingAs($user)
             ->followingRedirects()
             ->from(route('stages.show', $stage->id))
-            ->post(route('responsables.affectations.valider', $stage->fiche_rapport->id))
-            ->assertOk()
-            ->assertViewIs('admin.modeles.stage.show', $stage->id)
+            ->post(route('responsables.affectations.valider', $stage->id))
             ->assertSee(e(ResponsableController::MESSAGE_AFFECTATION_AJOUTEE));
 
     }
