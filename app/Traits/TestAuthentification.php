@@ -10,7 +10,7 @@ trait TestAuthentification
 {
 
     /* ------------------------------------------------------------------
-     *           AUXILIAIRES : tests de controle d'acces
+     *           AUXILIAIRES : tests de controle d'acces GET
      * ------------------------------------------------------------------
      */
     /**
