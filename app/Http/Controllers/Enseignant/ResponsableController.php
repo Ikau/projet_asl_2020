@@ -24,6 +24,14 @@ class ResponsableController extends AbstractResponsableController
     const TITRE_GET_FORM_AFFECTATION = 'Responsable - Creer une affectation';
     const TITRE_INDEX_AFFECTATION    = 'Responsable - Liste des affectations';
 
+    /*
+     * Messages affiches en cas d'erreurs
+     */
+    const MESSAGE_AFFECTATION_AJOUTEE        = 'Affectation de stage ajoutée avec succès';
+    const MESSAGE_AFFECTATION_INEXISTANTE    = 'Impossible de recuperer le stage a valider';
+    const MESSAGE_AFFECTATION_AUCUN_REFERENT = 'Il n\'y a aucun referent assigné à ce stage !';
+    const MESSAGE_AFFECTATION_NON_ROLE       = 'Vous devez être responsable de l\'option ou du departement pour valider';
+
     /**
      * Indique a Lavel que toutes les fonctions de callback demandent un utilisateur
      * authentifie
@@ -107,21 +115,21 @@ class ResponsableController extends AbstractResponsableController
         if(null === $stage)
         {
             return redirect()->route('responsables.affectations.index')
-                ->with('error', 'Impossible de recuperer le stage a valider');
+                ->with('error', self::MESSAGE_AFFECTATION_INEXISTANTE);
         }
 
         // Verification du droit
         if(Auth::user()->cant('validerAffectation', $stage))
         {
             return redirect()->route('stages.show', $idStage)
-                ->with('error', "Vous ne pouvez modifier que les stages de votre departement / option");
+                ->with('error', self::MESSAGE_AFFECTATION_NON_ROLE);
         }
 
         // Verification qu'il y ait bien un referent
-        if($stage[Stage::COL_REFERENT_ID] === -1)
+        if($stage[Stage::COL_REFERENT_ID] === null)
         {
             return redirect()->route('stages.show', $stage->id)
-                ->with('error', "Il n'y a aucun referent assigné à ce stage !");
+                ->with('error', self::MESSAGE_AFFECTATION_AUCUN_REFERENT);
         }
 
         // Le stage a ete validee
@@ -136,6 +144,6 @@ class ResponsableController extends AbstractResponsableController
         $userEnseignant->notify(new AffectationAssignee($stage->id));
 
         return redirect()->route('stages.show', $idStage)
-            ->with('success', 'Affectation validée !');
+            ->with('success', self::MESSAGE_AFFECTATION_AJOUTEE);
     }
 }

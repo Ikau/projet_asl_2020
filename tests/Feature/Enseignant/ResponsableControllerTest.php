@@ -91,7 +91,34 @@ class ResponsableControllerTest extends TestCase
 
     public function testPostValiderAffectationOk()
     {
-        // TODO
+        // Nouvelle affectation
+        $stage = factory(Stage::class)->create();
+        FicheFacade::creerFiches($stage->id);
+
+        // On ajoute les bons droits
+        $user  = $this->creerUserRoleEnseignant();
+        $this->ajouteRoleResponsableDepartement($user);
+        $this->ajouteRoleResponsableOption($user);
+
+        $idDpt = $stage->etudiant->departement->id;
+        $idOpt = $stage->etudiant->option->id;
+        $user->identite->departement_id = $idDpt;
+        $user->identite->option_id      = $idOpt;
+
+        $stage->referent()->dissociate();
+        $stage->referent()->associate($user->identite);
+        $stage->save();
+
+
+        // Routeage ok
+        $this->actingAs($user)
+            ->followingRedirects()
+            ->from(route('stages.show', $stage->id))
+            ->post(route('responsables.affectations.valider', $stage->fiche_rapport->id))
+            ->assertOk()
+            ->assertViewIs('admin.modeles.stage.show', $stage->id)
+            ->assertSee(e(ResponsableController::MESSAGE_AFFECTATION_AJOUTEE));
+
     }
 
     public function testPostValiderAffectationEchec()
@@ -113,22 +140,46 @@ class ResponsableControllerTest extends TestCase
             ->post(route('responsables.affectations.valider', $stage->id))
             ->assertStatus(403);
 
+        // Stage inexistant
+        $user = $this->creerUserRoleEnseignant();
+        $this->ajouteRoleResponsableDepartement($user);
+        $this->actingAs($user)
+            ->followingRedirects()
+            ->from('/')
+            ->post(route('responsables.affectations.valider', -1))
+            ->assertSee(ResponsableController::MESSAGE_AFFECTATION_INEXISTANTE);
+
+
         // Mauvais responsable
         $user = $this->creerUserRoleEnseignant();
-        $user->identite->fill([
-            Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID => null,
-            Enseignant::COL_RESPONSABLE_OPTION_ID      => null
-        ])->save();
+        $this->ajouteRoleResponsableDepartement($user);
+        $user->identite[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID] = null;
+        $user->identite[Enseignant::COL_RESPONSABLE_OPTION_ID]      = null;
         $this->actingAs($user)
-            ->from('/')
+            ->followingRedirects()
+            ->from(route('stages.show', $stage->id))
             ->post(route('responsables.affectations.valider', $stage->id))
-            ->assertStatus(403);
-
-        // Stage inexistant
-
-        // Non habilite
+            ->assertSee(e(ResponsableController::MESSAGE_AFFECTATION_NON_ROLE));
 
         // Stage sans referent
+        $stage->referent()->dissociate();
+        $stage->save();
+
+        $user = $this->creerUserRoleEnseignant();
+        $this->ajouteRoleResponsableDepartement($user);
+        $this->ajouteRoleResponsableOption($user);
+
+        $idDpt = $stage->etudiant->departement->id;
+        $idOpt = $stage->etudiant->option->id;
+        $user->identite->departement_id = $idDpt;
+        $user->identite->option_id      = $idOpt;
+
+        $this->actingAs($user)
+            ->followingRedirects()
+            ->from(route('stages.show', $stage->id))
+            ->post(route('responsables.affectations.valider', $stage->id))
+            ->assertSee(e(ResponsableController::MESSAGE_AFFECTATION_AUCUN_REFERENT));
+
     }
 
 }
