@@ -120,7 +120,7 @@ class AuthServiceProvider extends ServiceProvider implements Gates
         Gate::define(Constantes::GATE_ROLE_SCOLARITE, function($user) {
             if( ! $user->estScolariteINSA() )
             {
-                return Response::deny("Seuls la scolarite de l'INSA peut accéder à cette partie du site.");
+                return Response::deny("Seule la scolarite de l'INSA peut accéder à cette partie du site.");
             }
 
             return Response::allow();

@@ -14,8 +14,6 @@ use Tests\TestCase;
 
 class StagePolicyTest extends TestCase
 {
-    use RefreshDatabase;
-
     /**
      * @dataProvider validerAffectationProvider
      */

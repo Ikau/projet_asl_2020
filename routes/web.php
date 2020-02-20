@@ -21,12 +21,12 @@ Route::get('/', function () {
  | Routes generees par Laravel pour la gestion de l'authentification
  | Voir :
  | vendor/laravel/framework/src/Illuminate/Routing/Router->auth()
+ |
+ | On notera ici que l'on a demande a Laravel de ne pas utiliser la route 'register'
+ | Dans notre maquette du site, les utilisateurs sont ajoutes par l'administrateur
  |--------------------------------------------------------------------------
  */
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+Auth::routes(['register' => false]);
 
 
 /*
@@ -34,6 +34,8 @@ Route::get('/home', 'HomeController@index')->name('home');
  | Routes Temporaires des controllers a modifier pour la mise en prod
  |--------------------------------------------------------------------------
  */
+Route::get('/home', 'HomeController@index')->name('home');
+
 
 
 /*

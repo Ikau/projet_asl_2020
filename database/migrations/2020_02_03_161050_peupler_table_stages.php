@@ -1,5 +1,6 @@
 <?php
 
+use App\Facade\FicheFacade;
 use App\Modeles\Fiches\FicheRapport;
 use Illuminate\Database\Migrations\Migration;
 use App\Modeles\Etudiant;
@@ -20,6 +21,7 @@ class PeuplerTableStages extends Migration
         {
             // Creation du stage
             $stage = factory(Stage::class)->create();
+            FicheFacade::creerFiches($stage->id);
         }
     }
 

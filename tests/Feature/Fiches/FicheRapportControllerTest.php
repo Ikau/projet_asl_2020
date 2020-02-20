@@ -14,7 +14,7 @@ use Tests\TestCase;
 
 class FicheRapportControllerTest extends TestCase
 {
-    use RefreshDatabase, TestAuthentification, TestFiches;
+    use TestAuthentification, TestFiches;
 
     /* ------------------------------------------------------------------
      *           AUXILIAIRES : tests de controle d'acces

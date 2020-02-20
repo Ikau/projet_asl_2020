@@ -32,7 +32,6 @@
                 </div>
 
                 <div class="card-header bg-primary text-white">
-                    <p>Bienvenue {{ Auth::user()->identite->prenom }} {{ Auth::user()->identite->nom }}</p>
                     <h3>Mes derniers évènements</h3>
                 </div>
 

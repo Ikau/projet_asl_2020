@@ -15,9 +15,6 @@ use App\Utils\Constantes;
 
 class TemplateControllerTest extends TestCase
 {
-    // Rollback les modifications de la BDD a la fin des tests
-    use RefreshDatabase;
-
     /* ====================================================================
      *                           TESTS AUXILIAIRES
      * ====================================================================
@@ -55,7 +52,7 @@ class TemplateControllerTest extends TestCase
     {
         $this->assertTrue(TRUE);
     }
-    
+
     /**
      * @depends testValiderForm
      */

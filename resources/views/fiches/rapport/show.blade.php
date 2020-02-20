@@ -47,10 +47,12 @@
     </div>
 
     {{-- Bouton pour modifier --}}
+    @if(Auth::user()->can('edit', $fiche))
     <div class="row mb-3">
         <div class="col text-right">
             <a class="btn btn-lg btn-success" href="{{route('fiches.rapport.edit', $fiche->id)}}">📝 Modifier la fiche</a>
         </div>
     </div>
+    @endif
 </div>
 @endsection

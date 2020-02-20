@@ -13,9 +13,6 @@ use App\Utils\Constantes;
 
 class EtudiantControllerTest extends TestCase
 {
-    // Rollback les modifications de la BDD a la fin des tests
-    use RefreshDatabase;
-
     /* ====================================================================
      *                           TESTS AUXILIAIRES
      * ====================================================================
@@ -35,7 +32,7 @@ class EtudiantControllerTest extends TestCase
         ->post(route('etudiants.tests'), $etudiant->toArray())
         ->assertOk(); // Si les inputs optionnels sont null, 404 est renvoye
     }
-    
+
     public function normaliseOptionnelsProvider()
     {
         //[string $clefModifiee, $nouvelleValeur]
@@ -64,7 +61,7 @@ class EtudiantControllerTest extends TestCase
             $response->assertSessionHasErrors($clefModifiee)
             ->assertRedirect($routeSource);
         }
-        else 
+        else
         {
             $response->assertSessionDoesntHaveErrors()
             ->assertRedirect('/');
@@ -91,7 +88,7 @@ class EtudiantControllerTest extends TestCase
             'Mobilite bool'      => [FALSE, Etudiant::COL_MOBILITE, FALSE],
             'Mobilite 1'         => [FALSE, Etudiant::COL_MOBILITE, 1],
             'Mobilite 0'         => [FALSE, Etudiant::COL_MOBILITE, 0],
-            
+
             // Echecs
             'Nom null'             => [TRUE, Etudiant::COL_NOM, null],
             'Prenom null'          => [TRUE, Etudiant::COL_PRENOM, null],
@@ -121,20 +118,20 @@ class EtudiantControllerTest extends TestCase
         $id;
         switch($idCase)
         {
-            case 0: 
-                $id = $etudiant->id; 
+            case 0:
+                $id = $etudiant->id;
             break;
 
-            case 1: 
-                $id = "$etudiant->id"; 
+            case 1:
+                $id = "$etudiant->id";
             break;
 
-            case 2: 
-                $id = -1; 
+            case 2:
+                $id = -1;
             break;
 
-            case 3: 
-                $id = null; 
+            case 3:
+                $id = null;
             break;
         }
 
@@ -185,13 +182,13 @@ class EtudiantControllerTest extends TestCase
 
         foreach($this->getAttributsModele() as $attribut)
         {
-            if($attribut !== 'id') 
+            if($attribut !== 'id')
             {
                 $response->assertSee("name=\"$attribut\"");
             }
         }
     }
-    
+
     /**
      * @depends testValiderForm
      */
@@ -287,8 +284,8 @@ class EtudiantControllerTest extends TestCase
         if(null !== $boolAttendu)
        {
            $etudiant->mobilite = $boolAttendu;
-       } 
-        
+       }
+
         $etudiantTest = Etudiant::find($etudiant->id);
         foreach($this->getAttributsModele() as $a)
         {

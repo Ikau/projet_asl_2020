@@ -15,9 +15,6 @@ use Faker\Factory as Faker;
 
 class UserFacadeTest extends TestCase
 {
-    // Rollback les modifications de la BDD a la fin des tests
-    use RefreshDatabase;
-
     /* ====================================================================
      *                       CONSTRUCTEURS STATIQUES
      * ====================================================================

@@ -13,9 +13,6 @@ use App\Utils\Constantes;
 
 class ContactControllerTest extends TestCase
 {
-    // Rollback les modifications de la BDD a la fin des tests
-    use RefreshDatabase;
-
     /* ====================================================================
      *                           TESTS AUXILIAIRES
      * ====================================================================

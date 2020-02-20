@@ -89,7 +89,7 @@ class FicheRapportController extends AbstractFicheRapportController
         }
 
         // Autorisation
-        $this->verifieAcces(Auth::user(), $ficheRapport);
+        $this->verifieAcces(Auth::user(), 'show', $ficheRapport);
 
         return view('fiches.rapport.show', [
             'titre' => self::VAL_TITRE_SHOW,
@@ -108,7 +108,8 @@ class FicheRapportController extends AbstractFicheRapportController
         }
 
         // Autorisation
-        $this->verifieAcces(Auth::user(), $ficheRapport);
+        Gate::authorize(Constantes::GATE_ROLE_ENSEIGNANT);
+        $this->verifieAcces(Auth::user(), 'edit', $ficheRapport);
 
         return view('fiches.rapport.form', [
             'titre'       => self::VAL_TITRE_EDIT,
@@ -128,7 +129,7 @@ class FicheRapportController extends AbstractFicheRapportController
         }
 
         // Autorisation
-        $this->verifieAcces(Auth::user(), $ficheRapport);
+        $this->verifieAcces(Auth::user(), 'edit', $ficheRapport);
 
         // Validation du form
         $this->validerForm($request);
@@ -286,13 +287,10 @@ class FicheRapportController extends AbstractFicheRapportController
      *
      * @param User $user
      * @param FicheRapport $ficheRapport
-     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    private function verifieAcces(User $user, FicheRapport $ficheRapport)
+    private function verifieAcces(User $user, string $verbe, FicheRapport $ficheRapport)
     {
-        Gate::authorize(Constantes::GATE_ROLE_ENSEIGNANT);
-
-        if( $user->cant('show', $ficheRapport) )
+        if( $user->cant($verbe, $ficheRapport) )
         {
             abort('404');
         }

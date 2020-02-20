@@ -12,7 +12,6 @@
     @foreach($enseignants as $e)
     <option value="{{ $e->id }}" {{ $valeur === $e->id ? 'selected':'' }}>{{ $e->nom }} {{ $e->prenom }}</option>
     @endforeach
-    <option value="-1" {{ $valeur === -1 ? 'selected':'' }}>Aucun</option>
 </select>
 @error($attribut)
 <div class="alert alert-danger">{{ $message }}</div>
