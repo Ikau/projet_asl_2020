@@ -17,7 +17,7 @@ class ReferentControllerTest extends TestCase
     /**
      * Permet de facilement tester les differentes routes
      */
-    public function controleAccesProvider()
+    public function controleGetAccesProvider()
     {
         // [string $route]
         return [

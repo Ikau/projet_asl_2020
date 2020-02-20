@@ -16,9 +16,9 @@ trait TestAuthentification
     /**
      * Un utilisateur non authentifie doit etre renvoye a la page de login
      *
-     * @dataProvider controleAccesProvider
+     * @dataProvider controleGetAccesProvider
      */
-    public function testNonAuth(string $uriRoute, array $args)
+    public function testGetNonAuth(string $uriRoute, array $args)
     {
         $this->assertGuest()
             ->from('/')
@@ -29,9 +29,9 @@ trait TestAuthentification
     /**
      * Un utilisateur qui n'est pas de la classe App\Modeles\Enseignant n'est pas autorise
      *
-     * @dataProvider controleAccesProvider
+     * @dataProvider controleGetAccesProvider
      */
-    public function testNonTypeEnseignant(string $uriRoute, array $args)
+    public function testGetNonTypeEnseignant(string $uriRoute, array $args)
     {
         // Creation d'un utilisateur aleatoire
         $contact = factory(Contact::class)->create();
@@ -49,9 +49,9 @@ trait TestAuthentification
     /**
      * Un utilisateur qui n'a pas le role App\Modeles\Role::VAL_ENSEIGNANT n'est pas autorise
      *
-     * @dataProvider controleAccesProvider
+     * @dataProvider controleGetAccesProvider
      */
-    public function testNonRoleEnseignant(string $uriRoute, array $args)
+    public function testGetNonRoleEnseignant(string $uriRoute, array $args)
     {
         // Creation d'un enseignant aleatoire
         $enseignant = factory(Enseignant::class)->create();

@@ -20,7 +20,7 @@ class ScolariteControllerTest extends TestCase
     /**
      * Un utilisateur non authentifie doit etre renvoye a la page de login
      *
-     * @dataProvider controleAccesProvider
+     * @dataProvider controleGetAccesProvider
      */
     public function testNonAuth(string $uriRoute)
     {
@@ -33,7 +33,7 @@ class ScolariteControllerTest extends TestCase
     /**
      * Un utilisateur authentifie sans le role 'scolarite' n'a pas acces au routes
      *
-     * @dataProvider controleAccesProvider
+     * @dataProvider controleGetAccesProvider
      */
     public function testNonScolarite(string $uriRoute)
     {
@@ -50,7 +50,7 @@ class ScolariteControllerTest extends TestCase
     /**
      * Permet de facilement tester les differentes routes
      */
-    public function controleAccesProvider()
+    public function controleGetAccesProvider()
     {
         // [string $route]
         return [
