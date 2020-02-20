@@ -2,11 +2,9 @@
 
 namespace Tests\Unit\Modeles;
 
-use Illuminate\Support\Facades\Schema;
-use Tests\TestCase;
-
 use App\Modeles\Role;
 use App\Utils\Constantes;
+use Tests\TestCase;
 
 class RoleTest extends TestCase
 {

@@ -2,14 +2,10 @@
 
 namespace Tests\Feature\CRUD;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use App\Http\Controllers\CRUD\EtudiantController;
+use App\Modeles\Etudiant;
 use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
-
-use App\Modeles\Etudiant;
-use App\Http\Controllers\CRUD\EtudiantController;
-use App\Utils\Constantes;
 
 class EtudiantControllerTest extends TestCase
 {

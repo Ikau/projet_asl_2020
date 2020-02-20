@@ -2,17 +2,12 @@
 
 namespace Tests\Feature\CRUD;
 
-use App\Facade\UserFacade;
+use App\Http\Controllers\CRUD\StageController;
 use App\Modeles\Fiches\FicheRapport;
+use App\Modeles\Stage;
 use App\Traits\TestFiches;
-use App\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
-
-use App\Modeles\Stage;
-use App\Http\Controllers\CRUD\StageController;
-use App\Utils\Constantes;
 
 class StageControllerTest extends TestCase
 {

@@ -3,15 +3,12 @@
 namespace Tests\Unit\Modeles;
 
 use App\Facade\UserFacade;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Hash;
-use Tests\TestCase;
-
-use App\User;
 use App\Modeles\Contact;
 use App\Modeles\Enseignant;
-
+use App\User;
 use Faker\Factory as Faker;
+use Illuminate\Support\Facades\Hash;
+use Tests\TestCase;
 
 class UserFacadeTest extends TestCase
 {

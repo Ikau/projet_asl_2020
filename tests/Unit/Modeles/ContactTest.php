@@ -2,13 +2,9 @@
 
 namespace Tests\Unit\Modeles;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Schema;
-use Tests\TestCase;
-
 use App\Modeles\Contact;
 use App\Utils\Constantes;
+use Tests\TestCase;
 
 class ContactTest extends TestCase
 {

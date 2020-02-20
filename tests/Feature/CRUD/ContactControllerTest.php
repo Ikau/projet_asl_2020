@@ -2,14 +2,11 @@
 
 namespace Tests\Feature\CRUD;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use App\Http\Controllers\CRUD\ContactController;
+use App\Modeles\Contact;
+use App\Utils\Constantes;
 use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
-
-use App\Modeles\Contact;
-use App\Http\Controllers\CRUD\ContactController;
-use App\Utils\Constantes;
 
 class ContactControllerTest extends TestCase
 {

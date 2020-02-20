@@ -6,9 +6,7 @@ use App\Abstracts\Controllers\Enseignant\AbstractReferentController;
 use App\Http\Middleware\VerifieEstEnseignant;
 use App\Interfaces\InformationsNotification;
 use App\Modeles\Stage;
-use App\Utils\Constantes;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 
 class ReferentController extends AbstractReferentController
 {

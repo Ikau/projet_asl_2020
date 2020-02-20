@@ -5,11 +5,8 @@ namespace Tests\Feature\Scolarite;
 use App\Facade\UserFacade;
 use App\Http\Controllers\Scolarite\ScolariteController;
 use App\Modeles\Contact;
-use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-
-use App\Http\Controllers\Enseignant\ReferentController;
 
 class ScolariteControllerTest extends TestCase
 {

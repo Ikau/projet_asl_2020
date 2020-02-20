@@ -2,16 +2,12 @@
 
 namespace Tests\Feature\CRUD;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use App\Http\Controllers\CRUD\EnseignantController;
+use App\Modeles\Departement;
+use App\Modeles\Enseignant;
+use App\Modeles\Option;
 use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
-
-use App\Modeles\Enseignant;
-use App\Modeles\Departement;
-use App\Modeles\Option;
-use App\Http\Controllers\CRUD\EnseignantController;
-use App\Utils\Constantes;
 
 class EnseignantControllerTest extends TestCase
 {

@@ -2,11 +2,9 @@
 
 namespace Tests\Feature\CRUD;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
-
 use App\Http\Controllers\Enseignant\ReferentController;
 use App\Traits\TestAuthentification;
+use Tests\TestCase;
 
 class ReferentControllerTest extends TestCase
 {

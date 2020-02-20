@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Abstracts\Controllers\AbstractAdminController;
 use App\Http\Middleware\VerifieEstAdministrateur;
-use App\Utils\Constantes;
-use Illuminate\Support\Facades\Gate;
 
 class AdminController extends AbstractAdminController
 {

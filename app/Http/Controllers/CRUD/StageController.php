@@ -11,7 +11,6 @@ use App\Modeles\Stage;
 use App\Utils\Constantes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Validation\Rule;
 

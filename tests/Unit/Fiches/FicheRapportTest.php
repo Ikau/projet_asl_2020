@@ -3,13 +3,9 @@
 namespace Tests\Unit\Modeles\Fiches;
 
 
-use App\Traits\TestFiches;
-use Faker\Generator as Faker;
-
 use App\Modeles\Fiches\FicheRapport;
-use App\Modeles\Fiches\FicheSynthese;
-use App\Modeles\Fiches\ModeleNotation;
 use App\Modeles\Stage;
+use App\Traits\TestFiches;
 use App\Utils\Constantes;
 use Tests\TestCase;
 

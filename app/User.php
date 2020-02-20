@@ -6,7 +6,6 @@ use App\Interfaces\Authentification;
 use App\Interfaces\Utilisateur;
 use App\Modeles\Privilege;
 use App\Modeles\Role;
-use App\Utils\Constantes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;

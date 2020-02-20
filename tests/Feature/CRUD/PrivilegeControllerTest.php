@@ -2,16 +2,12 @@
 
 namespace Tests\Feature\CRUD;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Schema;
-use Tests\TestCase;
-
-use App\User;
+use App\Http\Controllers\CRUD\PrivilegeController;
 use App\Modeles\Contact;
 use App\Modeles\Privilege;
-use App\Http\Controllers\CRUD\PrivilegeController;
-use App\Utils\Constantes;
+use App\User;
+use Illuminate\Support\Facades\Schema;
+use Tests\TestCase;
 
 class PrivilegeControllerTest extends TestCase
 {

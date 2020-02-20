@@ -5,10 +5,8 @@ namespace Tests\Unit\Modeles\Fiches;
 use App\Facade\TestFacade;
 use App\Http\Controllers\Fiches\FicheRapportController;
 use App\Modeles\Fiches\FicheRapport;
-use App\Traits\TestFiches;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Traits\TestAuthentification;
-use Illuminate\Support\Facades\Schema;
+use App\Traits\TestFiches;
 use Tests\TestCase;
 
 

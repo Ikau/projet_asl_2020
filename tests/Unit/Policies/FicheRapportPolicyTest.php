@@ -3,7 +3,6 @@
 use App\Facade\UserFacade;
 use App\Modeles\Enseignant;
 use App\Modeles\Fiches\FicheRapport;
-use App\User;
 use Tests\TestCase;
 
 class FicheRapportPolicyTest extends TestCase

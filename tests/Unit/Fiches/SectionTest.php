@@ -3,10 +3,9 @@
 namespace Tests\Unit\Modeles;
 
 
-use Faker\Factory as Faker;
-
 use App\Modeles\Fiches\Section;
 use App\Utils\Constantes;
+use Faker\Factory as Faker;
 use Tests\TestCase;
 
 class SectionTest extends TestCase

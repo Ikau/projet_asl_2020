@@ -5,11 +5,8 @@ namespace Tests\Unit\Policies;
 use App\Facade\UserFacade;
 use App\Modeles\Departement;
 use App\Modeles\Enseignant;
-use App\Modeles\Etudiant;
 use App\Modeles\Option;
 use App\Modeles\Stage;
-use App\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class StagePolicyTest extends TestCase

@@ -2,16 +2,9 @@
 
 namespace Tests\Unit\Modeles;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Eloquent\Collection;
-use Tests\TestCase;
-
 use App\Modeles\Enseignant;
-use App\Modeles\Option;
-use App\ModeleS\Departement;
 use App\Utils\Constantes;
+use Tests\TestCase;
 
 class EnseignantTest extends TestCase
 {

@@ -2,14 +2,9 @@
 
 namespace Tests\Unit\Modeles;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Schema;
-use Tests\TestCase;
-
 use App\Modeles\Stage;
 use App\Utils\Constantes;
+use Tests\TestCase;
 
 class StageTest extends TestCase
 {

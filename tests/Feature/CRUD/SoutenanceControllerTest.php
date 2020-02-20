@@ -2,14 +2,10 @@
 
 namespace Tests\Feature\CRUD;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use App\Http\Controllers\CRUD\SoutenanceController;
+use App\Modeles\Soutenance;
 use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
-
-use App\Modeles\Soutenance;
-use App\Http\Controllers\CRUD\SoutenanceController;
-use App\Utils\Constantes;
 
 class SoutenanceControllerTest extends TestCase
 {

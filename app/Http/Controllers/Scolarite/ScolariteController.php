@@ -6,8 +6,6 @@ use App\Abstracts\Controllers\Scolarite\AbstractScolariteController;
 use App\Http\Middleware\VerifieEstScolarite;
 use App\Modeles\Departement;
 use App\Modeles\Stage;
-use App\Utils\Constantes;
-use Illuminate\Support\Facades\Gate;
 
 class ScolariteController extends AbstractScolariteController
 {

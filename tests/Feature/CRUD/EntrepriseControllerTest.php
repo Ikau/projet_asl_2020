@@ -2,14 +2,10 @@
 
 namespace Tests\Feature\CRUD;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use App\Http\Controllers\CRUD\EntrepriseController;
+use App\Modeles\Entreprise;
 use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
-
-use App\Modeles\Entreprise;
-use App\Http\Controllers\CRUD\EntrepriseController;
-use App\Utils\Constantes;
 
 class EntrepriseControllerTest extends TestCase
 {

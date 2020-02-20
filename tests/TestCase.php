@@ -5,16 +5,12 @@ namespace Tests;
 use App\Facade\UserFacade;
 use App\Modeles\Contact;
 use App\Modeles\Enseignant;
-use App\Modeles\Fiches\FicheRapport;
 use App\Modeles\Role;
-
 use App\Modeles\Stage;
 use App\User;
-
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
-use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Support\Facades\Schema;
 
 abstract class TestCase extends BaseTestCase

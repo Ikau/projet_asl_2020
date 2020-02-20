@@ -9,9 +9,7 @@ use App\Modeles\Option;
 use App\Modeles\Stage;
 use App\Notifications\AffectationAssignee;
 use App\User;
-use App\Utils\Constantes;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 
 class ResponsableController extends AbstractResponsableController
 {

@@ -2,16 +2,11 @@
 
 namespace Tests\Feature\CRUD;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\Hash;
-use Tests\TestCase;
-
-use App\User;
-use App\Modeles\Enseignant;
 use App\Http\Controllers\CRUD\UserController;
-use App\Utils\Constantes;
+use App\Modeles\Enseignant;
+use App\User;
+use Illuminate\Support\Facades\Schema;
+use Tests\TestCase;
 
 
 class UserControllerTest extends TestCase
