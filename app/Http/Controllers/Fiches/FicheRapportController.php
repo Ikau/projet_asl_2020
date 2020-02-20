@@ -129,7 +129,7 @@ class FicheRapportController extends AbstractFicheRapportController
         }
 
         // Autorisation
-        $this->verifieAcces(Auth::user(), $ficheRapport);
+        $this->verifieAcces(Auth::user(), 'edit', $ficheRapport);
 
         // Validation du form
         $this->validerForm($request);

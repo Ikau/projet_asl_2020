@@ -2,8 +2,10 @@
 
 namespace Tests\Feature\CRUD;
 
+use App\Facade\UserFacade;
 use App\Modeles\Fiches\FicheRapport;
 use App\Traits\TestFiches;
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
@@ -222,13 +224,17 @@ class StageControllerTest extends TestCase
      */
     public function testStore()
     {
+        // Creation d'un utilisateur aleatoire
+        $user = $this->creerUserRoleEnseignant();
+
         $stage = factory(Stage::class)->make();
 
         // Verification de la route
-        $response = $this->followingRedirects()
+        $response = $this->actingAs($user)
+        ->followingRedirects()
         ->from(route('stages.create'))
         ->post(route('stages.store'), $stage->toArray())
-        ->assertViewIs('admin.modeles.stage.index')
+        ->assertViewIs('enseignant.commun.index')
         ->assertSee('Stage ajoute !');
 
         // Verification de l'insertion
