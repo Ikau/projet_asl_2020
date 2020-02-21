@@ -33,8 +33,13 @@ $factory->define(Contact::class, function (Faker $faker)
 
 $factory->define(Enseignant::class, function (Faker $faker)
 {
+    // Recuperation des ids
     $idsDepartement = DB::table(Departement::NOM_TABLE)->pluck('id');
     $idsOption      = DB::table(Option::NOM_TABLE)->pluck('id');
+
+    // Ajout de la valeur null
+    $idsDepartement[] = null;
+    $idsOption[]      = null;
 
     return [
         Enseignant::COL_NOM                        => $faker->lastName,

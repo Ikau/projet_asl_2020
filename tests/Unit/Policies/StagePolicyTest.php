@@ -53,14 +53,10 @@ class StagePolicyTest extends TestCase
         // Creation d'un stage
         $stage = factory(Stage::class)->create();
 
-        // Recuperation des ID nul
-        $idOptionNul      = Option::where(Option::COL_INTITULE, '=', Option::VAL_AUCUN)->first()->id;
-        $idDepartementNul = Departement::where(Departement::COL_INTITULE, '=', Departement::VAL_AUCUN)->first()->id;
-
         // Creation d'un user enseignant basique
         $enseignant = factory(Enseignant::class)->create();
-        $enseignant[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID] = $idOptionNul;
-        $enseignant[Enseignant::COL_RESPONSABLE_OPTION_ID]      = $idDepartementNul;
+        $enseignant[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID] = null;
+        $enseignant[Enseignant::COL_RESPONSABLE_OPTION_ID]      = null;
         $enseignant->save();
 
         $user = UserFacade::creerDepuisEnseignant($enseignant->id, 'azerty');

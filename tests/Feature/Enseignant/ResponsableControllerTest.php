@@ -109,7 +109,6 @@ class ResponsableControllerTest extends TestCase
         $stage->referent()->associate($user->identite);
         $stage->save();
 
-
         // Routeage ok
         $this->actingAs($user)
             ->followingRedirects()

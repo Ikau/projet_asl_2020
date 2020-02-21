@@ -22,16 +22,12 @@ class StagePolicy
      */
     public function validerAffectation(User $user, Stage $stage)
     {
-        // Recuperation des ID nul
-        $idOptionNul      = Option::where(Option::COL_INTITULE, '=', Option::VAL_AUCUN)->first()->id;
-        $idDepartementNul = Departement::where(Departement::COL_INTITULE, '=', Departement::VAL_AUCUN)->first()->id;
-
-        if($idOptionNul !== $user->identite[Enseignant::COL_RESPONSABLE_OPTION_ID]
+        if(null !== $user->identite[Enseignant::COL_RESPONSABLE_OPTION_ID]
         && $stage->etudiant->option->id === $user->identite[Enseignant::COL_RESPONSABLE_OPTION_ID])
         {
             return true;
         }
-        else if($idDepartementNul !== $user->identite[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID]
+        else if(null !== $user->identite[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID]
         && $stage->etudiant->departement->id === $user->identite[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID])
         {
             return true;
