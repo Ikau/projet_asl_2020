@@ -40,7 +40,6 @@ class EnseignantControllerTest extends TestCase
             'Resp departement null'     => [Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, null],
             'Resp option null'          => [Enseignant::COL_RESPONSABLE_OPTION_ID, null],
 
-
             'Resp departement numerique' => [Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, '1'],
             'Resp option numerique'      => [Enseignant::COL_RESPONSABLE_OPTION_ID, '1'],
 
@@ -112,7 +111,7 @@ class EnseignantControllerTest extends TestCase
     public function testValiderModele(int $casId, int $statutAttendu)
     {
         $enseignant = factory(Enseignant::class)->create();
-        $id;
+        $id = -1;
         switch($casId)
         {
             case 0:
@@ -206,9 +205,11 @@ class EnseignantControllerTest extends TestCase
      */
     public function testStore()
     {
+        // Enseignant aleatoire
         $enseignant = factory(Enseignant::class)->make();
 
-        $response = $this->from(route('enseignants.create'))
+        // Routage OK
+        $this->from(route('enseignants.create'))
         ->post(route('enseignants.store'), $enseignant->toArray())
         ->assertRedirect(route('enseignants.index'));
 
@@ -226,6 +227,7 @@ class EnseignantControllerTest extends TestCase
         $enseignantTest = Enseignant::where($arrayWhere)->first();
         $this->assertNotNull($enseignantTest);
 
+        // Integrite des donnees
         foreach($this->getAttributsModele() as $attribut)
         {
             if('id' !== $attribut)
@@ -277,7 +279,7 @@ class EnseignantControllerTest extends TestCase
      * @depends testValiderModele
      * @dataProvider updateProvider
      */
-    public function testUpdate(string $clefModifiee, $nouvelleValeur, $valeurDefaut)
+    public function testUpdate(string $clefModifiee, $nouvelleValeur)
     {
         $enseignantSource                = factory(Enseignant::class)->create();
         $enseignantSource[$clefModifiee] = $nouvelleValeur;
@@ -286,18 +288,6 @@ class EnseignantControllerTest extends TestCase
         $response = $this->from(route('enseignants.edit', $enseignantSource->id))
         ->patch(route('enseignants.update', $enseignantSource->id), $enseignantSource->toArray())
         ->assertRedirect(route('enseignants.index'));
-
-        // Definition du defaut si necessaire
-        if('departement' === $valeurDefaut)
-        {
-            $idAucunDepartement = Departement::where(Departement::COL_INTITULE, 'Aucun')->first()->id;
-            $enseignantSource[$clefModifiee] = $idAucunDepartement;
-        }
-        else if('option' === $valeurDefaut)
-        {
-            $idAucuneOption = Option::where(Option::COL_INTITULE, 'Aucune')->first()->id;
-            $enseignantSource[$clefModifiee] = $idAucuneOption;
-        }
 
         // Verification de la MAJ
         $enseignantMaj = Enseignant::find($enseignantSource->id);
@@ -310,16 +300,16 @@ class EnseignantControllerTest extends TestCase
 
     public function updateProvider()
     {
-        //[string $clefModifiee, $nouvelleValeur, $valeurDefaut]
+        //[string $clefModifiee, $nouvelleValeur]
         return [
-            'Nom valide'         => [Enseignant::COL_NOM, 'nouveau', null],
-            'Prenom valide'      => [Enseignant::COL_PRENOM, 'nouveau', null],
-            'Mail valide'        => [Enseignant::COL_EMAIL, 'nouveau@example.com', null],
-            'Departement valide' => [Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, 1, null],
-            'Option valide'      => [Enseignant::COL_RESPONSABLE_OPTION_ID, 1, null],
+            'Nom valide'         => [Enseignant::COL_NOM, 'nouveau'],
+            'Prenom valide'      => [Enseignant::COL_PRENOM, 'nouveau'],
+            'Mail valide'        => [Enseignant::COL_EMAIL, 'nouveau@example.com'],
+            'Departement valide' => [Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, 1],
+            'Option valide'      => [Enseignant::COL_RESPONSABLE_OPTION_ID, 1],
 
-            'Departement null' => [Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, null, 'departement'],
-            'Option null'      => [Enseignant::COL_RESPONSABLE_OPTION_ID, null, 'option'],
+            'Departement null' => [Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, null],
+            'Option null'      => [Enseignant::COL_RESPONSABLE_OPTION_ID, null],
         ];
     }
 

@@ -92,6 +92,7 @@ class EnseignantController extends AbstractControllerCRUD
     public function update(Request $request, $id)
     {
         $this->validerForm($request);
+
         $enseignant = $this->validerModele($id);
         if(null === $enseignant)
         {
@@ -124,8 +125,9 @@ class EnseignantController extends AbstractControllerCRUD
             case 'normaliseInputsOptionnels':
                 $this->normaliseInputsOptionnels($request);
 
-                if(! is_numeric($request[Enseignant::COL_RESPONSABLE_OPTION_ID])
-                || ! is_numeric($request[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID]))
+
+                if((null !== $request[Enseignant::COL_RESPONSABLE_OPTION_ID] && ! is_numeric($request[Enseignant::COL_RESPONSABLE_OPTION_ID]))
+                || (null !== $request[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID] && ! is_numeric($request[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID])))
                 {
                     abort('404');
                 }
@@ -158,27 +160,21 @@ class EnseignantController extends AbstractControllerCRUD
     {
 
         // Departement
-        $idsDepartement       = Departement::all()->pluck('id');
-        $idDepartementRequest = $request[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID];
+        $idDepartement = $request[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID];
         if($request->missing(Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID)
-        || null === $idDepartementRequest
-        || ! is_numeric($idDepartementRequest)
-        || ! $idsDepartement->contains($idDepartementRequest))
+        || null === $idDepartement
+        || ! is_numeric($idDepartement))
         {
-            $idAucunDepartement = Departement::where(Departement::COL_INTITULE, 'Aucun')->first()->id;
-            $request[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID] = $idAucunDepartement;
+            $request[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID] = NULL;
         }
 
         // Option
-        $idsOption       = Option::all()->pluck('id');
-        $idOptionRequest = $request[Enseignant::COL_RESPONSABLE_OPTION_ID];
+        $idOption = $request[Enseignant::COL_RESPONSABLE_OPTION_ID];
         if($request->missing(Enseignant::COL_RESPONSABLE_OPTION_ID)
-        || null === $idOptionRequest
-        || ! is_numeric($idOptionRequest)
-        || ! $idsOption->contains($idOptionRequest))
+        || null === $idOption
+        || ! is_numeric($idOption))
         {
-            $idAucuneOption = Option::where(Option::COL_INTITULE, 'Aucune')->first()->id;
-            $request[Enseignant::COL_RESPONSABLE_OPTION_ID] = $idAucuneOption;
+            $request[Enseignant::COL_RESPONSABLE_OPTION_ID] = NULL;
         }
     }
 
@@ -191,16 +187,10 @@ class EnseignantController extends AbstractControllerCRUD
             Enseignant::COL_NOM    => ['required', 'string'],
             Enseignant::COL_PRENOM => ['required', 'string'],
             Enseignant::COL_EMAIL  => ['required', 'email'],
-            Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID => [
-                'nullable',
-                'integer',
-                Rule::in(Departement::all()->pluck('id'))
-            ],
-            Enseignant::COL_RESPONSABLE_OPTION_ID => [
-                'nullable',
-                'integer',
-                Rule::in(Option::all()->pluck('id'))
-            ]
+            Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID => ['nullable', 'integer',
+                'exists:'.Departement::NOM_TABLE.',id'],
+            Enseignant::COL_RESPONSABLE_OPTION_ID => ['nullable', 'integer',
+                'exists:'.Option::NOM_TABLE.',id']
         ]);
 
         $this->normaliseInputsOptionnels($request);

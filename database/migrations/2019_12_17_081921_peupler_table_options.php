@@ -25,7 +25,7 @@ class PeuplerTableOptions extends Migration
 
         DB::table(Option::NOM_TABLE)->insert([
             [
-                Option::COL_INTITULE => 'Aucune',
+                Option::COL_INTITULE       => 'Aucune',
                 Option::COL_DEPARTEMENT_ID => $idDepartementVide
             ],
         ]);
@@ -40,7 +40,7 @@ class PeuplerTableOptions extends Migration
         {
             DB::table(Option::NOM_TABLE)->insert([
                 [
-                    Option::COL_INTITULE => $option,
+                    Option::COL_INTITULE       => $option,
                     Option::COL_DEPARTEMENT_ID => $idDepartementMRI
                 ]
             ]);
@@ -51,12 +51,12 @@ class PeuplerTableOptions extends Migration
         ->where(Departement::COL_INTITULE, 'STI')
         ->first()
         ->id;
-        
+
         foreach(['2SU', '4AS', 'ASL'] as $option)
         {
             DB::table(Option::NOM_TABLE)->insert([
                 [
-                    Option::COL_INTITULE => $option,
+                    Option::COL_INTITULE       => $option,
                     Option::COL_DEPARTEMENT_ID => $idDepartementSTI
                 ]
             ]);

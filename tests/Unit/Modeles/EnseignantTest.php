@@ -22,8 +22,8 @@ class EnseignantTest extends TestCase
             Enseignant::COL_PRENOM                     => Constantes::STRING_VIDE,
             Enseignant::COL_EMAIL                      => Constantes::STRING_VIDE,
 
-            Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID => Constantes::ID_VIDE,
-            Enseignant::COL_RESPONSABLE_OPTION_ID      => Constantes::ID_VIDE
+            Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID => NULL,
+            Enseignant::COL_RESPONSABLE_OPTION_ID      => NULL
         ];
 
         $this->verifieIntegriteConstructeurEloquent($attributsTests, $enseignant, Enseignant::NOM_TABLE);

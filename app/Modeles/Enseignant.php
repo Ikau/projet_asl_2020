@@ -35,16 +35,16 @@ class Enseignant extends AbstractEnseignant implements CompteUser, ModeleParDefa
     const NOM_TABLE = 'enseignants';
 
     /**
+     * @var string Nom de la table associee au modele 'Enseignant'
+     */
+    protected $table = self::NOM_TABLE;
+
+    /**
      * Indique a Laravel de ne pas creer ni de gerer les tables 'created_at' et 'updated_at'
      *
      * @var bool Gestion des timestamps
      */
     public $timestamps = false;
-
-    /**
-     * @var string Nom de la table associee au modele 'Enseignant'
-     */
-    protected $table = Enseignant::NOM_TABLE;
 
     /**
      * @var array[string] Liste des attributs a assigner manuellement
@@ -63,8 +63,8 @@ class Enseignant extends AbstractEnseignant implements CompteUser, ModeleParDefa
         self::COL_PRENOM                     => Constantes::STRING_VIDE,
         self::COL_EMAIL                      => Constantes::STRING_VIDE,
 
-        self::COL_RESPONSABLE_DEPARTEMENT_ID => Constantes::ID_VIDE,
-        self::COL_RESPONSABLE_OPTION_ID      => Constantes::ID_VIDE
+        self::COL_RESPONSABLE_DEPARTEMENT_ID => NULL,
+        self::COL_RESPONSABLE_OPTION_ID      => NULL
     ];
 
     /* ====================================================================
