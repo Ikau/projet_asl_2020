@@ -1,4 +1,4 @@
-{{-- 
+{{--
     Tag <select> affichant specifiquement les departements de l'INSA
 
     Variables a definir depuis la vue appelante :
@@ -7,13 +7,15 @@
         'valeur'       : la valeur de l'input le cas echeant
         'departements' : collection de App\Modeles\Departement
 --}}
-<label for="{{ $attribut }}">{{ $intitule }}</label>
-<select name="{{ $attribut }}" id="{{ $attribut }}" value="{{ $valeur }}" >
-    {{-- Liste les departements existants --}}
-    @include('includes.foreach.departements', [
-        'departements' => $departements
-    ])
-</select>
-@error($attribut)
-<div class="alert alert-danger">{{ $message }}</div>
-@enderror
+<div>
+    <label for="{{ $attribut }}">{{ $intitule }}</label>
+    <select name="{{ $attribut }}" id="{{ $attribut }}">
+        <option value="" {{ $valeur === null ? 'selected':'' }} >Aucun</option>
+        @foreach($departements as $departement)
+            <option value="{{ $departement->id }}" {{ $valeur === $departement->id ? 'selected':'' }}>{{ $departement->intitule }}</option>
+        @endforeach
+    </select>
+    @error($attribut)
+    <div class="alert alert-danger">{{ $message }}</div>
+    @enderror
+</div>

@@ -189,13 +189,13 @@ class EnseignantControllerTest extends TestCase
         foreach(Departement::all() as $departement)
         {
             $response->assertSee("<optgroup label=\"$departement->intitule\">")
-            ->assertSee("<option value=\"$departement->id\">$departement->intitule</option>");
+            ->assertSee($departement->intitule);
         }
 
         // Verification des options
         foreach(Option::all() as $option)
         {
-            $response->assertSee("<option value=\"$option->id\">$option->intitule</option>");
+            $response->assertSee($option->intitule);
         }
     }
 
