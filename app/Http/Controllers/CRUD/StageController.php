@@ -48,7 +48,7 @@ class StageController extends AbstractControllerCRUD
                 if( ! is_bool($request[Stage::COL_CONVENTION_ENVOYEE])
                 ||  ! is_bool($request[Stage::COL_CONVENTION_SIGNEE])
                 ||  ! is_string($request[Stage::COL_MOYEN_RECHERCHE])
-                ||  ! is_integer($request[Stage::COL_REFERENT_ID]) )
+                ||  (null !== $request[Stage::COL_REFERENT_ID] && ! is_integer($request[Stage::COL_REFERENT_ID])) )
                 {
                     abort('404');
                 }
@@ -294,11 +294,11 @@ class StageController extends AbstractControllerCRUD
         }
 
         // Referent
-        $referent = Enseignant::find($request[Stage::COL_REFERENT_ID]);
+        $idReferent = $request[Stage::COL_REFERENT_ID];
         if($request->missing(Stage::COL_REFERENT_ID)
-        || null === $referent)
+        || ! is_numeric($idReferent))
         {
-            $request[Stage::COL_REFERENT_ID] = -1;
+            $request[Stage::COL_REFERENT_ID] = null;
         }
     }
 
@@ -325,7 +325,7 @@ class StageController extends AbstractControllerCRUD
             Stage::COL_CONVENTION_ENVOYEE => ['sometimes', 'nullable', Rule::in(['on', FALSE, TRUE, 0, 1])],
             Stage::COL_CONVENTION_SIGNEE  => ['sometimes', 'nullable', Rule::in(['on', FALSE, TRUE, 0, 1])],
             Stage::COL_MOYEN_RECHERCHE    => ['sometimes', 'nullable', 'string'],
-            Stage::COL_REFERENT_ID        => ['sometimes', 'nullable', 'integer', 'min:-1'],
+            Stage::COL_REFERENT_ID        => ['sometimes', 'nullable', 'exists:'.Enseignant::NOM_TABLE.',id'],
         ]);
 
         $this->normaliseInputsOptionnels($request);

@@ -40,7 +40,11 @@
                     <td>{{ $stage->annee_etudiant }}</td>
                     <td><span class="text-uppercase">{{ $stage->etudiant->nom }}</span> {{ $stage->etudiant->prenom }}</td>
                     <td>{{ $stage->etudiant->promotion }}</td>
-                    <td><span class="text-uppercase">{{ $stage->referent->nom }}</span> {{ $stage->referent->prenom }}</td>
+                    <td>
+                        @if(null !== $stage->referent)
+                        <span class="text-uppercase">{{ $stage->referent->nom }}</span> {{ $stage->referent->prenom }}
+                        @endif
+                    </td>
                     <td>...</td>
                     <td>
                         @include('includes.table.fiche', [

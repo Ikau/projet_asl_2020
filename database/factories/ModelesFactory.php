@@ -18,6 +18,9 @@ use App\Modeles\Soutenance;
 
 use App\Utils\Constantes;
 
+/**
+ * Modele factory pour un contact INSA ou autre
+ */
 $factory->define(Contact::class, function (Faker $faker)
 {
     return [
@@ -31,6 +34,9 @@ $factory->define(Contact::class, function (Faker $faker)
     ];
 });
 
+/**
+ * Modele factory pour un enseignant avec ou sans responsabilite
+ */
 $factory->define(Enseignant::class, function (Faker $faker)
 {
     // Recuperation des ids
@@ -50,6 +56,9 @@ $factory->define(Enseignant::class, function (Faker $faker)
     ];
 });
 
+/**
+ * Modele factory pour un etudiant
+ */
 $factory->define(Etudiant::class, function (Faker $faker)
 {
     $idsDepartement = DB::table(Departement::NOM_TABLE)->pluck('id');
@@ -67,6 +76,9 @@ $factory->define(Etudiant::class, function (Faker $faker)
     ];
 });
 
+/**
+ * Modele factory pour un privilege
+ */
 $factory->define(Entreprise::class, function (Faker $faker)
 {
     return [
@@ -80,6 +92,9 @@ $factory->define(Entreprise::class, function (Faker $faker)
     ];
 });
 
+/**
+ * Modele factory pour un privilege
+ */
 $factory->define(Privilege::class, function (Faker $faker)
 {
     return [
@@ -87,14 +102,22 @@ $factory->define(Privilege::class, function (Faker $faker)
     ];
 });
 
+/**
+ * Modele factory pour un stage avec ou sans referent
+ */
 $factory->define(Stage::class, function (Faker $faker)
 {
-    // Creation des entites auxiliaires
-    $idEtudiant   = factory(Etudiant::class)->create();
+    // Creation d'un etudiant
+    $idEtudiant = factory(Etudiant::class)->create()->id;
 
-    $enseignant = factory(Enseignant::class)->create();
-    UserFacade::creerDepuisEnseignant($enseignant->id, 'azerty');
-
+    // Creation ou non d'un referent
+    $idEnseignant = null;
+    if($faker->randomElement([TRUE, FALSE]))
+    {
+        $enseignant = factory(Enseignant::class)->create();
+        UserFacade::creerDepuisEnseignant($enseignant->id, 'azerty');
+        $idEnseignant = $enseignant->id;
+    }
 
     return [
         Stage::COL_ANNEE              => $faker->randomElement([4, 5]),
@@ -113,11 +136,14 @@ $factory->define(Stage::class, function (Faker $faker)
         Stage::COL_RESUME             => $faker->text,
 
         // Clefs etrangeres
-        Stage::COL_REFERENT_ID   => $enseignant->id,
+        Stage::COL_REFERENT_ID   => $idEnseignant,
         Stage::COL_ETUDIANT_ID   => $idEtudiant
     ];
 });
 
+/**
+ * Modele factory pour creer une soutenance
+ */
 $factory->define(Soutenance::class, function (Faker $faker)
 {
     //$idsContact     = DB::table(Contact::NOM_TABLE)->pluck('id');

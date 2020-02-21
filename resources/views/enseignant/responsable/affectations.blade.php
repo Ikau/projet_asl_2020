@@ -60,7 +60,11 @@
                             <span class="text-success">Validée</span>
                         @endif
                     </td>
-                    <td>{{ $stage->referent->prenom }} {{ $stage->referent->nom }}</td>
+                    <td>
+                        @if(null !== $stage->referent)
+                        {{ $stage->referent->prenom }} {{ $stage->referent->nom }}
+                        @endif
+                    </td>
                     <td> {{ \Faker\Factory::create()->company }} </td>
                     <td>{{ $stage->lieu }}</td>
                 </tr>
