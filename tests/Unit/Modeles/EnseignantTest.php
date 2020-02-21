@@ -18,12 +18,9 @@ class EnseignantTest extends TestCase
         $enseignant = new Enseignant();
 
         $attributsTests = [
-            Enseignant::COL_NOM                        => Constantes::STRING_VIDE,
-            Enseignant::COL_PRENOM                     => Constantes::STRING_VIDE,
-            Enseignant::COL_EMAIL                      => Constantes::STRING_VIDE,
-
-            Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID => NULL,
-            Enseignant::COL_RESPONSABLE_OPTION_ID      => NULL
+            Enseignant::COL_NOM    => Constantes::STRING_VIDE,
+            Enseignant::COL_PRENOM => Constantes::STRING_VIDE,
+            Enseignant::COL_EMAIL  => Constantes::STRING_VIDE,
         ];
 
         $this->verifieIntegriteConstructeurEloquent($attributsTests, $enseignant, Enseignant::NOM_TABLE);

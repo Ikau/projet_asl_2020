@@ -125,11 +125,9 @@ class EnseignantController extends AbstractControllerCRUD
             case 'normaliseInputsOptionnels':
                 $this->normaliseInputsOptionnels($request);
 
-
-                if((null !== $request[Enseignant::COL_RESPONSABLE_OPTION_ID] && ! is_numeric($request[Enseignant::COL_RESPONSABLE_OPTION_ID]))
-                || (null !== $request[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID] && ! is_numeric($request[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID])))
+                if(false) // Il n'y a pas d'arguments optionnels pour l'instant
                 {
-                    abort('404');
+                    abort(404);
                 }
             return redirect('/');
 
@@ -158,24 +156,7 @@ class EnseignantController extends AbstractControllerCRUD
      */
     protected function normaliseInputsOptionnels(Request $request)
     {
-
-        // Departement
-        $idDepartement = $request[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID];
-        if($request->missing(Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID)
-        || null === $idDepartement
-        || ! is_numeric($idDepartement))
-        {
-            $request[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID] = NULL;
-        }
-
-        // Option
-        $idOption = $request[Enseignant::COL_RESPONSABLE_OPTION_ID];
-        if($request->missing(Enseignant::COL_RESPONSABLE_OPTION_ID)
-        || null === $idOption
-        || ! is_numeric($idOption))
-        {
-            $request[Enseignant::COL_RESPONSABLE_OPTION_ID] = NULL;
-        }
+        // Rien pour l'instant
     }
 
     /**
@@ -186,11 +167,7 @@ class EnseignantController extends AbstractControllerCRUD
         $validation = $request->validate([
             Enseignant::COL_NOM    => ['required', 'string'],
             Enseignant::COL_PRENOM => ['required', 'string'],
-            Enseignant::COL_EMAIL  => ['required', 'email'],
-            Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID => ['nullable', 'integer',
-                'exists:'.Departement::NOM_TABLE.',id'],
-            Enseignant::COL_RESPONSABLE_OPTION_ID => ['nullable', 'integer',
-                'exists:'.Option::NOM_TABLE.',id']
+            Enseignant::COL_EMAIL  => ['required', 'email']
         ]);
 
         $this->normaliseInputsOptionnels($request);

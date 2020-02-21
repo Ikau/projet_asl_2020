@@ -8,7 +8,7 @@ use App\Interfaces\ModeleParDefaut;
 use App\User;
 use App\Utils\Constantes;
 
-class Enseignant extends AbstractEnseignant implements CompteUser, ModeleParDefaut
+class Enseignant extends AbstractEnseignant implements CompteUser
 {
 
     /* ====================================================================
@@ -22,12 +22,6 @@ class Enseignant extends AbstractEnseignant implements CompteUser, ModeleParDefa
     const COL_NOM    = 'nom';
     const COL_PRENOM = 'prenom';
     const COL_EMAIL  = 'email';
-
-    /*
-     * Nom des colonnes des clefs etrangeres
-     */
-    const COL_RESPONSABLE_DEPARTEMENT_ID = 'departement_id';
-    const COL_RESPONSABLE_OPTION_ID      = 'option_id';
 
     /**
      * @var string Nom de la table associe au modele 'Enseignant'
@@ -59,12 +53,9 @@ class Enseignant extends AbstractEnseignant implements CompteUser, ModeleParDefa
      * @var array[string]string
      */
     protected $attributes = [
-        self::COL_NOM                        => Constantes::STRING_VIDE,
-        self::COL_PRENOM                     => Constantes::STRING_VIDE,
-        self::COL_EMAIL                      => Constantes::STRING_VIDE,
-
-        self::COL_RESPONSABLE_DEPARTEMENT_ID => NULL,
-        self::COL_RESPONSABLE_OPTION_ID      => NULL
+        self::COL_NOM    => Constantes::STRING_VIDE,
+        self::COL_PRENOM => Constantes::STRING_VIDE,
+        self::COL_EMAIL  => Constantes::STRING_VIDE,
     ];
 
     /* ====================================================================
@@ -81,40 +72,9 @@ class Enseignant extends AbstractEnseignant implements CompteUser, ModeleParDefa
     }
 
     /* ====================================================================
-     *                      INTERFACE 'ModeleParDefaut'
-     * ====================================================================
-     */
-
-    /**
-     * Renvoie l'enseignant vide pour les cas où on ne precise pas de referent
-     */
-    public static function getModeleDefaut()
-    {
-        $idDepartementVide = Departement::where(Departement::COL_INTITULE, '=', Departement::VAL_AUCUN)->first()->id;
-        $idOptionVide      = Option::where(Option::COL_INTITULE, '=', Option::VAL_AUCUN)->first()->id;
-
-        return Enseignant::where([
-            [Enseignant::COL_NOM, '=', '* Aucun'],
-            [Enseignant::COL_PRENOM, '=', ''],
-            [Enseignant::COL_EMAIL, '=', ''],
-            [Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, '=', $idDepartementVide],
-            [Enseignant::COL_RESPONSABLE_OPTION_ID, '=', $idOptionVide]
-        ])->first();
-    }
-
-    /* ====================================================================
      *                             RELATIONS
      * ====================================================================
      */
-
-    /**
-     * Renvoie l'option dont l'enseignant est responsable
-     * @var array[App\Modeles\Option]
-     */
-    public function responsable_option()
-    {
-        return $this->belongsTo(Option::class, Enseignant::COL_RESPONSABLE_OPTION_ID);
-    }
 
     /**
      * Renvoie le departement dont l'enseignant est responsable
@@ -122,7 +82,16 @@ class Enseignant extends AbstractEnseignant implements CompteUser, ModeleParDefa
      */
     public function responsable_departement()
     {
-        return $this->belongsTo(Departement::class, Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID);
+        return $this->hasOne(Departement::class, Departement::COL_RESPONSABLE_ID);
+    }
+
+    /**
+     * Renvoie l'option dont l'enseignant est responsable
+     * @var array[App\Modeles\Option]
+     */
+    public function responsable_option()
+    {
+        return $this->hasOne(Option::class, Option::COL_RESPONSABLE_ID);
     }
 
     /**

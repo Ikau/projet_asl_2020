@@ -39,20 +39,10 @@ $factory->define(Contact::class, function (Faker $faker)
  */
 $factory->define(Enseignant::class, function (Faker $faker)
 {
-    // Recuperation des ids
-    $idsDepartement = DB::table(Departement::NOM_TABLE)->pluck('id');
-    $idsOption      = DB::table(Option::NOM_TABLE)->pluck('id');
-
-    // Ajout de la valeur null
-    $idsDepartement[] = null;
-    $idsOption[]      = null;
-
     return [
-        Enseignant::COL_NOM                        => $faker->lastName,
-        Enseignant::COL_PRENOM                     => $faker->firstname,
-        Enseignant::COL_EMAIL                      => $faker->unique()->safeEmail,
-        Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID => $faker->randomElement($idsDepartement),
-        Enseignant::COL_RESPONSABLE_OPTION_ID      => $faker->randomElement($idsOption)
+        Enseignant::COL_NOM    => $faker->lastName,
+        Enseignant::COL_PRENOM => $faker->firstname,
+        Enseignant::COL_EMAIL  => $faker->unique()->safeEmail
     ];
 });
 

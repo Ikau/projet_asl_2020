@@ -49,7 +49,8 @@ class PeuplerTableOptions extends Migration
             DB::table(Option::NOM_TABLE)->insert([
                 [
                     Option::COL_INTITULE       => $option,
-                    Option::COL_DEPARTEMENT_ID => $idDepartementMRI
+                    Option::COL_DEPARTEMENT_ID => $idDepartementMRI,
+                    Option::COL_RESPONSABLE_ID => null
                 ]
             ]);
         }
@@ -67,7 +68,8 @@ class PeuplerTableOptions extends Migration
             DB::table(Option::NOM_TABLE)->insert([
                 [
                     Option::COL_INTITULE       => $option,
-                    Option::COL_DEPARTEMENT_ID => $idDepartementSTI
+                    Option::COL_DEPARTEMENT_ID => $idDepartementSTI,
+                    Option::COL_RESPONSABLE_ID => null
                 ]
             ]);
         }

@@ -36,20 +36,10 @@ class EnseignantControllerTest extends TestCase
     {
         //[string $clefModifiee, $nouvelleValeur]
         return [
-            // Success
-            'Resp departement null'     => [Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, null],
-            'Resp option null'          => [Enseignant::COL_RESPONSABLE_OPTION_ID, null],
-
-            'Resp departement numerique' => [Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, '1'],
-            'Resp option numerique'      => [Enseignant::COL_RESPONSABLE_OPTION_ID, '1'],
-
-            'Resp departement non numerique' => [Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, ''],
-            'Resp option non numerique'      => [Enseignant::COL_RESPONSABLE_OPTION_ID, ''],
-
-            'Resp departement invalide' => [Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, -1],
-            'Resp option invalide'      => [Enseignant::COL_RESPONSABLE_OPTION_ID, -1],
+            'Enseignant valide' => ['ok', 'ok']
         ];
     }
+
 
     /**
      * @dataProvider validerFormProvider
@@ -85,22 +75,12 @@ class EnseignantControllerTest extends TestCase
             'Nom valide'         => [FALSE, Enseignant::COL_NOM, 'nom'],
             'Prenom valide'      => [FALSE, Enseignant::COL_PRENOM, 'prenom'],
             'Email valide'       => [FALSE, Enseignant::COL_EMAIL, 'valide@example.com'],
-            'Departement valide' => [FALSE, Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, 1],
-            'Option valide'      => [FALSE, Enseignant::COL_RESPONSABLE_OPTION_ID, 1],
-
-            'Departement non numerique' => [FALSE, Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, ''],
-            'Option non numerique'      => [FALSE, Enseignant::COL_RESPONSABLE_OPTION_ID, ''],
-
-            'Departement null' => [FALSE, Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, null],
-            'Option null'      => [FALSE, Enseignant::COL_RESPONSABLE_OPTION_ID, null],
 
             // Echecs
             'Nom null'         => [TRUE, Enseignant::COL_NOM, null],
             'Prenom null'      => [TRUE, Enseignant::COL_PRENOM, null],
             'Email null'       => [TRUE, Enseignant::COL_EMAIL, null],
 
-            'Departement invalide' => [TRUE, Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, -1],
-            'Option invalide'      => [TRUE, Enseignant::COL_RESPONSABLE_OPTION_ID, -1],
             'Email invalide'       => [TRUE, Enseignant::COL_EMAIL, 'invalideEmail'],
         ];
     }
@@ -305,11 +285,6 @@ class EnseignantControllerTest extends TestCase
             'Nom valide'         => [Enseignant::COL_NOM, 'nouveau'],
             'Prenom valide'      => [Enseignant::COL_PRENOM, 'nouveau'],
             'Mail valide'        => [Enseignant::COL_EMAIL, 'nouveau@example.com'],
-            'Departement valide' => [Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, 1],
-            'Option valide'      => [Enseignant::COL_RESPONSABLE_OPTION_ID, 1],
-
-            'Departement null' => [Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, null],
-            'Option null'      => [Enseignant::COL_RESPONSABLE_OPTION_ID, null],
         ];
     }
 

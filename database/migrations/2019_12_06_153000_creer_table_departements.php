@@ -1,5 +1,6 @@
 <?php
 
+use App\Modeles\Enseignant;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,7 +19,13 @@ class CreerTableDepartements extends Migration
         Schema::create(Departement::NOM_TABLE, function(Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->string(Departement::COL_INTITULE)->nullable();
+            // Colonnes
+            $table->string(Departement::COL_INTITULE);
+
+            // Clefs etrangeres
+            $table->unsignedBigInteger(Departement::COL_RESPONSABLE_ID)->nullable(); // Si aucun responsable n'est determine
+
+            $table->foreign(Departement::COL_RESPONSABLE_ID)->references('id')->on(Enseignant::NOM_TABLE);
         });
     }
 

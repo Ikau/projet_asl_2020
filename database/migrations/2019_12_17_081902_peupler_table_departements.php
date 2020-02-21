@@ -17,8 +17,8 @@ class PeuplerTableDepartements extends Migration
     public function up()
     {
         DB::table(Departement::NOM_TABLE)->insert([
-            [Departement::COL_INTITULE => 'MRI'],
-            [Departement::COL_INTITULE => 'STI']
+            [Departement::COL_INTITULE => 'MRI', Departement::COL_RESPONSABLE_ID => null],
+            [Departement::COL_INTITULE => 'STI', Departement::COL_RESPONSABLE_ID => null]
         ]);
     }
 
@@ -30,6 +30,6 @@ class PeuplerTableDepartements extends Migration
     public function down()
     {
         // Supression brutale
-        DB::table(Departement::NOM_TABLE)->truncate();
+        DB::table(Departement::NOM_TABLE)->delete();
     }
 }

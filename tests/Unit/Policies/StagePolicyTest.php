@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Policies;
 
+use App\Facade\PermissionFacade;
 use App\Facade\UserFacade;
 use App\Modeles\Departement;
 use App\Modeles\Enseignant;
@@ -14,7 +15,7 @@ class StagePolicyTest extends TestCase
     /**
      * @dataProvider validerAffectationProvider
      */
-    public function testValiderAffectationAllow(bool $estOption, $idDivision)
+    public function testValiderAffectationAllow(bool $estOption, $division)
     {
         // Creation d'un stage
         $stage = factory(Stage::class)->create();
@@ -23,23 +24,23 @@ class StagePolicyTest extends TestCase
         $enseignant = factory(Enseignant::class)->create();
         $user       = UserFacade::creerDepuisEnseignant($enseignant->id, 'azerty');
 
-        // On les attache au stage
+        // Pour valider une affectation : l'enseignant doit etre resp de l'option ou du departement du stage
         if($estOption)
         {
-            $stage->etudiant->option->id = $idDivision;
-            $user->identite[Enseignant::COL_RESPONSABLE_OPTION_ID]   = $idDivision;
+            PermissionFacade::remplaceResponsableOption($division->intitule, $enseignant);
+            $stage->etudiant->option()->dissociate();
+            $stage->etudiant->option()->associate($division);
+            $stage->etudiant->save();
 
         }
         else
         {
-            $stage->etudiant->departement->id = $idDivision;
-            $user->identite[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID]   = $idDivision;
-        }
+            PermissionFacade::remplaceResponsableDepartement($division->intitule, $enseignant);
+            $stage->etudiant->departement()->dissociate();
+            $stage->etudiant->departement()->associate($division);
+            $stage->etudiant->save();
 
-        // Sauvegarde des changements
-        $stage->etudiant->save();
-        $enseignant->save();
-        $user->save();
+        }
 
         $this->assertTrue($user->can('validerAffectation', $stage));
         $this->assertFalse($user->cant('validerAffectation', $stage));
@@ -48,15 +49,13 @@ class StagePolicyTest extends TestCase
     /**
      * @dataProvider validerAffectationProvider
      */
-    public function testValiderAffectationDeny(bool $estOption, $idDivision)
+    public function testValiderAffectationDeny(bool $estOption, $division)
     {
         // Creation d'un stage
         $stage = factory(Stage::class)->create();
 
         // Creation d'un user enseignant basique
         $enseignant = factory(Enseignant::class)->create();
-        $enseignant[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID] = null;
-        $enseignant[Enseignant::COL_RESPONSABLE_OPTION_ID]      = null;
         $enseignant->save();
 
         $user = UserFacade::creerDepuisEnseignant($enseignant->id, 'azerty');
@@ -75,19 +74,19 @@ class StagePolicyTest extends TestCase
 
         // Recuperation des donnees
         $departements = Departement::all();
-        $options      = Departement::all();
+        $options      = Option::all();
 
         // Creation de l'array
         foreach($options as $option)
         {
-            $divisions[$option->intitule] = [TRUE, $option->id];
+            $divisions[$option[Option::COL_INTITULE]] = [TRUE, $option];
         }
         foreach($departements as $departement)
         {
-            $divisions[$departement->intitule] = [FALSE, $departement->id];
+            $divisions[$departement[Departement::COL_INTITULE]] = [FALSE, $departement];
         }
 
-        // [bool $estOption, $iddivision]
+        // [bool $estOption, Departement|Option $division]
         return $divisions;
     }
 }

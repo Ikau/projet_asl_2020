@@ -47,16 +47,6 @@ class Option extends AbstractOption implements ArrayValeurs
      *                          BASE DE DONNEES
      * ====================================================================
      */
-    /*
-     * Nom des colonnes dans la base de donnees
-     */
-    const COL_INTITULE       = 'intitule';
-
-    /*
-     * Nom des clefs etrangeres dans la base de donnees
-     */
-    const COL_DEPARTEMENT_ID = 'departement_id';
-
     /**
      * @var string Nom de la table associe au modele 'option'
      */
@@ -66,6 +56,17 @@ class Option extends AbstractOption implements ArrayValeurs
      * @var string Nom de la table associee au modele 'Option'
      */
     protected $table = self::NOM_TABLE;
+
+    /*
+     * Nom des colonnes dans la base de donnees
+     */
+    const COL_INTITULE = 'intitule';
+
+    /*
+     * Nom des clefs etrangeres dans la base de donnees
+     */
+    const COL_DEPARTEMENT_ID = 'departement_id';
+    const COL_RESPONSABLE_ID = 'responsable_id';
 
     /**
      * Indique a Laravel de ne pas creer ni de gerer les tables 'created_at' et 'updated_at'
@@ -90,7 +91,7 @@ class Option extends AbstractOption implements ArrayValeurs
      */
     public function departement()
     {
-        return $this->belongsTo(Departement::class, Option::COL_DEPARTEMENT_ID);
+        return $this->belongsTo(Departement::class, self::COL_DEPARTEMENT_ID);
     }
 
     /**
@@ -108,6 +109,6 @@ class Option extends AbstractOption implements ArrayValeurs
      */
     public function responsable()
     {
-        return $this->hasOne(Etudiant::class, Enseignant::COL_RESPONSABLE_OPTION_ID);
+        return $this->belongsTo(Enseignant::class, self::COL_RESPONSABLE_ID);
     }
 }
