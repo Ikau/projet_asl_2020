@@ -3,7 +3,7 @@
 namespace App\Interfaces;
 
 /**
- * Il y a plusieurs de gerer le controle d'acces avec Laravel : Gates ou Policies.
+ * Il y a plusieurs moyens de gerer le controle d'acces avec Laravel : Gates ou Policies.
  * Cette interface permet d'expliciter les differentes regles 'Gates'.
  *
  * En quelques mots, les 'Gates' sont des fonctions renvoyant TRUE ou FALSE pour indiquer une permission

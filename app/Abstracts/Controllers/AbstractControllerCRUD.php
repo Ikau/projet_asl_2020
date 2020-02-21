@@ -5,6 +5,17 @@ namespace App\Abstracts\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+/**
+ * Classe abstraite pour la plupart des controleurs de l'application.
+ *
+ * La classe est majoritairement utilisée par les controleurs CRUD
+ * (Create, Read, Update, Delete) : typiquement pour la page admin des modeles.
+ *
+ * Pour des classes plus complexes, il serait recommandé de creer une toute nouvelle abstraction.
+ * Les classes filles qui decoule de celle courante ne font que le stricte minimum.
+ *
+ * @package App\Abstracts\Controllers
+ */
 abstract class AbstractControllerCRUD extends Controller
 {
     /* ====================================================================

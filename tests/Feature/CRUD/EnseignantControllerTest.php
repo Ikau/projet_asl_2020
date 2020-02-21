@@ -21,13 +21,15 @@ class EnseignantControllerTest extends TestCase
       */
     public function testNormaliseOptionnels(string $clefModifiee, $nouvelleValeur)
     {
-        $donnee                = factory(Enseignant::class)->make()->toArray();
-        $donnee['test']        = 'normaliseInputsOptionnels';
-        $donnee[$clefModifiee] = $nouvelleValeur;
+        // Construction de l'objet
+        $enseignant                = factory(Enseignant::class)->make();
+        $enseignant['test']        = 'normaliseInputsOptionnels';
+        $enseignant[$clefModifiee] = $nouvelleValeur;
 
-        $response = $this->from(route('enseignants.tests'))
-        ->post(route('enseignants.tests'), $donnee)
-        ->assertRedirect('/'); // 404 est renvoye si non numerique, 500 si affectation par defaut echoue
+        // Test
+        $this->from(route('enseignants.tests'))
+        ->post(route('enseignants.tests'), $enseignant->toArray())
+        ->assertRedirect('/');
     }
 
     public function normaliseOptionnelsProvider()
@@ -35,17 +37,18 @@ class EnseignantControllerTest extends TestCase
         //[string $clefModifiee, $nouvelleValeur]
         return [
             // Success
-           'Resp departement null'     => [Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, null],
-           'Resp option null'          => [Enseignant::COL_RESPONSABLE_OPTION_ID, null],
+            'Resp departement null'     => [Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, null],
+            'Resp option null'          => [Enseignant::COL_RESPONSABLE_OPTION_ID, null],
 
-           'Resp departement numerique' => [Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, '1'],
-           'Resp option numerique'      => [Enseignant::COL_RESPONSABLE_OPTION_ID, '1'],
 
-           'Resp departement non numerique' => [Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, ''],
-           'Resp option non numerique'      => [Enseignant::COL_RESPONSABLE_OPTION_ID, ''],
+            'Resp departement numerique' => [Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, '1'],
+            'Resp option numerique'      => [Enseignant::COL_RESPONSABLE_OPTION_ID, '1'],
 
-           'Resp departement invalide' => [Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, -1],
-           'Resp option invalide'      => [Enseignant::COL_RESPONSABLE_OPTION_ID, -1],
+            'Resp departement non numerique' => [Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, ''],
+            'Resp option non numerique'      => [Enseignant::COL_RESPONSABLE_OPTION_ID, ''],
+
+            'Resp departement invalide' => [Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID, -1],
+            'Resp option invalide'      => [Enseignant::COL_RESPONSABLE_OPTION_ID, -1],
         ];
     }
 
