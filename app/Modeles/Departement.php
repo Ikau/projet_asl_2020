@@ -12,9 +12,8 @@ class Departement extends AbstractDepartement implements ArrayValeurs
      *                         VALEURS DU MODELE
      * ====================================================================
      */
-    const VAL_AUCUN = 'Aucun';
-    const VAL_MRI   = 'MRI';
-    const VAL_STI   = 'STI';
+    const VAL_MRI = 'MRI';
+    const VAL_STI = 'STI';
 
     /**
      * @inheritDoc
@@ -22,7 +21,6 @@ class Departement extends AbstractDepartement implements ArrayValeurs
     public static function getValeurs()
     {
         return [
-            self::VAL_AUCUN,
             self::VAL_MRI,
             self::VAL_STI
         ];

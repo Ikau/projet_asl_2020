@@ -18,7 +18,7 @@ class CreerTableDepartements extends Migration
         Schema::create(Departement::NOM_TABLE, function(Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->string(Departement::COL_INTITULE);
+            $table->string(Departement::COL_INTITULE)->nullable();
         });
     }
 

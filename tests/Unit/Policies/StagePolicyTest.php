@@ -74,8 +74,8 @@ class StagePolicyTest extends TestCase
         $divisions = [];
 
         // Recuperation des donnees
-        $departements = Departement::where(Departement::COL_INTITULE, '<>', Departement::VAL_AUCUN)->get();
-        $options      = Option::where(Option::COL_INTITULE, '<>', Option::VAL_AUCUN)->get();
+        $departements = Departement::all();
+        $options      = Departement::all();
 
         // Creation de l'array
         foreach($options as $option)

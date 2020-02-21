@@ -102,8 +102,8 @@ class PeuplerTableUsers extends Migration
             Enseignant::COL_NOM                        => 'Tichaud',
             Enseignant::COL_PRENOM                     => 'Bernard',
             Enseignant::COL_EMAIL                      => 'bernard.tichaud@exemple.fr',
-            Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID => Departement::where(Departement::COL_INTITULE, '=', Departement::VAL_AUCUN)->first()->id,
-            Enseignant::COL_RESPONSABLE_OPTION_ID      => Option::where(Option::COL_INTITULE, '=', Option::VAL_AUCUN)->first()->id,
+            Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID => null,
+            Enseignant::COL_RESPONSABLE_OPTION_ID      => null
         ])->save();
 
         // Creation du compte de Bernard TICHAUD
@@ -127,7 +127,7 @@ class PeuplerTableUsers extends Migration
             Enseignant::COL_PRENOM                     => 'Charles',
             Enseignant::COL_EMAIL                      => 'atan.charles@exemple.fr',
             Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID => Departement::where(Departement::COL_INTITULE, '=', Departement::VAL_MRI)->first()->id,
-            Enseignant::COL_RESPONSABLE_OPTION_ID      => Option::where(Option::COL_INTITULE, '=', Option::VAL_AUCUN)->first()->id
+            Enseignant::COL_RESPONSABLE_OPTION_ID      => null
         ])->save();
 
         // Creation du compte de Charles Atan

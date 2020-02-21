@@ -17,7 +17,6 @@ class PeuplerTableDepartements extends Migration
     public function up()
     {
         DB::table(Departement::NOM_TABLE)->insert([
-            [Departement::COL_INTITULE => 'Aucun'],
             [Departement::COL_INTITULE => 'MRI'],
             [Departement::COL_INTITULE => 'STI']
         ]);

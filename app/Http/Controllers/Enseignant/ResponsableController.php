@@ -62,22 +62,18 @@ class ResponsableController extends AbstractResponsableController
         // Recuperation du responsable courant
         $responsable = Auth::user()->identite;
 
-        // Recuperation des id nuls
-        $idDepartementNul = Departement::where(Departement::COL_INTITULE, '=', Departement::VAL_AUCUN)->first()->id;
-        $idOptionNul      = Option::where(Option::COL_INTITULE, '=', Option::VAL_AUCUN)->first()->id;
-
         // Recuperation des stages geres par le responsable
         $stages = [];
         foreach(Stage::all() as $stage)
         {
             // Si l'enseignant est responsable du departement
-            if($idDepartementNul !== $responsable[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID]
+            if(null !== $responsable[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID]
             && $stage->etudiant->departement->id === $responsable[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID])
             {
                 $stages[] = $stage;
             }
             // Si l'enseignant est responsable de l'option
-            else if($idOptionNul !== $responsable[Enseignant::COL_RESPONSABLE_OPTION_ID]
+            else if(null !== $responsable[Enseignant::COL_RESPONSABLE_OPTION_ID]
                 && $stage->etudiant->option->id === $responsable[Enseignant::COL_RESPONSABLE_OPTION_ID])
             {
                 $stages[] = $stage;
