@@ -10,6 +10,18 @@ namespace App\Interfaces;
  */
 interface CreationFiches
 {
+    /**
+     * Creer toutes les fiches liees (vides) a un stage avec les versions appropriees le cas echeant.
+     *
+     * Par defaut, la fonction devrait automatiquement prendre la version de modele la plus recente.
+     *
+     * @param int $idStage
+     * @param int|null $versionEntreprise
+     * @param int|null $versionRapport
+     * @param int|null $versionSoutenance
+     * @param int|null $versionSynthese
+     * @return mixed
+     */
     public static function creerFiches(int $idStage,
                                        int $versionEntreprise = null,
                                        int $versionRapport    = null,

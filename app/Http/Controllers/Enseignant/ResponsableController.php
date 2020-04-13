@@ -27,10 +27,10 @@ class ResponsableController extends AbstractResponsableController
     /*
      * Messages affiches en cas d'erreurs
      */
-    const MESSAGE_AFFECTATION_AJOUTEE        = 'Affectation de stage ajoutée avec succès';
-    const MESSAGE_AFFECTATION_INEXISTANTE    = 'Impossible de recuperer le stage a valider';
-    const MESSAGE_AFFECTATION_AUCUN_REFERENT = 'Il n\'y a aucun referent assigné à ce stage !';
-    const MESSAGE_AFFECTATION_NON_ROLE       = 'Vous devez être responsable de l\'option ou du departement pour valider';
+    const MESSAGE_AFFECTATION_AUCUN_REFERENT  = 'Il n\'y a aucun referent assigné à ce stage !';
+    const MESSAGE_AFFECTATION_INEXISTANTE     = 'Impossible de recuperer le stage a valider';
+    const MESSAGE_AFFECTATION_NON_RESPONSABLE = 'Vous devez être responsable de l\'option ou du departement pour valider';
+    const MESSAGE_AFFECTAATION_VALIDEE        = 'L\'affectation de stage a été validée avec succès !';
 
     /**
      * Indique a Lavel que toutes les fonctions de callback demandent un utilisateur
@@ -62,23 +62,19 @@ class ResponsableController extends AbstractResponsableController
         // Recuperation du responsable courant
         $responsable = Auth::user()->identite;
 
-        // Recuperation des id nuls
-        $idDepartementNul = Departement::where(Departement::COL_INTITULE, '=', Departement::VAL_AUCUN)->first()->id;
-        $idOptionNul      = Option::where(Option::COL_INTITULE, '=', Option::VAL_AUCUN)->first()->id;
-
         // Recuperation des stages geres par le responsable
         $stages = [];
         foreach(Stage::all() as $stage)
         {
             // Si l'enseignant est responsable du departement
-            if($idDepartementNul !== $responsable[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID]
-            && $stage->etudiant->departement->id === $responsable[Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID])
+            if(null !== $responsable->responsable_departement
+            && $stage->etudiant->departement->id === $responsable->responsable_departement->id)
             {
                 $stages[] = $stage;
             }
             // Si l'enseignant est responsable de l'option
-            else if($idOptionNul !== $responsable[Enseignant::COL_RESPONSABLE_OPTION_ID]
-                && $stage->etudiant->option->id === $responsable[Enseignant::COL_RESPONSABLE_OPTION_ID])
+            else if(null !== $responsable->responsable_option
+                && $stage->etudiant->option->id === $responsable->responsable_option->id)
             {
                 $stages[] = $stage;
             }
@@ -122,7 +118,7 @@ class ResponsableController extends AbstractResponsableController
         if(Auth::user()->cant('validerAffectation', $stage))
         {
             return redirect()->route('stages.show', $idStage)
-                ->with('error', self::MESSAGE_AFFECTATION_NON_ROLE);
+                ->with('error', self::MESSAGE_AFFECTATION_NON_RESPONSABLE);
         }
 
         // Verification qu'il y ait bien un referent
@@ -136,7 +132,6 @@ class ResponsableController extends AbstractResponsableController
         $stage[Stage::COL_AFFECTATION_VALIDEE] = TRUE;
         $stage->save();
 
-        // On envoie la notification au referent
         $userEnseignant = User::where([
             [User::COL_POLY_MODELE_TYPE, '=', Enseignant::class],
             [User::COL_POLY_MODELE_ID, '=', $stage->referent->id]
@@ -144,6 +139,6 @@ class ResponsableController extends AbstractResponsableController
         $userEnseignant->notify(new AffectationAssignee($stage->id));
 
         return redirect()->route('stages.show', $idStage)
-            ->with('success', self::MESSAGE_AFFECTATION_AJOUTEE);
+            ->with('success', self::MESSAGE_AFFECTAATION_VALIDEE);
     }
 }

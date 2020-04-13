@@ -133,7 +133,7 @@ class User extends Authenticatable implements Utilisateur, Authentification, Mus
     /**
      * Renvoie les privileges de l'utilisateur.
      *
-     * @return array[App\Modeles\Privileges] Array de tous les privileges de l'utilisateur.
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function privileges()
     {
@@ -145,7 +145,7 @@ class User extends Authenticatable implements Utilisateur, Authentification, Mus
     /**
      * Renvoie les roles de l'utilisateur.
      *
-     * @return Collection[app\Modeles\Role]
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function roles()
     {
@@ -163,7 +163,7 @@ class User extends Authenticatable implements Utilisateur, Authentification, Mus
      * Peut etre etendu a un etudiant si besoin
      * [DOC] : https://laravel.com/docs/6.x/eloquent-relationships#one-to-one-polymorphic-relations
      *
-     * @return App\Modeles\Contact|App\Modeles\Enseignant
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
     public function identite()
     {

@@ -9,6 +9,7 @@
 --}}
 <label for="{{ $attribut }}">{{ $intitule }}</label>
 <select name="{{ $attribut }}" id="{{ $attribut }}">
+    <option value="">* Aucun</option>
     @foreach($enseignants as $e)
     <option value="{{ $e->id }}" {{ $valeur === $e->id ? 'selected':'' }}>{{ $e->nom }} {{ $e->prenom }}</option>
     @endforeach

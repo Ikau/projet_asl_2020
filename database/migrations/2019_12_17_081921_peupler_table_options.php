@@ -17,50 +17,8 @@ class PeuplerTableOptions extends Migration
      */
     public function up()
     {
-        // Ajout des options pour le departement 'Aucun'
-        $idDepartementVide = DB::table(Departement::NOM_TABLE)
-        ->where(Departement::COL_INTITULE, 'Aucun')
-        ->first()
-        ->id;
-
-        DB::table(Option::NOM_TABLE)->insert([
-            [
-                Option::COL_INTITULE => 'Aucune',
-                Option::COL_DEPARTEMENT_ID => $idDepartementVide
-            ],
-        ]);
-
-        // Ajout des options pour le departement 'MRI'
-        $idDepartementMRI = DB::table(Departement::NOM_TABLE)
-        ->where(Departement::COL_INTITULE, 'MRI')
-        ->first()
-        ->id;
-
-        foreach(['RAI', 'RE', 'RSI', 'SFEN', 'STLR'] as $option)
-        {
-            DB::table(Option::NOM_TABLE)->insert([
-                [
-                    Option::COL_INTITULE => $option,
-                    Option::COL_DEPARTEMENT_ID => $idDepartementMRI
-                ]
-            ]);
-        }
-
-        // Ajout des options pour le departement 'STI'
-        $idDepartementSTI = DB::table(Departement::NOM_TABLE)
-        ->where(Departement::COL_INTITULE, 'STI')
-        ->first()
-        ->id;
-        
-        foreach(['2SU', '4AS', 'ASL'] as $option)
-        {
-            DB::table(Option::NOM_TABLE)->insert([
-                [
-                    Option::COL_INTITULE => $option,
-                    Option::COL_DEPARTEMENT_ID => $idDepartementSTI
-                ]
-            ]);
-        }
+        $this->insereOptionsMRI();
+        $this->insereOptionsSTI();
     }
 
     /**
@@ -71,6 +29,49 @@ class PeuplerTableOptions extends Migration
     public function down()
     {
         // Supression brutale
-        DB::table(Option::NOM_TABLE)->truncate();
+        DB::table(Option::NOM_TABLE)->delete();
+    }
+
+
+    /* ====================================================================
+     *                          FONCTIONS PRIVEES
+     * ====================================================================
+     */
+    private function insereOptionsMRI()
+    {
+        $idDepartementMRI = DB::table(Departement::NOM_TABLE)
+            ->where(Departement::COL_INTITULE, Departement::VAL_MRI)
+            ->first()
+            ->id;
+
+        foreach(['RAI', 'RE', 'RSI', 'SFEN', 'STLR'] as $option)
+        {
+            DB::table(Option::NOM_TABLE)->insert([
+                [
+                    Option::COL_INTITULE       => $option,
+                    Option::COL_DEPARTEMENT_ID => $idDepartementMRI,
+                    Option::COL_RESPONSABLE_ID => null
+                ]
+            ]);
+        }
+    }
+
+    private function insereOptionsSTI()
+    {
+        $idDepartementSTI = DB::table(Departement::NOM_TABLE)
+            ->where(Departement::COL_INTITULE, Departement::VAL_STI)
+            ->first()
+            ->id;
+
+        foreach(['2SU', '4AS', 'ASL'] as $option)
+        {
+            DB::table(Option::NOM_TABLE)->insert([
+                [
+                    Option::COL_INTITULE       => $option,
+                    Option::COL_DEPARTEMENT_ID => $idDepartementSTI,
+                    Option::COL_RESPONSABLE_ID => null
+                ]
+            ]);
+        }
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Facade\PermissionFacade;
 use App\Facade\UserFacade;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -82,9 +83,7 @@ class PeuplerTableUsers extends Migration
         $userAdmin = UserFacade::creerDepuisContact($contactAdmin->id, 'azerty');
 
         // Ajout des roles et privileges le cas echeant
-        $roleAdmin = Role::where(Role::COL_INTITULE, '=', Role::VAL_ADMIN)->first();
-        $userAdmin->roles()->attach($roleAdmin);
-        $userAdmin->save();
+        PermissionFacade::ajouterRole(Role::VAL_ADMIN, $userAdmin);
     }
 
     /**
@@ -101,18 +100,14 @@ class PeuplerTableUsers extends Migration
         $bernardTichaud->fill([
             Enseignant::COL_NOM                        => 'Tichaud',
             Enseignant::COL_PRENOM                     => 'Bernard',
-            Enseignant::COL_EMAIL                      => 'bernard.tichaud@exemple.fr',
-            Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID => Departement::where(Departement::COL_INTITULE, '=', Departement::VAL_AUCUN)->first()->id,
-            Enseignant::COL_RESPONSABLE_OPTION_ID      => Option::where(Option::COL_INTITULE, '=', Option::VAL_AUCUN)->first()->id,
+            Enseignant::COL_EMAIL                      => 'bernard.tichaud@exemple.fr'
         ])->save();
 
         // Creation du compte de Bernard TICHAUD
         $userTichaud = UserFacade::creerDepuisEnseignant($bernardTichaud->id, 'azerty');
 
         // Ajout des roles et des privileges au compte
-        $roleEnseignant = Role::where(Role::COL_INTITULE, '=', Role::VAL_ENSEIGNANT)->first();
-        $userTichaud->roles()->attach($roleEnseignant);
-        $userTichaud->save();
+        PermissionFacade::ajouterRole(Role::VAL_ENSEIGNANT, $userTichaud);
     }
 
     /**
@@ -120,25 +115,23 @@ class PeuplerTableUsers extends Migration
      */
     private function insertCharlesAtan()
     {
-        // Creation de l'enseignant Charels Atan, responsable de departement
+        // Creation de l'enseignant Charels Atan
         $charlesAtan = new Enseignant;
         $charlesAtan->fill([
             Enseignant::COL_NOM                        => 'Atan',
             Enseignant::COL_PRENOM                     => 'Charles',
-            Enseignant::COL_EMAIL                      => 'atan.charles@exemple.fr',
-            Enseignant::COL_RESPONSABLE_DEPARTEMENT_ID => Departement::where(Departement::COL_INTITULE, '=', Departement::VAL_MRI)->first()->id,
-            Enseignant::COL_RESPONSABLE_OPTION_ID      => Option::where(Option::COL_INTITULE, '=', Option::VAL_AUCUN)->first()->id
+            Enseignant::COL_EMAIL                      => 'atan.charles@exemple.fr'
         ])->save();
+
+        // Affectation en tant que responsable de MRI
+        PermissionFacade::remplaceResponsableDepartement(Departement::VAL_MRI, $charlesAtan);
 
         // Creation du compte de Charles Atan
         $userAtan = UserFacade::creerDepuisEnseignant($charlesAtan->id, 'azerty');
 
         // Ajout des roles et des privileges au compte
-        $roleEnseignant             = Role::where(Role::COL_INTITULE, '=', Role::VAL_ENSEIGNANT)->first();
-        $roleResponsableDepartement = Role::where(Role::COL_INTITULE, '=', Role::VAL_RESP_DEPARTEMENT)->first();
-        $userAtan->roles()->attach($roleEnseignant);
-        $userAtan->roles()->attach($roleResponsableDepartement);
-        $userAtan->save();
+        PermissionFacade::ajouterRole(Role::VAL_ENSEIGNANT, $userAtan);
+        PermissionFacade::ajouterRole(Role::VAL_RESP_DEPARTEMENT, $userAtan);
     }
 
     /**
@@ -167,8 +160,6 @@ class PeuplerTableUsers extends Migration
         $userAnnieVerserre = UserFacade::creerDepuisContact($annieVerserre->id, 'azerty');
 
         // Ajout des roles et des privileges au compte
-        $roleScolarite = Role::where(Role::COL_INTITULE, '=', Role::VAL_SCOLARITE)->first();
-        $userAnnieVerserre->roles()->attach($roleScolarite);
-        $userAnnieVerserre->save();
+        PermissionFacade::ajouterRole(Role::VAL_SCOLARITE, $userAnnieVerserre);
     }
 }

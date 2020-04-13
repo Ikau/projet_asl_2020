@@ -40,7 +40,13 @@ class TestFacade implements CreationTests
 
     public static function creerStageNonAffecte(): Stage
     {
-        // TODO: Implement creerStageNonAffecte() method.
+        // Creation du stage
+        $stage = factory(Stage::class)->create();
+        $stage->referent()->dissociate();
+        $stage->save();
+
+        // Creation des fiches associees
+        FicheFacade::creerFiches($stage->id);
     }
 
 

@@ -166,10 +166,10 @@ class Stage extends AbstractStage
 
     /**
      * Renvoie l'enseignant referent associe au stage.
-     * @var App\Modeles\Enseignant
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function referent()
     {
-        return $this->belongsTo('App\Modeles\Enseignant', Stage::COL_REFERENT_ID);
+        return $this->belongsTo(Enseignant::class, Stage::COL_REFERENT_ID);
     }
 }

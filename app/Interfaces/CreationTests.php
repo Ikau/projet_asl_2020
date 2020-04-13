@@ -10,6 +10,7 @@ use App\User;
  *
  * Les classes implementant cette interface ne devraient renvoyer que des
  * objets naifs sans aucune fonctionnalite business.
+ * Il serait donc interessant d'utiliser le Factory pour creer des valeurs naives.
  *
  * Interface CreationTests
  * @package App\Interfaces

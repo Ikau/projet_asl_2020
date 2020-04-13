@@ -31,21 +31,25 @@
         'intitule' => 'Nom (*)',
         'valeur'   => $enseignant->nom ?? old('nom')
     ])
-    <br/>
 
     @include('includes.form.input.text', [
         'attribut' => 'prenom',
         'intitule' => 'Prenom (*)',
         'valeur'   => $enseignant->prenom ?? old('prenom')
     ])
-    <br/>
 
     @include('includes.form.input.text', [
         'attribut' => 'email',
         'intitule' => 'Courriel (*)',
         'valeur'   => $enseignant->email ?? old('email')
     ])
-    <br/>
+
+    @include('includes.form.input.select.departements', [
+        'attribut'     => 'departement_id',
+        'intitule'     => 'Responsable de département ?',
+        'valeur'       => $enseignant->departement_id ?? old('departement_id'),
+        'departements' => $departements
+    ])
 
     @include('includes.form.input.select.options', [
         'attribut'     => 'option_id',
@@ -54,15 +58,6 @@
         'departements' => $departements,
         'options'      => $options
     ])
-    <br/>
-
-    @include('includes.form.input.select.departements', [
-        'attribut'     => 'departement_id',
-        'intitule'     => 'Responsable de département ?',
-        'valeur'       => $enseignant->departement_id ?? old('departement_id'),
-        'departements' => $departements
-    ])
-    <br/>
 
     @if ( isset($enseignant))
     <button type="submit"> Modifier le enseignant</button>

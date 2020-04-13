@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 abstract class AbstractSection extends Model
 {
-
-
     /**
      * Renvoie le nombre de points obtenables dans la section
      * @return float
