@@ -30,6 +30,6 @@ class PeuplerTableSoutenances extends Migration
      */
     public function down()
     {
-        DB::table(Soutenance::class)->delete();
+        DB::table(Soutenance::NOM_TABLE)->delete();
     }
 }

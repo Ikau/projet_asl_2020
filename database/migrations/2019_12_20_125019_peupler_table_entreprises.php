@@ -30,6 +30,6 @@ class PeuplerTableEntreprises extends Migration
      */
     public function down()
     {
-        DB::table(Entreprise::class)->delete();
+        DB::table(Entreprise::NOM_TABLE)->delete();
     }
 }
