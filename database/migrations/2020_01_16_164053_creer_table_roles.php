@@ -30,6 +30,6 @@ class CreerTableRoles extends Migration
      */
     public function down()
     {
-        DB::dropIfExists(Role::NOM_TABLE);
+        Schema::dropIfExists(Role::NOM_TABLE);
     }
 }

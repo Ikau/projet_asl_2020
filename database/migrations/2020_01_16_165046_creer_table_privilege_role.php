@@ -39,6 +39,6 @@ class CreerTablePrivilegeRole extends Migration
      */
     public function down()
     {
-        DB::dropIfExists(Privilege::NOM_TABLE_PIVOT_PRIVILEGE_ROLE);
+        Schema::dropIfExists(Privilege::NOM_TABLE_PIVOT_PRIVILEGE_ROLE);
     }
 }

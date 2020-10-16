@@ -39,6 +39,6 @@ class CreerTableRoleUser extends Migration
      */
     public function down()
     {
-        DB::dropIfExists(Role::NOM_TABLE_PIVOT_ROLE_USER);
+        Schema::dropIfExists(Role::NOM_TABLE_PIVOT_ROLE_USER);
     }
 }
