@@ -25,8 +25,8 @@ class CreerTablePrivilegeUser extends Migration
             $table->unsignedBigInteger(User::COL_PIVOT);
             $table->unsignedBigInteger(Privilege::COL_PIVOT);
 
-            $table->foreign(User::COL_PIVOT)->references('id')->on(User::NOM_TABLE);
-            $table->foreign(Privilege::COL_PIVOT)->references('id')->on(Privilege::NOM_TABLE);
+            $table->foreign(User::COL_PIVOT)->references('id')->on(User::NOM_TABLE)->onDelete('cascade');
+            $table->foreign(Privilege::COL_PIVOT)->references('id')->on(Privilege::NOM_TABLE)->onDelete('cascade');
 
             // On indique que la combinaison est unique
             $table->unique([User::COL_PIVOT, Privilege::COL_PIVOT]);
