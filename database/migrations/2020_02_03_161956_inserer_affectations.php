@@ -34,11 +34,26 @@ class InsererAffectations extends Migration
      */
     public function down()
     {
-        DB::table(Stage::NOM_TABLE)->delete();
+        // Recuperation de l'enseignant Bernard Tichaud
+        $bernardTichaud = Enseignant::where(Enseignant::COL_EMAIL, '=', 'bernard.tichaud@exemple.fr')->first();
+        $userTichaud    = User::where([
+            [User::COL_POLY_MODELE_ID  , '=', $bernardTichaud->id],
+            [User::COL_POLY_MODELE_TYPE, '=', Enseignant::class]
+        ])->first();
+
+        // Recuperation des id de stage de Bernard Tichau
+        $idStages = Stage::where(Stage::COL_REFERENT_ID, '=', $bernardTichaud->id)->get('id');
+
+        // TEMP : suppression manuelle des fiches
+        // il faudrait implementer une methode specifique dans l'un des modeles
+        DB::table(FicheRapport::NOM_TABLE)->whereIn(FicheRapport::COL_STAGE_ID, $idStages)->delete();
+
+        // Suppression des stages
+        DB::table(Stage::NOM_TABLE)->where(Stage::COL_REFERENT_ID, '=', $bernardTichaud->id)->delete();
     }
 
     /**
-     * Cree des affectations de stage pour l'enseignant Bob Dupont
+     * Cree des affectations de stage pour l'enseignant Bernard Tichaud
      *
      * @return void
      */
@@ -47,7 +62,7 @@ class InsererAffectations extends Migration
         // Init du faker
         $faker = Faker::create();
 
-        // Recuperation de l'enseignant Bob Dupont
+        // Recuperation de l'enseignant Bernard Tichaud
         $bernardTichaud = Enseignant::where(Enseignant::COL_EMAIL, '=', 'bernard.tichaud@exemple.fr')->first();
         $userTichaud    = User::where([
             [User::COL_POLY_MODELE_ID  , '=', $bernardTichaud->id],
