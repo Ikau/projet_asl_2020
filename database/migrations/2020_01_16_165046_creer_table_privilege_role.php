@@ -24,8 +24,8 @@ class CreerTablePrivilegeRole extends Migration
             $table->unsignedBigInteger(Privilege::COL_PIVOT);
             $table->unsignedBigInteger(Role::COL_PIVOT);
 
-            $table->foreign(Privilege::COL_PIVOT)->references('id')->on(Privilege::NOM_TABLE);
-            $table->foreign(Role::COL_PIVOT)->references('id')->on(Role::NOM_TABLE);
+            $table->foreign(Privilege::COL_PIVOT)->references('id')->on(Privilege::NOM_TABLE)->onDelete('cascade');
+            $table->foreign(Role::COL_PIVOT)->references('id')->on(Role::NOM_TABLE)->onDelete('cascde');
 
             // On indique que la combinaison est unique
             $table->unique([Privilege::COL_PIVOT, Role::COL_PIVOT]);
