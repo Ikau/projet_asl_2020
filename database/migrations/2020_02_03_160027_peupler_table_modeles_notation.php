@@ -25,7 +25,20 @@ class PeuplerTableModelesNotation extends Migration
      */
     public function down()
     {
-        Schema::table(ModeleNotation::NOM_TABLE)->delete();
+        // Recuperation du modele a ajouter
+        $modeleRapport = ModeleNotation::where([
+            [ModeleNotation::COL_VERSION, '=', 1],
+            [ModeleNotation::COL_TYPE, '=', ModeleNotation::VAL_RAPPORT]
+        ])->first();
+        
+        // Suppression des sections
+        Section::where(Section::COL_MODELE_ID, '=', $modeleRapport->id)->delete();
+
+        // Suppression du modele
+        ModeleNotation::where([
+            [ModeleNotation::COL_VERSION, '=', 1],
+            [ModeleNotation::COL_TYPE, '=', ModeleNotation::VAL_RAPPORT]
+        ])->delete();
     }
 
     /* ====================================================================
