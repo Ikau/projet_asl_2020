@@ -25,7 +25,7 @@ class CreerTableDepartements extends Migration
             // Clefs etrangeres
             $table->unsignedBigInteger(Departement::COL_RESPONSABLE_ID)->nullable(); // Si aucun responsable n'est determine
 
-            $table->foreign(Departement::COL_RESPONSABLE_ID)->references('id')->on(Enseignant::NOM_TABLE);
+            $table->foreign(Departement::COL_RESPONSABLE_ID)->references('id')->on(Enseignant::NOM_TABLE)->onDelete('set null');
         });
     }
 
