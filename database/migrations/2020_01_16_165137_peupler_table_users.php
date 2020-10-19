@@ -120,7 +120,7 @@ class PeuplerTableUsers extends Migration
         $charlesAtan->fill([
             Enseignant::COL_NOM                        => 'Atan',
             Enseignant::COL_PRENOM                     => 'Charles',
-            Enseignant::COL_EMAIL                      => 'atan.charles@exemple.fr'
+            Enseignant::COL_EMAIL                      => 'charles.atan@exemple.fr'
         ])->save();
 
         // Affectation en tant que responsable de MRI
