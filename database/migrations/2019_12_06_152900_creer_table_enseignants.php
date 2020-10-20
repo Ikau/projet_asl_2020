@@ -23,7 +23,7 @@ class CreerTableEnseignants extends Migration
 
             $table->string(Enseignant::COL_NOM);
             $table->string(Enseignant::COL_PRENOM);
-            $table->string(Enseignant::COL_EMAIL);
+            $table->string(Enseignant::COL_EMAIL)->unique();
         });
     }
 
